@@ -1,31 +1,33 @@
-The 5 planes of design:
-- [5 Planes of Design](#5-planes-of-design)
-  - [Strategy](#strategy)
-    - [Target Audience](#target-audience)
-    - [User \& Client Needs](#user--client-needs)
-    - [Opportunity Matrices](#opportunity-matrices)
-  - [Scope](#scope)
-  - [Structure](#structure)
-    - [Information Architecture \& User Journey](#information-architecture--user-journey)
-      - [User Management](#user-management)
-      - [Admin Management](#admin-management)
-      - [Repo Management](#repo-management)
-  - [Skeleton](#skeleton)
-    - [Home page](#home-page)
-    - [Features](#features)
-      - [Sign up / Register \& Login / Logout](#sign-up--register--login--logout)
-      - [Morning page](#morning-page)
-      - [Evening page](#evening-page)
-      - [My profile page](#my-profile-page)
-      - [Contact page](#contact-page)
-      - [Modals](#modals)
-  - [Surface](#surface)
-    - [Imagery](#imagery)
-    - [Colour Palette](#colour-palette)
-    - [Typography](#typography)
-    - [Mock-ups](#mock-ups)
-
+<!-- omit from toc -->
 # 5 Planes of Design
+
+<!-- omit from toc -->
+## Table of Contents
+- [Strategy](#strategy)
+  - [Target Audience](#target-audience)
+  - [User \& Client Needs](#user--client-needs)
+  - [Opportunity Matrices](#opportunity-matrices)
+- [Scope](#scope)
+- [Structure](#structure)
+  - [Information Architecture \& User Journey](#information-architecture--user-journey)
+    - [User Management](#user-management)
+    - [Admin Management](#admin-management)
+    - [Repo Management](#repo-management)
+- [Skeleton](#skeleton)
+  - [Home page](#home-page)
+  - [Features](#features)
+    - [Sign up / Register \& Login / Logout](#sign-up--register--login--logout)
+    - [Morning page](#morning-page)
+    - [Evening page](#evening-page)
+    - [My profile page](#my-profile-page)
+    - [Contact page](#contact-page)
+    - [Modals](#modals)
+- [Surface](#surface)
+  - [Imagery](#imagery)
+  - [Colour Palette](#colour-palette)
+  - [Typography](#typography)
+  - [Mock-ups](#mock-ups)
+
 
 ## Strategy
 

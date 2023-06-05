@@ -1,14 +1,17 @@
-- [Design Thinking](#design-thinking)
-  - [Research Report](#research-report)
-  - [Initial Questionnaire](#initial-questionnaire)
-  - [5Ws](#5ws)
-  - [Problem Statement](#problem-statement)
-  - [How-Now-Wow](#how-now-wow)
-  - [Design Feedback Questionnaire](#design-feedback-questionnaire)
-    - [The (Drafted) Concepts](#the-drafted-concepts)
-    - [Reflection \& Iteration Ideas](#reflection--iteration-ideas)
-
+<!-- omit from toc -->
 # Design Thinking
+
+<!-- omit from toc -->
+## Table of Contents
+- [Research Report](#research-report)
+- [Initial Questionnaire](#initial-questionnaire)
+- [5Ws](#5ws)
+- [Problem Statement](#problem-statement)
+- [How-Now-Wow](#how-now-wow)
+- [Design Feedback Questionnaire](#design-feedback-questionnaire)
+  - [The (Drafted) Concepts](#the-drafted-concepts)
+  - [Reflection \& Iteration Ideas](#reflection--iteration-ideas)
+
 
 [Design Thinking Diagram on FigmaJam](https://www.figma.com/file/7rtFy0K92UjWxtJk84oh6D/Define-and-Ideate?type=whiteboard&node-id=0%3A1&t=U2UiLCfcAOVAZf6c-1)
 

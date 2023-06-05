@@ -37,9 +37,9 @@
 
 For further details of the design process, please see:
 
-### [Design Thinking](docs/ui-ux/design-thinking/design-thinking.md#design-thinking)
+### [Design Thinking](docs/ui-ux/design-thinking/design-thinking.md)
 
-### [5 Planes of Design](docs/ui-ux/five-planes/five-planes.md#5-planes-of-design)
+### [5 Planes of Design](docs/ui-ux/five-planes/five-planes.md)
 
 ### Future Implementations
 
@@ -77,7 +77,7 @@ For the diagram on [LucidChart](https://lucid.app), click [here](https://lucid.a
 
 ### Django Test Driven Development using REST Framework
 
-For further details on testing, click [here](/docs/testing/testing.md#testing).
+For further details on testing, click [here](docs/testing/testing.md).
 
 ### User experience
 

@@ -1,39 +1,34 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+- [Mindful Minutes](#mindful-minutes)
+  - [Product Information](#product-information)
+  - [UX / UI Design](#ux--ui-design)
+    - [Design Thinking](#design-thinking)
+    - [5 Planes of Design](#5-planes-of-design)
+  - [Data Models](#data-models)
+    - [Schematics](#schematics)
+  - [Testing](#testing)
+  - [Credits](#credits)
 
-Welcome,
+# Mindful Minutes
 
-This is the Code Institute student template for Codeanywhere. We have preinstalled all of the tools you need to get started. It's perfectly ok to use this template as the basis for your project submissions.
+## Product Information
 
-You can safely delete this README.md file, or change it for your own project. Please do read it at least once, though! It contains some important information about Codeanywhere and the extensions we use. Some of this information has been updated since the video content was created. The last update to this file was: **March 3rd, 2023**
+## UX / UI Design
 
-## Codeanywhere Reminders
+For further details of the design process, please see:
 
-To run a frontend (HTML, CSS, Javascript only) application in Codeanywhere, in the terminal, type:
+### [Design Thinking](docs/ui-ux/design-thinking/design-thinking.md#design-thinking)
 
-`python3 -m http.server`
+### [5 Planes of Design](docs/ui-ux/five-planes/five-planes.md#5-planes-of-design)
 
-A button should appear to click: _Open Preview_ or _Open Browser_.
+## Data Models
+### Schematics
 
-To run a frontend (HTML, CSS, Javascript only) application in Codeanywhere with no-cache, you can use this alias for `python3 -m http.server`.
+![Mindful Minutes ERD - Database ER diagram (crow's foot)](docs/media/images/mm_erd.png)
 
-`http_server`
+For the diagram on [LucidChart](https://lucid.app), click [here](https://lucid.app/lucidchart/eceb8ec6-75f3-4138-9efa-b05138d3aad4/edit?viewport_loc=-88%2C-96%2C2219%2C2508%2Ctev4AmcZ54sb&invitationId=inv_6d67a542-c4ca-4174-9f85-6c08cd947952)
 
-To run a backend Python file, type `python3 app.py`, if your Python file is named `app.py` of course.
+## Testing 
 
-A button should appear to click: _Open Preview_ or _Open Browser_.
+For further details on testing, click [here](/docs/testing/testing.md#testing). 
 
-In Codeanywhere you have superuser security privileges by default. Therefore you do not need to use the `sudo` (superuser do) command in the bash terminal in any of the lessons.
-
-To log into the Heroku toolbelt CLI:
-
-1. Log in to your Heroku account and go to _Account Settings_ in the menu under your avatar.
-2. Scroll down to the _API Key_ and click _Reveal_
-3. Copy the key
-4. In Codeanywhere, from the terminal, run `heroku_config`
-5. Paste in your API key when asked
-
-You can now use the `heroku` CLI program - try running `heroku apps` to confirm it works. This API key is unique and private to you so do not share it. If you accidentally make it public then you can create a new one with _Regenerate API Key_.
-
----
-
-Happy coding!
+## Credits

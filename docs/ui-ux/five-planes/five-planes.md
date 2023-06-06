@@ -415,6 +415,9 @@ The Repository is the main component in this Information Architecture. The User 
 
 ![Skeleton: Navigational Map](../../media/images/skeleton_navigational-map.png)
 
+References:
+- [IMDB Website Redesign: UX Case Study](https://medium.com/ux-diaries/imdb-website-redesign-ux-case-study-c42f65a69b98)
+
 ## 5. Surface Plane
 
 ### Imagery

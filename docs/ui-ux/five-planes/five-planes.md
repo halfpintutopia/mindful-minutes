@@ -58,7 +58,7 @@ The following sections provide an overview of the target audience for the Mindfu
     - study schedules
     - track assignments
     - take notes
-- Create Professionals
+- Creative (Professionals)
   - Individuals who use the app for:
     - take ideas
     - take inspiration

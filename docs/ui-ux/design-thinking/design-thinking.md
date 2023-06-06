@@ -1,7 +1,7 @@
 <!-- omit from toc -->
 # Design Thinking
 
-For the full overview produced in [Figma](https://figma.com), please see [Mindful Minutes - Define Ideate FigJam Board](https://www.figma.com/file/7rtFy0K92UjWxtJk84oh6D/Define-and-Ideate?type=whiteboard&node-id=0%3A1&t=cB3V7QtiU6YaSUpv-1)
+For the full overview produced in [Figma](https://figma.com), please see [Mindful Minutes - Define Ideate FigJam Board](https://www.figma.com/file/7rtFy0K92UjWxtJk84oh6D/Define-and-Ideate?type=whiteboard&node-id=0%3A1&t=cB3V7QtiU6YaSUpv-1).
 
 <!-- omit from toc -->
 ## Table of Contents
@@ -87,6 +87,8 @@ The **How-Now-Wow** diagram provide a range of ideas for creating an app that ad
 ![Design Thinking: Design Feedback Questionnaire](../../media/images/design-thinking_design-feedback-questionnaire.png)
 
 ### The (Drafted) Concepts
+
+Drafts were created in [Figma](https://figma.com). Please see the [drafts for Concept A & B in Figma](https://www.figma.com/file/0dqJufUdcM2ZNwxmbKpLzZ/Design-Feedback-(Concept-A-%26-B)?type=design&node-id=0%3A1&t=7BN0IWFqODDsJggl-1).
 
 <details>
   <summary>Concept A</summary>

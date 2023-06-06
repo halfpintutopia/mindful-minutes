@@ -33,6 +33,10 @@
 
 ## Product Information
 
+The app is designed to help cultivate a habit of daily introspection and self-reflection. By using the app, the user can establish a routine of engaging with their thoughts, goals and achievements every current day and evening.
+
+The primary goal of the Mindful Minutes App is to encourage users to build a habit of checking in daily and reflecting on their experiences. To reinforce this habit, the app allows users to create, edit, delete and access their current day's journal entries while keeping the previous days' entries in a read-only mode. This approach ensures that users focus on the present, fostering a send of mindfulness and self-awareness.
+
 ## UX / UI Design
 
 For further details of the design process, please see:
@@ -121,7 +125,7 @@ CREATE TABLE "Settings" (
   "ID" PK,
   "User" FK,
   "Verified" boolean,
-  "Startt Week Day" string,
+  "Start Week Day" string,
   "Morning Check-in" time,
   "Evening Check-in" time,
   "Created on" datetime,

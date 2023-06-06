@@ -1,7 +1,7 @@
 <!-- omit from toc -->
 # Design Thinking
 
-For the full overview produced in [Figma](https://figma.com), please see [Mindful Minutes - Define Ideate FigJam](https://www.figma.com/file/7rtFy0K92UjWxtJk84oh6D/Define-and-Ideate?type=whiteboard&node-id=0%3A1&t=cB3V7QtiU6YaSUpv-1)
+For the full overview produced in [Figma](https://figma.com), please see [Mindful Minutes - Define Ideate FigJam Board](https://www.figma.com/file/7rtFy0K92UjWxtJk84oh6D/Define-and-Ideate?type=whiteboard&node-id=0%3A1&t=cB3V7QtiU6YaSUpv-1)
 
 <!-- omit from toc -->
 ## Table of Contents

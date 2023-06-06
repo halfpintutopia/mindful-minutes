@@ -295,7 +295,7 @@ The content requirements refer to the specific content elements and information 
   - date
   - content
 
--Sections for:
+- Sections for:
   - appointment diary
   - day targets
   - notes

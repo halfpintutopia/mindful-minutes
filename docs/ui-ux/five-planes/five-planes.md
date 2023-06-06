@@ -1,19 +1,21 @@
 <!-- omit from toc -->
 # 5 Planes of Design
 
+[Design Thinking](../design-thinking/design-thinking.md) provided the creative and exploratory aspect of the design process, in continuation the 5 Planes of Design framework structures and evaluates the design solution across different dimensions. Using the data provided from the [Design Thinking](../design-thinking/design-thinking.md) approach, here is the summary of generated and innovative ideas and concepts that were further refined and shaped into a well-considered and holistic design solution.
+
 <!-- omit from toc -->
 ## Table of Contents
-- [Strategy](#strategy)
+- [1. Strategy Plane](#1-strategy-plane)
   - [Target Audience](#target-audience)
   - [User \& Client Needs](#user--client-needs)
   - [Opportunity Matrices](#opportunity-matrices)
-- [Scope](#scope)
-- [Structure](#structure)
+- [2. Scope Plane](#2-scope-plane)
+- [3. Structure Plane](#3-structure-plane)
   - [Information Architecture \& User Journey](#information-architecture--user-journey)
     - [User Management](#user-management)
     - [Admin Management](#admin-management)
     - [Repo Management](#repo-management)
-- [Skeleton](#skeleton)
+- [4. Skeleton Plane](#4-skeleton-plane)
   - [Home page](#home-page)
   - [Features](#features)
     - [Sign up / Register \& Login / Logout](#sign-up--register--login--logout)
@@ -22,14 +24,14 @@
     - [My profile page](#my-profile-page)
     - [Contact page](#contact-page)
     - [Modals](#modals)
-- [Surface](#surface)
+- [5. Surface Plane](#5-surface-plane)
   - [Imagery](#imagery)
   - [Colour Palette](#colour-palette)
   - [Typography](#typography)
   - [Mock-ups](#mock-ups)
 
 
-## Strategy
+## 1. Strategy Plane
 
 ### Target Audience
 
@@ -276,7 +278,7 @@ References on [Figma](http://figma.com) screenshot:
 
 ![Strategy: Opportunity matrices](../../media/images/strategy_opportunity-matrices.png)
 
-## Scope
+## 2. Scope Plane
 
 The Scope Plane defines the overall boundaries and scope of the project, including the Content and Functionality Requirements.
 
@@ -337,7 +339,7 @@ The functionality requirements define specific features, actions and capabilitie
 
 </details>
 
-## Structure
+## 3. Structure Plane
 
 ### Information Architecture & User Journey
 
@@ -378,7 +380,7 @@ The Repository is the main component in this Information Architecture. The User 
 
 ![Structure: Repository User Journey](../../media/images/structure_repo-user-journey.png)
 
-## Skeleton
+## 4. Skeleton Plane
 
 ### Home page
 
@@ -408,7 +410,7 @@ The Repository is the main component in this Information Architecture. The User 
 
 #### Modals
 
-## Surface
+## 5. Surface Plane
 
 ### Imagery
 
@@ -458,6 +460,27 @@ While considering the colours which would evoke the desired mood, other consider
 ---
 
 ### Typography
+
+![Surface: Typography - Variable fonts](../../media/images/surface_typography.png)
+
+The combination of Roboto Flex and Caveat variant fonts in a journal app provides a balances between readability, customisation, elegance and personalisation. It allows for flexibility in typography, while maintaining consistency and enhancing the overall user experience.
+
+References:
+- [Responsive Web Typography v2 with Jason Pamental](https://frontendmasters.com/courses/responsive-typography-v2/)
+- [Font Face Observer](https://fontfaceobserver.com/)
+- [Google Fonts](https://fonts.google.com/)
+- [Adobe Fonts](https://fonts.adobe.com)
+- [Website Style Guide Resources](http://styleguides.io/)
+- [Axis Praxis](https://www.axis-praxis.org/specimens/__DEFAULT__)
+- [Variable Fonts](https://v-fonts.com/)
+- [Microsoft Edge Demos - Variable Fonts](https://googlefonts.github.io/microsoft-edge-variable-fonts-demo/)
+- [Variable Fonts 101: How to get started with variable fonts](https://www.monotype.com/resources/expertise/variable-fonts-101)
+- [FF Meta Variable Font Demo](https://codepen.io/jpamental/pen/MGEPEL)
+- [Getting started with Variable fonts on the web - Kevin Powell](https://www.youtube.com/watch?v=0fVymQ7SZw0)
+- [Interactive animation with variable fonts](https://fonts.google.com/knowledge/using_variable_fonts_on_the_web/interactive_animations_with_variable_fonts)
+- [Flexible typography with CSS locks](https://blog.typekit.com/2016/08/17/flexible-typography-with-css-locks/)
+- [The evolution of typography with variable fonts](https://www.monotype.com/resources/articles/the-evolution-of-typography-with-variable-fonts)
+- [Wakamai Fondue](https://wakamaifondue.com/beta/)
 
 ---
 

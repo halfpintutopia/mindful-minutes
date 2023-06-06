@@ -77,147 +77,145 @@ For further details of the design process, please see:
 
 For the diagram on [LucidChart](https://lucid.app), click [here](https://lucid.app/documents/view/eceb8ec6-75f3-4138-9efa-b05138d3aad4)
 
-```sql
-CREATE TABLE "User" (
-  "ID" PK,
-  "First Name" string,
-  "Last Name" string,
-  "Email" string,
-  "Password" string,
-  "Created on" datetime,
-  "Updated on" datetime
-);
 
-CREATE TABLE "Optimise" (
-  "ID" PK,
-  "User" FK,
-  "Content" string,
-  "Created on" datetime,
-  "Updated on" datetime,
-  CONSTRAINT "FK_Optimise.User"
-    FOREIGN KEY ("User")
-      REFERENCES "User"("ID")
-);
+<details>
+  <summary>Entity Relationship in PostgreSQL</summary>
 
-CREATE TABLE "Notes" (
-  "ID" PK,
-  "User" FK,
-  "Content" string,
-  "Created on" datetime,
-  "Updated on" datetime,
-  CONSTRAINT "FK_Notes.User"
-    FOREIGN KEY ("User")
-      REFERENCES "User"("ID")
-);
+  ```sql
+  CREATE TABLE "user" (
+    "id" PK,
+    "first_name" string,
+    "last_name" string,
+    "email" string,
+    "password" string,
+    "created_on" datetime,
+    "updated_on" datetime
+  );
 
-CREATE TABLE "Thankfful" (
-  "ID" PK,
-  "User" FK,
-  "Content" string,
-  "Created on" datetime,
-  "Updated on" datetime,
-  CONSTRAINT "FK_Thankfful.User"
-    FOREIGN KEY ("User")
-      REFERENCES "User"("ID")
-);
+  CREATE TABLE "optimise" (
+    "id" PK,
+    "user" FK,
+    "content" string,
+    "created_on" datetime,
+    "updated_on" datetime,
+    CONSTRAINT "FK_optimise.user"
+      FOREIGN KEY ("user")
+        REFERENCES "user"("id")
+  );
 
-CREATE TABLE "Settings" (
-  "ID" PK,
-  "User" FK,
-  "Verified" boolean,
-  "Start Week Day" string,
-  "Morning Check-in" time,
-  "Evening Check-in" time,
-  "Created on" datetime,
-  "Updated on" datetime,
-  CONSTRAINT "FK_Settings.User"
-    FOREIGN KEY ("User")
-      REFERENCES "User"("ID")
-);
+  CREATE TABLE "notes" (
+    "id" PK,
+    "user" FK,
+    "content" string,
+    "created_on" datetime,
+    "updated_on" datetime,
+    CONSTRAINT "FK_notes.user"
+      FOREIGN KEY ("user")
+        REFERENCES "user"("id")
+  );
 
-CREATE TABLE "Targets" (
-  "ID" PK,
-  "User" FK,
-  "Title" string,
-  "Order" integer,
-  "Created on" datetime,
-  "Updated on" dateime,
-  CONSTRAINT "FK_Targets.User"
-    FOREIGN KEY ("User")
-      REFERENCES "User"("ID")
-);
+  CREATE TABLE "thankful" (
+    "id" PK,
+    "user" FK,
+    "content" string,
+    "created_on" datetime,
+    "updated_on" datetime,
+    CONSTRAINT "FK_thankful.user"
+      FOREIGN KEY ("user")
+        REFERENCES "user"("id")
+  );
 
-CREATE TABLE "Sub-Targets" (
-  "ID" PK,
-  "Target" FK,
-  "Content" string,
-  "Created on" datetime,
-  "Updated on" datetime,
-  CONSTRAINT "FK_Sub-Targets.Target"
-    FOREIGN KEY ("Target")
-      REFERENCES "Targets"("ID")
-);
+  CREATE TABLE "settings" (
+    "id" PK,
+    "user" FK,
+    "verified" boolean,
+    "start_week_day" string,
+    "morning_check_in" time,
+    "evening_check_in" time,
+    "created_on" datetime,
+    "updated_on" datetime
+  );
 
-CREATE TABLE "Wins" (
-  "ID" PK,
-  "User" FK,
-  "Content" string,
-  "Created on" datetime,
-  "Updated on" datetime,
-  CONSTRAINT "FK_Wins.User"
-    FOREIGN KEY ("User")
-      REFERENCES "User"("ID")
-);
+  CREATE TABLE "targets" (
+    "id" PK,
+    "user" FK,
+    "title" string,
+    "order" integer,
+    "created_on" datetime,
+    "updated_on" datetime,
+    CONSTRAINT "FK_targets.user"
+      FOREIGN KEY ("user")
+        REFERENCES "user"("id")
+  );
 
-CREATE TABLE "Ideas" (
-  "ID" PK,
-  "User" FK,
-  "Content" string,
-  "Created on" datetime,
-  "Updated on" datetime,
-  CONSTRAINT "FK_Ideas.User"
-    FOREIGN KEY ("User")
-      REFERENCES "User"("ID")
-);
+  CREATE TABLE "sub_targets" (
+    "id" PK,
+    "target" FK,
+    "content" string,
+    "created_on" datetime,
+    "updated_on" datetime,
+    CONSTRAINT "FK_sub_targets.target"
+      FOREIGN KEY ("target")
+        REFERENCES "targets"("id")
+  );
 
-CREATE TABLE "Learnt" (
-  "ID" PK,
-  "User" FK,
-  "Content" string,
-  "Created on" datetime,
-  "Updated on" datetime,
-  CONSTRAINT "FK_Learnt.User"
-    FOREIGN KEY ("User")
-      REFERENCES "User"("ID")
-);
+  CREATE TABLE "wins" (
+    "id" PK,
+    "user" FK,
+    "content" string,
+    "created_on" datetime,
+    "updated_on" datetime,
+    CONSTRAINT "FK_wins.user"
+      FOREIGN KEY ("user")
+        REFERENCES "User"("id")
+  );
 
-CREATE TABLE "Appointment Diary" (
-  "ID" PK,
-  "User" FK,
-  "Title" string,
-  "Date" datetime,
-  "From" datetime,
-  "Until" datetime,
-  "Created on" datetime,
-  "Updated on" dateime,
-  CONSTRAINT "FK_Appointment Diary.User"
-    FOREIGN KEY ("User")
-      REFERENCES "User"("ID")
-);
+  CREATE TABLE "ideas" (
+    "id" PK,
+    "user" FK,
+    "content" string,
+    "created_on" datetime,
+    "updated_on" datetime,
+    CONSTRAINT "FK_ideas.user"
+      FOREIGN KEY ("user")
+        REFERENCES "user"("id")
+  );
 
-CREATE TABLE "Mood" (
-  "ID" PK,
-  "User" FK,
-  "Emotion" string,
-  "Created on" datetime,
-  "Updated on" datetime,
-  CONSTRAINT "FK_Mood.User"
-    FOREIGN KEY ("User")
-      REFERENCES "User"("ID")
-);
+  CREATE TABLE "learnt" (
+    "id" PK,
+    "user" FK,
+    "content" string,
+    "created_on" datetime,
+    "updated_on" datetime,
+    CONSTRAINT "FK_learnt.user"
+      FOREIGN KEY ("user")
+        REFERENCES "user"("id")
+  );
+
+  CREATE TABLE "appointment_diary" (
+    "id" PK,
+    "user" FK,
+    "title" string,
+    "date" date,
+    "from" time,
+    "until" time,
+    "created_on" datetime,
+    "updated_on" datetime,
+    CONSTRAINT "FK_appointment_diary.user"
+      FOREIGN KEY ("user")
+        REFERENCES "user"("id")
+  );
 
 
-```
+  CREATE TABLE "mood" (
+    "id" PK,
+    "user" FK,
+    "emotion" string,
+    "created_on" datetime,
+    "updated_on" datetime
+  );
+  ```
+</details>
 
 ## Testing 
 

@@ -24,6 +24,7 @@
     - [My profile page](#my-profile-page)
     - [Contact page](#contact-page)
     - [Modals](#modals)
+  - [Navigational Map](#navigational-map)
 - [5. Surface Plane](#5-surface-plane)
   - [Imagery](#imagery)
   - [Colour Palette](#colour-palette)
@@ -409,6 +410,10 @@ The Repository is the main component in this Information Architecture. The User 
 ---
 
 #### Modals
+
+### Navigational Map
+
+![Skeleton: Navigational Map](../../media/images/skeleton_navigational-map.png)
 
 ## 5. Surface Plane
 

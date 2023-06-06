@@ -23,7 +23,12 @@
 
 ![Initial questionnaire](../../media/images/design-thinking_initial-questionnaire.png)
 
-![Results from initial questionnaire]()
+<details>
+  <summary>Results from initial questionnaire</summary>
+
+  ![Results from initial questionnaire](../../media/images/design-thinking_initial-questionnaire-results.png)
+
+</details>
 
 ## 5Ws
 
@@ -99,10 +104,27 @@ The **How-Now-Wow** diagram provide a range of ideas for creating an app that ad
 
 ### Reflection & Iteration Ideas
 
-_Based on the feedback, how would I iterate on one (or both) concepts?_
+<details>
+  <summary>Results from design feedback questionnaire</summary>
 
-I would like to iterated on Concept B.
+  ![Results from design feedback questionnaire](../../media/images/design-thinking_design-feedback-questionnaire-results.png)
 
-In the new iteration:
-- Fact 1
+  Overall, the participant had a positive reaction to the concept of the app, appreciating the timer feature and the ability to mark tasks as completed. They provided valuable feed on including a "do not disturb" button, adding a pending tasks section and incorporating a timer for tasks that require focus. These suggestions can be considered for improving the concept and enhancing the user experience of the app. 
+
+  Note:
+
+  This feedback report is based on the input and feedback provided by a single participant. As there is only one participant, it was important to consider gathering feedback from a larger and diverse group of participants to obtain a more comprehensive and representative understanding fo user perspective and preferences.
+
+</details>
+
+Due to requiring further data, I asked to present the questionnaire in one of the weekly cohort stand-up meetings, where the following were present:
+- Rebecca Tracey-Timoney
+- Tomislav Dukez
+- Hope Tracy Njoroge
+
+![Design Thinking: Design Feedback Group Chat](../../media/images/design-thinking_feedback-reflection.png)
+
+![Design Thinking: Iteration Ideas](../../media/images/design-thinking_iteration-ideas.png)
+
+Based on the feedback received during the stand-up meeting, I (the design team) should consider integrating the best elements from both concepts to create a well-rounded solution. The participants' positive reception of the mobile-first design, emphasis on CRUD functionality and suggestions for additional features provide valuable insights for further refining the design and improving user experience.
 

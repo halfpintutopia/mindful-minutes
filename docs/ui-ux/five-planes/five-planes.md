@@ -18,12 +18,9 @@
 - [4. Skeleton Plane](#4-skeleton-plane)
   - [Home page](#home-page)
   - [Features](#features)
-    - [Sign up / Register \& Login / Logout](#sign-up--register--login--logout)
-    - [Morning page](#morning-page)
-    - [Evening page](#evening-page)
+    - [Forms](#forms)
+    - [Morning page (and Evening page)](#morning-page-and-evening-page)
     - [My profile page](#my-profile-page)
-    - [Contact page](#contact-page)
-    - [Modals](#modals)
   - [Navigational Map](#navigational-map)
 - [5. Surface Plane](#5-surface-plane)
   - [Imagery](#imagery)
@@ -377,39 +374,51 @@ The simple User Journey represents the typical flow of actions for the Admin in 
 
 #### Repo Management
 
-The Repository is the main component in this Information Architecture. The User Journey includes login to ensure secure access to the repository functionality for authorised users only. 
+The Repository is the main component in this Information Architecture. The User Journey includes login to ensure secure access to the repository functionality for authorised users only.
 
 ![Structure: Repository User Journey](../../media/images/structure_repo-user-journey.png)
 
 ## 4. Skeleton Plane
 
+The Skeleton Plan wireframes serve as the foundational blueprint for the visual layout and structure of the web application. It focuses on defining the overall composition of the pages, including the placement of key elements and sections. The wireframes provides a visual representation of the basic skeletal structure of the app's pages, guiding the subsequent design and development processes. It outlines the general arrangement of the header, content sections, and footer ensuring a consistent and user-friendly interface throughout the application.
+
 ### Home page
+
+![Skeleton: Wireframe - Home page](../../media/images/skeleton_wireframe-home.png)
+
+By keeping the home page clean and uncluttered, users can easily grasp the core concept of the app without overwhelming distractions. The about summary section provides a brief description of the app, highlighting its key features and benefits. To enhance user engagement and encourage interaction, each section includes a Call To Action (CTA) button. These CTAs prompt users to sign up for the app.
 
 ---
 
 ### Features
 
-#### Sign up / Register & Login / Logout
+#### Forms
+
+![Skeleton: Wireframe - Form](../../media/images/skeleton_wireframes-forms.png)
+
+Dividing a form into steps can significantly enhance the user experience by providing clarity, reducing cognitive load, maintaining focus, improving error handling and increasing user engagement. Clear progress indicators so users can easily understand their progress and know how much they need to complete.
+
+Types of forms:
+- Sign up
+- Login
+- Contact form
+  - Using a contact form rather than an email link was the chosen option to provide the user with a seamless experience allowing user to submit inquiries or feedback without leaving the app. Also, this allows users to feel confident in submitting inquiries as it offers privacy and security.
 
 ---
 
-#### Morning page
+#### Morning page (and Evening page)
 
----
+![Skeleton: Wireframe - Morning Page](../../media/images/skeleton_wireframes-morning-page.png)
 
-#### Evening page
+The decision to use collapsible sections on mobile devices while keeping them open and expanded on desktop is based on optimising the user experience for different screen sizes and device capabilities.
 
 ---
 
 #### My profile page
 
----
-
-#### Contact page
+![Skeleton: Wireframe - Account Settings Page](../../media/images/skeleton_wireframes-profile-page.png)
 
 ---
-
-#### Modals
 
 ### Navigational Map
 

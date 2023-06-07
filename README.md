@@ -217,7 +217,7 @@ For the diagram on [LucidChart](https://lucid.app), click [here](https://lucid.a
   ```
 </details>
 
-## Testing 
+## Testing
 
 ### Django Test Driven Development using REST Framework
 
@@ -244,3 +244,5 @@ For further details on testing, click [here](docs/testing/testing.md).
 ### Media
 
 ### Acknowledgements
+
+Thanks to Adam Gilroy for giving me permission to use his LinkedIn Post as inspiration for a Use Case. 

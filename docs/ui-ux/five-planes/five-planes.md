@@ -416,7 +416,11 @@ The decision to use collapsible sections on mobile devices while keeping them op
 
 #### My profile page
 
+The account settings remain simple and using the form structure during the initial onboarding process promotes a user-friendly experience, clear onboarding flow, efficiency in time and effort and reduced decision fatigue. It sets a solid foundation for users to get started quickly and enjoy the core features of the app.
+
 ![Skeleton: Wireframe - Account Settings Page](../../media/images/skeleton_wireframes-profile-page.png)
+
+ The profile page is accessible and editable in this structure after the onboarding process.
 
 ---
 

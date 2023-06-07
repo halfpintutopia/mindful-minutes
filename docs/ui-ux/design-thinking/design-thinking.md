@@ -5,6 +5,7 @@ For the full overview produced in [Figma](https://figma.com), please see [Mindfu
 
 <!-- omit from toc -->
 ## Table of Contents
+- [Inspiration](#inspiration)
 - [Research Report](#research-report)
 - [Initial Questionnaire](#initial-questionnaire)
 - [5Ws](#5ws)
@@ -16,6 +17,12 @@ For the full overview produced in [Figma](https://figma.com), please see [Mindfu
 
 
 [Design Thinking Diagram on FigmaJam](https://www.figma.com/file/7rtFy0K92UjWxtJk84oh6D/Define-and-Ideate?type=whiteboard&node-id=0%3A1&t=U2UiLCfcAOVAZf6c-1)
+
+## Inspiration
+
+![User story: Adam Gilroy LinkedIn Post](../../media/images/adam-gilroy_linkedin-post.png)
+
+After coming across a post shared on LinkedIn, I found inspiration to create a journal app that could provide immense value to individuals like them. The LinkedIn connection expressed their struggle to find a journal that effectively helped them stay organised and track their progress towards their goals. As they embarked on their diploma in Full-Stack Development, they discoverd a journal that became an essential part of their daily routine. Recognising the significance of such a tool in their own life, they expressed a desire to help others benefit from a similar journalling experience. Motivated by their story, I am developing a Django journal app to provide uses with a platform to stay organised, set goals, track achievements and foster a habit of introspection. By offering a user-friendly interface and intuitive features, this app aims to empower individuals to make the most of their daily experiences and achieve personal growth.
 
 ## Research Report
 

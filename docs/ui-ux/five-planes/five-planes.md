@@ -30,39 +30,6 @@
   - [Typography](#typography)
   - [Mock-ups](#mock-ups)
 
-<style>
-  /* Enable smooth scrolling */
-  @media screen and (prefers-reduced-motion: no-preference) {
-    html {
-      scroll-behavior: smooth;
-    }
-  }
-
-  /* Style the button */
-  .top-link {
-    transition:       all .25s ease-in-out;
-    position:         fixed;
-    bottom:           0;
-    right:            0;
-    display:          inline-flex;
-    color:            #000000;
-
-    cursor:           pointer;
-    align-items:      center;
-    justify-content:  center;
-    margin:           0 2em 2em 0;
-    border-radius:    50%;
-    padding:          .25em;
-    width:            1em;
-    height:           1em;
-    background-color: #F8F8F8;
-  }
-
-</style>
-
-<a class="top-link hide" href="#top">↑</a>
-<a name="top"></a>
-
 ## 1. Strategy Plane
 
 ### Target Audience
@@ -540,3 +507,5 @@ References:
 ---
 
 ### Mock-ups
+
+[Back to the top](#5-planes-of-design)

@@ -17,39 +17,6 @@ For the full overview produced in [Figma](https://figma.com), please see [Mindfu
   - [The (Drafted) Concepts](#the-drafted-concepts)
   - [Reflection \& Iteration Ideas](#reflection--iteration-ideas)
 
-<style>
-  /* Enable smooth scrolling */
-  @media screen and (prefers-reduced-motion: no-preference) {
-    html {
-      scroll-behavior: smooth;
-    }
-  }
-
-  /* Style the button */
-  .top-link {
-    transition:       all .25s ease-in-out;
-    position:         fixed;
-    bottom:           0;
-    right:            0;
-    display:          inline-flex;
-    color:            #000000;
-
-    cursor:           pointer;
-    align-items:      center;
-    justify-content:  center;
-    margin:           0 2em 2em 0;
-    border-radius:    50%;
-    padding:          .25em;
-    width:            1em;
-    height:           1em;
-    background-color: #F8F8F8;
-  }
-
-</style>
-
-<a class="top-link hide" href="#top">↑</a>
-<a name="top"></a>
-
 [Design Thinking Diagram on FigmaJam](https://www.figma.com/file/7rtFy0K92UjWxtJk84oh6D/Define-and-Ideate?type=whiteboard&node-id=0%3A1&t=U2UiLCfcAOVAZf6c-1)
 
 ## Inspiration
@@ -173,3 +140,4 @@ Due to requiring further data, I asked to present the questionnaire in one of th
 
 Based on the feedback received during the stand-up meeting, I (the design team) should consider integrating the best elements from both concepts to create a well-rounded solution. The participants' positive reception of the mobile-first design, emphasis on CRUD functionality and suggestions for additional features provide valuable insights for further refining the design and improving user experience.
 
+[Back to the top](#design-thinking)

@@ -25,44 +25,12 @@
   - [Lighthouse](#lighthouse)
   - [Validator Testing](#validator-testing)
 - [Credits](#credits)
+  - [References](#references)
   - [Code Used](#code-used)
   - [References \& Resources](#references--resources)
   - [Content](#content)
   - [Media](#media)
   - [Acknowledgements](#acknowledgements)
-
-<style>
-  /* Enable smooth scrolling */
-  @media screen and (prefers-reduced-motion: no-preference) {
-    html {
-      scroll-behavior: smooth;
-    }
-  }
-
-  /* Style the button */
-  .top-link {
-    transition:       all .25s ease-in-out;
-    position:         fixed;
-    bottom:           0;
-    right:            0;
-    display:          inline-flex;
-    color:            #000000;
-
-    cursor:           pointer;
-    align-items:      center;
-    justify-content:  center;
-    margin:           0 2em 2em 0;
-    border-radius:    50%;
-    padding:          .25em;
-    width:            1em;
-    height:           1em;
-    background-color: #F8F8F8;
-  }
-
-</style>
-
-<a class="top-link hide" href="#top">↑</a>
-<a name="top"></a>
 
 ## Product Information
 
@@ -268,6 +236,9 @@ For further details on testing, click [here](docs/testing/testing.md).
 
 ## Credits
 
+### References
+[Add 'go to top' button on Readme.md](https://github.com/orgs/community/discussions/42712)
+
 ### Code Used
 
 ### References & Resources
@@ -278,4 +249,6 @@ For further details on testing, click [here](docs/testing/testing.md).
 
 ### Acknowledgements
 
-Thanks to Adam Gilroy for giving me permission to use his LinkedIn Post as inspiration for a Use Case. 
+Thanks to Adam Gilroy for giving me permission to use his LinkedIn Post as inspiration for a Use Case.
+
+[Back to the top](#mindful-minutes)

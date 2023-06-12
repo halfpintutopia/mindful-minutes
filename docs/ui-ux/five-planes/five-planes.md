@@ -29,6 +29,11 @@
   - [Colour Palette](#colour-palette)
   - [Typography](#typography)
   - [Mock-ups](#mock-ups)
+    - [Home page](#home-page-1)
+    - [Forms](#forms-1)
+    - [Morning page (and Evening page)](#morning-page-and-evening-page-1)
+    - [Search page](#search-page)
+    - [My profile page](#my-profile-page-1)
 
 ## 1. Strategy Plane
 
@@ -507,5 +512,49 @@ References:
 ---
 
 ### Mock-ups
+
+Basic prototypes created in [Figma](https://figma.com) for: 
+- [Mobile](https://www.figma.com/proto/f32xrjkM9NoxP3CN9klXTi/Mock-ups?type=design&node-id=32-116&scaling=scale-down&page-id=0%3A1&starting-point-node-id=32%3A116&show-proto-sidebar=1)
+
+#### Home page
+
+![Surface: Mock-up - Home page](../../media/images/surface_mock-up_homepage.png)
+
+---
+
+#### Forms
+
+![Surface: Mock-up - Forms](../../media/images/surface_mock-up_forms.png)
+
+---
+
+#### Morning page (and Evening page)
+
+![Surface: Mock-up - Morning page](../../media/images/surface_mock-up_morning-page.png)
+
+---
+
+#### Search page
+
+![Surface: Mock-up - Search](../../media/images/surface_mock-up_search.png)
+
+---
+
+#### My profile page
+
+![Surface: Mock-up - Account Settings](../../media/images/surface_mock-up_account.png)
+
+---
+
+Image References within Mock-ups:
+- [Laptop and notepad by Nick Morrison](https://unsplash.com/photos/FHnnjk1Yj7Y)
+- [White work table with notes, smartphone and laptop by JESHOOTS.COM](https://unsplash.com/photos/pUAM5hPaCRI)
+
+Design Inspiration References:
+- [Click Up](https://clickup.com/)
+- [Pinterest](https://www.pinterest.ch/)
+- [Women Who Code + Codum Buddy Accountability Form](https://www.womenwhocode.typeform.com/)
+  - [Typeform](https://www.typeform.com/)
+- [Motion Recording App by Alan Love on Béhance](https://www.behance.net/gallery/124478219/Sports-Recording-app)
 
 [Back to the top](#5-planes-of-design)

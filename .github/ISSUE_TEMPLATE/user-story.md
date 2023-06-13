@@ -1,7 +1,7 @@
 ---
 name: User Story
 about: Issue for user stories
-title: ''
+title: "<TITLE>"
 labels: user story
 assignees: ''
 
@@ -10,6 +10,7 @@ assignees: ''
 Epic: 
 
 ### Description
+As a **role**, I want to be able to **capability** to **received benefit**
 
 ### Tasks
 - [ ] Task 1

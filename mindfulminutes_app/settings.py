@@ -23,7 +23,7 @@ development = os.environ.get('DEVELOPMENT', False)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -35,7 +35,7 @@ SECRET_KEY = os.environ.get('SECRET', '')
 DEBUG = True
 
 # ALLOWED_HOSTS = ['127.0.0.1', os.getenv('PROJECT_DOMAIN')]
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1', 'mindful-minutes-74de1a27aff9.herokuapp.com' ]
 
 
 # Application definition
@@ -68,7 +68,7 @@ ROOT_URLCONF = 'mindfulminutes_app.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [TEMPLATES_DIR],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

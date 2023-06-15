@@ -81,6 +81,8 @@ pip install gunicorn # Server used to run Django on Heroku
 
 #### Create Heroku App (via the Dashboard)
 
+[heroku _create_app.webm](https://github.com/halfpintutopia/mindful-minutes/assets/30613818/17142ef0-b723-4652-a0a9-53acdbcd5ce9)
+
 1. Login
 2. From the Dashboard, click the "New" button
 3. Choose "Create new app" from drop down menu

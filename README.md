@@ -28,6 +28,9 @@
   - [References](#references)
   - [Code Used](#code-used)
   - [References \& Resources](#references--resources)
+    - [Agile](#agile)
+    - [Deployment](#deployment)
+    - [CI / CD](#ci--cd)
   - [Content](#content)
   - [Media](#media)
   - [Acknowledgements](#acknowledgements)
@@ -242,6 +245,27 @@ For further details on testing, click [here](docs/testing/testing.md).
 ### Code Used
 
 ### References & Resources
+
+
+#### Agile
+
+- [Agile User Story Template Spread Sheet, resource provided by Rebecca Tracey-Timoney](https://docs.google.com/spreadsheets/d/1E87iXrwStqmuy0DatpK8e-pD3ygBqotS91npelTbVVs/edit?usp=sharing)
+- [Project Management on GitHub](https://www.topcoder.com/thrive/articles/project-management-on-github)
+- [Acceptance Criteria for User Stories: Purposes, Formats, Examples, and Best Practices](https://www.altexsoft.com/blog/business/acceptance-criteria-purposes-formats-and-best-practices/)
+- [User stories with examples and a template](https://www.atlassian.com/agile/project-management/user-stories)
+- [Define features and epics, organize your product and portfolio backlogs in Azure Boards](https://learn.microsoft.com/en-us/azure/devops/boards/backlogs/define-features-epics?view=azure-devops&tabs=agile-process)
+- [Chapter 15: Requirements and user stories](https://www.agilebusiness.org/dsdm-project-framework/requirements-and-user-stories.html)
+- [Epics, User Stories, Themes, and Initiatives: The Key Difference and Examples](https://www.altamira.ai/blog/difference-between-epics-vs-user-stories/)
+- [How to Write a Good User Story: with Examples & Templates](https://stormotion.io/blog/how-to-write-a-good-user-story-with-examples-templates/)
+- [Epics vs. User Stories: what’s the difference?](https://www.delibr.com/post/epics-vs-user-stories-whats-the-difference)
+
+#### Deployment
+
+- [How to use Environment Variables in Django](https://codinggear.blog/django-environment-variables/)
+
+#### CI / CD
+
+- [GitHub Actions - Create starter workflows](https://docs.github.com/en/actions/using-workflows/creating-starter-workflows-for-your-organization)
 
 ### Content
 

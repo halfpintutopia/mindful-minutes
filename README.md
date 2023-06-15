@@ -14,6 +14,7 @@
   - [Frameworks, Libraries \& Additional Programs/Software used](#frameworks-libraries--additional-programssoftware-used)
 - [Remote \& Local Deployment](#remote--local-deployment)
   - [Remote Deployment](#remote-deployment)
+    - [Create Heroku App (via the Dashboard)](#create-heroku-app-via-the-dashboard)
   - [Local Deployment](#local-deployment)
   - [Contributing](#contributing)
 - [Data Models](#data-models)
@@ -68,7 +69,24 @@ For further details of the design process, please see:
 
 ## Remote & Local Deployment
 
+[Agile User Story Master on Google Sheets](https://docs.google.com/spreadsheets/d/1AhkEDuU5mDY9n6TMRGyk5BchJ2ijZUxiFlvbauW9HUE/edit?usp=sharing) was created from a template supplied by our Cohort October 2022 Tutor, Rebecca Tracey-Timoney.
+
+```shell
+pip install django
+
+pip install gunicorn # Server used to run Django on Heroku
+```
+
 ### Remote Deployment
+
+#### Create Heroku App (via the Dashboard)
+
+1. Login
+2. From the Dashboard, click the "New" button
+3. Choose "Create new app" from drop down menu
+4. Give the app a unique name, it *must* be unique otherwise Heroku complains
+5. Choose the region appropriate to you
+6. Click the "Create app" button
 
 ### Local Deployment
 

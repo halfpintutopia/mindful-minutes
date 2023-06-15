@@ -82,7 +82,7 @@ pip install gunicorn # Server used to run Django on Heroku
 ### Remote Deployment
 
 Install `python-dotenv` package with `pip install python-dotenv`
-Create a `.env` file at the root of project with the following keys
+Create a `.env` file at the root of the project with the following keys
 
 ```
 SECRET=<YOUR_SECRET_KEY>
@@ -96,34 +96,36 @@ DEVELOPMENT=<SET TO 'True' if in development mode or remove or set to 'False' fo
 
 1. Login
 2. From the Dashboard, click the "New" button
-3. Choose "Create new app" from drop down menu
+3. Choose "Create new app" from the drop-down menu
 4. Give the app a unique name, it *must* be unique otherwise Heroku complains
 5. Choose the region appropriate to you
 6. Click the "Create app" button
 
-#### Create new PostgreSQL Database Instance
+#### Create a new PostgreSQL Database Instance
 
 [elephantsql_database_instance.webm](https://github.com/halfpintutopia/mindful-minutes/assets/30613818/e061fe61-76db-4157-b7cf-c7e720e2783e)
 
 1. Login
-2. Click "Create New Instance" button
-3. Set up plan
+2. Click the "Create New Instance" button
+3. Set up a plan
    - Provide a name
    - Select the _Tiny Turtle (Free)_ plan
    - Add tags if needed
-4. Click "Select Region" button
-   - Choose the data center closest to you
+4. Click the "Select Region" button
+   - Choose the data centre closest to you
 5. Click the "Review" button
 6. Click the "Create instance" button
 7. From the list of instances on your dashboard, click the name of the new instance
-8. Copy the URL from from the Details page and paste this link into your settings.py file in your Django project
+8. Copy the URL from the "Details" page and paste this link into your settings.py file in your Django project
 
 
 #### Set up Heroku Config Vars
 
+[heroku _config_vars.webm](https://github.com/halfpintutopia/mindful-minutes/assets/30613818/d19dd102-eab2-4750-a5ee-0963ad7039be)
+
 1. Login
-2. Go to project and click on the Settings tab
-3. Go the to the "Config Vars" section and add the following variables:
+2. Go to the project and click on the Settings tab
+3. Go to the "Config Vars" section and add the following variables:
    - DATABASE_URL
    - SECRET_KEY
    - PORT

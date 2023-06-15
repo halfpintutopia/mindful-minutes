@@ -16,6 +16,7 @@
   - [Remote Deployment](#remote-deployment)
     - [Create Heroku App (via the Dashboard)](#create-heroku-app-via-the-dashboard)
     - [Create new PostgreSQL Database Instance](#create-new-postgresql-database-instance)
+    - [Set up Heroku Config Vars](#set-up-heroku-config-vars)
   - [Local Deployment](#local-deployment)
   - [Contributing](#contributing)
 - [Data Models](#data-models)
@@ -107,15 +108,25 @@ DEVELOPMENT=<SET TO 'True' if in development mode or remove or set to 'False' fo
 1. Login
 2. Click "Create New Instance" button
 3. Set up plan
-   1. Provide a name
-   2. Select the _Tiny Turtle (Free)_ plan
-   3. Add tags if needed
+   - Provide a name
+   - Select the _Tiny Turtle (Free)_ plan
+   - Add tags if needed
 4. Click "Select Region" button
-   1. Choose the data center closest to you
+   - Choose the data center closest to you
 5. Click the "Review" button
 6. Click the "Create instance" button
 7. From the list of instances on your dashboard, click the name of the new instance
 8. Copy the URL from from the Details page and paste this link into your settings.py file in your Django project
+
+
+#### Set up Heroku Config Vars
+
+1. Login
+2. Go to project and click on the Settings tab
+3. Go the to the "Config Vars" section and add the following variables:
+   - DATABASE_URL
+   - SECRET_KEY
+   - PORT
 
 
 

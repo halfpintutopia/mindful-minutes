@@ -80,6 +80,15 @@ pip install gunicorn # Server used to run Django on Heroku
 
 ### Remote Deployment
 
+Install `python-dotenv` package with `pip install python-dotenv`
+Create a `.env` file at the root of project with the following keys
+
+```
+SECRET=<YOUR_SECRET_KEY>
+DATABASE_URL=<ELEPHANTSQL_URL>
+DEVELOPMENT=<SET TO 'True' if in development mode or remove or set to 'False' for production>
+```
+
 #### Create Heroku App (via the Dashboard)
 
 [heroku _create_app.webm](https://github.com/halfpintutopia/mindful-minutes/assets/30613818/17142ef0-b723-4652-a0a9-53acdbcd5ce9)
@@ -107,6 +116,8 @@ pip install gunicorn # Server used to run Django on Heroku
 6. Click the "Create instance" button
 7. From the list of instances on your dashboard, click the name of the new instance
 8. Copy the URL from from the Details page and paste this link into your settings.py file in your Django project
+
+
 
 ### Local Deployment
 

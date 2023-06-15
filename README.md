@@ -93,7 +93,7 @@ pip install gunicorn # Server used to run Django on Heroku
 
 #### Create new PostgreSQL Database Instance
 
-[heroku _create_app.webm](https://github.com/halfpintutopia/mindful-minutes/assets/30613818/a5b700b0-ca1a-4eb8-9180-9dd0a854e6b1)
+[elephantsql_database_instance.webm](https://github.com/halfpintutopia/mindful-minutes/assets/30613818/e061fe61-76db-4157-b7cf-c7e720e2783e)
 
 1. Login
 2. Click "Create New Instance" button

@@ -15,7 +15,7 @@ from pathlib import Path
 import dj_database_url
 
 
-if os.path.isfile('.env'):
+if os.path.exists('.env'):
     from dotenv import load_dotenv
     load_dotenv()
 
@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'cloudinary_storage',
     'django.contrib.staticfiles',
-    'cloudinary_'
+    'cloudinary',
     'mindfulminutes',
 
 ]
@@ -134,7 +134,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')

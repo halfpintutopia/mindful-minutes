@@ -13,11 +13,10 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 from pathlib import Path
 import dj_database_url
-from dotenv import load_dotenv
-load_dotenv()
 
-# if os.path.exists('.env'):
-    
+if os.path.exists('.env'):
+    from dotenv import load_dotenv
+    load_dotenv()
 
 development = os.environ.get('DEVELOPMENT', False)
 

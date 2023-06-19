@@ -12,10 +12,8 @@ class CustomUser(AbstractUser):
     """
     username = None
     email = models.EmailField(_("Email"), unique=True)
-    first_name = models.CharField(max_length=100, blank=False)
-    last_name = models.CharField(max_length=100, blank=False)
     is_active = models.BooleanField(default=True)
-    is_staff = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
     data_joined = models.DateTimeField(default=timezone.now)
 
     USERNAME_FIELD = "email"

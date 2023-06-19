@@ -1,54 +1,27 @@
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 
-class CustomUserManager(BaseUserManager):
-    def create_user(self, email, password=None, **extra_fields):
-        if not email:
-            raise ValueError("The Email field must be set")
-        email = self.normalize_email(email)
-        user = self.model(email=email, **extra_fields)
-        user.set_password(password)
-        user.save()
-        return user
+from .managers import CustomUserManager
 
-    def create_superuser(self, email, password=None, **extra_fields):
-        extra_fields.setdefault('is_staff', True)
-        extra_fields.setdefault('is_superuser', True)
-        return self.create_user(email, password, **extra_fields)
 
-class CustomUser(AbstractBaseUser, PermissionsMixin):
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
-    email = models.EmailField(unique=True)
-    password = models.CharField(max_length=100)
+class CustomUser(AbstractUser):
+    """
+    Custom user model where email is the the unique identifier instead of username
+    """
+    username = None
+    email = models.EmailField(_("Email"), unique=True)
+    first_name = models.CharField(max_length=100, blank=False)
+    last_name = models.CharField(max_length=100, blank=False)
     is_active = models.BooleanField(default=True)
-    is_staff = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True)
+    is_staff = models.BooleanField(default=True)
+    data_joined = models.DateTimeField(default=timezone.now)
 
-    objects = CustomUserManager()
-
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ['first_name', 'last_name']
 
-        # Add a unique related_name for groups field
-    groups = models.ManyToManyField(
-        'auth.Group',
-        verbose_name='groups',
-        blank=True,
-        help_text='The groups this user belongs to.',
-        related_name='customuser_set',
-        related_query_name='customuser'
-    )
-
-    # Add a unique related_name for user_permissions field
-    user_permissions = models.ManyToManyField(
-        'auth.Permission',
-        verbose_name='user permissions',
-        blank=True,
-        help_text='Specific permissions for this user.',
-        related_name='customuser_set',
-        related_query_name='customuser'
-    )
+    objects = CustomUserManager()
 
     def __str__(self):
         return self.email

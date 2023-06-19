@@ -13,9 +13,11 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 from pathlib import Path
 import dj_database_url
+from dotenv import load_dotenv, find_dotenv
 
-if os.path.exists('.env'):
-    from dotenv import load_dotenv
+ENV_FILE = find_dotenv()
+
+if ENV_FILE:
     load_dotenv()
 
 development = os.environ.get('DEVELOPMENT', False)
@@ -34,7 +36,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', '')
 DEBUG = True
 
 # ALLOWED_HOSTS = ['127.0.0.1', os.getenv('PROJECT_DOMAIN')]
-ALLOWED_HOSTS = ['127.0.0.1', 'mindful-minutes-74de1a27aff9.herokuapp.com' ]
+ALLOWED_HOSTS = ['127.0.0.1', 'mindful-minutes-74de1a27aff9.herokuapp.com']
 
 
 # Application definition
@@ -48,6 +50,7 @@ INSTALLED_APPS = [
     'cloudinary_storage',
     'django.contrib.staticfiles',
     'cloudinary',
+    'rest_framework',
     'mindfulminutes',
 
 ]
@@ -145,3 +148,5 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'mindfulminutes.CustomUser'

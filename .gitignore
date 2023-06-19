@@ -12,3 +12,4 @@ env
 .env
 *.sqlite3
 .vscode
+venv

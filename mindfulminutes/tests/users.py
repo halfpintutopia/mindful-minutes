@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 from faker import Factory
-from .factories import UserFactory, SuperUserFactory
+from ..factories.users import UserFactory, SuperUserFactory
 
 User = get_user_model()
 faker = Factory.create()

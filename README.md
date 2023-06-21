@@ -15,7 +15,7 @@
 - [Remote \& Local Deployment](#remote--local-deployment)
   - [Remote Deployment](#remote-deployment)
     - [Create Heroku App (via the Dashboard)](#create-heroku-app-via-the-dashboard)
-    - [Create new PostgreSQL Database Instance](#create-new-postgresql-database-instance)
+    - [Create a new PostgreSQL Database Instance](#create-a-new-postgresql-database-instance)
     - [Set up Heroku Config Vars](#set-up-heroku-config-vars)
   - [Local Deployment](#local-deployment)
   - [Contributing](#contributing)
@@ -34,6 +34,7 @@
     - [Agile](#agile)
     - [Deployment](#deployment)
     - [CI / CD](#ci--cd)
+    - [Django Testing](#django-testing)
   - [Content](#content)
   - [Media](#media)
   - [Acknowledgements](#acknowledgements)
@@ -129,7 +130,9 @@ DEVELOPMENT=<SET TO 'True' if in development mode or remove or set to 'False' fo
    - DATABASE_URL
    - SECRET_KEY
    - PORT
+   - CLOUDINARY_URL
 
+DISABLE_COLLECT_STATIC 1
 
 
 ### Local Deployment
@@ -328,6 +331,11 @@ For further details on testing, click [here](docs/testing/testing.md).
 #### CI / CD
 
 - [GitHub Actions - Create starter workflows](https://docs.github.com/en/actions/using-workflows/creating-starter-workflows-for-your-organization)
+
+#### Django Testing
+
+- [Creating a Custom User Model in Django](https://testdriven.io/blog/django-custom-user-model/)
+- [Testing Models with Django using Faker and Factory Boy](https://medium.com/analytics-vidhya/factoryboy-usage-cd0398fd11d2)
 
 ### Content
 

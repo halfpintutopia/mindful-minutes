@@ -1,5 +1,5 @@
 """
-WSGI config for mindfulminutes_app project.
+WSGI config for mindfulminutes project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mindfulminutes_app.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mindfulminutes.settings')
 
 application = get_wsgi_application()

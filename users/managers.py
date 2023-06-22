@@ -25,7 +25,7 @@ class CustomUserManager(BaseUserManager):
             raise ValueError(_("The last name is required"))
 
         email = self.normalize_email(email)
-        user = self.model(email=email, **extra_fields)
+        user = self.model(email=email, **extra_fields) # creates a new instance in memory and requires explicit save()
         user.set_password(password)
         user.save()
         return user

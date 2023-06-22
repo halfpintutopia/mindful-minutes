@@ -53,6 +53,12 @@ class UserSettings(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        """
+        Meta options for the UserSettings model
+        """
+        verbose_name_plural = "Users' Settings"
+
 
 class AppointmentEntry(models.Model):
     """
@@ -74,6 +80,7 @@ class AppointmentEntry(models.Model):
         """_
         Meta options for the AppointmentEntry model
         """
+        verbose_name_plural = "Appointment Entries"
         ordering = ["-date", "-time_from"]
 
     def clean(self):

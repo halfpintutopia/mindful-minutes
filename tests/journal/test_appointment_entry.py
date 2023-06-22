@@ -3,6 +3,7 @@ from datetime import time
 import pytest
 
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
 
 from journal.models import AppointmentEntry
 
@@ -50,3 +51,20 @@ def test_create_appointment_entry(user):
     assert appointment_entries[0].time_until == time(11, 0)
     assert isinstance(appointment_entries[0].time_until,
                       time) and appointment_entries[0].time_until is not None
+
+
+@pytest.mark.django_db
+def test_create_appointment_entry_from_until():
+    """
+    GIVEN an appointment entry model
+    WHEN creating an appointment entry
+    THEN a ValidationError is raised
+    """
+    with pytest.raises(ValidationError):
+        AppointmentEntry.objects.create(
+            user=user,
+            title="Dentist",
+            date="2023-07-06",
+            time_from=time(10, 0),
+            time_until=time(9, 0)
+        )

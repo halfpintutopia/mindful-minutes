@@ -1,4 +1,4 @@
-from datetime import time
+from datetime import time, date
 
 import pytest
 
@@ -42,9 +42,9 @@ def test_create_appointment_entry(user):
     assert len(appointment_entries) == 1
     assert appointment_entries[0].user == user
     assert appointment_entries[0].title == "Dentist"
-    assert appointment_entries[0].date == "2023-07-06"
+    assert appointment_entries[0].date == date(2023, 7, 6)
     assert isinstance(
-        appointment_entries[0].date, str) and appointment_entries[0].date is not None
+        appointment_entries[0].date, date) and appointment_entries[0].date is not None
     assert appointment_entries[0].time_from == time(10, 0)
     assert isinstance(appointment_entries[0].time_from,
                       time) and appointment_entries[0].time_from is not None
@@ -54,17 +54,18 @@ def test_create_appointment_entry(user):
 
 
 @pytest.mark.django_db
-def test_create_appointment_entry_from_until():
+def test_create_appointment_entry_from_until(user):
     """
     GIVEN an appointment entry model
     WHEN creating an appointment entry
     THEN a ValidationError is raised
     """
     with pytest.raises(ValidationError):
-        AppointmentEntry.objects.create(
+        appointment_entry = AppointmentEntry.objects.create(
             user=user,
             title="Dentist",
             date="2023-07-06",
             time_from=time(10, 0),
             time_until=time(9, 0)
         )
+        appointment_entry.clean()

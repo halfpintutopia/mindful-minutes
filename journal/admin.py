@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
 from .forms import CustomUserCreationForm, CustomUserChangeForm
-from .models import CustomUser
+from .models import CustomUser, UserSettings
 
 
 class CustomUserAdmin(UserAdmin):
@@ -42,6 +42,31 @@ class CustomUserAdmin(UserAdmin):
     )
     search_fields = ["email", "first_name", "last_name"]
     ordering = ("email",)
+
+
+@admin.register(UserSettings)
+class UserSettingsAdmin(admin.ModelAdmin):
+    """
+    Admin configuration for the UserSettings model
+
+    The class defines the display and behaviour of the UserSettings model
+    """
+    readonly_fields = (
+        "created_date",
+        "updated_date"
+    )
+    list_display = (
+        "user",
+        "start_week_day",
+        "morning_check_in",
+        "evening_check_in"
+    )
+    fields = (
+        "user",
+        "start_week_day",
+        "morning_check_in",
+        "evening_check_in"
+    )
 
 
 admin.site.register(CustomUser, CustomUserAdmin)

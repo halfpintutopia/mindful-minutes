@@ -49,3 +49,4 @@ def test_create_user_settings(user):
     assert user_settings_all[0].evening_check_in == time(20, 30)
     assert isinstance(user_settings_all[0].evening_check_in,
                       time) and user_settings_all[0].evening_check_in is not None
+    assert user_settings_all[0].user == user

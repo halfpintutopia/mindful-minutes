@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import UserSettings, AppointmentEntry, Target
+from .models import UserSettings, AppointmentEntry, Target, Note
 
 
 class UserSettingsSerializer(serializers.ModelSerializer):
@@ -54,5 +54,21 @@ class TargetSerializer(serializers.ModelSerializer):
         Defines the model and fields to be serialized
         """
         model = Target
+        fields = "__all__"
+        read_only_fields = ("id", "user", "created_date", "updated_date",)
+
+class NoteSerializer(serializers.ModelSerializer):
+    """
+    Serializer for Note model to convert it to JSON representation
+    """
+    user = serializers.PrimaryKeyRelatedField(read_only=True)
+
+    class Meta:
+        """
+        Metadata class for NoteSerializer
+
+        Defines the model and fields to be serialized
+        """
+        model = Note
         fields = "__all__"
         read_only_fields = ("id", "user", "created_date", "updated_date",)

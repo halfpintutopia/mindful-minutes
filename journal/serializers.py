@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import UserSettings
+from .models import UserSettings, AppointmentEntry
 
 
 class UserSettingsSerializer(serializers.ModelSerializer):
@@ -21,4 +21,21 @@ class UserSettingsSerializer(serializers.ModelSerializer):
         """
         model = UserSettings
         fields = '__all__'
+        read_only_fields = ("id", "user", "created_date", "updated_date",)
+
+
+class AppointmentEntrySerializer(serializers.ModelSerializer):
+    """
+    Serializer for AppointmentEntry model to convert it to JSON representation
+    """
+    user = serializers.PrimaryKeyRelatedField(read_only=True)
+
+    class Meta:
+        """
+        Metadata class for AppointmentEntrySerializer
+
+        Defines the model and fields to be serialized
+        """
+        model = AppointmentEntry
+        fields = "__all__"
         read_only_fields = ("id", "user", "created_date", "updated_date",)

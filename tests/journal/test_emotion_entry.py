@@ -31,12 +31,12 @@ def test_create_emotion_entry(user):
     """
     emotion_entry = EmotionEntry.objects.create(
         user=user,
-        emotion="happy"
+        emotion="okay"
     )
     emotion_entry.save()
     emotion_entries = EmotionEntry.objects.all()
     assert len(emotion_entries) == 1
     assert emotion_entries[0].user == user
-    assert emotion_entries[0].emotion == "happy"
+    assert emotion_entries[0].emotion == "okay"
     assert isinstance(
         emotion_entries[0].emotion, str) and emotion_entries[0].emotion is not None

@@ -7,14 +7,17 @@ def test_valid_emotion_entry_serializer():
     WHEN the data us passed to the serializer
     THEN the serializer should be valid
     """
-    valid_serializer_data = {
-        "emotion": "happy"
-    }
-    serializer = EmotionEntrySerializer(data=valid_serializer_data)
-    assert serializer.is_valid()
-    assert serializer.validated_data == valid_serializer_data
-    assert serializer.data == valid_serializer_data
-    assert not serializer.errors
+    valid_emotions = ["awful", "terrible", "bad",
+                      "okay", "good", "great", "excellent"]
+
+    for emotion in valid_emotions:
+        valid_serializer_data = {"emotion": emotion}
+        serializer = EmotionEntrySerializer(data=valid_serializer_data)
+        print(serializer)
+        assert serializer.is_valid()
+        assert serializer.validated_data == valid_serializer_data
+        assert serializer.data == valid_serializer_data
+        assert not serializer.errors
 
 
 def test_invalid_missing_content_emotion_entry_serializer():

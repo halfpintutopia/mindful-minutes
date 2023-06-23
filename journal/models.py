@@ -194,7 +194,7 @@ class WinEntry(models.Model):
         on_delete=models.CASCADE,
         related_name="win_entries"
     )
-    content = models.TextField(_("Win Entry"))
+    content = models.CharField(_("Win Entry"), max_length=255)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 
@@ -203,4 +203,25 @@ class WinEntry(models.Model):
         Meta options for the Win model
         """
         verbose_name_plural = "Win Entries"
+        ordering = ["created_on"]
+
+
+class IdeasEntry(models.Model):
+    """
+    IdeasEntry model to allow users to create ideas entries
+    """
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="ideas_entries"
+    )
+    content = models.TextField(_("Ideas Entry"))
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_on = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        """
+        Meta options for the IdeaEntry model
+        """
+        verbose_name_plural = "Ideas Entries"
         ordering = ["created_on"]

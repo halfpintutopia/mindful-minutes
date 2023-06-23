@@ -107,7 +107,7 @@ class Target(models.Model):
         related_name="targets"
     )
     title = models.CharField(_("Target"), max_length=255)
-    order = models.IntegerField()
+    order = models.IntegerField(null=True, blank=True)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 

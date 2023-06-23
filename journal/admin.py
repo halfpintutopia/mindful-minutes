@@ -4,7 +4,7 @@ from django.contrib.auth.admin import UserAdmin
 from .forms import CustomUserCreationForm, CustomUserChangeForm
 from .models import CustomUser, UserSettings, AppointmentEntry, \
     Target, Note, KnowledgeEntry, GratitudeEntry, WinEntry, IdeasEntry, \
-    ImprovementEntry
+    ImprovementEntry, EmotionEntry
 
 
 class CustomUserAdmin(UserAdmin):
@@ -252,6 +252,28 @@ class ImprovementEntryAdmin(admin.ModelAdmin):
         "user", "content", "created_on", "updated_on",
     )
     search_fields = ["user", "content", "created_on"]
+    ordering = ("created_on",)
+
+
+@admin.register(EmotionEntry)
+class EmotionEntryAdmin(admin.ModelAdmin):
+    """
+    Admin configuration for the EmotionEntry model
+
+    The class defines the display and behaviour fo the EmotionEntry model
+    """
+    readonly_fields = (
+        "created_on",
+        "updated_on"
+    )
+    list_display = (
+        "user",
+        "emotion"
+    )
+    fields = (
+        "user", "emotion", "created_on", "updated_on",
+    )
+    search_fields = ["user", "emotion", "created_on"]
     ordering = ("created_on",)
 
 

@@ -286,6 +286,40 @@ For the diagram on [LucidChart](https://lucid.app), click [here](https://lucid.a
   ```
 </details>
 
+Considered creating a base model or mixin as models most of the models contained the same fields e.g.
+
+```python
+# Creating the base model to be inherited by models
+class BaseModel(models.Model):
+  field_1 = models.CharField(max_length=50)
+  field_2 = models.IntegerField()
+  field_3 = models.TimeField()
+
+  class Meta:
+    abstract = True
+
+# implementation of BaseModel by inheritance as follows:
+class ModelOne(BaseModel):
+  additional_field_1 = models.TextField()
+
+
+# Creating the mixin to be reused by models
+class MixinModel(models.Model):
+  field_1 = models.CharField(max_length=50)
+  field_2 = models.IntegerField()
+  field_3 = models.TimeField()
+
+  class Meta:
+    abstract = True
+
+# implementation of reusing the MixinModel
+class ModelTwo(MixinModel):
+  additional_field_1 = models.TextField()
+```
+
+As the models had the exactly the same fields with not additional fields or behaviours, I chose to keep the models separate. Having individual models allows for clarity and simplicity as well as making it more maintainable, as then the codebase is more flexible to evolve independently.
+
+
 ## Testing
 
 ### Django Test Driven Development using REST Framework
@@ -336,6 +370,7 @@ For further details on testing, click [here](docs/testing/testing.md).
 
 - [Creating a Custom User Model in Django](https://testdriven.io/blog/django-custom-user-model/)
 - [Testing Models with Django using Faker and Factory Boy](https://medium.com/analytics-vidhya/factoryboy-usage-cd0398fd11d2)
+- [Pytest for Beginners](https://testdriven.io/blog/pytest-for-beginners/)
 
 ### Content
 

@@ -95,3 +95,28 @@ class AppointmentEntry(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Target(models.Model):
+    """
+    Target model to allow users to create targets
+    """
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="targets"
+    )
+    title = models.CharField(_("Target"), max_length=255)
+    order = models.IntegerField()
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_on = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        """
+        Meta options for the Target model
+        """
+        verbose_name_plural = "Targets"
+        ordering = ["created_on"]
+
+    def __str__(self):
+        return self.title

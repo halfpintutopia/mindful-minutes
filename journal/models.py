@@ -225,3 +225,24 @@ class IdeasEntry(models.Model):
         """
         verbose_name_plural = "Ideas Entries"
         ordering = ["created_on"]
+
+
+class ImprovementEntry(models.Model):
+    """
+    ImprovementEntry model to allow users to create improvement entries
+    """
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="improvement_entries"
+    )
+    content = models.TextField(_("Improvement Entry"))
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_on = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        """
+        Meta options for the ImprovementEntry model
+        """
+        verbose_name_plural = "Improvement Entries"
+        ordering = ["created_on"]

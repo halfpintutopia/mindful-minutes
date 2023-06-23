@@ -12,8 +12,8 @@ def test_valid_target_serializer():
         "order": 1,
     }
     serializer = TargetSerializer(data=valid_serializer_data)
-    assert serializer.is_valid
-    assert serializer.validated.data == valid_serializer_data
+    assert serializer.is_valid()
+    assert serializer.validated_data == valid_serializer_data
     assert serializer.data == valid_serializer_data
     assert not serializer.errors
 
@@ -31,4 +31,5 @@ def test_invalid_missing_title_target_serializer():
     assert not serializer.is_valid()
     assert serializer.validated_data == {}
     assert serializer.data == invalid_serializer_data
-    assert serializer.errors == {"title": ["This field is required"]}
+    print("Errors:", serializer.errors)
+    assert serializer.errors == {"title": ["This field is required."]}

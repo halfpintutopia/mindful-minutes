@@ -19,8 +19,6 @@ def test_valid_appointment_entry_serializer():
     }
     serializer = AppointmentEntrySerializer(data=valid_serializer_data)
     assert serializer.is_valid()
-    print("validated_data:", serializer.validated_data)
-    print("data:", serializer.data)
     assert serializer.validated_data == valid_serializer_data
     assert serializer.data == {
         "title": "Dentist",

@@ -28,5 +28,4 @@ def test_invalid_missing_content_note_serializer():
     assert not serializer.is_valid()
     assert serializer.validated_data == {}
     assert serializer.data == invalid_serializer_data
-    print("Errors:", serializer.errors)
     assert serializer.errors == {"content": ["This field is required."]}

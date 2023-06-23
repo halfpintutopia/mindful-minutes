@@ -31,5 +31,4 @@ def test_invalid_missing_title_target_serializer():
     assert not serializer.is_valid()
     assert serializer.validated_data == {}
     assert serializer.data == invalid_serializer_data
-    print("Errors:", serializer.errors)
     assert serializer.errors == {"title": ["This field is required."]}

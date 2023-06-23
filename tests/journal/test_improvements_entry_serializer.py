@@ -1,30 +1,30 @@
-from journal.serializers import GratitudeEntrySerializer
+from journal.serializers import ImprovementEntrySerializer
 
 
-def test_valid_gratitude_entry_serializer():
+def test_valid_improvement_entry_serializer():
     """
-    GIVEN a valid gratitude entry serializer
+    GIVEN a valid improvement entry serializer
     WHEN the data us passed to the serializer
     THEN the serializer should be valid
     """
     valid_serializer_data = {
-        "content": "I am healthy."
+        "content": "Listen more, talk less."
     }
-    serializer = GratitudeEntrySerializer(data=valid_serializer_data)
+    serializer = ImprovementEntrySerializer(data=valid_serializer_data)
     assert serializer.is_valid()
     assert serializer.validated_data == valid_serializer_data
     assert serializer.data == valid_serializer_data
     assert not serializer.errors
 
 
-def test_invalid_missing_content_gratitude_entry_serializer():
+def test_invalid_missing_content_improvement_entry_serializer():
     """
-    GIVEN an invalid gratitude entry serializer with missing content
+    GIVEN an invalid improvement entry serializer with missing content
     WHEN the data is passed to the serializer
     THEN the serializer should be invalid
     """
     invalid_serializer_data = {}
-    serializer = GratitudeEntrySerializer(data=invalid_serializer_data)
+    serializer = ImprovementEntrySerializer(data=invalid_serializer_data)
     assert not serializer.is_valid()
     assert serializer.validated_data == {}
     assert serializer.data == invalid_serializer_data

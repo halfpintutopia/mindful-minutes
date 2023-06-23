@@ -131,7 +131,7 @@ class Note(models.Model):
         on_delete=models.CASCADE,
         related_name="notes"
     )
-    content = models.TextField(_("Notes"), max_length=255)
+    content = models.TextField(_("Notes"))
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 
@@ -140,4 +140,25 @@ class Note(models.Model):
         Meta options for the Target model
         """
         verbose_name_plural = "Notes"
+        ordering = ["created_on"]
+
+
+class KnowledgeEntry(models.Model):
+    """
+    Note model to allow users to create targets
+    """
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="knowledge_entries"
+    )
+    content = models.TextField(_("Knowledge Entry"))
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_on = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        """
+        Meta options for the Target model
+        """
+        verbose_name_plural = "Knowledge Entries"
         ordering = ["created_on"]

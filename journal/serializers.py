@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from .models import UserSettings, AppointmentEntry, Target, Note, \
-    KnowledgeEntry, GratitudeEntry, WinEntry, IdeasEntry
+    KnowledgeEntry, GratitudeEntry, WinEntry, IdeasEntry, ImprovementEntry
 
 
 class UserSettingsSerializer(serializers.ModelSerializer):
@@ -109,6 +109,7 @@ class GratitudeEntrySerializer(serializers.ModelSerializer):
         fields = "__all__"
         read_only_fields = ("id", "user", "created_date", "updated_date",)
 
+
 class WinEntrySerializer(serializers.ModelSerializer):
     """
     Serializer for WinEntry model to convert it to JSON representation
@@ -139,5 +140,22 @@ class IdeasEntrySerializer(serializers.ModelSerializer):
         Defines the model and fields to be serialized
         """
         model = IdeasEntry
+        fields = "__all__"
+        read_only_fields = ("id", "user", "created_date", "updated_date",)
+
+
+class ImprovementEntrySerializer(serializers.ModelSerializer):
+    """
+    Serializer for ImprovementEntry model to convert it to JSON representation
+    """
+    user = serializers.PrimaryKeyRelatedField(read_only=True)
+
+    class Meta:
+        """
+        Metadata class for ImprovementEntrySerializer
+
+        Defines the model and fields to be serialized
+        """
+        model = ImprovementEntry
         fields = "__all__"
         read_only_fields = ("id", "user", "created_date", "updated_date",)

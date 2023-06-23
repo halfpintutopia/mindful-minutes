@@ -145,7 +145,7 @@ class Note(models.Model):
 
 class KnowledgeEntry(models.Model):
     """
-    Note model to allow users to create knowledge entries
+    KnowledgeEntry model to allow users to create knowledge entries
     """
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -163,9 +163,10 @@ class KnowledgeEntry(models.Model):
         verbose_name_plural = "Knowledge Entries"
         ordering = ["created_on"]
 
+
 class GratitudeEntry(models.Model):
     """
-    Note model to allow users to create gratitude entries
+    GratitudeEntry model to allow users to create gratitude entries
     """
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -181,4 +182,25 @@ class GratitudeEntry(models.Model):
         Meta options for the Target model
         """
         verbose_name_plural = "Gratitude Entries"
+        ordering = ["created_on"]
+
+
+class WinEntry(models.Model):
+    """
+    Win model to allow users to create win entries
+    """
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="win_entries"
+    )
+    content = models.TextField(_("Win Entry"))
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_on = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        """
+        Meta options for the Win model
+        """
+        verbose_name_plural = "Win Entries"
         ordering = ["created_on"]

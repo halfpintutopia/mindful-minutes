@@ -1,7 +1,7 @@
 from journal.serializers import GratitudeEntrySerializer
 
 
-def test_valid_note_serializer():
+def test_valid_gratitude_entry_serializer():
     """
     GIVEN a valid gratitude entry serializer
     WHEN the data us passed to the serializer
@@ -19,7 +19,7 @@ def test_valid_note_serializer():
 
 def test_invalid_missing_content_gratitude_entry_serializer():
     """
-    GIVEN an invalid gratitude entry serializer with missing title
+    GIVEN an invalid gratitude entry serializer with missing content
     WHEN the data is passed to the serializer
     THEN the serializer should be invalid
     """

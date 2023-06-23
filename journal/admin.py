@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
 from .forms import CustomUserCreationForm, CustomUserChangeForm
-from .models import CustomUser, UserSettings, AppointmentEntry, Target
+from .models import CustomUser, UserSettings, AppointmentEntry, Target, Note
 
 
 class CustomUserAdmin(UserAdmin):
@@ -98,7 +98,7 @@ class AppointmentEntryAdmin(admin.ModelAdmin):
 
 
 @admin.register(Target)
-class Target(admin.ModelAdmin):
+class TargetAdmin(admin.ModelAdmin):
     """
     Admin configuration for the AppointmentEntry model
 
@@ -118,6 +118,28 @@ class Target(admin.ModelAdmin):
     )
     search_fields = ["user", "title", "created_on"]
     list_filter = ("title", "created_on")
+    ordering = ("created_on",)
+
+
+@admin.register(Note)
+class NoteAdmin(admin.ModelAdmin):
+    """
+    Admin configuration for the AppointmentEntry model
+
+    The class defines the display and behaviour fo the AppointmentEntry model
+    """
+    readonly_fields = (
+        "created_on",
+        "updated_on"
+    )
+    list_display = (
+        "user",
+        "content"
+    )
+    fields = (
+        "user", "content", "created_on", "updated_on",
+    )
+    search_fields = ["user", "content", "created_on"]
     ordering = ("created_on",)
 
 

@@ -124,7 +124,7 @@ class Target(models.Model):
 
 class Note(models.Model):
     """
-    Note model to allow users to create targets
+    Note model to allow users to create notes
     """
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -145,7 +145,7 @@ class Note(models.Model):
 
 class KnowledgeEntry(models.Model):
     """
-    Note model to allow users to create targets
+    Note model to allow users to create knowledge entries
     """
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -161,4 +161,24 @@ class KnowledgeEntry(models.Model):
         Meta options for the Target model
         """
         verbose_name_plural = "Knowledge Entries"
+        ordering = ["created_on"]
+
+class GratitudeEntry(models.Model):
+    """
+    Note model to allow users to create gratitude entries
+    """
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="gratitude_entries"
+    )
+    content = models.TextField(_("Gratitude Entry"))
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_on = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        """
+        Meta options for the Target model
+        """
+        verbose_name_plural = "Gratitude Entries"
         ordering = ["created_on"]

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import UserSettings, AppointmentEntry, Target, Note, KnowledgeEntry
+from .models import UserSettings, AppointmentEntry, Target, Note, KnowledgeEntry, GratitudeEntry
 
 
 class UserSettingsSerializer(serializers.ModelSerializer):
@@ -77,16 +77,33 @@ class NoteSerializer(serializers.ModelSerializer):
 
 class KnowledgeEntrySerializer(serializers.ModelSerializer):
     """
-    Serializer for Note model to convert it to JSON representation
+    Serializer for KnowledgeEntry model to convert it to JSON representation
     """
     user = serializers.PrimaryKeyRelatedField(read_only=True)
 
     class Meta:
         """
-        Metadata class for NoteSerializer
+        Metadata class for KnowledgeEntrySerializer
 
         Defines the model and fields to be serialized
         """
         model = KnowledgeEntry
+        fields = "__all__"
+        read_only_fields = ("id", "user", "created_date", "updated_date",)
+
+
+class GratitudeEntrySerializer(serializers.ModelSerializer):
+    """
+    Serializer for GratitudeEntry model to convert it to JSON representation
+    """
+    user = serializers.PrimaryKeyRelatedField(read_only=True)
+
+    class Meta:
+        """
+        Metadata class for GratitudeEntrySerializer
+
+        Defines the model and fields to be serialized
+        """
+        model = GratitudeEntry
         fields = "__all__"
         read_only_fields = ("id", "user", "created_date", "updated_date",)

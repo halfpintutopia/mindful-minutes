@@ -2,7 +2,8 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
 from .forms import CustomUserCreationForm, CustomUserChangeForm
-from .models import CustomUser, UserSettings, AppointmentEntry, Target, Note, KnowledgeEntry, GratitudeEntry
+from .models import CustomUser, UserSettings, AppointmentEntry, \
+    Target, Note, KnowledgeEntry, GratitudeEntry, WinEntry
 
 
 class CustomUserAdmin(UserAdmin):
@@ -171,6 +172,28 @@ class GratitudeEntryAdmin(admin.ModelAdmin):
     Admin configuration for the GratitudeEntry model
 
     The class defines the display and behaviour fo the GratitudeEntry model
+    """
+    readonly_fields = (
+        "created_on",
+        "updated_on"
+    )
+    list_display = (
+        "user",
+        "content"
+    )
+    fields = (
+        "user", "content", "created_on", "updated_on",
+    )
+    search_fields = ["user", "content", "created_on"]
+    ordering = ("created_on",)
+
+
+@admin.register(WinEntry)
+class WinEntryAdmin(admin.ModelAdmin):
+    """
+    Admin configuration for the WinEntry model
+
+    The class defines the display and behaviour fo the WinEntry model
     """
     readonly_fields = (
         "created_on",

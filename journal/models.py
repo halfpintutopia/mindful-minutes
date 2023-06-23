@@ -120,3 +120,24 @@ class Target(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Note(models.Model):
+    """
+    Note model to allow users to create targets
+    """
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="notes"
+    )
+    content = models.TextField(_("Notes"), max_length=255)
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_on = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        """
+        Meta options for the Target model
+        """
+        verbose_name_plural = "Notes"
+        ordering = ["created_on"]

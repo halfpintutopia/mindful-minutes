@@ -259,15 +259,14 @@ class EmotionEntry(models.Model):
         ("okay", "Okay"),
         ("good", "Good"),
         ("great", "Great"),
-        ("excellent", "Excellent"),
+        ("excellent", "Excellent")
     ]
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name="emotion_entries"
     )
-    emotion = models.CharField(
-        _("Emotion Entry"), max_length=10, choices=EMOTION_CHOICES)
+    emotion = models.CharField(max_length=10, choices=EMOTION_CHOICES)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 

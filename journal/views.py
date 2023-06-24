@@ -26,3 +26,27 @@ class AppointmentEntryList(APIView):
                 status=status.HTTP_201_CREATED
             )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class AppointmentEntryDetail(APIView):
+    """
+    Retrieve, update or delete an appointment entry
+    """
+
+    def get_object(self, pk):
+        """
+        Helper method to get an appointment entry object from the database
+        or raise a 404 error
+        """
+        try:
+            return AppointmentEntry.objects.get(pk=pk)
+        except AppointmentEntry.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        """
+        Retrieve an appointment entry
+        """
+        appointment = self.get_object(pk)
+        serializer = AppointmentEntrySerializer(appointment)
+        return Response(serializer.data)

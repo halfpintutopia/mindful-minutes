@@ -18,8 +18,8 @@ def test_add_appointment():
     WHEN the user requests to add an appointment
     THEN check that the appointment is added
     """
-    appointment_entry = AppointmentEntry.objects.all()
-    assert len(appointment_entry) == 0
+    appointment_entries = AppointmentEntry.objects.all()
+    assert len(appointment_entries) == 0
 
     user = User.objects.create_user(
         email="normal@user.com",
@@ -31,13 +31,12 @@ def test_add_appointment():
     client = APIClient()
     client.force_authenticate(user=user)
 
-
     appointment_data = {
         "title": "Dentist",
         "date": "2023-07-06",
         "time_from": "09:00:00",
         "time_until": "10:00:00",
-        "user": user.id, 
+        "user": user.id,
     }
 
     res = client.post(
@@ -55,3 +54,63 @@ def test_add_appointment():
 
     appointment_entries = AppointmentEntry.objects.all()
     assert len(appointment_entries) == 1
+
+
+@pytest.mark.django_db
+def test_add_appointment_invalid_json(client):
+    """
+    GIVEN a Django application
+    WHEN the user requests to add an appointment with an invalid payload
+    THEN the payload is not sent
+    """
+    appointment_entries = AppointmentEntry.objects.all()
+    assert len(appointment_entries) == 0
+
+    res = client.post(
+        "/api/appointments/",
+        {},
+        format="json"
+    )
+    assert res.status_code == 400
+
+    appointment_entries = AppointmentEntry.objects.all()
+    assert len(appointment_entries) == 0
+
+
+@pytest.mark.django_db
+def test_add_appointment_missing_title():
+    """
+    GIVEN a Django application
+    WHEN the user request to add an appointment with missing title
+    THEN the payload is not sent
+    """
+    appointment_entries = AppointmentEntry.objects.all()
+    assert len(appointment_entries) == 0
+
+    user = User.objects.create_user(
+        email="normal@user.com",
+        password="abcdefghij123!+_",
+        first_name="Normal",
+        last_name="User"
+    )
+
+    client = APIClient()
+    client.force_authenticate(user=user)
+
+    appointment_data = {
+        "date": "2023-07-06",
+        "time_from": "09:00:00",
+        "time_until": "10:00:00",
+        "user": user.id,
+    }
+
+    res = client.post(
+        "/api/appointments/",
+        appointment_data,
+        format="json"
+    )
+
+    assert res.status_code == 400
+
+    appointment_entries = AppointmentEntry.objects.all()
+    assert len(appointment_entries) == 0

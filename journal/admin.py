@@ -55,8 +55,8 @@ class UserSettingsAdmin(admin.ModelAdmin):
     """
     model = UserSettings
     readonly_fields = (
-        "created_date",
-        "updated_date"
+        "created_on",
+        "updated_on"
     )
     list_display = (
         "user",

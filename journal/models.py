@@ -50,8 +50,8 @@ class UserSettings(models.Model):
         _("Start Week Day"), choices=DAY_OPTIONS)
     morning_check_in = models.TimeField()
     evening_check_in = models.TimeField()
-    created_date = models.DateTimeField(auto_now_add=True)
-    updated_date = models.DateTimeField(auto_now=True)
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_on = models.DateTimeField(auto_now=True)
 
     class Meta:
         """

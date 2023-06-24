@@ -20,7 +20,7 @@ class AppointmentEntryList(APIView):
         """
         serializer = AppointmentEntrySerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            serializer.save(user=request.user)
             return Response(
                 serializer.data,
                 status=status.HTTP_201_CREATED

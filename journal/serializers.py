@@ -1,8 +1,35 @@
 from rest_framework import serializers
+from django.contrib.auth import get_user_model
 
 from .models import UserSettings, AppointmentEntry, Target, Note, \
     KnowledgeEntry, GratitudeEntry, WinEntry, IdeasEntry, ImprovementEntry, \
     EmotionEntry
+
+User = get_user_model()
+
+
+class CustomUserSerializer(serializers.ModelSerializer):
+    """
+    CustomUserSerializer is a ModelSerializer that converts CustomUser model to JSON representation and vice versa
+    """
+    active = serializers.BooleanField(source="is_active")
+    start_week_day = serializers.IntegerField(
+        source="usersettings.start_week_day")
+    morning_check_in = serializers.TimeField(
+        source="usersettings.morning_check_in")
+    evening_check_in = serializers.TimeField(
+        source="usersettings.evening_check_in")
+
+    class Meta:
+        """
+        Metadata class for CustomUserSerializer
+
+        Defines the model and fields to be serialized
+        """
+        model = User
+        fields = ["id", "email", "first_name", "last_name",
+                  "is_staff", "active", "is_superuser",
+                  "start_week_day", "morning_check_in", "evening_check_in"]
 
 
 class UserSettingsSerializer(serializers.ModelSerializer):
@@ -23,7 +50,7 @@ class UserSettingsSerializer(serializers.ModelSerializer):
         """
         model = UserSettings
         fields = '__all__'
-        read_only_fields = ("id", "user", "created_date", "updated_date",)
+        read_only_fields = ("id", "created_date", "updated_date",)
 
 
 class AppointmentEntrySerializer(serializers.ModelSerializer):
@@ -39,8 +66,9 @@ class AppointmentEntrySerializer(serializers.ModelSerializer):
         Defines the model and fields to be serialized
         """
         model = AppointmentEntry
-        fields = "__all__"
-        read_only_fields = ("id", "user", "created_date", "updated_date",)
+        fields = ['id', 'user', 'title', 'date', 'time_from',
+                  'time_until', 'created_on', 'updated_on']
+        # read_only_fields = ("id", "created_date", "updated_date",)
 
 
 class TargetSerializer(serializers.ModelSerializer):
@@ -57,7 +85,7 @@ class TargetSerializer(serializers.ModelSerializer):
         """
         model = Target
         fields = "__all__"
-        read_only_fields = ("id", "user", "created_date", "updated_date",)
+        read_only_fields = ("id", "created_date", "updated_date",)
 
 
 class NoteSerializer(serializers.ModelSerializer):
@@ -74,7 +102,7 @@ class NoteSerializer(serializers.ModelSerializer):
         """
         model = Note
         fields = "__all__"
-        read_only_fields = ("id", "user", "created_date", "updated_date",)
+        read_only_fields = ("id", "created_date", "updated_date",)
 
 
 class KnowledgeEntrySerializer(serializers.ModelSerializer):
@@ -91,7 +119,7 @@ class KnowledgeEntrySerializer(serializers.ModelSerializer):
         """
         model = KnowledgeEntry
         fields = "__all__"
-        read_only_fields = ("id", "user", "created_date", "updated_date",)
+        read_only_fields = ("id", "created_date", "updated_date",)
 
 
 class GratitudeEntrySerializer(serializers.ModelSerializer):
@@ -108,7 +136,7 @@ class GratitudeEntrySerializer(serializers.ModelSerializer):
         """
         model = GratitudeEntry
         fields = "__all__"
-        read_only_fields = ("id", "user", "created_date", "updated_date",)
+        read_only_fields = ("id", "created_date", "updated_date",)
 
 
 class WinEntrySerializer(serializers.ModelSerializer):
@@ -125,7 +153,7 @@ class WinEntrySerializer(serializers.ModelSerializer):
         """
         model = WinEntry
         fields = "__all__"
-        read_only_fields = ("id", "user", "created_date", "updated_date",)
+        read_only_fields = ("id", "created_date", "updated_date",)
 
 
 class IdeasEntrySerializer(serializers.ModelSerializer):
@@ -142,7 +170,7 @@ class IdeasEntrySerializer(serializers.ModelSerializer):
         """
         model = IdeasEntry
         fields = "__all__"
-        read_only_fields = ("id", "user", "created_date", "updated_date",)
+        read_only_fields = ("id", "created_date", "updated_date",)
 
 
 class ImprovementEntrySerializer(serializers.ModelSerializer):
@@ -159,7 +187,7 @@ class ImprovementEntrySerializer(serializers.ModelSerializer):
         """
         model = ImprovementEntry
         fields = "__all__"
-        read_only_fields = ("id", "user", "created_date", "updated_date",)
+        read_only_fields = ("id", "created_date", "updated_date",)
 
 
 class EmotionEntrySerializer(serializers.ModelSerializer):
@@ -176,4 +204,4 @@ class EmotionEntrySerializer(serializers.ModelSerializer):
         """
         model = EmotionEntry
         fields = "__all__"
-        read_only_fields = ("id", "user", "created_date", "updated_date",)
+        read_only_fields = ("id", "created_date", "updated_date",)

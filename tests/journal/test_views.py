@@ -12,11 +12,11 @@ User = get_user_model()
 
 
 @pytest.mark.django_db
-def test_add_appointment(client):
+def test_add_appointment():
     """
-    GIVEN
-    WHEN
-    THEN
+    GIVEN a Django application
+    WHEN the user requests to add an appointment
+    THEN check that the appointment is added
     """
     appointment_entry = AppointmentEntry.objects.all()
     assert len(appointment_entry) == 0
@@ -28,24 +28,26 @@ def test_add_appointment(client):
         last_name="User"
     )
 
-    # client = APIClient()
-    # client.force_authenticate(user=user)
+    client = APIClient()
+    client.force_authenticate(user=user)
+
+
+    appointment_data = {
+        "title": "Dentist",
+        "date": "2023-07-06",
+        "time_from": "09:00:00",
+        "time_until": "10:00:00",
+        "user": user.id, 
+    }
 
     res = client.post(
         "/api/appointments/",
-        {
-            "user": user.id,
-            "title": "Dentist",
-            "date": "2023-07-06",
-            "time_from": "09:00:00",
-            "time_until": "10:00:00",
-        },
+        appointment_data,
         format="json"
     )
 
-    print("Response data:", res.data)
-
     assert res.status_code == 201
+    assert res.data["user"] == user.id
     assert res.data["title"] == "Dentist"
     assert res.data["date"] == "2023-07-06"
     assert res.data["time_from"] == "09:00:00"

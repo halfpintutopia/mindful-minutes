@@ -34,6 +34,10 @@
     - [Morning page (and Evening page)](#morning-page-and-evening-page-1)
     - [Search page](#search-page)
     - [My profile page](#my-profile-page-1)
+  - [References:](#references)
+    - [Methodology](#methodology)
+    - [Images within Mock-ups:](#images-within-mock-ups)
+    - [Design Inspiration:](#design-inspiration)
 
 ## 1. Strategy Plane
 
@@ -546,11 +550,18 @@ Basic prototypes created in [Figma](https://figma.com) for:
 
 ---
 
-Image References within Mock-ups:
+### References:
+
+#### Methodology
+- [UX Design using the Five Planes Method](https://medium.com/designcentered/ux-design-5-planes-method-b1b1d6587c05)
+
+#### Images within Mock-ups:
 - [Laptop and notepad by Nick Morrison](https://unsplash.com/photos/FHnnjk1Yj7Y)
 - [White work table with notes, smartphone and laptop by JESHOOTS.COM](https://unsplash.com/photos/pUAM5hPaCRI)
 
-Design Inspiration References:
+---
+
+#### Design Inspiration:
 - [Click Up](https://clickup.com/)
 - [Pinterest](https://www.pinterest.ch/)
 - [Women Who Code + Codum Buddy Accountability Form](https://www.womenwhocode.typeform.com/)

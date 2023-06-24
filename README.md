@@ -35,6 +35,8 @@
     - [Deployment](#deployment)
     - [CI / CD](#ci--cd)
     - [Django Testing](#django-testing)
+    - [Django](#django)
+    - [Performance and Optimisation](#performance-and-optimisation)
   - [Content](#content)
   - [Media](#media)
   - [Acknowledgements](#acknowledgements)
@@ -371,6 +373,21 @@ For further details on testing, click [here](docs/testing/testing.md).
 - [Creating a Custom User Model in Django](https://testdriven.io/blog/django-custom-user-model/)
 - [Testing Models with Django using Faker and Factory Boy](https://medium.com/analytics-vidhya/factoryboy-usage-cd0398fd11d2)
 - [Pytest for Beginners](https://testdriven.io/blog/pytest-for-beginners/)
+- [Pytest](https://docs.pytest.org/en/latest/getting-started.html)
+- [Testing in Django with Selenium](https://ordinarycoders.com/blog/article/testing-django-selenium)
+- [How to authorize user in Django testing REST framework APIClient post method](https://stackoverflow.com/questions/70967642/how-to-authorize-user-in-django-testing-rest-framework-apiclient-post-method)
+
+#### Django
+
+- [Effectively Using Django REST Framework Serializers](https://testdriven.io/blog/drf-serializers/)
+- [Introduction to Django Channels](https://testdriven.io/blog/django-channels/)
+- [Migrating a Custom User Model Mid-Project in Django](https://testdriven.io/blog/django-custom-user-model-migration/)
+- [Customize Django Admin](https://earthly.dev/blog/customize-django-admin-site/)
+
+#### Performance and Optimisation
+
+- [A Guide to Performance Testing and Optimization with Python and Django](https://medium.com/designcentered/ux-design-5-planes-method-b1b1d6587c05)
+- [Scaling Django Applications: Best Practices and Strategies](https://medium.com/ux-diaries/imdb-website-redesign-ux-case-study-c42f65a69b98)
 
 ### Content
 

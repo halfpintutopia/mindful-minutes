@@ -49,7 +49,7 @@ class UserSettingsSerializer(serializers.ModelSerializer):
         Defines the model and fields to be serialized
         """
         model = UserSettings
-        fields = '__all__'
+        fields = "__all__"
         read_only_fields = ("id", "created_date", "updated_date",)
 
 
@@ -66,9 +66,8 @@ class AppointmentEntrySerializer(serializers.ModelSerializer):
         Defines the model and fields to be serialized
         """
         model = AppointmentEntry
-        fields = ['id', 'user', 'title', 'date', 'time_from',
-                  'time_until', 'created_on', 'updated_on']
-        # read_only_fields = ("id", "created_date", "updated_date",)
+        fields = "__all__"
+        read_only_fields = ("id", "created_date", "updated_date",)
 
 
 class TargetSerializer(serializers.ModelSerializer):

@@ -114,3 +114,48 @@ def test_add_appointment_missing_title():
 
     appointment_entries = AppointmentEntry.objects.all()
     assert len(appointment_entries) == 0
+
+
+@pytest.mark.django_db
+def test_get_single_appointment(client):
+    """
+    GIVEN a Django application
+    WHEN the user requests to retrieve an appointment
+    THEN check that the appointment is retrieved
+    """
+    user = User.objects.create_user(
+        email="normal@user.com",
+        password="abcdefghij123!+_",
+        first_name="Normal",
+        last_name="User"
+    )
+
+    appointment = AppointmentEntry.objects.create(
+        title="Dentist",
+        date="2023-07-06",
+        time_from="09:00:00",
+        time_until="10:00:00",
+        user=user,
+    )
+
+    res = client.get(f"/api/appointments/{appointment.id}/")
+    print("Response:", res)
+
+    assert res.status_code == 200
+    assert res.data["user"] == user.id
+    assert res.data["title"] == "Dentist"
+    assert res.data["time_from"] == "09:00:00"
+    assert res.data["time_until"] == "10:00:00"
+
+
+@pytest.mark.django_db
+def test_get_single_appointment_incorrect_id(client):
+    """
+    GIVEN a Django application
+    WHEN the user requests to retrieve an appointment with an incorrect id
+    THEN check the appointment is not retrieved
+    """
+    invalid_id = "random"
+    res = client.get(f"/api/appointments/{invalid_id}")
+
+    assert res.status_code == 404

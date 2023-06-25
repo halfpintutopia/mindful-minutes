@@ -70,6 +70,7 @@ class AppointmentEntry(models.Model):
         related_name="appointment_entries"
     )
     title = models.CharField(_("Title"), max_length=255)
+    # TODO add slugs for title
     date = models.DateField(_("Date"))
     time_from = models.TimeField(_("From"))
     time_until = models.TimeField(_("Until"))
@@ -81,7 +82,7 @@ class AppointmentEntry(models.Model):
         Meta options for the AppointmentEntry model
         """
         verbose_name_plural = "Appointment Entries"
-        ordering = ["-date", "-time_from"]
+        ordering = ["date", "time_from"]
 
     def clean(self):
         """

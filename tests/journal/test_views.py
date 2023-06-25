@@ -57,7 +57,7 @@ def test_add_appointment():
 
 
 @pytest.mark.django_db
-def test_add_appointment_invalid_json(client):
+def test_add_appointment_invalid_json():
     """
     GIVEN a Django application
     WHEN the user requests to add an appointment with an invalid payload
@@ -65,6 +65,16 @@ def test_add_appointment_invalid_json(client):
     """
     appointment_entries = AppointmentEntry.objects.all()
     assert len(appointment_entries) == 0
+
+    user = User.objects.create_user(
+        email="normal@user.com",
+        password="abcdefghij123!+_",
+        first_name="Normal",
+        last_name="User"
+    )
+
+    client = APIClient()
+    client.force_authenticate(user=user)
 
     res = client.post(
         "/api/appointments/",
@@ -117,7 +127,7 @@ def test_add_appointment_missing_title():
 
 
 @pytest.mark.django_db
-def test_get_single_appointment(client):
+def test_get_single_appointment_entry(client, add_appointment_entry):
     """
     GIVEN a Django application
     WHEN the user requests to retrieve an appointment
@@ -130,7 +140,7 @@ def test_get_single_appointment(client):
         last_name="User"
     )
 
-    appointment = AppointmentEntry.objects.create(
+    appointment = add_appointment_entry(
         title="Dentist",
         date="2023-07-06",
         time_from="09:00:00",
@@ -159,3 +169,64 @@ def test_get_single_appointment_incorrect_id(client):
     res = client.get(f"/api/appointments/{invalid_id}")
 
     assert res.status_code == 404
+
+
+@pytest.mark.django_db
+def test_get_all_appointment_entries(add_appointment_entry):
+    """
+    GIVEN a Django application
+    WHEN the user requests to retrieve all appointments
+    THEN check all appointments are retrieved
+    """
+    user = User.objects.create_user(
+        email="normal@user.com",
+        password="abcdefghij123!+_",
+        first_name="Normal",
+        last_name="User"
+    )
+
+    client = APIClient()
+    client.force_authenticate(user=user)
+
+    appointment_entry_one = add_appointment_entry(
+        title="Dentist",
+        date="2023-07-06",
+        time_from="09:00:00",
+        time_until="10:00:00",
+        user=user,
+    )
+
+    appointment_entry_two = add_appointment_entry(
+        title="Gym",
+        date="2023-07-06",
+        time_from="19:00:00",
+        time_until="20:00:00",
+        user=user,
+    )
+
+    res = client.get(f"/api/appointments/")
+
+    print("Response", res.data)
+
+    assert res.status_code == 200
+    assert res.data[0]["title"] == "Dentist"
+    assert res.data[1]["title"] == "Gym"
+
+
+#     from datetime import date
+# from rest_framework.test import APIClient
+
+# def test_list_appointments_by_date(client):
+#     # Create an authenticated client
+#     client = APIClient()
+#     # Authenticate the client if necessary
+
+#     # Set the desired date
+#     desired_date = date(2023, 7, 6)
+
+#     # Make a request to the API endpoint to list appointments by date
+#     response = client.get('/api/appointments/', {'date': desired_date}, format='json')
+
+#     # Assert the response
+#     assert response.status_code == 200
+#     # ...

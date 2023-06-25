@@ -12,7 +12,15 @@ class AppointmentEntryList(APIView):
     """
     List all appointment entries or create a new appointment entry
     """
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, format=None):
+        """
+        List all appointment entries
+        """
+        appointment_entries = AppointmentEntry.objects.all()
+        serializer = AppointmentEntrySerializer(appointment_entries, many=True)
+        return Response(serializer.data)
 
     def post(self, request, format=None):
         """

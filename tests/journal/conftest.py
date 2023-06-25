@@ -2,8 +2,7 @@ import pytest
 
 from django.contrib.auth import get_user_model
 
-from journal.models import AppointmentEntry, Target, Note, KnowledgeEntry, \
-    GratitudeEntry, WinEntry, IdeasEntry, ImprovementEntry, EmotionEntry
+from journal.models import AppointmentEntry
 
 User = get_user_model()
 

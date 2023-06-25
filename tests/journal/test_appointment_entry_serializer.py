@@ -1,7 +1,5 @@
 from datetime import time, date
 
-import pytest
-
 from journal.serializers import AppointmentEntrySerializer
 
 

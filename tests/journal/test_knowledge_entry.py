@@ -35,6 +35,8 @@ def test_create_knowledge_entry(user):
     knowledge_entries = KnowledgeEntry.objects.all()
     assert len(knowledge_entries) == 1
     assert knowledge_entries[0].user == user
-    assert knowledge_entries[0].content == "Understand what 'hoisting' means in JavaScript"
+    assert (knowledge_entries[0].content ==
+            "Understand what 'hoisting' means in JavaScript")
     assert isinstance(
-        knowledge_entries[0].content, str) and knowledge_entries[0].content is not None
+        knowledge_entries[0].content, str
+    ) and knowledge_entries[0].content is not None

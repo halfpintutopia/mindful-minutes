@@ -35,6 +35,8 @@ def test_create_improvement_entry(user):
     improvement_entries = ImprovementEntry.objects.all()
     assert len(improvement_entries) == 1
     assert improvement_entries[0].user == user
-    assert improvement_entries[0].content == "Listen more, talk less."
+    assert (improvement_entries[0].content ==
+            "Listen more, talk less.")
     assert isinstance(
-        improvement_entries[0].content, str) and improvement_entries[0].content is not None
+        improvement_entries[0].content, str
+    ) and improvement_entries[0].content is not None

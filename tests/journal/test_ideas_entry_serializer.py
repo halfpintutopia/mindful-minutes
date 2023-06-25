@@ -8,7 +8,8 @@ def test_valid_ideas_entry_serializer():
     THEN the serializer should be valid
     """
     valid_serializer_data = {
-        "content": "I can discuss my design ideas with my cohort, arrange a good time to huddle in chat."
+        "content": "I can discuss my design ideas with my cohort, \
+            arrange a good time to huddle in chat."
     }
     serializer = IdeasEntrySerializer(data=valid_serializer_data)
     assert serializer.is_valid()

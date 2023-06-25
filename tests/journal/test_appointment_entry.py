@@ -44,13 +44,16 @@ def test_create_appointment_entry(user):
     assert appointment_entries[0].title == "Dentist"
     assert appointment_entries[0].date == date(2023, 7, 6)
     assert isinstance(
-        appointment_entries[0].date, date) and appointment_entries[0].date is not None
+        appointment_entries[0].date, date
+    ) and appointment_entries[0].date is not None
     assert appointment_entries[0].time_from == time(10, 0)
-    assert isinstance(appointment_entries[0].time_from,
-                      time) and appointment_entries[0].time_from is not None
+    assert isinstance(
+        appointment_entries[0].time_from, time
+    ) and appointment_entries[0].time_from is not None
     assert appointment_entries[0].time_until == time(11, 0)
-    assert isinstance(appointment_entries[0].time_until,
-                      time) and appointment_entries[0].time_until is not None
+    assert isinstance(
+        appointment_entries[0].time_until, time
+    ) and appointment_entries[0].time_until is not None
 
 
 @pytest.mark.django_db

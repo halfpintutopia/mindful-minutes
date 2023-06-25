@@ -103,8 +103,10 @@ def test_create_user_without_password():
 def test_create_superuser():
     """
         GIVEN a custom user model
-        WHEN a superuser is created with a valid email, password, first_name, last_name
-        THEN the superuser should have the provided email, first_name, last_name,
+        WHEN a superuser is created with
+        a valid email, password, first_name, last_name
+        THEN the superuser should have
+        the provided email, first_name, last_name,
         be active, a staff member
         """
     admin_user = User.objects.create_superuser(

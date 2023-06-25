@@ -10,7 +10,8 @@ User = get_user_model()
 
 class CustomUserSerializer(serializers.ModelSerializer):
     """
-    CustomUserSerializer is a ModelSerializer that converts CustomUser model to JSON representation and vice versa
+    CustomUserSerializer is a ModelSerializer
+    that converts CustomUser model to JSON representation and vice versa
     """
     active = serializers.BooleanField(source="is_active")
     start_week_day = serializers.IntegerField(

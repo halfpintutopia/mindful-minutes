@@ -39,4 +39,5 @@ def test_create_emotion_entry(user):
     assert emotion_entries[0].user == user
     assert emotion_entries[0].emotion == "okay"
     assert isinstance(
-        emotion_entries[0].emotion, str) and emotion_entries[0].emotion is not None
+        emotion_entries[0].emotion, str
+    ) and emotion_entries[0].emotion is not None

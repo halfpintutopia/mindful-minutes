@@ -37,4 +37,5 @@ def test_create_knowledge_entry(user):
     assert gratitude_entries[0].user == user
     assert gratitude_entries[0].content == "I am healthy"
     assert isinstance(
-        gratitude_entries[0].content, str) and gratitude_entries[0].content is not None
+        gratitude_entries[0].content, str
+    ) and gratitude_entries[0].content is not None

@@ -1,6 +1,5 @@
-from datetime import date, time
+from datetime import date
 
-import json
 import pytest
 
 from django.contrib.auth import get_user_model
@@ -201,7 +200,7 @@ def test_get_all_appointment_entries(add_appointment_entry):
     client = APIClient()
     client.force_authenticate(user=user)
 
-    appointment_entry_one = add_appointment_entry(
+    add_appointment_entry(
         title="Dentist",
         date="2023-07-06",
         time_from="09:00:00",
@@ -209,7 +208,7 @@ def test_get_all_appointment_entries(add_appointment_entry):
         user=user,
     )
 
-    appointment_entry_two = add_appointment_entry(
+    add_appointment_entry(
         title="Gym",
         date="2023-07-06",
         time_from="19:00:00",
@@ -217,7 +216,7 @@ def test_get_all_appointment_entries(add_appointment_entry):
         user=user,
     )
 
-    res = client.get(f"/api/appointments/")
+    res = client.get("/api/appointments/")
 
     assert res.status_code == 200
     assert res.data[0]["title"] == "Dentist"
@@ -241,7 +240,7 @@ def test_get_all_appointment_entries_by_date(add_appointment_entry):
     client = APIClient()
     client.force_authenticate(user=user)
 
-    appointment_entry_one = add_appointment_entry(
+    add_appointment_entry(
         title="Dentist",
         date="2023-07-06",
         time_from="09:00:00",
@@ -249,7 +248,7 @@ def test_get_all_appointment_entries_by_date(add_appointment_entry):
         user=user,
     )
 
-    appointment_entry_two = add_appointment_entry(
+    add_appointment_entry(
         title="Gym",
         date="2023-07-06",
         time_from="19:00:00",
@@ -257,7 +256,7 @@ def test_get_all_appointment_entries_by_date(add_appointment_entry):
         user=user,
     )
 
-    appointment_entry_three = add_appointment_entry(
+    add_appointment_entry(
         title="Lunch with Maria",
         date="2023-07-04",
         time_from="12:00:00",
@@ -265,7 +264,7 @@ def test_get_all_appointment_entries_by_date(add_appointment_entry):
         user=user,
     )
 
-    appointment_entry_four = add_appointment_entry(
+    add_appointment_entry(
         title="Cinema",
         date="2023-07-09",
         time_from="19:00:00",
@@ -282,3 +281,6 @@ def test_get_all_appointment_entries_by_date(add_appointment_entry):
     assert res.data[0]["date"] == res.data[1]["date"]
     assert res.data[0]["title"] == "Dentist"
     assert res.data[1]["title"] == "Gym"
+
+# @pytest.mark.django_db
+# def test_remove_appointment(add_appointment_entry):

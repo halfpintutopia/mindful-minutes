@@ -1,4 +1,7 @@
+from datetime import date
+
 from django.http import Http404
+
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -14,11 +17,23 @@ class AppointmentEntryList(APIView):
     """
     permission_classes = [IsAuthenticated]
 
-    def get(self, request, format=None):
+    def get(self, request, date_request=None, format=None):
         """
-        List all appointment entries
+        List all appointment entries or filter by date
         """
-        appointment_entries = AppointmentEntry.objects.all()
+        if date_request is not None:
+            try:
+                requested_date = date.fromisoformat(date_request)
+            except ValueError:
+                return Response(
+                    {"error": "Invalid date format. Please user YYYY-MM-DD."},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+            appointment_entries = AppointmentEntry.objects.filter(
+                date=requested_date)
+        else:
+            appointment_entries = AppointmentEntry.objects.all()
+
         serializer = AppointmentEntrySerializer(appointment_entries, many=True)
         return Response(serializer.data)
 
@@ -41,6 +56,8 @@ class AppointmentEntryDetail(APIView):
     Retrieve, update or delete an appointment entry
     """
 
+    permission_classes = [IsAuthenticated]
+
     def get_object(self, pk):
         """
         Helper method to get an appointment entry object from the database
@@ -55,6 +72,17 @@ class AppointmentEntryDetail(APIView):
         """
         Retrieve an appointment entry
         """
-        appointment = self.get_object(pk)
-        serializer = AppointmentEntrySerializer(appointment)
+        try:
+            appointment_id = isinstance(pk, int)
+            appointment_entry = self.get_object(appointment_id)
+        except (ValueError, Http404):
+            if isinstance(pk, str):
+                return Response(
+                    {"error": "Invalid appointment ID"},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+            else:
+                return Response(status=status.HTTP_404_NOT_FOUND)
+
+        serializer = AppointmentEntrySerializer(appointment_entry)
         return Response(serializer.data)

@@ -206,27 +206,65 @@ def test_get_all_appointment_entries(add_appointment_entry):
 
     res = client.get(f"/api/appointments/")
 
-    print("Response", res.data)
-
     assert res.status_code == 200
     assert res.data[0]["title"] == "Dentist"
     assert res.data[1]["title"] == "Gym"
 
 
-#     from datetime import date
-# from rest_framework.test import APIClient
+@pytest.mark.django_db
+def test_get_all_appointment_entries_by_date(add_appointment_entry):
+    """
+    GIVEN a Django application
+    WHEN the user requests to retrieve all appointments by date
+    THEN check all appointments are retrieved
+    """
+    user = User.objects.create_user(
+        email="normal@user.com",
+        password="abcdefghij123!+_",
+        first_name="Normal",
+        last_name="User"
+    )
 
-# def test_list_appointments_by_date(client):
-#     # Create an authenticated client
-#     client = APIClient()
-#     # Authenticate the client if necessary
+    client = APIClient()
+    client.force_authenticate(user=user)
 
-#     # Set the desired date
-#     desired_date = date(2023, 7, 6)
+    appointment_entry_one = add_appointment_entry(
+        title="Dentist",
+        date="2023-07-06",
+        time_from="09:00:00",
+        time_until="10:00:00",
+        user=user,
+    )
 
-#     # Make a request to the API endpoint to list appointments by date
-#     response = client.get('/api/appointments/', {'date': desired_date}, format='json')
+    appointment_entry_two = add_appointment_entry(
+        title="Gym",
+        date="2023-07-06",
+        time_from="19:00:00",
+        time_until="20:00:00",
+        user=user,
+    )
 
-#     # Assert the response
-#     assert response.status_code == 200
-#     # ...
+    appointment_entry_three = add_appointment_entry(
+        title="Lunch with Maria",
+        date="2023-07-04",
+        time_from="12:00:00",
+        time_until="13:00:00",
+        user=user,
+    )
+
+    appointment_entry_four = add_appointment_entry(
+        title="Cinema",
+        date="2023-07-09",
+        time_from="19:00:00",
+        time_until="22:00:00",
+        user=user,
+    )
+
+    current_date = date(2023, 7, 6)
+
+    res = client.get(f"/api/appointments/{current_date}/")
+
+    assert res.status_code == 200
+    assert res.data["date"] == "2023-07-06"
+    assert res.data[0]["title"] == "Dentist"
+    assert res.data[1]["title"] == "Gym"

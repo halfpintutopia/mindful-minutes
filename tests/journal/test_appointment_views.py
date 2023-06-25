@@ -127,7 +127,7 @@ def test_add_appointment_missing_title():
 
 
 @pytest.mark.django_db
-def test_get_single_appointment_entry(client, add_appointment_entry):
+def test_get_single_appointment_entry(add_appointment_entry):
     """
     GIVEN a Django application
     WHEN the user requests to retrieve an appointment
@@ -140,6 +140,9 @@ def test_get_single_appointment_entry(client, add_appointment_entry):
         last_name="User"
     )
 
+    client = APIClient()
+    client.force_authenticate(user=user)
+
     appointment = add_appointment_entry(
         title="Dentist",
         date="2023-07-06",
@@ -148,7 +151,7 @@ def test_get_single_appointment_entry(client, add_appointment_entry):
         user=user,
     )
 
-    res = client.get(f"/api/appointments/{appointment.id}/")
+    res = client.get(f"/api/appointments/id/{appointment.id}/")
     print("Response:", res)
 
     assert res.status_code == 200
@@ -159,14 +162,24 @@ def test_get_single_appointment_entry(client, add_appointment_entry):
 
 
 @pytest.mark.django_db
-def test_get_single_appointment_incorrect_id(client):
+def test_get_single_appointment_incorrect_id():
     """
     GIVEN a Django application
     WHEN the user requests to retrieve an appointment with an incorrect id
     THEN check the appointment is not retrieved
     """
+    user = User.objects.create_user(
+        email="normal@user.com",
+        password="abcdefghij123!+_",
+        first_name="Normal",
+        last_name="User"
+    )
+
+    client = APIClient()
+    client.force_authenticate(user=user)
+
     invalid_id = "random"
-    res = client.get(f"/api/appointments/{invalid_id}")
+    res = client.get(f"/api/appointments/id/{invalid_id}/")
 
     assert res.status_code == 404
 
@@ -262,9 +275,10 @@ def test_get_all_appointment_entries_by_date(add_appointment_entry):
 
     current_date = date(2023, 7, 6)
 
-    res = client.get(f"/api/appointments/{current_date}/")
+    res = client.get(f"/api/appointments/date/{current_date}/")
 
     assert res.status_code == 200
-    assert res.data["date"] == "2023-07-06"
+    assert res.data[0]["date"] == "2023-07-06"
+    assert res.data[0]["date"] == res.data[1]["date"]
     assert res.data[0]["title"] == "Dentist"
     assert res.data[1]["title"] == "Gym"

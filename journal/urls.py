@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import AppointmentEntryList, AppointmentEntryDetail
+from .views.appointment_entries import AppointmentEntryList, AppointmentEntryDetail
 
 urlpatterns = [
     path("api/appointments/", AppointmentEntryList.as_view()),

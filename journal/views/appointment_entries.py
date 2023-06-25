@@ -7,8 +7,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 
-from .models import AppointmentEntry
-from .serializers import AppointmentEntrySerializer
+from ..models import AppointmentEntry
+from ..serializers import AppointmentEntrySerializer
 
 
 class AppointmentEntryList(APIView):

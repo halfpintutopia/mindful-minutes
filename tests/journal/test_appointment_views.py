@@ -11,7 +11,7 @@ User = get_user_model()
 
 
 @pytest.mark.django_db
-def test_add_appointment():
+def test_add_appointment(authenticated_user):
     """
     GIVEN a Django application
     WHEN the user requests to add an appointment
@@ -20,19 +20,7 @@ def test_add_appointment():
     appointment_entries = AppointmentEntry.objects.all()
     assert len(appointment_entries) == 0
 
-    user = User.objects.create_user(
-        email="normal@user.com",
-        password="abcdefghij123!+_",
-        first_name="Normal",
-        last_name="User"
-    )
-
-    # Acts as a simulatd web browser that allows
-    # you to make requests to API endpoints and receive responses.
-    client = APIClient()
-    # Sets up the test client with an authenticated user,
-    # then use the client to perform actions on behalf of the authenticated user
-    client.force_authenticate(user=user)
+    client, user = authenticated_user
 
     appointment_data = {
         "title": "Dentist",
@@ -60,7 +48,7 @@ def test_add_appointment():
 
 
 @pytest.mark.django_db
-def test_add_appointment_invalid_json():
+def test_add_appointment_invalid_json(authenticated_user):
     """
     GIVEN a Django application
     WHEN the user requests to add an appointment with an invalid payload
@@ -69,15 +57,7 @@ def test_add_appointment_invalid_json():
     appointment_entries = AppointmentEntry.objects.all()
     assert len(appointment_entries) == 0
 
-    user = User.objects.create_user(
-        email="normal@user.com",
-        password="abcdefghij123!+_",
-        first_name="Normal",
-        last_name="User"
-    )
-
-    client = APIClient()
-    client.force_authenticate(user=user)
+    (client, *_) = authenticated_user
 
     res = client.post(
         "/api/appointments/",
@@ -91,7 +71,7 @@ def test_add_appointment_invalid_json():
 
 
 @pytest.mark.django_db
-def test_add_appointment_missing_title():
+def test_add_appointment_missing_title(authenticated_user):
     """
     GIVEN a Django application
     WHEN the user request to add an appointment with missing title
@@ -100,15 +80,7 @@ def test_add_appointment_missing_title():
     appointment_entries = AppointmentEntry.objects.all()
     assert len(appointment_entries) == 0
 
-    user = User.objects.create_user(
-        email="normal@user.com",
-        password="abcdefghij123!+_",
-        first_name="Normal",
-        last_name="User"
-    )
-
-    client = APIClient()
-    client.force_authenticate(user=user)
+    client, user = authenticated_user
 
     appointment_data = {
         "date": "2023-07-06",
@@ -130,21 +102,13 @@ def test_add_appointment_missing_title():
 
 
 @pytest.mark.django_db
-def test_get_single_appointment_entry(add_appointment_entry):
+def test_get_single_appointment_entry(authenticated_user, add_appointment_entry):
     """
     GIVEN a Django application
     WHEN the user requests to retrieve an appointment
     THEN check that the appointment is retrieved
     """
-    user = User.objects.create_user(
-        email="normal@user.com",
-        password="abcdefghij123!+_",
-        first_name="Normal",
-        last_name="User"
-    )
-
-    client = APIClient()
-    client.force_authenticate(user=user)
+    client, user = authenticated_user
 
     appointment = add_appointment_entry(
         title="Dentist",
@@ -165,21 +129,13 @@ def test_get_single_appointment_entry(add_appointment_entry):
 
 
 @pytest.mark.django_db
-def test_get_single_appointment_incorrect_id():
+def test_get_single_appointment_incorrect_id(authenticated_user):
     """
     GIVEN a Django application
     WHEN the user requests to retrieve an appointment with an incorrect id
     THEN check the appointment is not retrieved
     """
-    user = User.objects.create_user(
-        email="normal@user.com",
-        password="abcdefghij123!+_",
-        first_name="Normal",
-        last_name="User"
-    )
-
-    client = APIClient()
-    client.force_authenticate(user=user)
+    client, user = authenticated_user
 
     invalid_id = "random"
     res = client.get(f"/api/appointments/id/{invalid_id}/")
@@ -188,7 +144,7 @@ def test_get_single_appointment_incorrect_id():
 
 
 @pytest.mark.django_db
-def test_get_all_appointment_entries(add_appointment_entry):
+def test_get_all_appointment_entries(authenticated_user, add_appointment_entry):
     """
     GIVEN a Django application
     WHEN the user requests to retrieve all appointments
@@ -197,15 +153,7 @@ def test_get_all_appointment_entries(add_appointment_entry):
     appointment_entries = AppointmentEntry.objects.all()
     assert len(appointment_entries) == 0
 
-    user = User.objects.create_user(
-        email="normal@user.com",
-        password="abcdefghij123!+_",
-        first_name="Normal",
-        last_name="User"
-    )
-
-    client = APIClient()
-    client.force_authenticate(user=user)
+    client, user = authenticated_user
 
     add_appointment_entry(
         title="Dentist",
@@ -234,21 +182,13 @@ def test_get_all_appointment_entries(add_appointment_entry):
 
 
 @pytest.mark.django_db
-def test_get_all_appointment_entries_by_date(add_appointment_entry):
+def test_get_all_appointment_entries_by_date(authenticated_user, add_appointment_entry):
     """
     GIVEN a Django application
     WHEN the user requests to retrieve all appointments by date
     THEN check all appointments are retrieved
     """
-    user = User.objects.create_user(
-        email="normal@user.com",
-        password="abcdefghij123!+_",
-        first_name="Normal",
-        last_name="User"
-    )
-
-    client = APIClient()
-    client.force_authenticate(user=user)
+    client, user = authenticated_user
 
     add_appointment_entry(
         title="Dentist",
@@ -294,7 +234,7 @@ def test_get_all_appointment_entries_by_date(add_appointment_entry):
 
 
 @pytest.mark.django_db
-def test_remove_appointment_entry(add_appointment_entry):
+def test_remove_appointment_entry(authenticated_user, add_appointment_entry):
     """
     GIVEN a Django application
     WHEN the user requests to remove an appointment
@@ -303,15 +243,7 @@ def test_remove_appointment_entry(add_appointment_entry):
     appointment_entries = AppointmentEntry.objects.all()
     assert len(appointment_entries) == 0
 
-    user = User.objects.create_user(
-        email="normal@user.com",
-        password="abcdefghij123!+_",
-        first_name="Normal",
-        last_name="User"
-    )
-
-    client = APIClient()
-    client.force_authenticate(user=user)
+    client, user = authenticated_user
 
     appointment_entry = add_appointment_entry(
         title="Dentist",
@@ -339,7 +271,7 @@ def test_remove_appointment_entry(add_appointment_entry):
 
 
 @pytest.mark.django_db
-def test_remove_appointment_entry_string_id(add_appointment_entry):
+def test_remove_appointment_entry_string_id(authenticated_user, add_appointment_entry):
     """
     GIVEN a Django application
     WHEN the user requests to remove an appointment with a string id
@@ -348,15 +280,7 @@ def test_remove_appointment_entry_string_id(add_appointment_entry):
     appointment_entries = AppointmentEntry.objects.all()
     assert len(appointment_entries) == 0
 
-    user = User.objects.create_user(
-        email="normal@user.com",
-        password="abcdefghij123!+_",
-        first_name="Normal",
-        last_name="User"
-    )
-
-    client = APIClient()
-    client.force_authenticate(user=user)
+    client, user = authenticated_user
 
     incorrect_id = "random"
 
@@ -369,7 +293,7 @@ def test_remove_appointment_entry_string_id(add_appointment_entry):
 
 
 @pytest.mark.django_db
-def test_remove_appointment_entry_incorrect_id(add_appointment_entry):
+def test_remove_appointment_entry_incorrect_id(authenticated_user, add_appointment_entry):
     """
     GIVEN a Django application
     WHEN the user requests to remove an appointment with a string id
@@ -378,15 +302,7 @@ def test_remove_appointment_entry_incorrect_id(add_appointment_entry):
     appointment_entries = AppointmentEntry.objects.all()
     assert len(appointment_entries) == 0
 
-    user = User.objects.create_user(
-        email="normal@user.com",
-        password="abcdefghij123!+_",
-        first_name="Normal",
-        last_name="User"
-    )
-
-    client = APIClient()
-    client.force_authenticate(user=user)
+    client, user = authenticated_user
 
     incorrect_id = 12574
 
@@ -399,7 +315,7 @@ def test_remove_appointment_entry_incorrect_id(add_appointment_entry):
 
 
 @pytest.mark.django_db
-def test_update_appointment_entry(add_appointment_entry):
+def test_update_appointment_entry(authenticated_user, add_appointment_entry):
     """
     GIVEN a Django application
     WHEN the user requests to update an appointment
@@ -408,15 +324,7 @@ def test_update_appointment_entry(add_appointment_entry):
     appointment_entries = AppointmentEntry.objects.all()
     assert len(appointment_entries) == 0
 
-    user = User.objects.create_user(
-        email="normal@user.com",
-        password="abcdefghij123!+_",
-        first_name="Normal",
-        last_name="User"
-    )
-
-    client = APIClient()
-    client.force_authenticate(user=user)
+    client, user = authenticated_user
 
     appointment_entry = add_appointment_entry(
         title="Dentist",
@@ -451,21 +359,13 @@ def test_update_appointment_entry(add_appointment_entry):
 
 
 @pytest.mark.django_db
-def test_update_appointment_entry_incorrect_id():
+def test_update_appointment_entry_incorrect_id(authenticated_user):
     """
     GIVEN a Django application
     WHEN the user requests to update an appointment with an incorrect id
     THEN the appointment is not updated
     """
-    user = User.objects.create_user(
-        email="normal@user.com",
-        password="abcdefghij123!+_",
-        first_name="Normal",
-        last_name="User"
-    )
-
-    client = APIClient()
-    client.force_authenticate(user=user)
+    client, user = authenticated_user
 
     incorrect_id = 12574
 
@@ -475,21 +375,13 @@ def test_update_appointment_entry_incorrect_id():
 
 
 @pytest.mark.django_db
-def test_update_appointment_entry_invalid_json(add_appointment_entry):
+def test_update_appointment_entry_invalid_json(authenticated_user, add_appointment_entry):
     """
     GIVEN a Django application
     WHEN the user requests to update an appointment with invalid JSON
     THEN the appointment is not updated
     """
-    user = User.objects.create_user(
-        email="normal@user.com",
-        password="abcdefghij123!+_",
-        first_name="Normal",
-        last_name="User"
-    )
-
-    client = APIClient()
-    client.force_authenticate(user=user)
+    client, user = authenticated_user
 
     appointment_entry = add_appointment_entry(
         title="Dentist",
@@ -509,21 +401,13 @@ def test_update_appointment_entry_invalid_json(add_appointment_entry):
 
 
 @pytest.mark.django_db
-def test_update_appointment_entry_invalid_json_keys(add_appointment_entry):
+def test_update_appointment_entry_invalid_json_keys(authenticated_user, add_appointment_entry):
     """
     GIVEN a Django application
     WHEN the user requests to update an appointment with invalid JSON keys
     THEN the appointment is not updated
     """
-    user = User.objects.create_user(
-        email="normal@user.com",
-        password="abcdefghij123!+_",
-        first_name="Normal",
-        last_name="User"
-    )
-
-    client = APIClient()
-    client.force_authenticate(user=user)
+    client, user = authenticated_user
 
     appointment_entry = add_appointment_entry(
         title="Dentist",

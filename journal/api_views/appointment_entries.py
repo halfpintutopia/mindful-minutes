@@ -81,8 +81,25 @@ class AppointmentEntryDetail(APIView):
                     {"error": "Invalid appointment ID"},
                     status=status.HTTP_400_BAD_REQUEST
                 )
-            else:
-                return Response(status=status.HTTP_404_NOT_FOUND)
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
         serializer = AppointmentEntrySerializer(appointment_entry)
         return Response(serializer.data)
+
+    def delete(self, request, pk, format=None):
+        """
+        Delete an appointment entry
+        """
+        try:
+            appointment_id = isinstance(pk, int)
+            appointment_entry = self.get_object(appointment_id)
+        except (ValueError, Http404):
+            if isinstance(pk, str):
+                return Response(
+                    {"error": "Invalid appointment ID"},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        appointment_entry.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)

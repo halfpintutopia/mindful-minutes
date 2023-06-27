@@ -26,11 +26,11 @@
 | Endpoint                | HTTP Method | CRUD Method | Result                         |         |
 | :---------------------- | :---------: | :---------: | :----------------------------- | ------- |
 | /api/appointments/      |     GET     |    READ     | get all appointments           | &#9745; |
-| /api/appointments/:date |     GET     |    READ     | get all appointments by date   |         |
+| /api/appointments/:date |     GET     |    READ     | get all appointments by date   | &#9745; |
 | /api/appointments/:id   |     GET     |    READ     | get a single appointment by ID | &#9745; |
 | /api/appointments/      |    POST     |   CREATE    | add an appointment             | &#9745; |
 | /api/appointments/:id   |     PUT     |   UPDATE    | update an appointment          |         |
-| /api/appointments/:id   |   DELETE    |   DELETE    | delete an appointment          |         |
+| /api/appointments/:id   |   DELETE    |   DELETE    | delete an appointment          | &#9745; |
 
 ---
 

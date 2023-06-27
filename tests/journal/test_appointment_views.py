@@ -271,10 +271,15 @@ def test_remove_appointment_entry(authenticated_user, add_appointment_entry):
 
 
 @pytest.mark.django_db
-def test_remove_appointment_entry_string_id(authenticated_user, add_appointment_entry):
+@pytest.mark.parametrize("incorrect_id, status_code", [
+    ["random", 404],
+    [12574, 404],
+    ["98", 404]
+])
+def test_remove_appointment_invalid_id(authenticated_user, incorrect_id, status_code):
     """
     GIVEN a Django application
-    WHEN the user requests to remove an appointment with a string id
+    WHEN the user requests to remove an appointment with an invalid id
     THEN the appointment is not removed
     """
     appointment_entries = AppointmentEntry.objects.all()
@@ -282,32 +287,8 @@ def test_remove_appointment_entry_string_id(authenticated_user, add_appointment_
 
     client, user = authenticated_user
 
-    incorrect_id = "random"
-
     res = client.get(f"/api/appointments/id/{incorrect_id}/")
-    assert res.status_code == 404
-
-    updated_appointment_entries = AppointmentEntry.objects.all()
-    assert len(appointment_entries) == len(updated_appointment_entries)
-    assert len(updated_appointment_entries) == 0
-
-
-@pytest.mark.django_db
-def test_remove_appointment_entry_incorrect_id(authenticated_user, add_appointment_entry):
-    """
-    GIVEN a Django application
-    WHEN the user requests to remove an appointment with a string id
-    THEN the appointment is not removed
-    """
-    appointment_entries = AppointmentEntry.objects.all()
-    assert len(appointment_entries) == 0
-
-    client, user = authenticated_user
-
-    incorrect_id = 12574
-
-    res = client.get(f"/api/appointments/id/{incorrect_id}/")
-    assert res.status_code == 404
+    assert res.status_code == status_code
 
     updated_appointment_entries = AppointmentEntry.objects.all()
     assert len(appointment_entries) == len(updated_appointment_entries)
@@ -359,23 +340,40 @@ def test_update_appointment_entry(authenticated_user, add_appointment_entry):
 
 
 @pytest.mark.django_db
-def test_update_appointment_entry_incorrect_id(authenticated_user):
+@pytest.mark.parametrize("incorrect_id, status_code", [
+    ["random", 404],
+    [12574, 404],
+    ["98", 404]
+])
+def test_update_appointment_entry_incorrect_id(authenticated_user, incorrect_id, status_code):
     """
     GIVEN a Django application
     WHEN the user requests to update an appointment with an incorrect id
     THEN the appointment is not updated
     """
-    client, user = authenticated_user
-
-    incorrect_id = 12574
+    (client, *_) = authenticated_user
 
     res = client.put(f"/api/appointments/id/{incorrect_id}/")
 
-    assert res.status_code == 404
+    assert res.status_code == status_code
 
 
 @pytest.mark.django_db
-def test_update_appointment_entry_invalid_json(authenticated_user, add_appointment_entry):
+@pytest.mark.parametrize("add_appointment_entry, payload, status_code", [
+    ["add_appointment_entry", {}, 400],
+    ["add_appointment_entry", {
+        "title": "Dentist",
+        "date": "2023-07-06",
+        "time from": "09:00:00",
+        "time until": "10:00:00",
+    }, 400],
+], indirect=["add_appointment_entry"])
+def test_update_appointment_entry_invalid_json(
+    authenticated_user,
+    add_appointment_entry,
+    payload,
+    status_code
+):
     """
     GIVEN a Django application
     WHEN the user requests to update an appointment with invalid JSON
@@ -393,39 +391,8 @@ def test_update_appointment_entry_invalid_json(authenticated_user, add_appointme
 
     res = client.put(
         f"/api/appointments/id/{appointment_entry.id}/",
-        {},
+        payload,
         format="json"
     )
 
-    assert res.status_code == 400
-
-
-@pytest.mark.django_db
-def test_update_appointment_entry_invalid_json_keys(authenticated_user, add_appointment_entry):
-    """
-    GIVEN a Django application
-    WHEN the user requests to update an appointment with invalid JSON keys
-    THEN the appointment is not updated
-    """
-    client, user = authenticated_user
-
-    appointment_entry = add_appointment_entry(
-        title="Dentist",
-        date="2023-07-06",
-        time_from="09:00:00",
-        time_until="10:00:00",
-        user=user,
-    )
-
-    res = client.put(
-        f"/api/appointments/id/{appointment_entry.id}/",
-        {
-            "title": "Dentist",
-            "date": "2023-07-06",
-            "time from": "09:00:00",
-            "time until": "10:00:00",
-        },
-        format="json"
-    )
-
-    assert res.status_code == 400
+    assert res.status_code == status_code

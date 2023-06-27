@@ -27,7 +27,11 @@ def test_add_appointment():
         last_name="User"
     )
 
+    # Acts as a simulatd web browser that allows
+    # you to make requests to API endpoints and receive responses.
     client = APIClient()
+    # Sets up the test client with an authenticated user,
+    # then use the client to perform actions on behalf of the authenticated user
     client.force_authenticate(user=user)
 
     appointment_data = {
@@ -392,3 +396,152 @@ def test_remove_appointment_entry_incorrect_id(add_appointment_entry):
     updated_appointment_entries = AppointmentEntry.objects.all()
     assert len(appointment_entries) == len(updated_appointment_entries)
     assert len(updated_appointment_entries) == 0
+
+
+@pytest.mark.django_db
+def test_update_appointment_entry(add_appointment_entry):
+    """
+    GIVEN a Django application
+    WHEN the user requests to update an appointment
+    THEN the appointment is updated
+    """
+    appointment_entries = AppointmentEntry.objects.all()
+    assert len(appointment_entries) == 0
+
+    user = User.objects.create_user(
+        email="normal@user.com",
+        password="abcdefghij123!+_",
+        first_name="Normal",
+        last_name="User"
+    )
+
+    client = APIClient()
+    client.force_authenticate(user=user)
+
+    appointment_entry = add_appointment_entry(
+        title="Dentist",
+        date="2023-07-06",
+        time_from="09:00:00",
+        time_until="10:00:00",
+        user=user,
+    )
+
+    res = client.put(
+        f"/api/appointments/id/{appointment_entry.id}/",
+        {
+            "title": "Dentist",
+            "date": "2023-07-06",
+            "time_from": "10:00:00",
+            "time_until": "11:00:00",
+        },
+        format="json"
+    )
+
+    assert res.status_code == 200
+    assert res.data["time_from"] == "10:00:00"
+    assert res.data["time_until"] == "11:00:00"
+
+    res_check = client.get(f"/api/appointments/id/{appointment_entry.id}/")
+    assert res_check.status_code == 200
+    assert res.data["time_from"] == "10:00:00"
+    assert res.data["time_until"] == "11:00:00"
+
+    appointment_entries = AppointmentEntry.objects.all()
+    assert len(appointment_entries) == 1
+
+
+@pytest.mark.django_db
+def test_update_appointment_entry_incorrect_id():
+    """
+    GIVEN a Django application
+    WHEN the user requests to update an appointment with an incorrect id
+    THEN the appointment is not updated
+    """
+    user = User.objects.create_user(
+        email="normal@user.com",
+        password="abcdefghij123!+_",
+        first_name="Normal",
+        last_name="User"
+    )
+
+    client = APIClient()
+    client.force_authenticate(user=user)
+
+    incorrect_id = 12574
+
+    res = client.put(f"/api/appointments/id/{incorrect_id}/")
+
+    assert res.status_code == 404
+
+
+@pytest.mark.django_db
+def test_update_appointment_entry_invalid_json(add_appointment_entry):
+    """
+    GIVEN a Django application
+    WHEN the user requests to update an appointment with invalid JSON
+    THEN the appointment is not updated
+    """
+    user = User.objects.create_user(
+        email="normal@user.com",
+        password="abcdefghij123!+_",
+        first_name="Normal",
+        last_name="User"
+    )
+
+    client = APIClient()
+    client.force_authenticate(user=user)
+
+    appointment_entry = add_appointment_entry(
+        title="Dentist",
+        date="2023-07-06",
+        time_from="09:00:00",
+        time_until="10:00:00",
+        user=user,
+    )
+
+    res = client.put(
+        f"/api/appointments/id/{appointment_entry.id}/",
+        {},
+        format="json"
+    )
+
+    assert res.status_code == 400
+
+
+@pytest.mark.django_db
+def test_update_appointment_entry_invalid_json_keys(add_appointment_entry):
+    """
+    GIVEN a Django application
+    WHEN the user requests to update an appointment with invalid JSON keys
+    THEN the appointment is not updated
+    """
+    user = User.objects.create_user(
+        email="normal@user.com",
+        password="abcdefghij123!+_",
+        first_name="Normal",
+        last_name="User"
+    )
+
+    client = APIClient()
+    client.force_authenticate(user=user)
+
+    appointment_entry = add_appointment_entry(
+        title="Dentist",
+        date="2023-07-06",
+        time_from="09:00:00",
+        time_until="10:00:00",
+        user=user,
+    )
+
+    res = client.put(
+        f"/api/appointments/id/{appointment_entry.id}/",
+        {
+            title: "Dentist",
+            date: "2023-07-06",
+            time_from: "09:00:00",
+            time_until: "10:00:00",
+        },
+        format="json"
+    )
+
+    assert res.status_code == 400

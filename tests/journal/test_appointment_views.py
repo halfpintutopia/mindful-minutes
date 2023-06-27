@@ -190,6 +190,9 @@ def test_get_all_appointment_entries(add_appointment_entry):
     WHEN the user requests to retrieve all appointments
     THEN check all appointments are retrieved
     """
+    appointment_entries = AppointmentEntry.objects.all()
+    assert len(appointment_entries) == 0
+
     user = User.objects.create_user(
         email="normal@user.com",
         password="abcdefghij123!+_",
@@ -221,6 +224,9 @@ def test_get_all_appointment_entries(add_appointment_entry):
     assert res.status_code == 200
     assert res.data[0]["title"] == "Dentist"
     assert res.data[1]["title"] == "Gym"
+
+    appointment_entries = AppointmentEntry.objects.all()
+    assert len(appointment_entries) == 2
 
 
 @pytest.mark.django_db
@@ -282,5 +288,107 @@ def test_get_all_appointment_entries_by_date(add_appointment_entry):
     assert res.data[0]["title"] == "Dentist"
     assert res.data[1]["title"] == "Gym"
 
-# @pytest.mark.django_db
-# def test_remove_appointment(add_appointment_entry):
+
+@pytest.mark.django_db
+def test_remove_appointment_entry(add_appointment_entry):
+    """
+    GIVEN a Django application
+    WHEN the user requests to remove an appointment
+    THEN the appointment is removed
+    """
+    appointment_entries = AppointmentEntry.objects.all()
+    assert len(appointment_entries) == 0
+
+    user = User.objects.create_user(
+        email="normal@user.com",
+        password="abcdefghij123!+_",
+        first_name="Normal",
+        last_name="User"
+    )
+
+    client = APIClient()
+    client.force_authenticate(user=user)
+
+    appointment_entry = add_appointment_entry(
+        title="Dentist",
+        date="2023-07-06",
+        time_from="09:00:00",
+        time_until="10:00:00",
+        user=user,
+    )
+
+    res = client.get(f"/api/appointments/id/{appointment_entry.id}/")
+    assert res.status_code == 200
+    assert res.data["title"] == "Dentist"
+
+    res_delete = client.delete(f"/api/appointments/id/{appointment_entry.id}/")
+    assert res_delete.status_code == 204
+
+    res_retrieve = client.get(f"/api/appointments/")
+    assert res_retrieve.status_code == 200
+    assert len(res_retrieve.data) == 0
+
+    assert not AppointmentEntry.objects.filter(id=appointment_entry.id).exists()
+
+    appointment_entries = AppointmentEntry.objects.all()
+    assert len(appointment_entries) == 0
+
+
+@pytest.mark.django_db
+def test_remove_appointment_entry_string_id(add_appointment_entry):
+    """
+    GIVEN a Django application
+    WHEN the user requests to remove an appointment with a string id
+    THEN the appointment is not removed
+    """
+    appointment_entries = AppointmentEntry.objects.all()
+    assert len(appointment_entries) == 0
+
+    user = User.objects.create_user(
+        email="normal@user.com",
+        password="abcdefghij123!+_",
+        first_name="Normal",
+        last_name="User"
+    )
+
+    client = APIClient()
+    client.force_authenticate(user=user)
+
+    incorrect_id = "random"
+
+    res = client.get(f"/api/appointments/id/{incorrect_id}/")
+    assert res.status_code == 404
+
+    updated_appointment_entries = AppointmentEntry.objects.all()
+    assert len(appointment_entries) == len(updated_appointment_entries)
+    assert len(updated_appointment_entries) == 0
+
+
+@pytest.mark.django_db
+def test_remove_appointment_entry_incorrect_id(add_appointment_entry):
+    """
+    GIVEN a Django application
+    WHEN the user requests to remove an appointment with a string id
+    THEN the appointment is not removed
+    """
+    appointment_entries = AppointmentEntry.objects.all()
+    assert len(appointment_entries) == 0
+
+    user = User.objects.create_user(
+        email="normal@user.com",
+        password="abcdefghij123!+_",
+        first_name="Normal",
+        last_name="User"
+    )
+
+    client = APIClient()
+    client.force_authenticate(user=user)
+
+    incorrect_id = 12574
+
+    res = client.get(f"/api/appointments/id/{incorrect_id}/")
+    assert res.status_code == 404
+
+    updated_appointment_entries = AppointmentEntry.objects.all()
+    assert len(appointment_entries) == len(updated_appointment_entries)
+    assert len(updated_appointment_entries) == 0

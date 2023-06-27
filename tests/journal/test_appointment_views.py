@@ -536,10 +536,10 @@ def test_update_appointment_entry_invalid_json_keys(add_appointment_entry):
     res = client.put(
         f"/api/appointments/id/{appointment_entry.id}/",
         {
-            title: "Dentist",
-            date: "2023-07-06",
-            time_from: "09:00:00",
-            time_until: "10:00:00",
+            "title": "Dentist",
+            "date": "2023-07-06",
+            "time from": "09:00:00",
+            "time until": "10:00:00",
         },
         format="json"
     )

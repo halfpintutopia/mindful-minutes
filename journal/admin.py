@@ -202,12 +202,12 @@ class WinEntryAdmin(admin.ModelAdmin):
     )
     list_display = (
         "user",
-        "content"
+        "title"
     )
     fields = (
-        "user", "content", "created_on", "updated_on",
+        "user", "title", "created_on", "updated_on",
     )
-    search_fields = ["user", "content", "created_on"]
+    search_fields = ["user", "title", "created_on"]
     ordering = ("created_on",)
 
 

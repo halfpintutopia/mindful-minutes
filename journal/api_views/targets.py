@@ -1,4 +1,4 @@
-from datetime import date, datetime
+from datetime import date
 
 from django.http import Http404
 
@@ -29,7 +29,8 @@ class TargetList(APIView):
                     {"error": "Invalid date format. Please use YYYY-MM-DD."},
                     status=status.HTTP_400_BAD_REQUEST
                 )
-            # double underscore used to perform field lookups and filters on related fields
+            # double underscore used to perform field lookups and filters
+            # on related fields
             # https://docs.djangoproject.com/en/3.2/topics/db/queries/#field-lookups
             appointment_entries = Target.objects.filter(
                 created_on__date=requested_date)

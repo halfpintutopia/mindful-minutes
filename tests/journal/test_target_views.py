@@ -4,6 +4,8 @@ import pytest
 
 from journal.models import Target
 
+from journal.serializers import TargetSerializer
+
 
 @pytest.mark.django_db
 def test_add_target(authenticated_user):
@@ -18,7 +20,8 @@ def test_add_target(authenticated_user):
     client, user = authenticated_user
 
     target_data = {
-        "content": "20 minutes of meditation",
+        "title": "20 minutes of meditation",
+        "order": 1,
         "user": user.id,
     }
 
@@ -28,9 +31,11 @@ def test_add_target(authenticated_user):
         format="json"
     )
 
+    print("Response data", res.data)
+
     assert res.status_code == 201
     assert res.data["user"] == user.id
-    assert res.data["content"] == "20 minutes of meditation"
+    assert res.data["title"] == "20 minutes of meditation"
 
     target_entries = Target.objects.all()
     assert len(target_entries) == 1
@@ -39,7 +44,7 @@ def test_add_target(authenticated_user):
 @pytest.mark.django_db
 @pytest.mark.parametrize("payload, status_code", [
     [{}, 400],
-    [{"content entry": "20 minutes of meditation"}, 400]
+    [{"title entry": "20 minutes of meditation", "order": 1}, 400]
 ])
 def test_add_target_invalid_json(authenticated_user, payload, status_code):
     """
@@ -66,17 +71,16 @@ def test_add_target_invalid_json(authenticated_user, payload, status_code):
 
 
 @pytest.mark.django_db
-@pytest.mark.django_db
-@pytest.mark.parametrize("add_target_entry, endpoint, expected_content", [
-    ["add_target_entry", "id", "20 minutes of meditation"],
-    ["add_target_entry", "date", [
+@pytest.mark.parametrize("endpoint, expected_title", [
+    ["id", "20 minutes of meditation"],
+    ["date", [
         "20 minutes of meditation",
         "20 minute cold shower",
         "Meet Stefan for lunch",
         "Read 30 minutes of Momo"
     ]]
 ])
-def test_get_single_target_entry(authenticated_user, add_target_entry, endpoint, expected_content):
+def test_get_single_target_entry(authenticated_user, add_target_entry, endpoint, expected_title):
     """
     GIVEN a Django application
     WHEN the user requests to retrieve a single target by id or targets by date
@@ -85,22 +89,26 @@ def test_get_single_target_entry(authenticated_user, add_target_entry, endpoint,
     client, user = authenticated_user
 
     target_entry_one = add_target_entry(
-        content="20 minutes of meditation",
+        title="20 minutes of meditation",
+        order=1,
         user=user
     )
 
     target_entry_two = add_target_entry(
-        content="20 minute cold shower",
+        title="20 minute cold shower",
+        order=2,
         user=user,
     )
 
     target_entry_three = add_target_entry(
-        content="Meet Stefan for lunch",
+        title="Meet Stefan for lunch",
+        order=3,
         user=user,
     )
 
     target_entry_four = add_target_entry(
-        content="Read 30 minutes of Momo",
+        title="Read 30 minutes of Momo",
+        order=4,
         user=user,
     )
 
@@ -110,16 +118,19 @@ def test_get_single_target_entry(authenticated_user, add_target_entry, endpoint,
 
         assert res.status_code == 200
         assert res.data["user"] == user.id
-        assert res.data["content"] == expected_content
+        assert res.data["title"] == expected_title
+        assert res.data["order"] == 1
     elif endpoint == "date":
         current_date = date.today()
 
         res = client.get(f"/api/targets/date/{current_date}/")
 
         assert res.status_code == 200
-        assert res.data[0]["created_on"] == date.today()
-        assert len(res.data) == len(expected_content)
-        assert all(entry["content"] in expected_content for entry in res.data)
+        assert len(res.data) == len(expected_title)
+        # all() built-in function that returns True
+        assert all(entry["title"] in expected_title for entry in res.data)
+        today = date.today().isoformat()
+        assert all(entry["created_on"] == today for entry in res.data)
 
 
 @pytest.mark.django_db
@@ -153,20 +164,22 @@ def test_get_all_target_entries(authenticated_user, add_target_entry):
     client, user = authenticated_user
 
     target_entry_one = add_target_entry(
-        content="20 minutes of meditation",
+        title="20 minutes of meditation",
+        order=1,
         user=user
     )
 
     target_entry_two = add_target_entry(
-        content="20 minute cold shower",
+        title="20 minute cold shower",
+        order=2,
         user=user,
     )
 
     res = client.get("/api/targets/")
 
     assert res.status_code == 200
-    assert res.data[0]["content"] == "20 minutes of meditation"
-    assert res.data[1]["content"] == "20 minute cold shower"
+    assert res.data[0]["title"] == "20 minutes of meditation"
+    assert res.data[1]["title"] == "20 minute cold shower"
 
     target_entries = Target.objects.all()
     assert len(target_entries) == 2
@@ -185,13 +198,14 @@ def test_remove_target_entry(authenticated_user, add_target_entry):
     client, user = authenticated_user
 
     target_entry = add_target_entry(
-        content="20 minutes of meditation",
+        title="20 minutes of meditation",
+        order=1,
         user=user
     )
 
     res = client.get(f"/api/targets/id/{target_entry.id}/")
     assert res.status_code == 200
-    assert res.data["content"] == "20 minutes of meditation"
+    assert res.data["title"] == "20 minutes of meditation"
 
     res_delete = client.delete(f"/api/targets/id/{target_entry.id}/")
     assert res_delete.status_code == 204
@@ -232,7 +246,27 @@ def test_remove_target_invalid_id(authenticated_user, incorrect_id, status_code)
 
 
 @pytest.mark.django_db
-def test_update_target_entry(authenticated_user, add_target_entry):
+@pytest.mark.parametrize("test_data", [
+    {
+        "payload": {
+            "title": "20 minutes of yoga",
+            "order": 1
+        },
+        "status_code": 200,
+        "expected_title": "20 minutes of yoga",
+        "expected_order": 1
+    },
+    {
+        "payload": {
+            "title": "20 minutes of meditation",
+            "order": 2
+        },
+        "status_code": 200,
+        "expected_title": "20 minutes of meditation",
+        "expected_order": 2
+    }
+])
+def test_update_target_entry(authenticated_user, add_target_entry, test_data):
     """
     GIVEN a Django application
     WHEN the user requests to update an target
@@ -244,27 +278,31 @@ def test_update_target_entry(authenticated_user, add_target_entry):
     client, user = authenticated_user
 
     target_entry = add_target_entry(
-        content="20 minutes of meditation",
+        title="20 minutes of meditation",
+        order=1,
         user=user
     )
 
+    payload = test_data["payload"]
+    payload["user"] = user.id
+
     res = client.put(
         f"/api/targets/id/{target_entry.id}/",
-        {
-            "content": "20 minutes of yoga",
-            "user": user.id
-        },
+        payload,
         format="json"
     )
 
-    assert res.status_code == 200
-    assert res.data["created_on"] == date.today()
-    assert res.data["content"] == "20 minutes of yoga"
+    assert res.status_code == test_data["status_code"]
+    assert res.data["created_on"] == date.today().isoformat()
+    assert res.data["title"] == test_data["expected_title"]
+    assert res.data["order"] == test_data["expected_order"]
 
     res_check = client.get(f"/api/targets/id/{target_entry.id}/")
-    assert res_check.status_code == 200
-    assert res.data["created_on"] == date.today()
-    assert res.data["content"] == "20 minutes of yoga"
+
+    assert res_check.status_code == test_data["status_code"]
+    assert res.data["created_on"] == date.today().isoformat()
+    assert res.data["title"] == test_data["expected_title"]
+    assert res.data["order"] == test_data["expected_order"]
 
     target_entries = Target.objects.all()
     assert len(target_entries) == 1
@@ -293,7 +331,8 @@ def test_update_target_entry_incorrect_id(authenticated_user, incorrect_id, stat
 @pytest.mark.parametrize("add_target_entry, payload, status_code", [
     ["add_target_entry", {}, 400],
     ["add_target_entry", {
-        "content entry": "20 minutes of yoga"
+        "title entry": "20 minutes of yoga",
+        "order": 1
     }, 400],
 ], indirect=["add_target_entry"])
 def test_update_target_entry_invalid_json(
@@ -310,7 +349,8 @@ def test_update_target_entry_invalid_json(
     client, user = authenticated_user
 
     target_entry = add_target_entry(
-        content="20 minutes of meditation",
+        title="20 minutes of meditation",
+        order=1,
         user=user,
     )
 

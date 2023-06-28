@@ -57,6 +57,9 @@ For further details of the design process, please see:
 
 ### Future Implementations
 
+Personalise experience:
+- [How to use ChatGPT as a Personalized Mantra Generation for Meditation](https://chatgptschool.org/how-to-use-chatgpt-as-a-personalized-mantra-generator-for-meditation-2/)
+
 ### Accessibility
 
 ## Technologies Used

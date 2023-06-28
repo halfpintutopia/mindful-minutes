@@ -105,16 +105,25 @@ class Target(models.Model):
         related_name="targets"
     )
     title = models.CharField(_("Target"), max_length=255)
-    order = models.IntegerField(null=True, blank=True)
+    order = models.IntegerField(_("Order"))
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
+
+    # @property decorator transforms the method into a getter method for a specific property
+    # https://www.geeksforgeeks.org/python-property-decorator-property/
+    @property
+    def created_on_date(self):
+        """
+        Returns the date the target was created
+        """
+        return self.created_on.date
 
     class Meta:
         """
         Meta options for the Target model
         """
         verbose_name_plural = "Targets"
-        ordering = ["created_on"]
+        ordering = ["order"]
 
     def __str__(self):
         return self.title
@@ -132,6 +141,13 @@ class Note(models.Model):
     content = models.TextField(_("Notes"))
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
+
+    @property
+    def created_on_date(self):
+        """
+        Returns the date the note was created
+        """
+        return self.created_on.date
 
     class Meta:
         """
@@ -154,6 +170,13 @@ class KnowledgeEntry(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 
+    @property
+    def created_on_date(self):
+        """
+        Returns the date the knowledge entry was created
+        """
+        return self.created_on.date
+
     class Meta:
         """
         Meta options for the Target model
@@ -175,6 +198,13 @@ class GratitudeEntry(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 
+    @property
+    def created_on_date(self):
+        """
+        Returns the date the gratitude entry was created
+        """
+        return self.created_on.date
+
     class Meta:
         """
         Meta options for the Target model
@@ -192,9 +222,16 @@ class WinEntry(models.Model):
         on_delete=models.CASCADE,
         related_name="win_entries"
     )
-    content = models.CharField(_("Win Entry"), max_length=255)
+    title = models.CharField(_("Win Entry"), max_length=255)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
+
+    @property
+    def created_on_date(self):
+        """
+        Returns the date the win entry was created
+        """
+        return self.created_on.date
 
     class Meta:
         """
@@ -217,6 +254,13 @@ class IdeasEntry(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 
+    @property
+    def created_on_date(self):
+        """
+        Returns the date the ideas entry was created
+        """
+        return self.created_on.date
+
     class Meta:
         """
         Meta options for the IdeaEntry model
@@ -237,6 +281,13 @@ class ImprovementEntry(models.Model):
     content = models.TextField(_("Improvement Entry"))
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
+
+    @property
+    def created_on_date(self):
+        """
+        Returns the date the improvement entry was created
+        """
+        return self.created_on.date
 
     class Meta:
         """
@@ -267,6 +318,13 @@ class EmotionEntry(models.Model):
     emotion = models.CharField(max_length=10, choices=EMOTION_CHOICES)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
+
+    @property
+    def created_on_date(self):
+        """
+        Returns the date the emotion entry was created
+        """
+        return self.created_on.date
 
     class Meta:
         """

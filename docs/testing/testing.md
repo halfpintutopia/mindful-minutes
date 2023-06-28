@@ -14,7 +14,6 @@
     - [Win Entries](#win-entries)
     - [Ideas Entries](#ideas-entries)
     - [Improvement Entries](#improvement-entries)
-    - [Ideas Entries](#ideas-entries-1)
     - [Emotion Entries](#emotion-entries)
 
 ## Django REST Framework
@@ -29,21 +28,21 @@
 | /api/appointments/:date |     GET     |    READ     | get all appointments by date   | &#9745; |
 | /api/appointments/:id   |     GET     |    READ     | get a single appointment by ID | &#9745; |
 | /api/appointments/      |    POST     |   CREATE    | add an appointment             | &#9745; |
-| /api/appointments/:id   |     PUT     |   UPDATE    | update an appointment          |         |
+| /api/appointments/:id   |     PUT     |   UPDATE    | update an appointment          | &#9745; |
 | /api/appointments/:id   |   DELETE    |   DELETE    | delete an appointment          | &#9745; |
 
 ---
 
 #### Targets
 
-| Endpoint           | HTTP Method | CRUD Method | Result                    |     |
-| :----------------- | :---------: | :---------: | :------------------------ | --- |
-| /api/targets/      |     GET     |    READ     | get all targets           |     |
-| /api/targets/:date |     GET     |    READ     | get all targets by date   |     |
-| /api/targets/:id   |     GET     |    READ     | get a single target by ID |     |
-| /api/targets/      |    POST     |   CREATE    | add an target             |     |
-| /api/targets/:id   |     PUT     |   UPDATE    | update an target          |     |
-| /api/targets/:id   |   DELETE    |   DELETE    | delete an target          |     |
+| Endpoint           | HTTP Method | CRUD Method | Result                    |         |
+| :----------------- | :---------: | :---------: | :------------------------ | ------- |
+| /api/targets/      |     GET     |    READ     | get all targets           | &#9745; |
+| /api/targets/:date |     GET     |    READ     | get all targets by date   | &#9745; |
+| /api/targets/:id   |     GET     |    READ     | get a single target by ID | &#9745; |
+| /api/targets/      |    POST     |   CREATE    | add an target             | &#9745; |
+| /api/targets/:id   |     PUT     |   UPDATE    | update an target          | &#9745; |
+| /api/targets/:id   |   DELETE    |   DELETE    | delete an target          | &#9745; |
 
 ---
 
@@ -117,8 +116,6 @@
 
 #### Improvement Entries
 
-#### Ideas Entries
-
 | Endpoint                | HTTP Method | CRUD Method | Result                         |     |
 | :---------------------- | :---------: | :---------: | :----------------------------- | --- |
 | /api/improvements/      |     GET     |    READ     | get all improvements           |     |
@@ -128,7 +125,8 @@
 | /api/improvements/:id   |     PUT     |   UPDATE    | update an improvement          |     |
 | /api/improvements/:id   |   DELETE    |   DELETE    | delete an improvement          |     |
 
----
+
+--- 
 
 
 #### Emotion Entries

@@ -2,12 +2,7 @@ from datetime import date
 
 import pytest
 
-from django.contrib.auth import get_user_model
-from rest_framework.test import APIClient
-
 from journal.models import AppointmentEntry
-
-User = get_user_model()
 
 
 @pytest.mark.django_db
@@ -102,7 +97,10 @@ def test_add_appointment_missing_title(authenticated_user):
 
 
 @pytest.mark.django_db
-def test_get_single_appointment_entry(authenticated_user, add_appointment_entry):
+def test_get_single_appointment_entry(
+    authenticated_user,
+    add_appointment_entry
+):
     """
     GIVEN a Django application
     WHEN the user requests to retrieve an appointment
@@ -182,7 +180,10 @@ def test_get_all_appointment_entries(authenticated_user, add_appointment_entry):
 
 
 @pytest.mark.django_db
-def test_get_all_appointment_entries_by_date(authenticated_user, add_appointment_entry):
+def test_get_all_appointment_entries_by_date(
+    authenticated_user,
+    add_appointment_entry
+):
     """
     GIVEN a Django application
     WHEN the user requests to retrieve all appointments by date
@@ -260,7 +261,7 @@ def test_remove_appointment_entry(authenticated_user, add_appointment_entry):
     res_delete = client.delete(f"/api/appointments/id/{appointment_entry.id}/")
     assert res_delete.status_code == 204
 
-    res_retrieve = client.get(f"/api/appointments/")
+    res_retrieve = client.get("/api/appointments/")
     assert res_retrieve.status_code == 200
     assert len(res_retrieve.data) == 0
 
@@ -276,7 +277,11 @@ def test_remove_appointment_entry(authenticated_user, add_appointment_entry):
     [12574, 404],
     ["98", 404]
 ])
-def test_remove_appointment_invalid_id(authenticated_user, incorrect_id, status_code):
+def test_remove_appointment_invalid_id(
+    authenticated_user,
+    incorrect_id,
+    status_code
+):
     """
     GIVEN a Django application
     WHEN the user requests to remove an appointment with an invalid id
@@ -345,7 +350,11 @@ def test_update_appointment_entry(authenticated_user, add_appointment_entry):
     [12574, 404],
     ["98", 404]
 ])
-def test_update_appointment_entry_incorrect_id(authenticated_user, incorrect_id, status_code):
+def test_update_appointment_entry_incorrect_id(
+    authenticated_user,
+    incorrect_id,
+    status_code
+):
     """
     GIVEN a Django application
     WHEN the user requests to update an appointment with an incorrect id

@@ -4,8 +4,6 @@ import pytest
 
 from journal.models import Target
 
-from journal.serializers import TargetSerializer
-
 
 @pytest.mark.django_db
 def test_add_target(authenticated_user):
@@ -80,7 +78,12 @@ def test_add_target_invalid_json(authenticated_user, payload, status_code):
         "Read 30 minutes of Momo"
     ]]
 ])
-def test_get_single_target_entry(authenticated_user, add_target_entry, endpoint, expected_title):
+def test_get_single_target_entry(
+    authenticated_user,
+    add_target_entry,
+    endpoint,
+    expected_title
+):
     """
     GIVEN a Django application
     WHEN the user requests to retrieve a single target by id or targets by date
@@ -94,19 +97,19 @@ def test_get_single_target_entry(authenticated_user, add_target_entry, endpoint,
         user=user
     )
 
-    target_entry_two = add_target_entry(
+    add_target_entry(
         title="20 minute cold shower",
         order=2,
         user=user,
     )
 
-    target_entry_three = add_target_entry(
+    add_target_entry(
         title="Meet Stefan for lunch",
         order=3,
         user=user,
     )
 
-    target_entry_four = add_target_entry(
+    add_target_entry(
         title="Read 30 minutes of Momo",
         order=4,
         user=user,
@@ -138,7 +141,10 @@ def test_get_single_target_entry(authenticated_user, add_target_entry, endpoint,
     ["random", 404],
     [1234, 404]
 ])
-def test_get_single_target_incorrect_id(authenticated_user, invalid_id, status_code):
+def test_get_single_target_incorrect_id(
+    authenticated_user,
+    invalid_id, status_code
+):
     """
     GIVEN a Django application
     WHEN the user requests to retrieve an target with an incorrect id
@@ -163,13 +169,13 @@ def test_get_all_target_entries(authenticated_user, add_target_entry):
 
     client, user = authenticated_user
 
-    target_entry_one = add_target_entry(
+    add_target_entry(
         title="20 minutes of meditation",
         order=1,
         user=user
     )
 
-    target_entry_two = add_target_entry(
+    add_target_entry(
         title="20 minute cold shower",
         order=2,
         user=user,
@@ -210,7 +216,7 @@ def test_remove_target_entry(authenticated_user, add_target_entry):
     res_delete = client.delete(f"/api/targets/id/{target_entry.id}/")
     assert res_delete.status_code == 204
 
-    res_retrieve = client.get(f"/api/targets/")
+    res_retrieve = client.get("/api/targets/")
     assert res_retrieve.status_code == 200
     assert len(res_retrieve.data) == 0
 
@@ -226,7 +232,11 @@ def test_remove_target_entry(authenticated_user, add_target_entry):
     [12574, 404],
     ["98", 404]
 ])
-def test_remove_target_invalid_id(authenticated_user, incorrect_id, status_code):
+def test_remove_target_invalid_id(
+    authenticated_user,
+    incorrect_id,
+    status_code
+):
     """
     GIVEN a Django application
     WHEN the user requests to remove an target with an invalid id
@@ -314,7 +324,11 @@ def test_update_target_entry(authenticated_user, add_target_entry, test_data):
     [12574, 404],
     ["98", 404]
 ])
-def test_update_target_entry_incorrect_id(authenticated_user, incorrect_id, status_code):
+def test_update_target_entry_incorrect_id(
+    authenticated_user,
+    incorrect_id,
+    status_code
+):
     """
     GIVEN a Django application
     WHEN the user requests to update an target with an incorrect id

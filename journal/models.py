@@ -109,7 +109,8 @@ class Target(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 
-    # @property decorator transforms the method into a getter method for a specific property
+    # @property decorator transforms the method into a getter method
+    # for a specific property
     # https://www.geeksforgeeks.org/python-property-decorator-property/
     @property
     def created_on_date(self):

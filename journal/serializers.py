@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 
-from .models import UserSettings, AppointmentEntry, TargetEntry, Note, \
+from .models import UserSettings, AppointmentEntry, TargetEntry, NoteEntry, \
     KnowledgeEntry, GratitudeEntry, WinEntry, IdeasEntry, ImprovementEntry, \
     EmotionEntry
 
@@ -89,20 +89,20 @@ class TargetEntrySerializer(serializers.ModelSerializer):
         read_only_fields = ("id",)
 
 
-class NoteSerializer(serializers.ModelSerializer):
+class NoteEntrySerializer(serializers.ModelSerializer):
     """
-    Serializer for Note model to convert it to JSON representation
+    Serializer for NoteEntry model to convert it to JSON representation
     """
     user = serializers.PrimaryKeyRelatedField(read_only=True)
     created_on = serializers.DateTimeField(format="%Y-%m-%d", read_only=True)
 
     class Meta:
         """
-        Metadata class for NoteSerializer
+        Metadata class for NoteEntrySerializer
 
         Defines the model and fields to be serialized
         """
-        model = Note
+        model = NoteEntry
         exclude = ("updated_on",)
         read_only_fields = ("id",)
 

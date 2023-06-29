@@ -130,14 +130,14 @@ class TargetEntry(models.Model):
         return self.title
 
 
-class Note(models.Model):
+class NoteEntry(models.Model):
     """
-    Note model to allow users to create notes
+    NoteEntry model to allow users to create note entries
     """
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        related_name="notes"
+        related_name="note_entries"
     )
     content = models.TextField(_("Notes"))
     created_on = models.DateTimeField(auto_now_add=True)
@@ -146,7 +146,7 @@ class Note(models.Model):
     @property
     def created_on_date(self):
         """
-        Returns the date the note was created
+        Returns the date the note entry that was created
         """
         return self.created_on.date
 
@@ -154,7 +154,7 @@ class Note(models.Model):
         """
         Meta options for the TargetEntry model
         """
-        verbose_name_plural = "Notes"
+        verbose_name_plural = "Note Entries"
         ordering = ["created_on"]
 
 

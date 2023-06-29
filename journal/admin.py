@@ -3,7 +3,7 @@ from django.contrib.auth.admin import UserAdmin
 
 from .forms import CustomUserCreationForm, CustomUserChangeForm
 from .models import CustomUser, UserSettings, AppointmentEntry, \
-    TargetEntry, Note, KnowledgeEntry, GratitudeEntry, WinEntry, IdeasEntry, \
+    TargetEntry, NoteEntry, KnowledgeEntry, GratitudeEntry, WinEntry, IdeasEntry, \
     ImprovementEntry, EmotionEntry
 
 
@@ -123,7 +123,7 @@ class TargetEntryAdmin(admin.ModelAdmin):
     ordering = ("created_on",)
 
 
-@admin.register(Note)
+@admin.register(NoteEntry)
 class NoteAdmin(admin.ModelAdmin):
     """
     Admin configuration for the AppointmentEntry model

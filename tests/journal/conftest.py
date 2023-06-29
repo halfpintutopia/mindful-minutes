@@ -3,7 +3,7 @@ import pytest
 from django.contrib.auth import get_user_model
 from rest_framework.test import APIClient
 
-from journal.models import AppointmentEntry, Target, \
+from journal.models import AppointmentEntry, TargetEntry, \
     Note, KnowledgeEntry, GratitudeEntry, WinEntry, \
     IdeasEntry, ImprovementEntry, EmotionEntry
 
@@ -55,7 +55,7 @@ def add_target_entry():
     Fixture to crete an Target object in the database
     """
     def _add_target_entry(title, order, user):
-        target_entry = Target.objects.create(
+        target_entry = TargetEntry.objects.create(
             user=user,
             title=title,
             order=order

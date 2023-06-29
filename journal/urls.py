@@ -2,7 +2,7 @@ from django.urls import path
 
 from .api_views.appointment_entries import AppointmentEntryList, \
     AppointmentEntryDetail
-from .api_views.targets import TargetList, TargetDetail
+from .api_views.target_entries import TargetEntryList, TargetEntryDetail
 
 urlpatterns = [
     path(
@@ -19,14 +19,14 @@ urlpatterns = [
     ),
     path(
         "api/targets/",
-        TargetList.as_view()
+        TargetEntryList.as_view()
     ),
     path(
         "api/targets/id/<int:pk>/",
-        TargetDetail.as_view()
+        TargetEntryDetail.as_view()
     ),
     path(
         "api/targets/date/<str:date_request>/",
-        TargetList.as_view()
+        TargetEntryList.as_view()
     ),
 ]

@@ -2,7 +2,7 @@ from datetime import date
 
 import pytest
 
-from journal.models import Target
+from journal.models import TargetEntry
 
 
 @pytest.mark.django_db
@@ -12,7 +12,7 @@ def test_add_target(authenticated_user):
     WHEN the user requests to add an target
     THEN check that the target is added
     """
-    target_entries = Target.objects.all()
+    target_entries = TargetEntry.objects.all()
     assert len(target_entries) == 0
 
     client, user = authenticated_user
@@ -35,7 +35,7 @@ def test_add_target(authenticated_user):
     assert res.data["user"] == user.id
     assert res.data["title"] == "20 minutes of meditation"
 
-    target_entries = Target.objects.all()
+    target_entries = TargetEntry.objects.all()
     assert len(target_entries) == 1
 
 
@@ -50,7 +50,7 @@ def test_add_target_invalid_json(authenticated_user, payload, status_code):
     WHEN the user requests to add an target with an invalid payload
     THEN the payload is not sent
     """
-    target_entries = Target.objects.all()
+    target_entries = TargetEntry.objects.all()
     assert len(target_entries) == 0
 
     client, user = authenticated_user
@@ -64,7 +64,7 @@ def test_add_target_invalid_json(authenticated_user, payload, status_code):
     )
     assert res.status_code == status_code
 
-    target_entries = Target.objects.all()
+    target_entries = TargetEntry.objects.all()
     assert len(target_entries) == 0
 
 
@@ -164,7 +164,7 @@ def test_get_all_target_entries(authenticated_user, add_target_entry):
     WHEN the user requests to retrieve all targets
     THEN check all targets are retrieved
     """
-    target_entries = Target.objects.all()
+    target_entries = TargetEntry.objects.all()
     assert len(target_entries) == 0
 
     client, user = authenticated_user
@@ -187,7 +187,7 @@ def test_get_all_target_entries(authenticated_user, add_target_entry):
     assert res.data[0]["title"] == "20 minutes of meditation"
     assert res.data[1]["title"] == "20 minute cold shower"
 
-    target_entries = Target.objects.all()
+    target_entries = TargetEntry.objects.all()
     assert len(target_entries) == 2
 
 
@@ -198,7 +198,7 @@ def test_remove_target_entry(authenticated_user, add_target_entry):
     WHEN the user requests to remove an target
     THEN the target is removed
     """
-    target_entries = Target.objects.all()
+    target_entries = TargetEntry.objects.all()
     assert len(target_entries) == 0
 
     client, user = authenticated_user
@@ -220,9 +220,9 @@ def test_remove_target_entry(authenticated_user, add_target_entry):
     assert res_retrieve.status_code == 200
     assert len(res_retrieve.data) == 0
 
-    assert not Target.objects.filter(id=target_entry.id).exists()
+    assert not TargetEntry.objects.filter(id=target_entry.id).exists()
 
-    target_entries = Target.objects.all()
+    target_entries = TargetEntry.objects.all()
     assert len(target_entries) == 0
 
 
@@ -242,7 +242,7 @@ def test_remove_target_invalid_id(
     WHEN the user requests to remove an target with an invalid id
     THEN the target is not removed
     """
-    target_entries = Target.objects.all()
+    target_entries = TargetEntry.objects.all()
     assert len(target_entries) == 0
 
     (client, *_) = authenticated_user
@@ -250,7 +250,7 @@ def test_remove_target_invalid_id(
     res = client.get(f"/api/targets/id/{incorrect_id}/")
     assert res.status_code == status_code
 
-    updated_target_entries = Target.objects.all()
+    updated_target_entries = TargetEntry.objects.all()
     assert len(target_entries) == len(updated_target_entries)
     assert len(updated_target_entries) == 0
 
@@ -282,7 +282,7 @@ def test_update_target_entry(authenticated_user, add_target_entry, test_data):
     WHEN the user requests to update an target
     THEN the target is updated
     """
-    target_entries = Target.objects.all()
+    target_entries = TargetEntry.objects.all()
     assert len(target_entries) == 0
 
     client, user = authenticated_user
@@ -314,7 +314,7 @@ def test_update_target_entry(authenticated_user, add_target_entry, test_data):
     assert res.data["title"] == test_data["expected_title"]
     assert res.data["order"] == test_data["expected_order"]
 
-    target_entries = Target.objects.all()
+    target_entries = TargetEntry.objects.all()
     assert len(target_entries) == 1
 
 

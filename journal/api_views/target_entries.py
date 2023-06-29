@@ -7,11 +7,11 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 
-from ..models import Target
-from ..serializers import TargetSerializer
+from ..models import TargetEntry
+from ..serializers import TargetEntrySerializer
 
 
-class TargetList(APIView):
+class TargetEntryList(APIView):
     """
     List all target entries or create a new target entry
     """
@@ -32,20 +32,19 @@ class TargetList(APIView):
             # double underscore used to perform field lookups and filters
             # on related fields
             # https://docs.djangoproject.com/en/3.2/topics/db/queries/#field-lookups
-            appointment_entries = Target.objects.filter(
+            target_entries = TargetEntry.objects.filter(
                 created_on__date=requested_date)
         else:
-            appointment_entries = Target.objects.all()
+            target_entries = TargetEntry.objects.all()
 
-        serializer = TargetSerializer(appointment_entries, many=True)
+        serializer = TargetEntrySerializer(target_entries, many=True)
         return Response(serializer.data)
 
     def post(self, request, format=None):
         """
         Create a new appointment entry
         """
-        serializer = TargetSerializer(data=request.data)
-        print("Serializer", serializer)
+        serializer = TargetEntrySerializer(data=request.data)
         if serializer.is_valid():
             serializer.save(user=request.user)
             return Response(
@@ -55,30 +54,30 @@ class TargetList(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class TargetDetail(APIView):
+class TargetEntryDetail(APIView):
     """
-    Retrieve, update or delete an appointment entry
+    Retrieve, update or delete an target entry
     """
 
     permission_classes = [IsAuthenticated]
 
     def get_object(self, pk):
         """
-        Helper method to get an appointment entry object from the database
+        Helper method to get an target entry object from the database
         or raise a 404 error
         """
         try:
-            return Target.objects.get(pk=pk)
-        except Target.DoesNotExist:
+            return TargetEntry.objects.get(pk=pk)
+        except TargetEntry.DoesNotExist:
             raise Http404
 
     def get(self, request, pk, format=None):
         """
-        Retrieve an appointment entry
+        Retrieve an target entry
         """
         try:
-            target_id = isinstance(pk, int)
-            target_entry = self.get_object(target_id)
+            target_entry_id = isinstance(pk, int)
+            target_entry = self.get_object(target_entry_id)
         except (ValueError, Http404):
             if isinstance(pk, str):
                 return Response(
@@ -87,16 +86,16 @@ class TargetDetail(APIView):
                 )
             return Response(status=status.HTTP_404_NOT_FOUND)
 
-        serializer = TargetSerializer(target_entry)
+        serializer = TargetEntrySerializer(target_entry)
         return Response(serializer.data)
 
     def put(self, request, pk, format=None):
         """
-        Update an appointment entry
+        Update an target entry
         """
         try:
-            target_id = isinstance(pk, int)
-            target_entry = self.get_object(target_id)
+            target_entry_id = isinstance(pk, int)
+            target_entry = self.get_object(target_entry_id)
         except (ValueError, Http404):
             if isinstance(pk, str):
                 return Response(
@@ -105,7 +104,7 @@ class TargetDetail(APIView):
                 )
             return Response(status=status.HTTP_404_NOT_FOUND)
 
-        serializer = TargetSerializer(
+        serializer = TargetEntrySerializer(
             target_entry, data=request.data)
         if serializer.is_valid():
             serializer.save(user=request.user)
@@ -117,8 +116,8 @@ class TargetDetail(APIView):
         Delete an appointment entry
         """
         try:
-            target_id = isinstance(pk, int)
-            target_entry = self.get_object(target_id)
+            target_entry_id = isinstance(pk, int)
+            target_entry = self.get_object(target_entry_id)
         except (ValueError, Http404):
             if isinstance(pk, str):
                 return Response(

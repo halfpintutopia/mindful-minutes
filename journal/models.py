@@ -95,14 +95,14 @@ class AppointmentEntry(models.Model):
         return self.title
 
 
-class Target(models.Model):
+class TargetEntry(models.Model):
     """
-    Target model to allow users to create targets
+    TargetEntry model to allow users to create target entries
     """
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        related_name="targets"
+        related_name="target_entries"
     )
     title = models.CharField(_("Target"), max_length=255)
     order = models.IntegerField(_("Order"))
@@ -115,15 +115,15 @@ class Target(models.Model):
     @property
     def created_on_date(self):
         """
-        Returns the date the target was created
+        Returns the date the target entry was created
         """
         return self.created_on.date
 
     class Meta:
         """
-        Meta options for the Target model
+        Meta options for the TargetEntry model
         """
-        verbose_name_plural = "Targets"
+        verbose_name_plural = "Target Entries"
         ordering = ["order"]
 
     def __str__(self):
@@ -152,7 +152,7 @@ class Note(models.Model):
 
     class Meta:
         """
-        Meta options for the Target model
+        Meta options for the TargetEntry model
         """
         verbose_name_plural = "Notes"
         ordering = ["created_on"]
@@ -180,7 +180,7 @@ class KnowledgeEntry(models.Model):
 
     class Meta:
         """
-        Meta options for the Target model
+        Meta options for the KnowledgeEntry model
         """
         verbose_name_plural = "Knowledge Entries"
         ordering = ["created_on"]

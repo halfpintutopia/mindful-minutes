@@ -4,6 +4,8 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from ckeditor.fields import RichTextField
+
 from .managers import CustomUserManager
 
 
@@ -139,7 +141,7 @@ class NoteEntry(models.Model):
         on_delete=models.CASCADE,
         related_name="note_entries"
     )
-    content = models.TextField(_("Notes"))
+    content = RichTextField(_("Notes"))
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 
@@ -167,7 +169,7 @@ class KnowledgeEntry(models.Model):
         on_delete=models.CASCADE,
         related_name="knowledge_entries"
     )
-    content = models.TextField(_("Knowledge Entry"))
+    content = RichTextField(_("Knowledge Entry"))
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 
@@ -195,7 +197,7 @@ class GratitudeEntry(models.Model):
         on_delete=models.CASCADE,
         related_name="gratitude_entries"
     )
-    content = models.TextField(_("Gratitude Entry"))
+    content = RichTextField(_("Gratitude Entry"))
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 
@@ -251,7 +253,7 @@ class IdeasEntry(models.Model):
         on_delete=models.CASCADE,
         related_name="ideas_entries"
     )
-    content = models.TextField(_("Ideas Entry"))
+    content = RichTextField(_("Ideas Entry"))
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 
@@ -279,7 +281,7 @@ class ImprovementEntry(models.Model):
         on_delete=models.CASCADE,
         related_name="improvement_entries"
     )
-    content = models.TextField(_("Improvement Entry"))
+    content = RichTextField(_("Improvement Entry"))
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 

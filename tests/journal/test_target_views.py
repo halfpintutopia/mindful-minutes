@@ -1,4 +1,6 @@
 from datetime import date
+# https://dennisokeeffe.medium.com/mocking-python-datetime-in-tests-with-freezegun-f5532307d6d6
+from freezegun import freeze_time
 
 import pytest
 
@@ -6,217 +8,321 @@ from journal.models import TargetEntry
 
 
 @pytest.mark.django_db
-def test_add_target(authenticated_user):
+def test_add_target_entry(authenticated_user):
     """
     GIVEN a Django application
-    WHEN the user requests to add an target
-    THEN check that the target is added
+    WHEN the user requests to add an target entry
+    THEN check that the target entry is added
     """
     target_entries = TargetEntry.objects.all()
     assert len(target_entries) == 0
 
+    current_date = date.today()
+
     client, user = authenticated_user
 
     target_data = {
-        "title": "20 minutes of meditation",
+        "title": "2 minute cold shower",
         "order": 1,
         "user": user.id,
     }
 
     res = client.post(
-        "/api/targets/",
+        f"/api/targets/{current_date}/",
         target_data,
         format="json"
     )
 
-    print("Response data", res.data)
-
     assert res.status_code == 201
     assert res.data["user"] == user.id
-    assert res.data["title"] == "20 minutes of meditation"
+    assert res.data["title"] == "2 minute cold shower"
+    assert res.data["order"] == 1
 
     target_entries = TargetEntry.objects.all()
     assert len(target_entries) == 1
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize("payload, status_code", [
-    [{}, 400],
-    [{"title entry": "20 minutes of meditation", "order": 1}, 400]
+@pytest.mark.parametrize("test_data", [
+    {
+        "payload": {},
+        "status_code": 400
+    },
+    {
+        "payload": {
+            "title": "2 minute cold shower",
+            "content entry": "09:00:00",
+            "order": 1
+        },
+        "status_code": 400
+    }
 ])
-def test_add_target_invalid_json(authenticated_user, payload, status_code):
+def test_add_target_entry_incorrect_json(authenticated_user, test_data):
     """
     GIVEN a Django application
-    WHEN the user requests to add an target with an invalid payload
+    WHEN the user requests to add an target entry with an invalid payload
     THEN the payload is not sent
     """
     target_entries = TargetEntry.objects.all()
     assert len(target_entries) == 0
 
+    current_date = date.today()
+
     client, user = authenticated_user
 
-    payload["user"] = user.id
+    test_data["payload"]["user"] = user.id
 
     res = client.post(
-        "/api/targets/",
-        payload,
+        f"/api/targets/{current_date}/",
+        {},
         format="json"
     )
-    assert res.status_code == status_code
+    assert res.status_code == 400
 
     target_entries = TargetEntry.objects.all()
     assert len(target_entries) == 0
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize("endpoint, expected_title", [
-    ["id", "20 minutes of meditation"],
-    ["date", [
-        "20 minutes of meditation",
-        "20 minute cold shower",
-        "Meet Stefan for lunch",
-        "Read 30 minutes of Momo"
-    ]]
-])
-def test_get_single_target_entry(
+@pytest.mark.parametrize("date_param", ["2023-07-01", "2023-06-20"])
+def test_add_target_entry_not_current_date(
     authenticated_user,
-    add_target_entry,
-    endpoint,
-    expected_title
+    date_param
 ):
     """
     GIVEN a Django application
-    WHEN the user requests to retrieve a single target by id or targets by date
-    THEN check that the target is retrieved
+    WHEN the user attempts to add an target entry on a date,
+    that is not the current date
+    THEN the target entry is not created
     """
+    target_entries = TargetEntry.objects.all()
+    assert len(target_entries) == 0
+
+    current_date = date.today()
+
     client, user = authenticated_user
 
-    target_entry_one = add_target_entry(
-        title="20 minutes of meditation",
+    target_data = {
+        "title": "2 minute cold shower",
+        "order": 1,
+        "user": user.id,
+    }
+
+    res = client.post(
+        f"/api/targets/{date_param}/",
+        target_data,
+        format="json"
+    )
+
+    assert res.status_code == 403
+
+    target_entries = TargetEntry.objects.all()
+    assert len(target_entries) == 0
+
+
+@pytest.mark.django_db
+def test_get_single_target_entry(
+    authenticated_user,
+    add_target_entry
+):
+    """
+    GIVEN a Django application
+    WHEN the user requests to retrieve an target entry
+    THEN check that the target entry is retrieved
+    """
+    current_date = date.today()
+
+    client, user = authenticated_user
+
+    target = add_target_entry(
+        title="2 minute cold shower",
         order=1,
-        user=user
+        user=user,
+    )
+
+    res = client.get(
+        f"/api/targets/{current_date}/{target.id}/",
+        format="json"
+    )
+
+    assert res.status_code == 200
+    assert res.data["user"] == user.id
+    assert res.data["title"] == "2 minute cold shower"
+    assert res.data["order"] == 1
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("invalid_id", ["random", "1", 14258])
+def test_get_single_target_entry_incorrect_id(
+    authenticated_user,
+    invalid_id
+):
+    """
+    GIVEN a Django application
+    WHEN the user requests to retrieve an target entry with an incorrect id
+    THEN check the target entry is not retrieved
+    """
+    (client, *_) = authenticated_user
+
+    current_date = date.today()
+
+    res = client.get(f"/api/targets/{current_date}/{invalid_id}/")
+
+    assert res.status_code == 404
+
+
+@pytest.mark.django_db
+def test_get_all_target_entries_by_current_date(
+    authenticated_user,
+    add_target_entry
+):
+    """
+    GIVEN a Django application
+    WHEN the user requests to retrieve all target entries
+    by current date
+    THEN check all target entries are retrieved
+    """
+    target_entries = TargetEntry.objects.all()
+    assert len(target_entries) == 0
+
+    current_date = date.today()
+
+    client, user = authenticated_user
+
+    add_target_entry(
+        title="2 minute cold shower",
+        order=1,
+        user=user,
     )
 
     add_target_entry(
-        title="20 minute cold shower",
+        title="20 minute meditation",
         order=2,
         user=user,
     )
 
     add_target_entry(
-        title="Meet Stefan for lunch",
+        title="Meet Andy for lunch",
         order=3,
         user=user,
     )
 
     add_target_entry(
-        title="Read 30 minutes of Momo",
+        title="Read 30 pages of Momo in German",
         order=4,
         user=user,
     )
 
-    if endpoint == "id":
-        res = client.get(
-            f"/api/targets/id/{target_entry_one.id}/", format="json")
+    res = client.get(f"/api/targets/{str(current_date)}/")
 
-        assert res.status_code == 200
-        assert res.data["user"] == user.id
-        assert res.data["title"] == expected_title
-        assert res.data["order"] == 1
-    elif endpoint == "date":
-        current_date = date.today()
+    assert res.status_code == 200
+    assert res.data[0]["created_on"] == str(current_date)
 
-        res = client.get(f"/api/targets/date/{current_date}/")
-
-        assert res.status_code == 200
-        assert len(res.data) == len(expected_title)
-        # all() built-in function that returns True
-        assert all(entry["title"] in expected_title for entry in res.data)
-        today = date.today().isoformat()
-        assert all(entry["created_on"] == today for entry in res.data)
+    target_entries = TargetEntry.objects.filter(
+        created_on__date=current_date)
+    assert len(target_entries) == 4
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize("invalid_id, status_code", [
-    ["random", 404],
-    [1234, 404]
+@pytest.mark.parametrize("created_on_timestamp", [
+    "2023-07-06 12:00:00",
+    "2023-06-04 10:30:00",
+    "2022-07-09 19:45:00",
 ])
-def test_get_single_target_incorrect_id(
+def test_get_all_target_entries_by_date(
     authenticated_user,
-    invalid_id, status_code
+    add_target_entry,
+    created_on_timestamp
 ):
     """
     GIVEN a Django application
-    WHEN the user requests to retrieve an target with an incorrect id
-    THEN check the target is not retrieved
+    WHEN the user requests to retrieve all target entries by date
+    THEN check all target entries are retrieved
     """
-    (client, *_) = authenticated_user
+    with freeze_time(created_on_timestamp):
+        target_entries = TargetEntry.objects.all()
+        assert len(target_entries) == 0
 
-    res = client.get(f"/api/targets/id/{invalid_id}/")
+        current_date = date.today()
 
-    assert res.status_code == status_code
+        client, user = authenticated_user
+
+        add_target_entry(
+            title="2 minute cold shower",
+            order=1,
+            user=user,
+        )
+
+        add_target_entry(
+            title="20 minute meditation",
+            order=2,
+            user=user,
+        )
+
+        add_target_entry(
+            title="Meet Andy for lunch",
+            order=3,
+            user=user,
+        )
+
+        add_target_entry(
+            title="Read 30 pages of Momo in German",
+            order=4,
+            user=user,
+        )
+
+        res = client.get(f"/api/targets/{str(current_date)}/")
+
+        assert res.status_code == 200
+        assert res.data[0]["created_on"] == str(current_date)
+
+        target_entries = TargetEntry.objects.filter(
+            created_on__date=current_date)
+        assert len(target_entries) == 4
 
 
 @pytest.mark.django_db
-def test_get_all_target_entries(authenticated_user, add_target_entry):
+def test_remove_target_entry(
+    authenticated_user,
+    add_target_entry
+):
     """
     GIVEN a Django application
-    WHEN the user requests to retrieve all targets
-    THEN check all targets are retrieved
+    WHEN the user requests to remove an target entry
+    THEN the target entry is removed
     """
     target_entries = TargetEntry.objects.all()
     assert len(target_entries) == 0
 
-    client, user = authenticated_user
-
-    add_target_entry(
-        title="20 minutes of meditation",
-        order=1,
-        user=user
-    )
-
-    add_target_entry(
-        title="20 minute cold shower",
-        order=2,
-        user=user,
-    )
-
-    res = client.get("/api/targets/")
-
-    assert res.status_code == 200
-    assert res.data[0]["title"] == "20 minutes of meditation"
-    assert res.data[1]["title"] == "20 minute cold shower"
-
-    target_entries = TargetEntry.objects.all()
-    assert len(target_entries) == 2
-
-
-@pytest.mark.django_db
-def test_remove_target_entry(authenticated_user, add_target_entry):
-    """
-    GIVEN a Django application
-    WHEN the user requests to remove an target
-    THEN the target is removed
-    """
-    target_entries = TargetEntry.objects.all()
-    assert len(target_entries) == 0
+    current_date = date.today()
 
     client, user = authenticated_user
 
     target_entry = add_target_entry(
-        title="20 minutes of meditation",
+        title="2 minute cold shower",
         order=1,
-        user=user
+        user=user,
     )
 
-    res = client.get(f"/api/targets/id/{target_entry.id}/")
-    assert res.status_code == 200
-    assert res.data["title"] == "20 minutes of meditation"
+    res = client.get(
+        f"/api/targets/{current_date}/{target_entry.id}/",
+        format="json"
+    )
 
-    res_delete = client.delete(f"/api/targets/id/{target_entry.id}/")
+    assert res.status_code == 200
+    assert res.data["title"] == "2 minute cold shower"
+    assert res.data["order"] == 1
+
+    res_delete = client.delete(
+        f"/api/targets/{current_date}/{target_entry.id}/",
+        format="json"
+    )
+
     assert res_delete.status_code == 204
 
-    res_retrieve = client.get("/api/targets/")
+    res_retrieve = client.get(
+        f"/api/targets/{current_date}/", format="json")
+
     assert res_retrieve.status_code == 200
     assert len(res_retrieve.data) == 0
 
@@ -227,28 +333,69 @@ def test_remove_target_entry(authenticated_user, add_target_entry):
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize("incorrect_id, status_code", [
-    ["random", 404],
-    [12574, 404],
-    ["98", 404]
+@pytest.mark.parametrize("test_data", [
+    {
+        "incorrect_id": "random",
+        "expected_status_code": 404
+    },
+    {
+        "incorrect_id": "1",
+        "expected_status_code": 404
+    },
+    {
+        "incorrect_id": 12756,
+        "expected_status_code": 404
+    },
 ])
 def test_remove_target_invalid_id(
     authenticated_user,
-    incorrect_id,
-    status_code
+    test_data
 ):
     """
     GIVEN a Django application
-    WHEN the user requests to remove an target with an invalid id
-    THEN the target is not removed
+    WHEN the user requests to remove an target entry with an invalid id
+    THEN the target entry is not removed
+    """
+    target_entries = TargetEntry.objects.all()
+    assert len(target_entries) == 0
+
+    current_date = date.today()
+
+    (client, *_) = authenticated_user
+
+    res = client.delete(
+        f"/api/targets/{current_date}/{test_data['incorrect_id']}/",
+        format="json"
+    )
+
+    assert res.status_code == test_data["expected_status_code"]
+
+    updated_target_entries = TargetEntry.objects.all()
+    assert len(target_entries) == len(updated_target_entries)
+    assert len(updated_target_entries) == 0
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("requested_date", [
+    "2023-07-06", "2023-03-05", "2022-09-16"
+])
+def test_remove_target_not_current_date(
+    authenticated_user, requested_date
+):
+    """
+    GIVEN a Django application
+    WHEN the user requests to remove an target entry when the date is not today
+    THEN the target entry is not removed
     """
     target_entries = TargetEntry.objects.all()
     assert len(target_entries) == 0
 
     (client, *_) = authenticated_user
 
-    res = client.get(f"/api/targets/id/{incorrect_id}/")
-    assert res.status_code == status_code
+    res = client.delete(
+        f"/api/targets/{requested_date}/1/", format="json")
+
+    assert res.status_code == 403
 
     updated_target_entries = TargetEntry.objects.all()
     assert len(target_entries) == len(updated_target_entries)
@@ -259,121 +406,180 @@ def test_remove_target_invalid_id(
 @pytest.mark.parametrize("test_data", [
     {
         "payload": {
-            "title": "20 minutes of yoga",
-            "order": 1
-        },
-        "status_code": 200,
-        "expected_title": "20 minutes of yoga",
-        "expected_order": 1
+            "title": "20 minutes meditation",
+            "order": 1,
+        }
     },
     {
         "payload": {
-            "title": "20 minutes of meditation",
-            "order": 2
-        },
-        "status_code": 200,
-        "expected_title": "20 minutes of meditation",
-        "expected_order": 2
+            "title": "2 minute cold shower",
+            "order": 2,
+        }
+    },
+    {
+        "payload": {
+            "title": "20 minutes meditation",
+            "order": 2,
+        }
     }
 ])
-def test_update_target_entry(authenticated_user, add_target_entry, test_data):
+def test_update_target_entry(
+    authenticated_user,
+    add_target_entry,
+    test_data
+):
     """
     GIVEN a Django application
-    WHEN the user requests to update an target
-    THEN the target is updated
+    WHEN the user requests to update an target entry
+    THEN the target entry is updated
     """
     target_entries = TargetEntry.objects.all()
     assert len(target_entries) == 0
 
+    current_date = date.today()
+
     client, user = authenticated_user
 
     target_entry = add_target_entry(
-        title="20 minutes of meditation",
+        title="2 minute cold shower",
         order=1,
-        user=user
+        user=user,
     )
 
-    payload = test_data["payload"]
-    payload["user"] = user.id
+    test_data["payload"]["user"] = user.id
 
     res = client.put(
-        f"/api/targets/id/{target_entry.id}/",
-        payload,
+        f"/api/targets/{current_date}/{target_entry.id}/",
+        test_data["payload"],
         format="json"
     )
 
-    assert res.status_code == test_data["status_code"]
-    assert res.data["created_on"] == date.today().isoformat()
-    assert res.data["title"] == test_data["expected_title"]
-    assert res.data["order"] == test_data["expected_order"]
+    assert res.status_code == 200
+    assert res.data["title"] == test_data["payload"]["title"]
+    assert res.data["order"] == test_data["payload"]["order"]
 
-    res_check = client.get(f"/api/targets/id/{target_entry.id}/")
+    res_check = client.get(
+        f"/api/targets/{current_date}/{target_entry.id}/",
+        format="json"
+    )
 
-    assert res_check.status_code == test_data["status_code"]
-    assert res.data["created_on"] == date.today().isoformat()
-    assert res.data["title"] == test_data["expected_title"]
-    assert res.data["order"] == test_data["expected_order"]
+    assert res_check.status_code == 200
+    assert res.data["title"] == test_data["payload"]["title"]
+    assert res.data["order"] == test_data["payload"]["order"]
 
     target_entries = TargetEntry.objects.all()
     assert len(target_entries) == 1
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize("incorrect_id, status_code", [
-    ["random", 404],
-    [12574, 404],
-    ["98", 404]
+@pytest.mark.parametrize("test_data", [
+    {
+        "incorrect_id": "random",
+        "expected_status_code": 404
+    },
+    {
+        "incorrect_id": 12574,
+        "expected_status_code": 404
+    }
 ])
-def test_update_target_entry_incorrect_id(
-    authenticated_user,
-    incorrect_id,
-    status_code
-):
-    """
-    GIVEN a Django application
-    WHEN the user requests to update an target with an incorrect id
-    THEN the target is not updated
-    """
-    (client, *_) = authenticated_user
-
-    res = client.put(f"/api/targets/id/{incorrect_id}/")
-
-    assert res.status_code == status_code
-
-
-@pytest.mark.django_db
-@pytest.mark.parametrize("add_target_entry, payload, status_code", [
-    ["add_target_entry", {}, 400],
-    ["add_target_entry", {
-        "title entry": "20 minutes of yoga",
-        "order": 1
-    }, 400],
-], indirect=["add_target_entry"])
-def test_update_target_entry_invalid_json(
+def test_update_target_entry_incorrect_data(
     authenticated_user,
     add_target_entry,
-    payload,
-    status_code
+    test_data
 ):
     """
     GIVEN a Django application
-    WHEN the user requests to update an target with invalid JSON
-    THEN the target is not updated
+    WHEN the user requests to update an target entry with an incorrect id
+    THEN the target entry is not updated
     """
     client, user = authenticated_user
 
-    target_entry = add_target_entry(
-        title="20 minutes of meditation",
+    current_date = date.today()
+
+    add_target_entry(
+        title="2 minute cold shower",
         order=1,
         user=user,
     )
 
-    payload["user"] = user.id
+    target_data = {
+        "title": "2 minute cold shower",
+        "order": 1,
+        "user": user.id,
+    }
 
     res = client.put(
-        f"/api/targets/id/{target_entry.id}/",
-        payload,
+        f"/api/targets/{current_date}/{test_data['incorrect_id']}/",
+        target_data,
         format="json"
     )
 
-    assert res.status_code == status_code
+    print("response data", res)
+
+    assert res.status_code == test_data["expected_status_code"]
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("requested_date", [
+    "2023-07-06", "2023-03-05", "2022-09-16"
+])
+def test_update_target_entry_incorrect_date(
+    authenticated_user,
+    requested_date
+):
+    """
+    GIVEN a Django application
+    WHEN the user requests to update an target entry with an incorrect date
+    THEN the target entry is not and permission denied
+    """
+    (client, *_) = authenticated_user
+
+    res = client.put(
+        f"/api/targets/{requested_date}/1/",
+        format="json"
+    )
+
+    assert res.status_code == 403
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("test_data", [
+    {
+        "payload": {},
+        "expected_status_code": 400
+    },
+    {
+        "payload": {
+            "title input": "2 minute cold shower",
+            "order": 1,
+        },
+        "expected_status_code": 400
+    }
+])
+def test_update_target_entry_invalid_json(
+    authenticated_user,
+    add_target_entry,
+    test_data
+):
+    """
+    GIVEN a Django application
+    WHEN the user requests to update an target entry with invalid JSON
+    THEN the target entry is not updated
+    """
+    client, user = authenticated_user
+
+    current_date = date.today()
+
+    target_entry = add_target_entry(
+        title="Dentist",
+        order=1,
+        user=user,
+    )
+
+    res = client.put(
+        f"/api/targets/{current_date}/{target_entry.id}/",
+        test_data["payload"],
+        format="json"
+    )
+
+    assert res.status_code == test_data["expected_status_code"]

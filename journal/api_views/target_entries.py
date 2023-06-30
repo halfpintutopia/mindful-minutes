@@ -6,6 +6,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.exceptions import MethodNotAllowed
 
 from ..models import TargetEntry
 from ..serializers import TargetEntrySerializer
@@ -17,48 +18,76 @@ class TargetEntryList(APIView):
     """
     permission_classes = [IsAuthenticated]
 
-    def get(self, request, date_request=None, format=None):
+    def get(self, request, date_request, format=None):
         """
         List all target entries or filter by date
         """
-        if date_request is not None:
-            try:
-                requested_date = date.fromisoformat(date_request)
-            except ValueError:
+        return self._handle_target_list_action(request, date_request)
+
+    def post(self, request, date_request, format=None):
+        """
+        Create a new target entry
+        """
+        return self._handle_target_list_action(request, date_request)
+
+    def _handle_target_list_action(self, request, date_request):
+        """
+        Private helper method to handle both GET and POST requests
+
+        Check if request is allowed based on the date and either
+        lists all target entries or creates a new target entry
+        """
+        if request.method == "GET":
+            if date_request is not None:
+                try:
+                    requested_date = date.fromisoformat(date_request)
+                except ValueError:
+                    return Response(
+                        {
+                            "error":
+                            "Invalid date format. Please user YYYY-MM-DD."
+                        },
+                        status=status.HTTP_400_BAD_REQUEST
+                    )
+                target_entries = TargetEntry.objects.filter(
+                    created_on__date=requested_date)
+            else:
+                target_entries = TargetEntry.objects.all()
+
+            serializer = TargetEntrySerializer(
+                target_entries, many=True)
+            return Response(serializer.data)
+
+        if request.method == "POST":
+            current_date = date.today().strftime("%Y-%m-%d")
+            if date_request != current_date:
                 return Response(
-                    {"error": "Invalid date format. Please use YYYY-MM-DD."},
-                    status=status.HTTP_400_BAD_REQUEST
+                    {
+                        "error":
+                        "You are not allowed to change targets \
+                            for past or future dates."
+                    },
+                    status=status.HTTP_403_FORBIDDEN
                 )
-            # double underscore used to perform field lookups and filters
-            # on related fields
-            # https://docs.djangoproject.com/en/3.2/topics/db/queries/#field-lookups
-            target_entries = TargetEntry.objects.filter(
-                created_on__date=requested_date)
-        else:
-            target_entries = TargetEntry.objects.all()
-
-        serializer = TargetEntrySerializer(target_entries, many=True)
-        return Response(serializer.data)
-
-    def post(self, request, format=None):
-        """
-        Create a new appointment entry
-        """
-        serializer = TargetEntrySerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save(user=request.user)
+            serializer = TargetEntrySerializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save(user=request.user)
+                return Response(
+                    serializer.data,
+                    status=status.HTTP_201_CREATED
+                )
             return Response(
-                serializer.data,
-                status=status.HTTP_201_CREATED
+                serializer.errors,
+                status=status.HTTP_400_BAD_REQUEST
             )
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        raise MethodNotAllowed(request.method)
 
 
 class TargetEntryDetail(APIView):
     """
     Retrieve, update or delete an target entry
     """
-
     permission_classes = [IsAuthenticated]
 
     def get_object(self, pk):
@@ -71,60 +100,71 @@ class TargetEntryDetail(APIView):
         except TargetEntry.DoesNotExist:
             raise Http404
 
-    def get(self, request, pk, format=None):
+    def get(self, request, date_request, pk, format=None):
         """
         Retrieve an target entry
         """
-        try:
-            target_entry_id = isinstance(pk, int)
-            target_entry = self.get_object(target_entry_id)
-        except (ValueError, Http404):
-            if isinstance(pk, str):
-                return Response(
-                    {"error": "Invalid appointment ID"},
-                    status=status.HTTP_400_BAD_REQUEST
-                )
-            return Response(status=status.HTTP_404_NOT_FOUND)
+        return self._handle_target_detail_action(request, date_request, pk)
 
-        serializer = TargetEntrySerializer(target_entry)
-        return Response(serializer.data)
-
-    def put(self, request, pk, format=None):
+    def put(self, request, date_request, pk, format=None):
         """
         Update an target entry
         """
-        try:
-            target_entry_id = isinstance(pk, int)
-            target_entry = self.get_object(target_entry_id)
-        except (ValueError, Http404):
-            if isinstance(pk, str):
+        return self._handle_target_detail_action(request, date_request, pk)
+
+    def delete(self, request, date_request, pk, format=None):
+        """
+        Delete an target entry
+        """
+        return self._handle_target_detail_action(request, date_request, pk)
+
+    def _handle_target_detail_action(self, request, date_request, pk):
+        """
+        Private helper method to handle GET, PUT and DELETE requests
+
+        Check if request is allowed based on date and
+        either retrieve, update or delete an target entry
+        """
+        current_date = date.today().strftime("%Y-%m-%d")
+        if date_request != current_date:
+            return Response(
+                {
+                    "error":
+                    "You are not allowed to change targets \
+                        for past or future dates."
+                },
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+        if pk is not None:
+            try:
+                target_id = isinstance(pk, int)
+                target_entry = self.get_object(pk)
+            except (ValueError, Http404):
+                if isinstance(pk, str):
+                    return Response(
+                        {"error": "Invalid target ID"},
+                        status=status.HTTP_400_BAD_REQUEST
+                    )
+                return Response(status=status.HTTP_404_NOT_FOUND)
+
+            if request.method == "GET":
+                serializer = TargetEntrySerializer(target_entry)
+                return Response(serializer.data)
+
+            elif request.method == "PUT":
+                serializer = TargetEntrySerializer(
+                    target_entry, data=request.data)
+                if serializer.is_valid():
+                    serializer.save(user=request.user)
+                    return Response(serializer.data)
                 return Response(
-                    {"error": "Invalid appointment ID"},
+                    serializer.errors,
                     status=status.HTTP_400_BAD_REQUEST
                 )
-            return Response(status=status.HTTP_404_NOT_FOUND)
 
-        serializer = TargetEntrySerializer(
-            target_entry, data=request.data)
-        if serializer.is_valid():
-            serializer.save(user=request.user)
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            elif request.method == "DELETE":
+                target_entry.delete()
+                return Response(status=status.HTTP_204_NO_CONTENT)
 
-    def delete(self, request, pk, format=None):
-        """
-        Delete an appointment entry
-        """
-        try:
-            target_entry_id = isinstance(pk, int)
-            target_entry = self.get_object(target_entry_id)
-        except (ValueError, Http404):
-            if isinstance(pk, str):
-                return Response(
-                    {"error": "Invalid appointment ID"},
-                    status=status.HTTP_400_BAD_REQUEST
-                )
-            return Response(status=status.HTTP_404_NOT_FOUND)
-
-        target_entry.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(status=status.HTTP_400_BAD_REQUEST)

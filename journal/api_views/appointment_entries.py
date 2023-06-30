@@ -6,6 +6,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.exceptions import MethodNotAllowed
 
 from ..models import AppointmentEntry
 from ..serializers import AppointmentEntrySerializer
@@ -49,7 +50,7 @@ class AppointmentEntryList(APIView):
                         status=status.HTTP_400_BAD_REQUEST
                     )
                 appointment_entries = AppointmentEntry.objects.filter(
-                    date=requested_date)
+                    created_on__date=requested_date)
             else:
                 appointment_entries = AppointmentEntry.objects.all()
 
@@ -79,6 +80,15 @@ class AppointmentEntryList(APIView):
                 serializer.errors,
                 status=status.HTTP_400_BAD_REQUEST
             )
+
+        raise MethodNotAllowed(request.method)
+
+        # return Response(
+        #     {"error":
+        #      f"The requested method: {request.method} is not allowed.",
+        #      },
+        #     status=status.HTTP_405_METHOD_NOT_ALLOWED
+        # )
 
 
 class AppointmentEntryDetail(APIView):
@@ -135,8 +145,8 @@ class AppointmentEntryDetail(APIView):
 
         if pk is not None:
             try:
-                appointment_id = isinstance(pk, int)
-                appointment_entry = self.get_object(appointment_id)
+                isinstance(pk, int)
+                appointment_entry = self.get_object(pk)
             except (ValueError, Http404):
                 if isinstance(pk, str):
                     return Response(

@@ -42,7 +42,10 @@ class AppointmentEntryList(APIView):
                     requested_date = date.fromisoformat(date_request)
                 except ValueError:
                     return Response(
-                        {"error": "Invalid date format. Please user YYYY-MM-DD."},
+                        {
+                            "error":
+                            "Invalid date format. Please user YYYY-MM-DD."
+                        },
                         status=status.HTTP_400_BAD_REQUEST
                     )
                 appointment_entries = AppointmentEntry.objects.filter(
@@ -58,7 +61,11 @@ class AppointmentEntryList(APIView):
             current_date = date.today().strftime("%Y-%m-%d")
             if date_request != current_date:
                 return Response(
-                    {"error": "You are not allowed to change appointments for past or future dates."},
+                    {
+                        "error":
+                        "You are not allowed to change appointments \
+                            for past or future dates."
+                    },
                     status=status.HTTP_403_FORBIDDEN
                 )
             serializer = AppointmentEntrySerializer(data=request.data)
@@ -68,7 +75,10 @@ class AppointmentEntryList(APIView):
                     serializer.data,
                     status=status.HTTP_201_CREATED
                 )
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                serializer.errors,
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
 
 class AppointmentEntryDetail(APIView):
@@ -109,13 +119,17 @@ class AppointmentEntryDetail(APIView):
         """
         Private helper method to handle GET, PUT and DELETE requests
 
-        Check if request is allow based on date and either
-        retrieve, update or delete an appointment entry
+        Check if request is allowed based on date and
+        either retrieve, update or delete an appointment entry
         """
         current_date = date.today().strftime("%Y-%m-%d")
         if date_request != current_date:
             return Response(
-                {"error": "You are not allowed to change appointments for past or future dates."},
+                {
+                    "error":
+                    "You are not allowed to change appointments \
+                        for past or future dates."
+                },
                 status=status.HTTP_403_FORBIDDEN
             )
 
@@ -141,7 +155,10 @@ class AppointmentEntryDetail(APIView):
                 if serializer.is_valid():
                     serializer.save(user=request.user)
                     return Response(serializer.data)
-                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                return Response(
+                    serializer.errors,
+                    status=status.HTTP_400_BAD_REQUEST
+                )
 
             elif request.method == "DELETE":
                 appointment_entry.delete()

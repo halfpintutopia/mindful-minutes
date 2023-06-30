@@ -163,7 +163,10 @@ def test_get_single_appointment_entry(
 
 @pytest.mark.django_db
 @pytest.mark.parametrize("invalid_id", ["random", "1", 14258])
-def test_get_single_appointment_entry_incorrect_id(authenticated_user, invalid_id):
+def test_get_single_appointment_entry_incorrect_id(
+    authenticated_user,
+    invalid_id
+):
     """
     GIVEN a Django application
     WHEN the user requests to retrieve an appointment with an incorrect id
@@ -276,13 +279,17 @@ def test_remove_appointment_entry(
     )
 
     res = client.get(
-        f"/api/appointments/{current_date}/{appointment_entry.id}/", format="json")
+        f"/api/appointments/{current_date}/{appointment_entry.id}/",
+        format="json"
+    )
 
     assert res.status_code == 200
     assert res.data["title"] == "Dentist"
 
     res_delete = client.delete(
-        f"/api/appointments/{current_date}/{appointment_entry.id}/", format="json")
+        f"/api/appointments/{current_date}/{appointment_entry.id}/",
+        format="json"
+    )
 
     assert res_delete.status_code == 204
 
@@ -330,7 +337,9 @@ def test_remove_appointment_invalid_id(
     (client, *_) = authenticated_user
 
     res = client.delete(
-        f"/api/appointments/{current_date}/{test_data['incorrect_id']}/", format="json")
+        f"/api/appointments/{current_date}/{test_data['incorrect_id']}/",
+        format="json"
+    )
 
     assert res.status_code == test_data["expected_status_code"]
 
@@ -476,14 +485,14 @@ def test_update_appointment_entry_incorrect_data(
 @pytest.mark.parametrize("requested_date", [
     "2023-07-06", "2023-03-05", "2022-09-16"
 ])
-def test_update_appointment_entry_incorrect_data(
+def test_update_appointment_entry_incorrect_date(
     authenticated_user,
     requested_date
 ):
     """
     GIVEN a Django application
-    WHEN the user requests to update an appointment with an incorrect id
-    THEN the appointment is not updated
+    WHEN the user requests to update an appointment with an incorrect date
+    THEN the appointment is not  and permission denied
     """
     (client, *_) = authenticated_user
 

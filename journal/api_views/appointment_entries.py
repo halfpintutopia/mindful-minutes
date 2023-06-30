@@ -37,10 +37,17 @@ class AppointmentEntryList(APIView):
         serializer = AppointmentEntrySerializer(appointment_entries, many=True)
         return Response(serializer.data)
 
-    def post(self, request, format=None):
+    def post(self, request, date_request=None, format=None):
         """
         Create a new appointment entry
         """
+        current_date = date.today().strftime("%Y-%m-%d")
+        if date_request != current_date:
+            return Response(
+                {"error": "You are not allowed to change appointments for past or future dates."},
+                status=status.HTTP_403_FORBIDDEN
+            )
+
         serializer = AppointmentEntrySerializer(data=request.data)
         if serializer.is_valid():
             serializer.save(user=request.user)
@@ -68,7 +75,7 @@ class AppointmentEntryDetail(APIView):
         except AppointmentEntry.DoesNotExist:
             raise Http404
 
-    def get(self, request, pk, format=None):
+    def get(self, request, date_request, pk, format=None):
         """
         Retrieve an appointment entry
         """
@@ -86,10 +93,17 @@ class AppointmentEntryDetail(APIView):
         serializer = AppointmentEntrySerializer(appointment_entry)
         return Response(serializer.data)
 
-    def put(self, request, pk, format=None):
+    def put(self, request, date_request, pk, format=None):
         """
         Update an appointment entry
         """
+        current_date = date.today().strftime("%Y-%m-%d")
+        if date_request != current_date:
+            return Response(
+                {"error": "You are not allowed to change appointments for past or future dates."},
+                status=status.HTTP_403_FORBIDDEN
+            )
+
         try:
             appointment_id = isinstance(pk, int)
             appointment_entry = self.get_object(appointment_id)
@@ -108,10 +122,17 @@ class AppointmentEntryDetail(APIView):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, pk, format=None):
+    def delete(self, request, date_request, pk, format=None):
         """
         Delete an appointment entry
         """
+        current_date = date.today().strftime("%Y-%m-%d")
+        if date_request != current_date:
+            return Response(
+                {"error": "You are not allowed to change appointments for past or future dates."},
+                status=status.HTTP_403_FORBIDDEN
+            )
+
         try:
             appointment_id = isinstance(pk, int)
             appointment_entry = self.get_object(appointment_id)

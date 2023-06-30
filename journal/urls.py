@@ -6,15 +6,11 @@ from .api_views.target_entries import TargetEntryList, TargetEntryDetail
 
 urlpatterns = [
     path(
-        "api/appointments/",
-        AppointmentEntryList.as_view()
-    ),
-    path(
-        "api/appointments/id/<int:pk>/",
+        "api/appointments/<str:date_request>/<int:pk>/",
         AppointmentEntryDetail.as_view()
     ),
     path(
-        "api/appointments/date/<str:date_request>/",
+        "api/appointments/<str:date_request>/",
         AppointmentEntryList.as_view()
     ),
     path(

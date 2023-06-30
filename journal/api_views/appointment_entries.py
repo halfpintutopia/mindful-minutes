@@ -17,52 +17,64 @@ class AppointmentEntryList(APIView):
     """
     permission_classes = [IsAuthenticated]
 
-    def get(self, request, date_request=None, format=None):
+    def get(self, request, date_request, format=None):
         """
         List all appointment entries or filter by date
         """
-        if date_request is not None:
-            try:
-                requested_date = date.fromisoformat(date_request)
-            except ValueError:
-                return Response(
-                    {"error": "Invalid date format. Please user YYYY-MM-DD."},
-                    status=status.HTTP_400_BAD_REQUEST
-                )
-            appointment_entries = AppointmentEntry.objects.filter(
-                date=requested_date)
-        else:
-            appointment_entries = AppointmentEntry.objects.all()
+        return self._handle_appointment_list_action(request, date_request)
 
-        serializer = AppointmentEntrySerializer(appointment_entries, many=True)
-        return Response(serializer.data)
-
-    def post(self, request, date_request=None, format=None):
+    def post(self, request, date_request, format=None):
         """
         Create a new appointment entry
         """
-        current_date = date.today().strftime("%Y-%m-%d")
-        if date_request != current_date:
-            return Response(
-                {"error": "You are not allowed to change appointments for past or future dates."},
-                status=status.HTTP_403_FORBIDDEN
-            )
+        return self._handle_appointment_list_action(request, date_request)
 
-        serializer = AppointmentEntrySerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save(user=request.user)
-            return Response(
-                serializer.data,
-                status=status.HTTP_201_CREATED
-            )
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def _handle_appointment_list_action(self, request, date_request):
+        """
+        Private helper method to handle both GET and POST requests
+
+        Check if request is allowed based on the date and either
+        lists all appointment entries or creates a new appointment entry
+        """
+        if request.method == "GET":
+            if date_request is not None:
+                try:
+                    requested_date = date.fromisoformat(date_request)
+                except ValueError:
+                    return Response(
+                        {"error": "Invalid date format. Please user YYYY-MM-DD."},
+                        status=status.HTTP_400_BAD_REQUEST
+                    )
+                appointment_entries = AppointmentEntry.objects.filter(
+                    date=requested_date)
+            else:
+                appointment_entries = AppointmentEntry.objects.all()
+
+            serializer = AppointmentEntrySerializer(
+                appointment_entries, many=True)
+            return Response(serializer.data)
+
+        if request.method == "POST":
+            current_date = date.today().strftime("%Y-%m-%d")
+            if date_request != current_date:
+                return Response(
+                    {"error": "You are not allowed to change appointments for past or future dates."},
+                    status=status.HTTP_403_FORBIDDEN
+                )
+            serializer = AppointmentEntrySerializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save(user=request.user)
+                return Response(
+                    serializer.data,
+                    status=status.HTTP_201_CREATED
+                )
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class AppointmentEntryDetail(APIView):
     """
     Retrieve, update or delete an appointment entry
     """
-
     permission_classes = [IsAuthenticated]
 
     def get_object(self, pk):
@@ -79,53 +91,27 @@ class AppointmentEntryDetail(APIView):
         """
         Retrieve an appointment entry
         """
-        try:
-            appointment_id = isinstance(pk, int)
-            appointment_entry = self.get_object(appointment_id)
-        except (ValueError, Http404):
-            if isinstance(pk, str):
-                return Response(
-                    {"error": "Invalid appointment ID"},
-                    status=status.HTTP_400_BAD_REQUEST
-                )
-            return Response(status=status.HTTP_404_NOT_FOUND)
-
-        serializer = AppointmentEntrySerializer(appointment_entry)
-        return Response(serializer.data)
+        return self._handle_appointment_detail_action(request, date_request, pk)
 
     def put(self, request, date_request, pk, format=None):
         """
         Update an appointment entry
         """
-        current_date = date.today().strftime("%Y-%m-%d")
-        if date_request != current_date:
-            return Response(
-                {"error": "You are not allowed to change appointments for past or future dates."},
-                status=status.HTTP_403_FORBIDDEN
-            )
-
-        try:
-            appointment_id = isinstance(pk, int)
-            appointment_entry = self.get_object(appointment_id)
-        except (ValueError, Http404):
-            if isinstance(pk, str):
-                return Response(
-                    {"error": "Invalid appointment ID"},
-                    status=status.HTTP_400_BAD_REQUEST
-                )
-            return Response(status=status.HTTP_404_NOT_FOUND)
-
-        serializer = AppointmentEntrySerializer(
-            appointment_entry, data=request.data)
-        if serializer.is_valid():
-            serializer.save(user=request.user)
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return self._handle_appointment_detail_action(request, date_request, pk)
 
     def delete(self, request, date_request, pk, format=None):
         """
         Delete an appointment entry
         """
+        return self._handle_appointment_detail_action(request, date_request, pk)
+
+    def _handle_appointment_detail_action(self, request, date_request, pk):
+        """
+        Private helper method to handle GET, PUT and DELETE requests
+
+        Check if request is allow based on date and either
+        retrieve, update or delete an appointment entry
+        """
         current_date = date.today().strftime("%Y-%m-%d")
         if date_request != current_date:
             return Response(
@@ -133,16 +119,32 @@ class AppointmentEntryDetail(APIView):
                 status=status.HTTP_403_FORBIDDEN
             )
 
-        try:
-            appointment_id = isinstance(pk, int)
-            appointment_entry = self.get_object(appointment_id)
-        except (ValueError, Http404):
-            if isinstance(pk, str):
-                return Response(
-                    {"error": "Invalid appointment ID"},
-                    status=status.HTTP_400_BAD_REQUEST
-                )
-            return Response(status=status.HTTP_404_NOT_FOUND)
+        if pk is not None:
+            try:
+                appointment_id = isinstance(pk, int)
+                appointment_entry = self.get_object(appointment_id)
+            except (ValueError, Http404):
+                if isinstance(pk, str):
+                    return Response(
+                        {"error": "Invalid appointment ID"},
+                        status=status.HTTP_400_BAD_REQUEST
+                    )
+                return Response(status=status.HTTP_404_NOT_FOUND)
 
-        appointment_entry.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+            if request.method == "GET":
+                serializer = AppointmentEntrySerializer(appointment_entry)
+                return Response(serializer.data)
+
+            elif request.method == "PUT":
+                serializer = AppointmentEntrySerializer(
+                    appointment_entry, data=request.data)
+                if serializer.is_valid():
+                    serializer.save(user=request.user)
+                    return Response(serializer.data)
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+            elif request.method == "DELETE":
+                appointment_entry.delete()
+                return Response(status=status.HTTP_204_NO_CONTENT)
+
+        return Response(status=status.HTTP_400_BAD_REQUEST)

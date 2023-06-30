@@ -8,7 +8,7 @@ from journal.models import AppointmentEntry
 
 
 @pytest.mark.django_db
-def test_add_appointment(authenticated_user):
+def test_add_appointment_entry(authenticated_user):
     """
     GIVEN a Django application
     WHEN the user requests to add an appointment
@@ -61,7 +61,7 @@ def test_add_appointment(authenticated_user):
         "status_code": 400
     }
 ])
-def test_add_appointment_incorrect_json(authenticated_user, test_data):
+def test_add_appointment_entry_incorrect_json(authenticated_user, test_data):
     """
     GIVEN a Django application
     WHEN the user requests to add an appointment with an invalid payload
@@ -163,7 +163,7 @@ def test_get_single_appointment_entry(
 
 @pytest.mark.django_db
 @pytest.mark.parametrize("invalid_id", ["random", "1", 14258])
-def test_get_single_appointment_incorrect_id(authenticated_user, invalid_id):
+def test_get_single_appointment_entry_incorrect_id(authenticated_user, invalid_id):
     """
     GIVEN a Django application
     WHEN the user requests to retrieve an appointment with an incorrect id

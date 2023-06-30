@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 from rest_framework.test import APIClient
 
 from journal.models import AppointmentEntry, TargetEntry, \
-    Note, KnowledgeEntry, GratitudeEntry, WinEntry, \
+    NoteEntry, KnowledgeEntry, GratitudeEntry, WinEntry, \
     IdeasEntry, ImprovementEntry, EmotionEntry
 
 User = get_user_model()
@@ -67,10 +67,10 @@ def add_target_entry():
 @pytest.fixture(scope="function")
 def add_note_entry():
     """
-    Fixture to crete an Note object in the database
+    Fixture to crete an NoteEntry object in the database
     """
     def _add_note_entry(content, user):
-        note_entry = Note.objects.create(
+        note_entry = NoteEntry.objects.create(
             user=user,
             content=content,
         )

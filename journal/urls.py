@@ -14,15 +14,11 @@ urlpatterns = [
         AppointmentEntryList.as_view()
     ),
     path(
-        "api/targets/",
-        TargetEntryList.as_view()
-    ),
-    path(
-        "api/targets/id/<int:pk>/",
+        "api/appointments/<str:date_request>/<int:pk>/",
         TargetEntryDetail.as_view()
     ),
     path(
-        "api/targets/date/<str:date_request>/",
+        "api/appointments/<str:date_request>/",
         TargetEntryList.as_view()
     ),
 ]

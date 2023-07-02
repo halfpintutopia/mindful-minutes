@@ -111,10 +111,10 @@ def add_win_entry():
     """
     Fixture to crete an WinEntry object in the database
     """
-    def _add_win_entry(content, user):
+    def _add_win_entry(title, user):
         win_entry = WinEntry.objects.create(
             user=user,
-            content=content
+            title=title
         )
         return win_entry
     return _add_win_entry

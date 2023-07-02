@@ -8,6 +8,7 @@ from .api_views.knowledge_entries import KnowledgeEntryList, \
     KnowledgeEntryDetail
 from .api_views.gratitude_entries import GratitudeEntryList, \
     GratitudeEntryDetail
+from .api_views.win_entries import WinEntryList, WinEntryDetail
 
 urlpatterns = [
     path(
@@ -59,5 +60,15 @@ urlpatterns = [
         "api/gratitude/<str:date_request>/",
         GratitudeEntryList.as_view(),
         name="gratitude-entry-list"
+    ),
+    path(
+        "api/wins/<str:date_request>/<int:pk>/",
+        WinEntryDetail.as_view(),
+        name="win-entry-detail"
+    ),
+    path(
+        "api/wins/<str:date_request>/",
+        WinEntryList.as_view(),
+        name="win-entry-list"
     ),
 ]

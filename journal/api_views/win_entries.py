@@ -14,28 +14,28 @@ from ..serializers import WinEntrySerializer
 
 class WinEntryList(APIView):
     """
-    List all target entries or create a new target entry
+    List all win entries or create a new win entry
     """
     permission_classes = [IsAuthenticated]
 
     def get(self, request, date_request, format=None):
         """
-        List all target entries or filter by date
+        List all win entries or filter by date
         """
-        return self._handle_target_list_action(request, date_request)
+        return self._handle_win_list_action(request, date_request)
 
     def post(self, request, date_request, format=None):
         """
-        Create a new target entry
+        Create a new win entry
         """
-        return self._handle_target_list_action(request, date_request)
+        return self._handle_win_list_action(request, date_request)
 
-    def _handle_target_list_action(self, request, date_request):
+    def _handle_win_list_action(self, request, date_request):
         """
         Private helper method to handle both GET and POST requests
 
         Check if request is allowed based on the date and either
-        lists all target entries or creates a new target entry
+        lists all win entries or creates a new win entry
         """
         if request.method == "GET":
             if date_request is not None:
@@ -49,13 +49,13 @@ class WinEntryList(APIView):
                         },
                         status=status.HTTP_400_BAD_REQUEST
                     )
-                target_entries = WinEntry.objects.filter(
+                win_entries = WinEntry.objects.filter(
                     created_on__date=requested_date)
             else:
-                target_entries = WinEntry.objects.all()
+                win_entries = WinEntry.objects.all()
 
             serializer = WinEntrySerializer(
-                target_entries, many=True)
+                win_entries, many=True)
             return Response(serializer.data)
 
         if request.method == "POST":
@@ -64,7 +64,7 @@ class WinEntryList(APIView):
                 return Response(
                     {
                         "error":
-                        "You are not allowed to change targets \
+                        "You are not allowed to change wins \
                             for past or future dates."
                     },
                     status=status.HTTP_403_FORBIDDEN
@@ -86,13 +86,13 @@ class WinEntryList(APIView):
 
 class WinEntryDetail(APIView):
     """
-    Retrieve, update or delete an target entry
+    Retrieve, update or delete an win entry
     """
     permission_classes = [IsAuthenticated]
 
     def get_object(self, pk):
         """
-        Helper method to get an target entry object from the database
+        Helper method to get an win entry object from the database
         or raise a 404 error
         """
         try:
@@ -102,35 +102,35 @@ class WinEntryDetail(APIView):
 
     def get(self, request, date_request, pk, format=None):
         """
-        Retrieve an target entry
+        Retrieve an win entry
         """
-        return self._handle_target_detail_action(request, date_request, pk)
+        return self._handle_win_detail_action(request, date_request, pk)
 
     def put(self, request, date_request, pk, format=None):
         """
-        Update an target entry
+        Update an win entry
         """
-        return self._handle_target_detail_action(request, date_request, pk)
+        return self._handle_win_detail_action(request, date_request, pk)
 
     def delete(self, request, date_request, pk, format=None):
         """
-        Delete an target entry
+        Delete an win entry
         """
-        return self._handle_target_detail_action(request, date_request, pk)
+        return self._handle_win_detail_action(request, date_request, pk)
 
-    def _handle_target_detail_action(self, request, date_request, pk):
+    def _handle_win_detail_action(self, request, date_request, pk):
         """
         Private helper method to handle GET, PUT and DELETE requests
 
         Check if request is allowed based on date and
-        either retrieve, update or delete an target entry
+        either retrieve, update or delete an win entry
         """
         current_date = date.today().strftime("%Y-%m-%d")
         if date_request != current_date:
             return Response(
                 {
                     "error":
-                    "You are not allowed to change targets \
+                    "You are not allowed to change wins \
                         for past or future dates."
                 },
                 status=status.HTTP_403_FORBIDDEN
@@ -138,23 +138,23 @@ class WinEntryDetail(APIView):
 
         if pk is not None:
             try:
-                target_id = isinstance(pk, int)
-                target_entry = self.get_object(pk)
+                win_id = isinstance(pk, int)
+                win_entry = self.get_object(pk)
             except (ValueError, Http404):
                 if isinstance(pk, str):
                     return Response(
-                        {"error": "Invalid target ID"},
+                        {"error": "Invalid win ID"},
                         status=status.HTTP_400_BAD_REQUEST
                     )
                 return Response(status=status.HTTP_404_NOT_FOUND)
 
             if request.method == "GET":
-                serializer = WinEntrySerializer(target_entry)
+                serializer = WinEntrySerializer(win_entry)
                 return Response(serializer.data)
 
             elif request.method == "PUT":
                 serializer = WinEntrySerializer(
-                    target_entry, data=request.data)
+                    win_entry, data=request.data)
                 if serializer.is_valid():
                     serializer.save(user=request.user)
                     return Response(serializer.data)
@@ -164,7 +164,7 @@ class WinEntryDetail(APIView):
                 )
 
             elif request.method == "DELETE":
-                target_entry.delete()
+                win_entry.delete()
                 return Response(status=status.HTTP_204_NO_CONTENT)
 
         return Response(status=status.HTTP_400_BAD_REQUEST)

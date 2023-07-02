@@ -8,34 +8,34 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import MethodNotAllowed
 
-from ..models import GratitudeEntry
-from ..serializers import GratitudeEntrySerializer
+from ..models import IdeasEntry
+from ..serializers import IdeasEntrySerializer
 
 
-class GratitudeEntryList(APIView):
+class IdeasEntryList(APIView):
     """
-    List all gratitude entries or create a new gratitude entry
+    List all idea entries or create a new idea entry
     """
     permission_classes = [IsAuthenticated]
 
     def get(self, request, date_request, format=None):
         """
-        List all gratitude entries or filter by date
+        List all idea entries or filter by date
         """
-        return self._handle_gratitude_list_action(request, date_request)
+        return self._handle_idea_list_action(request, date_request)
 
     def post(self, request, date_request, format=None):
         """
-        Create a new gratitude entry
+        Create a new idea entry
         """
-        return self._handle_gratitude_list_action(request, date_request)
+        return self._handle_idea_list_action(request, date_request)
 
-    def _handle_gratitude_list_action(self, request, date_request):
+    def _handle_idea_list_action(self, request, date_request):
         """
         Private helper method to handle both GET and POST requests
 
         Check if request is allowed based on the date and either
-        lists all gratitude entries or creates a new gratitude entry
+        lists all idea entries or creates a new idea entry
         """
         if request.method == "GET":
             if date_request is not None:
@@ -49,13 +49,13 @@ class GratitudeEntryList(APIView):
                         },
                         status=status.HTTP_400_BAD_REQUEST
                     )
-                gratitude_entries = GratitudeEntry.objects.filter(
+                idea_entries = IdeasEntry.objects.filter(
                     created_on__date=requested_date)
             else:
-                gratitude_entries = GratitudeEntry.objects.all()
+                idea_entries = IdeasEntry.objects.all()
 
-            serializer = GratitudeEntrySerializer(
-                gratitude_entries, many=True)
+            serializer = IdeasEntrySerializer(
+                idea_entries, many=True)
             return Response(serializer.data)
 
         if request.method == "POST":
@@ -64,12 +64,12 @@ class GratitudeEntryList(APIView):
                 return Response(
                     {
                         "error":
-                        "You are not allowed to change gratitudes \
+                        "You are not allowed to change ideas \
                             for past or future dates."
                     },
                     status=status.HTTP_403_FORBIDDEN
                 )
-            serializer = GratitudeEntrySerializer(data=request.data)
+            serializer = IdeasEntrySerializer(data=request.data)
             if serializer.is_valid():
                 serializer.save(user=request.user)
                 return Response(
@@ -84,53 +84,53 @@ class GratitudeEntryList(APIView):
         raise MethodNotAllowed(request.method)
 
 
-class GratitudeEntryDetail(APIView):
+class IdeasEntryDetail(APIView):
     """
-    Retrieve, update or delete an gratitude entry
+    Retrieve, update or delete an idea entry
     """
     permission_classes = [IsAuthenticated]
 
     def get_object(self, pk):
         """
-        Helper method to get an gratitude entry object from the database
+        Helper method to get an idea entry object from the database
         or raise a 404 error
         """
         try:
-            return GratitudeEntry.objects.get(pk=pk)
-        except GratitudeEntry.DoesNotExist:
+            return IdeasEntry.objects.get(pk=pk)
+        except IdeasEntry.DoesNotExist:
             raise Http404
 
     def get(self, request, date_request, pk, format=None):
         """
-        Retrieve an gratitude entry
+        Retrieve an idea entry
         """
-        return self._handle_gratitude_detail_action(request, date_request, pk)
+        return self._handle_idea_detail_action(request, date_request, pk)
 
     def put(self, request, date_request, pk, format=None):
         """
-        Update an gratitude entry
+        Update an idea entry
         """
-        return self._handle_gratitude_detail_action(request, date_request, pk)
+        return self._handle_idea_detail_action(request, date_request, pk)
 
     def delete(self, request, date_request, pk, format=None):
         """
-        Delete an gratitude entry
+        Delete an idea entry
         """
-        return self._handle_gratitude_detail_action(request, date_request, pk)
+        return self._handle_idea_detail_action(request, date_request, pk)
 
-    def _handle_gratitude_detail_action(self, request, date_request, pk):
+    def _handle_idea_detail_action(self, request, date_request, pk):
         """
         Private helper method to handle GET, PUT and DELETE requests
 
         Check if request is allowed based on date and
-        either retrieve, update or delete an gratitude entry
+        either retrieve, update or delete an idea entry
         """
         current_date = date.today().strftime("%Y-%m-%d")
         if date_request != current_date:
             return Response(
                 {
                     "error":
-                    "You are not allowed to change gratitudes \
+                    "You are not allowed to change ideas \
                         for past or future dates."
                 },
                 status=status.HTTP_403_FORBIDDEN
@@ -138,23 +138,23 @@ class GratitudeEntryDetail(APIView):
 
         if pk is not None:
             try:
-                gratitude_id = isinstance(pk, int)
-                gratitude_entry = self.get_object(pk)
+                idea_id = isinstance(pk, int)
+                idea_entry = self.get_object(pk)
             except (ValueError, Http404):
                 if isinstance(pk, str):
                     return Response(
-                        {"error": "Invalid gratitude ID"},
+                        {"error": "Invalid idea ID"},
                         status=status.HTTP_400_BAD_REQUEST
                     )
                 return Response(status=status.HTTP_404_NOT_FOUND)
 
             if request.method == "GET":
-                serializer = GratitudeEntrySerializer(gratitude_entry)
+                serializer = IdeasEntrySerializer(idea_entry)
                 return Response(serializer.data)
 
             elif request.method == "PUT":
-                serializer = GratitudeEntrySerializer(
-                    gratitude_entry, data=request.data)
+                serializer = IdeasEntrySerializer(
+                    idea_entry, data=request.data)
                 if serializer.is_valid():
                     serializer.save(user=request.user)
                     return Response(serializer.data)
@@ -164,7 +164,7 @@ class GratitudeEntryDetail(APIView):
                 )
 
             elif request.method == "DELETE":
-                gratitude_entry.delete()
+                idea_entry.delete()
                 return Response(status=status.HTTP_204_NO_CONTENT)
 
         return Response(status=status.HTTP_400_BAD_REQUEST)

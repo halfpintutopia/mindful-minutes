@@ -9,6 +9,7 @@ from .api_views.knowledge_entries import KnowledgeEntryList, \
 from .api_views.gratitude_entries import GratitudeEntryList, \
     GratitudeEntryDetail
 from .api_views.win_entries import WinEntryList, WinEntryDetail
+from .api_views.ideas_entries import IdeasEntryList, IdeasEntryDetail
 
 urlpatterns = [
     path(
@@ -70,5 +71,15 @@ urlpatterns = [
         "api/wins/<str:date_request>/",
         WinEntryList.as_view(),
         name="win-entry-list"
+    ),
+    path(
+        "api/ideas/<str:date_request>/<int:pk>/",
+        IdeasEntryDetail.as_view(),
+        name="ideas-entry-detail"
+    ),
+    path(
+        "api/ideas/<str:date_request>/",
+        IdeasEntryList.as_view(),
+        name="ideas-entry-list"
     ),
 ]

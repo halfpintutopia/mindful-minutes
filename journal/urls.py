@@ -6,6 +6,8 @@ from .api_views.target_entries import TargetEntryList, TargetEntryDetail
 from .api_views.note_entries import NoteEntryList, NoteEntryDetail
 from .api_views.knowledge_entries import KnowledgeEntryList, \
     KnowledgeEntryDetail
+from .api_views.gratitude_entries import GratitudeEntryList, \
+    GratitudeEntryDetail
 
 urlpatterns = [
     path(
@@ -47,5 +49,15 @@ urlpatterns = [
         "api/knowledge/<str:date_request>/",
         KnowledgeEntryList.as_view(),
         name="knowledge-entry-list"
+    ),
+    path(
+        "api/gratitude/<str:date_request>/<int:pk>/",
+        GratitudeEntryDetail.as_view(),
+        name="gratitude-entry-detail"
+    ),
+    path(
+        "api/gratitude/<str:date_request>/",
+        GratitudeEntryList.as_view(),
+        name="gratitude-entry-list"
     ),
 ]

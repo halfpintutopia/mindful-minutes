@@ -2,11 +2,57 @@ from datetime import time
 
 import pytest
 
+from faker import Faker
+
 from django.contrib.auth import get_user_model
 
+from journal.models import UserSettings
 from journal.serializers import UserSettingsSerializer
 
+
 User = get_user_model()
+fake = Faker()
+
+
+@pytest.mark.django_db
+def test_user_settings_serializer():
+    """
+    GIVEN a UserSettings model
+    WHEN a new user settings are created
+    THEN check the, start_week_day,
+    morning_check_in, evening_check_in
+    """
+    email = fake.email()
+    password = fake.password(length=16)
+    first_name = fake.first_name()
+    last_name = fake.last_name()
+
+    user = User.objects.create_user(
+        email=email,
+        password=password,
+        first_name=first_name,
+        last_name=last_name
+    )
+
+    start_week_day = 1
+    morning_check_in = time(9, 0)
+    evening_check_in = time(17, 0)
+
+    user_settings = UserSettings.objects.create(
+        user=user,
+        start_week_day=start_week_day,
+        morning_check_in=morning_check_in,
+        evening_check_in=evening_check_in
+    )
+
+    serializer = UserSettingsSerializer(user_settings)
+
+    assert serializer.data.get("user") == user.id
+    assert serializer.data.get("start_week_day") == start_week_day
+    assert serializer.data.get(
+        "morning_check_in") == morning_check_in.strftime("%H:%M:%S")
+    assert serializer.data.get(
+        "evening_check_in") == evening_check_in.strftime("%H:%M:%S")
 
 
 @pytest.mark.django_db

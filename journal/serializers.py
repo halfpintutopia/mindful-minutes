@@ -8,31 +8,6 @@ from .models import UserSettings, AppointmentEntry, TargetEntry, NoteEntry, \
 User = get_user_model()
 
 
-class CustomUserSerializer(serializers.ModelSerializer):
-    """
-    CustomUserSerializer is a ModelSerializer
-    that converts CustomUser model to JSON representation and vice versa
-    """
-    active = serializers.BooleanField(source="is_active")
-    start_week_day = serializers.IntegerField(
-        source="usersettings.start_week_day")
-    morning_check_in = serializers.TimeField(
-        source="usersettings.morning_check_in")
-    evening_check_in = serializers.TimeField(
-        source="usersettings.evening_check_in")
-
-    class Meta:
-        """
-        Metadata class for CustomUserSerializer
-
-        Defines the model and fields to be serialized
-        """
-        model = User
-        fields = ["id", "email", "first_name", "last_name",
-                  "is_staff", "active", "is_superuser",
-                  "start_week_day", "morning_check_in", "evening_check_in"]
-
-
 class UserSettingsSerializer(serializers.ModelSerializer):
     """
     Serializer for UserSetting model to convert it to JSON representation
@@ -50,7 +25,39 @@ class UserSettingsSerializer(serializers.ModelSerializer):
         Defines the model and fields to be serialized
         """
         model = UserSettings
+        fields = [
+            "user",
+            "start_week_day",
+            "morning_check_in",
+            "evening_check_in"
+        ]
         read_only_fields = ("id", "created_on", "updated_on",)
+
+
+class CustomUserSerializer(serializers.ModelSerializer):
+    """
+    CustomUserSerializer is a ModelSerializer
+    that converts CustomUser model to JSON representation and vice versa
+    """
+    user_settings = UserSettingsSerializer()
+
+    class Meta:
+        """
+        Metadata class for CustomUserSerializer
+
+        Defines the model and fields to be serialized
+        """
+        model = User
+        fields = [
+            "id",
+            "email",
+            "first_name",
+            "last_name",
+            "is_staff",
+            "is_active",
+            "is_superuser",
+            "user_settings"
+        ]
 
 
 class AppointmentEntrySerializer(serializers.ModelSerializer):

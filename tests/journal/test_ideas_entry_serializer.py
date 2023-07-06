@@ -1,6 +1,9 @@
+import pytest
+
 from journal.serializers import IdeasEntrySerializer
 
 
+@pytest.mark.django_db
 def test_valid_ideas_entry_serializer():
     """
     GIVEN a valid ideas entry serializer
@@ -18,6 +21,7 @@ def test_valid_ideas_entry_serializer():
     assert not serializer.errors
 
 
+@pytest.mark.django_db
 def test_invalid_missing_content_ideas_entry_serializer():
     """
     GIVEN an invalid ideas entry serializer with missing content

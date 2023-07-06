@@ -1,6 +1,9 @@
+import pytest
+
 from journal.serializers import GratitudeEntrySerializer
 
 
+@pytest.mark.django_db
 def test_valid_gratitude_entry_serializer():
     """
     GIVEN a valid gratitude entry serializer
@@ -17,6 +20,7 @@ def test_valid_gratitude_entry_serializer():
     assert not serializer.errors
 
 
+@pytest.mark.django_db
 def test_invalid_missing_content_gratitude_entry_serializer():
     """
     GIVEN an invalid gratitude entry serializer with missing content

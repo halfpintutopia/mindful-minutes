@@ -22,7 +22,7 @@ def test_add_ideas_entry(authenticated_user):
     client, user = authenticated_user
 
     ideas_data = {
-        "content": "I am healthy. My studies are going well. I am free and strong.",
+        "content": "Check out TypeScript course on Frontend Masters.",
         "user": user.id,
     }
 
@@ -32,11 +32,9 @@ def test_add_ideas_entry(authenticated_user):
         format="json"
     )
 
-    print("Response data", res.data)
-
     assert res.status_code == 201
     assert res.data["user"] == user.id
-    assert res.data["content"] == "I am healthy. My studies are going well. I am free and strong."
+    assert res.data["content"] == "Check out TypeScript course on Frontend Masters."
 
     ideas_entries = IdeasEntry.objects.all()
     assert len(ideas_entries) == 1
@@ -50,7 +48,7 @@ def test_add_ideas_entry(authenticated_user):
     },
     {
         "payload": {
-            "content entry": "I am healthy. My studies are going well. I am free and strong.",
+            "content entry": "Check out TypeScript course on Frontend Masters.",
         },
         "status_code": 400
     }
@@ -99,7 +97,7 @@ def test_add_ideas_entry_not_current_date(
     client, user = authenticated_user
 
     ideas_data = {
-        "content": "I am healthy. My studies are going well. I am free and strong.",
+        "content": "Check out TypeScript course on Frontend Masters.",
         "user": user.id,
     }
 
@@ -130,7 +128,7 @@ def test_get_single_ideas_entry(
     client, user = authenticated_user
 
     ideas = add_ideas_entry(
-        content="I am healthy. My studies are going well. I am free and strong.",
+        content="Check out TypeScript course on Frontend Masters.",
         user=user,
     )
 
@@ -141,7 +139,7 @@ def test_get_single_ideas_entry(
 
     assert res.status_code == 200
     assert res.data["user"] == user.id
-    assert res.data["content"] == "I am healthy. My studies are going well. I am free and strong."
+    assert res.data["content"] == "Check out TypeScript course on Frontend Masters."
 
 
 @pytest.mark.django_db
@@ -183,7 +181,7 @@ def test_get_all_ideas_entries_by_current_date(
     client, user = authenticated_user
 
     add_ideas_entry(
-        content="I am healthy. My studies are going well. I am free and strong.",
+        content="Check out TypeScript course on Frontend Masters.",
         user=user,
     )
 
@@ -199,7 +197,7 @@ def test_get_all_ideas_entries_by_current_date(
 
 @pytest.mark.django_db
 @pytest.mark.parametrize("created_on_timestamp", [
-    "2023-07-06 12:00:00",
+    "2023-04-06 12:00:00",
     "2023-06-04 10:30:00",
     "2022-07-09 19:45:00",
 ])
@@ -222,7 +220,7 @@ def test_get_all_ideas_entries_by_date(
         client, user = authenticated_user
 
         add_ideas_entry(
-            content="I am healthy. My studies are going well. I am free and strong.",
+            content="Check out TypeScript course on Frontend Masters.",
             user=user,
         )
 
@@ -254,7 +252,7 @@ def test_remove_ideas_entry(
     client, user = authenticated_user
 
     ideas_entry = add_ideas_entry(
-        content="I am healthy. My studies are going well. I am free and strong.",
+        content="Check out TypeScript course on Frontend Masters.",
         user=user,
     )
 
@@ -264,7 +262,7 @@ def test_remove_ideas_entry(
     )
 
     assert res.status_code == 200
-    assert res.data["content"] == "I am healthy. My studies are going well. I am free and strong."
+    assert res.data["content"] == "Check out TypeScript course on Frontend Masters."
 
     res_delete = client.delete(
         f"/api/ideas/{current_date}/{ideas_entry.id}/",
@@ -330,7 +328,7 @@ def test_remove_ideas_invalid_id(
 
 @pytest.mark.django_db
 @pytest.mark.parametrize("requested_date", [
-    "2023-07-06", "2023-03-05", "2022-09-16"
+    "2024-07-06", "2023-03-05", "2022-09-16"
 ])
 def test_remove_ideas_not_current_date(
     authenticated_user, requested_date
@@ -359,12 +357,12 @@ def test_remove_ideas_not_current_date(
 @pytest.mark.parametrize("test_data", [
     {
         "payload": {
-            "content": "I am healthy. My studies are going well. I am free and strong. Refactored code with new ideas",
+            "content": "Check out TypeScript course on Frontend Masters. Refactored code with new ideas",
         }
     },
     {
         "payload": {
-            "content": "Read a chapter of Eloquent JavaScript and was able to explain this to another colleague",
+            "content": "Checkout Neo4J Playground.",
         }
     }
 ])
@@ -386,7 +384,7 @@ def test_update_ideas_entry(
     client, user = authenticated_user
 
     ideas_entry = add_ideas_entry(
-        content="I am healthy. My studies are going well. I am free and strong.",
+        content="Check out TypeScript course on Frontend Masters.",
         user=user,
     )
 
@@ -439,12 +437,12 @@ def test_update_ideas_entry_incorrect_data(
     current_date = date.today()
 
     add_ideas_entry(
-        content="I am healthy. My studies are going well. I am free and strong.",
+        content="Check out TypeScript course on Frontend Masters.",
         user=user,
     )
 
     ideas_data = {
-        "content": "Read a chapter of Eloquent JavaScript and was able to explain this to another colleague",
+        "content": "Checkout Neo4J Playground.",
         "user": user.id,
     }
 
@@ -461,7 +459,7 @@ def test_update_ideas_entry_incorrect_data(
 
 @pytest.mark.django_db
 @pytest.mark.parametrize("requested_date", [
-    "2023-07-06", "2023-03-05", "2022-09-16"
+    "2024-07-06", "2023-03-05", "2022-09-16"
 ])
 def test_update_ideas_entry_incorrect_date(
     authenticated_user,
@@ -490,7 +488,7 @@ def test_update_ideas_entry_incorrect_date(
     },
     {
         "payload": {
-            "content entry": "I am healthy. My studies are going well. I am free and strong.",
+            "content entry": "Check out TypeScript course on Frontend Masters.",
         },
         "expected_status_code": 400
     }

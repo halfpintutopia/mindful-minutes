@@ -1,6 +1,9 @@
-from journal.serializers import TargetSerializer
+import pytest
+
+from journal.serializers import TargetEntrySerializer
 
 
+@pytest.mark.django_db
 def test_valid_target_serializer():
     """
     GIVEN a valid target serializer
@@ -11,13 +14,14 @@ def test_valid_target_serializer():
         "title": "Mediate for 20 minutes",
         "order": 1,
     }
-    serializer = TargetSerializer(data=valid_serializer_data)
+    serializer = TargetEntrySerializer(data=valid_serializer_data)
     assert serializer.is_valid()
     assert serializer.validated_data == valid_serializer_data
     assert serializer.data == valid_serializer_data
     assert not serializer.errors
 
 
+@pytest.mark.django_db
 def test_invalid_missing_title_target_serializer():
     """
     GIVEN an invalid target serializer with missing title
@@ -27,7 +31,7 @@ def test_invalid_missing_title_target_serializer():
     invalid_serializer_data = {
         "order": 1
     }
-    serializer = TargetSerializer(data=invalid_serializer_data)
+    serializer = TargetEntrySerializer(data=invalid_serializer_data)
     assert not serializer.is_valid()
     assert serializer.validated_data == {}
     assert serializer.data == invalid_serializer_data

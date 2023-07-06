@@ -1,39 +1,20 @@
 import pytest
 
-from faker import Faker
-
-from django.contrib.auth import get_user_model
-
 from journal.serializers import NoteEntrySerializer
 from journal.models import NoteEntry
 
-User = get_user_model()
-fake = Faker()
-
 
 @pytest.mark.django_db
-def test_valid_note_serializer():
+def test_valid_note_serializer(custom_user):
     """
     GIVEN a valid note serializer
     WHEN the data us passed to the serializer
     THEN the serializer should be valid
     """
-    email = fake.email()
-    password = fake.password(length=16)
-    first_name = fake.first_name()
-    last_name = fake.last_name()
-
-    user = User.objects.create_user(
-        email=email,
-        password=password,
-        first_name=first_name,
-        last_name=last_name
-    )
-
     content = "I must order 'Eloquent JavaScript'"
 
     note_entry = NoteEntry.objects.create(
-        user=user,
+        user=custom_user,
         content=content
     )
 
@@ -46,6 +27,7 @@ def test_valid_note_serializer():
     assert not deserialized_serializer.errors
 
 
+@pytest.mark.django_db
 def test_invalid_missing_content_note_serializer():
     """
     GIVEN an invalid note serializer with missing title

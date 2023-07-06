@@ -199,7 +199,7 @@ def test_get_all_knowledge_entries_by_current_date(
 
 @pytest.mark.django_db
 @pytest.mark.parametrize("created_on_timestamp", [
-    "2023-07-06 12:00:00",
+    "2023-04-06 12:00:00",
     "2023-06-04 10:30:00",
     "2022-07-09 19:45:00",
 ])
@@ -330,7 +330,7 @@ def test_remove_knowledge_invalid_id(
 
 @pytest.mark.django_db
 @pytest.mark.parametrize("requested_date", [
-    "2023-07-06", "2023-03-05", "2022-09-16"
+    "2024-07-06", "2023-03-05", "2022-09-16"
 ])
 def test_remove_knowledge_not_current_date(
     authenticated_user, requested_date
@@ -461,7 +461,7 @@ def test_update_knowledge_entry_incorrect_data(
 
 @pytest.mark.django_db
 @pytest.mark.parametrize("requested_date", [
-    "2023-07-06", "2023-03-05", "2022-09-16"
+    "2024-07-06", "2023-03-05", "2022-09-16"
 ])
 def test_update_knowledge_entry_incorrect_date(
     authenticated_user,

@@ -330,7 +330,7 @@ def test_remove_gratitude_invalid_id(
 
 @pytest.mark.django_db
 @pytest.mark.parametrize("requested_date", [
-    "2023-07-06", "2023-03-05", "2022-09-16"
+    "2024-07-06", "2023-03-05", "2022-09-16"
 ])
 def test_remove_gratitude_not_current_date(
     authenticated_user, requested_date
@@ -461,7 +461,7 @@ def test_update_gratitude_entry_incorrect_data(
 
 @pytest.mark.django_db
 @pytest.mark.parametrize("requested_date", [
-    "2023-07-06", "2023-03-05", "2022-09-16"
+    "2024-07-06", "2023-03-05", "2022-09-16"
 ])
 def test_update_gratitude_entry_incorrect_date(
     authenticated_user,

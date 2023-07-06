@@ -2,36 +2,24 @@ from datetime import time, date
 
 import pytest
 
-from django.contrib.auth import get_user_model
+from faker import Faker
+
 from django.core.exceptions import ValidationError
 
 from journal.models import AppointmentEntry
 
-User = get_user_model()
-
-
-@pytest.fixture
-def user():
-    """
-    Fixture for creating a user object.
-    """
-    return User.objects.create_user(
-        email="normal@user.com",
-        password="abcdefghij123!+_",
-        first_name="Normal",
-        last_name="User"
-    )
+fake = Faker()
 
 
 @pytest.mark.django_db
-def test_create_appointment_entry(user):
+def test_create_appointment_entry(custom_user):
     """
     GIVEN an appointment entry model
     WHEN creating an appointment entry
     THEN user should have successfully created an appointment entry
     """
     appointment_entry = AppointmentEntry.objects.create(
-        user=user,
+        user=custom_user,
         title="Dentist",
         date="2023-07-06",
         time_from=time(10, 0),
@@ -40,7 +28,7 @@ def test_create_appointment_entry(user):
     appointment_entry.save()
     appointment_entries = AppointmentEntry.objects.all()
     assert len(appointment_entries) == 1
-    assert appointment_entries[0].user == user
+    assert appointment_entries[0].user == custom_user
     assert appointment_entries[0].title == "Dentist"
     assert appointment_entries[0].date == date(2023, 7, 6)
     assert isinstance(
@@ -57,7 +45,7 @@ def test_create_appointment_entry(user):
 
 
 @pytest.mark.django_db
-def test_create_appointment_entry_from_until(user):
+def test_create_appointment_entry_from_until(custom_user):
     """
     GIVEN an appointment entry model
     WHEN creating an appointment entry
@@ -65,7 +53,7 @@ def test_create_appointment_entry_from_until(user):
     """
     with pytest.raises(ValidationError):
         appointment_entry = AppointmentEntry.objects.create(
-            user=user,
+            user=custom_user,
             title="Dentist",
             date="2023-07-06",
             time_from=time(10, 0),

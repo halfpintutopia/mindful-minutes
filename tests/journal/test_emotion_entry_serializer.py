@@ -1,14 +1,24 @@
+import pytest
+
 from journal.serializers import EmotionEntrySerializer
 
 
+@pytest.mark.django_db
 def test_valid_emotion_entry_serializer():
     """
     GIVEN a valid emotion entry serializer
     WHEN the data us passed to the serializer
     THEN the serializer should be valid
     """
-    valid_emotions = ["awful", "terrible", "bad",
-                      "okay", "good", "great", "excellent"]
+    valid_emotions = [
+        "awful",
+        "terrible",
+        "bad",
+        "okay",
+        "good",
+        "great",
+        "excellent"
+    ]
 
     for emotion in valid_emotions:
         valid_serializer_data = {"emotion": emotion}
@@ -20,6 +30,7 @@ def test_valid_emotion_entry_serializer():
         assert not serializer.errors
 
 
+@pytest.mark.django_db
 def test_invalid_missing_content_emotion_entry_serializer():
     """
     GIVEN an invalid emotion entry serializer with missing content

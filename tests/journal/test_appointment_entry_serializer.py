@@ -1,8 +1,11 @@
+import pytest
+
 from datetime import time, date
 
 from journal.serializers import AppointmentEntrySerializer
 
 
+@pytest.mark.django_db
 def test_valid_appointment_entry_serializer():
     """
     GIVEN a valid appointment entry serializer
@@ -27,6 +30,7 @@ def test_valid_appointment_entry_serializer():
     assert not serializer.errors
 
 
+@pytest.mark.django_db
 def test_missing_title_appointment_entry_serializer():
     """
     GIVEN an invalid appointment entry serializer
@@ -47,6 +51,7 @@ def test_missing_title_appointment_entry_serializer():
     }
 
 
+@pytest.mark.django_db
 def test_missing_date_appointment_entry_serializer():
     """
     GIVEN an invalid appointment entry serializer
@@ -67,6 +72,7 @@ def test_missing_date_appointment_entry_serializer():
     }
 
 
+@pytest.mark.django_db
 def test_missing_time_from_appointment_entry_serializer():
     """
     GIVEN an invalid appointment entry serializer
@@ -87,6 +93,7 @@ def test_missing_time_from_appointment_entry_serializer():
     }
 
 
+@pytest.mark.django_db
 def test_missing_time_until_appointment_entry_serializer():
     """
     GIVEN an invalid appointment entry serializer

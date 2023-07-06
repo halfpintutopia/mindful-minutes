@@ -404,7 +404,7 @@ def test_remove_appointment_invalid_id(
 
 @pytest.mark.django_db
 @pytest.mark.parametrize("requested_date", [
-    "2023-07-06", "2023-03-05", "2022-09-16"
+    "2024-07-06", "2023-03-05", "2022-09-16"
 ])
 def test_remove_appointment_not_current_date(
     authenticated_user, requested_date
@@ -434,7 +434,6 @@ def test_remove_appointment_not_current_date(
     {
         "payload": {
             "title": "Dentist",
-            "date": "2023-07-06",
             "time_from": "10:00:00",
             "time_until": "11:00:00",
         }
@@ -442,9 +441,8 @@ def test_remove_appointment_not_current_date(
     {
         "payload": {
             "title": "Dentist",
-            "date": "2023-07-06",
-            "time_from": "10:00:00",
-            "time_until": "11:00:00",
+            "time_from": "14:00:00",
+            "time_until": "14:30:00",
         }
     }
 ])
@@ -483,8 +481,8 @@ def test_update_appointment_entry(
     )
 
     assert res.status_code == 200
-    assert res.data["time_from"] == "10:00:00"
-    assert res.data["time_until"] == "11:00:00"
+    assert res.data["time_from"] == test_data["payload"]["time_from"]
+    assert res.data["time_until"] == test_data["payload"]["time_until"]
 
     res_check = client.get(
         f"/api/appointments/{current_date}/{appointment_entry.id}/",
@@ -492,8 +490,8 @@ def test_update_appointment_entry(
     )
 
     assert res_check.status_code == 200
-    assert res.data["time_from"] == "10:00:00"
-    assert res.data["time_until"] == "11:00:00"
+    assert res.data["time_from"] == test_data["payload"]["time_from"]
+    assert res.data["time_until"] == test_data["payload"]["time_until"]
 
     appointment_entries = AppointmentEntry.objects.all()
     assert len(appointment_entries) == 1
@@ -533,7 +531,7 @@ def test_update_appointment_entry_incorrect_data(
 
 @pytest.mark.django_db
 @pytest.mark.parametrize("requested_date", [
-    "2023-07-06", "2023-03-05", "2022-09-16"
+    "2024-07-06", "2023-03-05", "2022-09-16"
 ])
 def test_update_appointment_entry_incorrect_date(
     authenticated_user,

@@ -1,5 +1,7 @@
 import pytest
 
+from faker import Faker
+
 from django.contrib.auth import get_user_model
 from rest_framework.test import APIClient
 
@@ -7,7 +9,11 @@ from journal.models import AppointmentEntry, TargetEntry, \
     NoteEntry, KnowledgeEntry, GratitudeEntry, WinEntry, \
     IdeasEntry, ImprovementEntry, EmotionEntry
 
+# retrieves the current active user model,
+# which is set as the default user model AUTH_USER_MODEL,
+# as extended AbstractUser
 User = get_user_model()
+fake = Faker()
 
 
 @pytest.fixture
@@ -15,14 +21,19 @@ def authenticated_user():
     """
     Fixture to create an authenticated user
     """
+    email = fake.email()
+    password = fake.password()
+    first_name = fake.first_name()
+    last_name = fake.last_name()
+
     user = User.objects.create_user(
-        email="normal@user.com",
-        password="abcdefghij123!+_",
-        first_name="Normal",
-        last_name="User"
+        email=email,
+        password=password,
+        first_name=first_name,
+        last_name=last_name
     )
 
-    # Acts as a simulatd web browser that allows
+    # Acts as a simulated web browser that allows
     # you to make requests to API endpoints and receive responses.
     client = APIClient()
     # Sets up the test client with an authenticated user,
@@ -30,6 +41,42 @@ def authenticated_user():
     client.force_authenticate(user=user)
 
     return client, user
+
+
+@pytest.fixture
+def custom_user():
+    """
+    Fixture for creating a user object.
+    """
+    email = fake.email()
+    password = fake.password()
+    first_name = fake.first_name()
+    last_name = fake.last_name()
+
+    return User.objects.create_user(
+        email=email,
+        password=password,
+        first_name=first_name,
+        last_name=last_name
+    )
+
+
+@pytest.fixture
+def custom_super_user():
+    """
+    Fixture for creating a super user object
+    """
+    email = fake.email()
+    password = fake.password()
+    first_name = fake.first_name()
+    last_name = fake.last_name()
+
+    return User.objects.create_superuser(
+        email=email,
+        password=password,
+        first_name=first_name,
+        last_name=last_name
+    )
 
 
 @pytest.fixture(scope="function")

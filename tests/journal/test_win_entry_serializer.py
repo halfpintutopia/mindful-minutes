@@ -1,6 +1,9 @@
+import pytest
+
 from journal.serializers import WinEntrySerializer
 
 
+@pytest.mark.django_db
 def test_valid_win_entry_serializer():
     """
     GIVEN a valid win entry serializer
@@ -8,7 +11,7 @@ def test_valid_win_entry_serializer():
     THEN the serializer should be valid
     """
     valid_serializer_data = {
-        "content": "20 minutes of meditation"
+        "title": "20 minutes of meditation"
     }
     serializer = WinEntrySerializer(data=valid_serializer_data)
     assert serializer.is_valid()
@@ -28,4 +31,4 @@ def test_invalid_missing_content_win_entry_serializer():
     assert not serializer.is_valid()
     assert serializer.validated_data == {}
     assert serializer.data == invalid_serializer_data
-    assert serializer.errors == {"content": ["This field is required."]}
+    assert serializer.errors == {"title": ["This field is required."]}

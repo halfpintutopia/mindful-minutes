@@ -22,7 +22,7 @@ def test_add_win_entry(authenticated_user):
     client, user = authenticated_user
 
     win_data = {
-        "title": "2 minute cold shower",
+        "title": "Finished HTML and CSS",
         "user": user.id,
     }
 
@@ -34,7 +34,7 @@ def test_add_win_entry(authenticated_user):
 
     assert res.status_code == 201
     assert res.data["user"] == user.id
-    assert res.data["title"] == "2 minute cold shower"
+    assert res.data["title"] == "Finished HTML and CSS"
 
     win_entries = WinEntry.objects.all()
     assert len(win_entries) == 1
@@ -48,8 +48,7 @@ def test_add_win_entry(authenticated_user):
     },
     {
         "payload": {
-            "title": "2 minute cold shower",
-            "content entry": "09:00:00",
+            "title entry": "Finished HTML and CSS",
         },
         "status_code": 400
     }
@@ -95,12 +94,10 @@ def test_add_win_entry_not_current_date(
     win_entries = WinEntry.objects.all()
     assert len(win_entries) == 0
 
-    current_date = date.today()
-
     client, user = authenticated_user
 
     win_data = {
-        "title": "2 minute cold shower",
+        "title": "Finished HTML and CSS",
         "user": user.id,
     }
 
@@ -131,7 +128,7 @@ def test_get_single_win_entry(
     client, user = authenticated_user
 
     win = add_win_entry(
-        title="2 minute cold shower",
+        title="Finished HTML and CSS",
         user=user,
     )
 
@@ -142,7 +139,7 @@ def test_get_single_win_entry(
 
     assert res.status_code == 200
     assert res.data["user"] == user.id
-    assert res.data["title"] == "2 minute cold shower"
+    assert res.data["title"] == "Finished HTML and CSS"
 
 
 @pytest.mark.django_db
@@ -184,17 +181,17 @@ def test_get_all_win_entries_by_current_date(
     client, user = authenticated_user
 
     add_win_entry(
-        title="2 minute cold shower",
+        title="Finished HTML and CSS",
         user=user,
     )
 
     add_win_entry(
-        title="20 minute meditation",
+        title="Had a conversation in German",
         user=user,
     )
 
     add_win_entry(
-        title="Meet Andy for lunch",
+        title="Hiked for 20 kms",
         user=user,
     )
 
@@ -215,7 +212,7 @@ def test_get_all_win_entries_by_current_date(
 
 @pytest.mark.django_db
 @pytest.mark.parametrize("created_on_timestamp", [
-    "2023-07-06 12:00:00",
+    "2023-04-06 12:00:00",
     "2023-06-04 10:30:00",
     "2022-07-09 19:45:00",
 ])
@@ -238,17 +235,17 @@ def test_get_all_win_entries_by_date(
         client, user = authenticated_user
 
         add_win_entry(
-            title="2 minute cold shower",
+            title="Finished HTML and CSS",
             user=user,
         )
 
         add_win_entry(
-            title="20 minute meditation",
+            title="Had a conversation in German",
             user=user,
         )
 
         add_win_entry(
-            title="Meet Andy for lunch",
+            title="Hiked for 20 kms",
             user=user,
         )
 
@@ -285,7 +282,7 @@ def test_remove_win_entry(
     client, user = authenticated_user
 
     win_entry = add_win_entry(
-        title="2 minute cold shower",
+        title="Finished HTML and CSS",
         user=user,
     )
 
@@ -295,7 +292,7 @@ def test_remove_win_entry(
     )
 
     assert res.status_code == 200
-    assert res.data["title"] == "2 minute cold shower"
+    assert res.data["title"] == "Finished HTML and CSS"
 
     res_delete = client.delete(
         f"/api/wins/{current_date}/{win_entry.id}/",
@@ -361,7 +358,7 @@ def test_remove_win_invalid_id(
 
 @pytest.mark.django_db
 @pytest.mark.parametrize("requested_date", [
-    "2023-07-06", "2023-03-05", "2022-09-16"
+    "2024-07-06", "2023-03-05", "2022-09-16"
 ])
 def test_remove_win_not_current_date(
     authenticated_user, requested_date
@@ -390,17 +387,17 @@ def test_remove_win_not_current_date(
 @pytest.mark.parametrize("test_data", [
     {
         "payload": {
-            "title": "20 minutes meditation",
+            "title": "Finished HTML and CSS",
         }
     },
     {
         "payload": {
-            "title": "2 minute cold shower",
+            "title": "Had a conversation in German",
         }
     },
     {
         "payload": {
-            "title": "20 minutes meditation",
+            "title": "Hiked for 20 kms",
         }
     }
 ])
@@ -422,7 +419,7 @@ def test_update_win_entry(
     client, user = authenticated_user
 
     win_entry = add_win_entry(
-        title="2 minute cold shower",
+        title="Finished HTML and CSS",
         user=user,
     )
 
@@ -475,12 +472,12 @@ def test_update_win_entry_incorrect_data(
     current_date = date.today()
 
     add_win_entry(
-        title="2 minute cold shower",
+        title="Finished HTML and CSS",
         user=user,
     )
 
     win_data = {
-        "title": "2 minute cold shower",
+        "title": "Finished HTML and CSS",
         "user": user.id,
     }
 
@@ -497,7 +494,7 @@ def test_update_win_entry_incorrect_data(
 
 @pytest.mark.django_db
 @pytest.mark.parametrize("requested_date", [
-    "2023-07-06", "2023-03-05", "2022-09-16"
+    "2024-07-06", "2023-03-05", "2022-09-16"
 ])
 def test_update_win_entry_incorrect_date(
     authenticated_user,
@@ -526,7 +523,7 @@ def test_update_win_entry_incorrect_date(
     },
     {
         "payload": {
-            "title input": "2 minute cold shower",
+            "title input": "Finished HTML and CSS",
         },
         "expected_status_code": 400
     }

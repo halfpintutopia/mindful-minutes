@@ -1,6 +1,9 @@
+import pytest
+
 from journal.serializers import KnowledgeEntrySerializer
 
 
+@pytest.mark.django_db
 def test_valid_knowledge_entry_serializer():
     """
     GIVEN a valid knowledge entry serializer
@@ -17,6 +20,7 @@ def test_valid_knowledge_entry_serializer():
     assert not serializer.errors
 
 
+@pytest.mark.django_db
 def test_invalid_missing_content_knowledge_entry_serializer():
     """
     GIVEN an invalid knowledge entry serializer with missing content

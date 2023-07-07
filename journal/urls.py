@@ -13,6 +13,7 @@ from .api_views.ideas_entries import IdeasEntryList, IdeasEntryDetail
 from .api_views.improvement_entries import ImprovementEntryList, \
     ImprovementEntryDetail
 from .api_views.custom_user import CustomUserList, CustomUserDetail
+from .api_views.user_settings import UserSettingsView
 
 urlpatterns = [
     path(
@@ -105,4 +106,9 @@ urlpatterns = [
         CustomUserList.as_view(),
         name="user-list"
     ),
+    path(
+        "api/user-settings/<int:user_id>/",
+        UserSettingsView.as_view(),
+        name="user-settings"
+    )
 ]

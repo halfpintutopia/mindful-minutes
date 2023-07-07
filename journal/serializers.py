@@ -39,7 +39,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
     CustomUserSerializer is a ModelSerializer
     that converts CustomUser model to JSON representation and vice versa
     """
-    user_settings = UserSettingsSerializer()
+    user_settings = UserSettingsSerializer(required=False)
 
     class Meta:
         """
@@ -58,6 +58,11 @@ class CustomUserSerializer(serializers.ModelSerializer):
             "is_superuser",
             "user_settings"
         ]
+
+        extra_kwargs = {
+            "first_name": {"required": True},
+            "last_name": {"required": True}
+        }
 
 
 class AppointmentEntrySerializer(serializers.ModelSerializer):

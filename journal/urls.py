@@ -12,6 +12,7 @@ from .api_views.win_entries import WinEntryList, WinEntryDetail
 from .api_views.ideas_entries import IdeasEntryList, IdeasEntryDetail
 from .api_views.improvement_entries import ImprovementEntryList, \
     ImprovementEntryDetail
+from .api_views.custom_user import CustomUserList, CustomUserDetail
 
 urlpatterns = [
     path(
@@ -93,5 +94,15 @@ urlpatterns = [
         "api/improvement/<str:date_request>/",
         ImprovementEntryList.as_view(),
         name="improvement-entry-list"
+    ),
+    path(
+        "api/users/<int:pk>/",
+        CustomUserDetail.as_view(),
+        name="user-detail"
+    ),
+    path(
+        "api/users/",
+        CustomUserList.as_view(),
+        name="user-list"
     ),
 ]

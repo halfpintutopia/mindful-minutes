@@ -6,9 +6,11 @@
 ## Table of Contents
 - [Django REST Framework](#django-rest-framework)
   - [RESTful Routes](#restful-routes)
+    - [Custom User](#custom-user)
+    - [User Settings](#user-settings)
     - [Appointment Entries](#appointment-entries)
-    - [Targets](#targets)
-    - [Notes](#notes)
+    - [Target Entries](#target-entries)
+    - [Note Entries](#note-entries)
     - [Knowledge Entries](#knowledge-entries)
     - [Gratitude Entries](#gratitude-entries)
     - [Win Entries](#win-entries)
@@ -20,110 +22,125 @@
 
 ### RESTful Routes
 
+#### Custom User
+
+| Endpoint       | HTTP Method | CRUD Method | Result                  |         |
+| :------------- | :---------: | :---------: | :---------------------- | ------- |
+| /api/users/    |     GET     |    READ     | get all users           | &#9745; |
+| /api/users/:id |     GET     |    READ     | get a single user by ID | &#9745; |
+| /api/users     |    POST     |   CREATE    | add an user             | &#9745; |
+| /api/users/:id |     PUT     |   UPDATE    | update an user          | &#9745; |
+| /api/users/:id |   DELETE    |   DELETE    | delete an user          | &#9745; |
+
+---
+
+#### User Settings
+
+| Endpoint                    | HTTP Method | CRUD Method | Result                       |         |
+| :-------------------------- | :---------: | :---------: | :--------------------------- | ------- |
+| /api/user-settings/:user_id |     GET     |    READ     | get all user's user-settings | &#9745; |
+| /api/user-settings/:user_id |    POST     |   CREATE    | add an user's user-settings  | &#9745; |
+| /api/user-settings/:user_id |     PUT     |   UPDATE    | update user's user-settings  | &#9745; |
+| /api/user-settings/:user_id |   DELETE    |   DELETE    | delete user's user-settings  | &#9745; |
+
+---
+
 #### Appointment Entries
 
-| Endpoint                | HTTP Method | CRUD Method | Result                         |         |
-| :---------------------- | :---------: | :---------: | :----------------------------- | ------- |
-| /api/appointments/      |     GET     |    READ     | get all appointments           | &#9745; |
-| /api/appointments/:date |     GET     |    READ     | get all appointments by date   | &#9745; |
-| /api/appointments/:id   |     GET     |    READ     | get a single appointment by ID | &#9745; |
-| /api/appointments/      |    POST     |   CREATE    | add an appointment             | &#9745; |
-| /api/appointments/:id   |     PUT     |   UPDATE    | update an appointment          | &#9745; |
-| /api/appointments/:id   |   DELETE    |   DELETE    | delete an appointment          | &#9745; |
+| Endpoint                    | HTTP Method | CRUD Method | Result                               |         |
+| :-------------------------- | :---------: | :---------: | :----------------------------------- | ------- |
+| /api/appointments/:date     |     GET     |    READ     | get all appointments by date         | &#9745; |
+| /api/appointments/:date/:id |     GET     |    READ     | get a single appointment entry by ID | &#9745; |
+| /api/appointments/:date     |    POST     |   CREATE    | add an appointment entry             | &#9745; |
+| /api/appointments/:date/:id |     PUT     |   UPDATE    | update an appointment entry          | &#9745; |
+| /api/appointments/:date/:id |   DELETE    |   DELETE    | delete an appointment entry          | &#9745; |
 
 ---
 
-#### Targets
+#### Target Entries
 
-| Endpoint           | HTTP Method | CRUD Method | Result                    |         |
-| :----------------- | :---------: | :---------: | :------------------------ | ------- |
-| /api/targets/      |     GET     |    READ     | get all targets           | &#9745; |
-| /api/targets/:date |     GET     |    READ     | get all targets by date   | &#9745; |
-| /api/targets/:id   |     GET     |    READ     | get a single target by ID | &#9745; |
-| /api/targets/      |    POST     |   CREATE    | add an target             | &#9745; |
-| /api/targets/:id   |     PUT     |   UPDATE    | update an target          | &#9745; |
-| /api/targets/:id   |   DELETE    |   DELETE    | delete an target          | &#9745; |
+| Endpoint               | HTTP Method | CRUD Method | Result                          |         |
+| :--------------------- | :---------: | :---------: | :------------------------------ | ------- |
+| /api/targets/:date     |     GET     |    READ     | get all targets by date         | &#9745; |
+| /api/targets/:date/:id |     GET     |    READ     | get a single target entry by ID | &#9745; |
+| /api/targets/:date     |    POST     |   CREATE    | add an target entry             | &#9745; |
+| /api/targets/:date/:id |     PUT     |   UPDATE    | update an target entry          | &#9745; |
+| /api/targets/:date/:id |   DELETE    |   DELETE    | delete an target entry          | &#9745; |
 
 ---
 
-#### Notes
+#### Note Entries
 
-| Endpoint         | HTTP Method | CRUD Method | Result                  |     |
-| :--------------- | :---------: | :---------: | :---------------------- | --- |
-| /api/notes/      |     GET     |    READ     | get all notes           |     |
-| /api/notes/:date |     GET     |    READ     | get all notes by date   |     |
-| /api/notes/:id   |     GET     |    READ     | get a single note by ID |     |
-| /api/notes/      |    POST     |   CREATE    | add an note             |     |
-| /api/notes/:id   |     PUT     |   UPDATE    | update an note          |     |
-| /api/notes/:id   |   DELETE    |   DELETE    | delete an note          |     |
+| Endpoint             | HTTP Method | CRUD Method | Result                        |         |
+| :------------------- | :---------: | :---------: | :---------------------------- | ------- |
+| /api/notes/:date     |     GET     |    READ     | get all notes by date         | &#9745; |
+| /api/notes/:date/:id |     GET     |    READ     | get a single note entry by ID | &#9745; |
+| /api/notes/:date     |    POST     |   CREATE    | add an note entry             | &#9745; |
+| /api/notes/:date/:id |     PUT     |   UPDATE    | update an note entry          | &#9745; |
+| /api/notes/:date/:id |   DELETE    |   DELETE    | delete an note entry          | &#9745; |
 
 ---
 
 #### Knowledge Entries
 
-| Endpoint                     | HTTP Method | CRUD Method | Result                             |     |
-| :--------------------------- | :---------: | :---------: | :--------------------------------- | --- |
-| /api/knowledge_entries/      |     GET     |    READ     | get all knowledge_entries          |     |
-| /api/knowledge_entries/:date |     GET     |    READ     | get all knowledge_entries by date  |     |
-| /api/knowledge_entries/:id   |     GET     |    READ     | get a single knowledge_entry by ID |     |
-| /api/knowledge_entries/      |    POST     |   CREATE    | add an knowledge_entry             |     |
-| /api/knowledge_entries/:id   |     PUT     |   UPDATE    | update an knowledge_entry          |     |
-| /api/knowledge_entries/:id   |   DELETE    |   DELETE    | delete an knowledge_entry          |     |
+| Endpoint                 | HTTP Method | CRUD Method | Result                             |         |
+| :----------------------- | :---------: | :---------: | :--------------------------------- | ------- |
+| /api/knowledge/:date     |     GET     |    READ     | get all knowledge by date          | &#9745; |
+| /api/knowledge/:date/:id |     GET     |    READ     | get a single knowledge entry by ID | &#9745; |
+| /api/knowledge/:date     |    POST     |   CREATE    | add an knowledge entry             | &#9745; |
+| /api/knowledge/:date/:id |     PUT     |   UPDATE    | update an knowledge entry          | &#9745; |
+| /api/knowledge/:date/:id |   DELETE    |   DELETE    | delete an knowledge entry          | &#9745; |
 
 ---
 
 
 #### Gratitude Entries
 
-| Endpoint                     | HTTP Method | CRUD Method | Result                             |     |
-| :--------------------------- | :---------: | :---------: | :--------------------------------- | --- |
-| /api/gratitude_entries/      |     GET     |    READ     | get all gratitude_entries          |     |
-| /api/gratitude_entries/:date |     GET     |    READ     | get all gratitude_entries by date  |     |
-| /api/gratitude_entries/:id   |     GET     |    READ     | get a single gratitude_entry by ID |     |
-| /api/gratitude_entries/      |    POST     |   CREATE    | add an gratitude_entry             |     |
-| /api/gratitude_entries/:id   |     PUT     |   UPDATE    | update an gratitude_entry          |     |
-| /api/gratitude_entries/:id   |   DELETE    |   DELETE    | delete an gratitude_entry          |     |
+| Endpoint                 | HTTP Method | CRUD Method | Result                             |         |
+| :----------------------- | :---------: | :---------: | :--------------------------------- | ------- |
+| /api/gratitude/:date     |     GET     |    READ     | get all gratitude by date          | &#9745; |
+| /api/gratitude/:date/:id |     GET     |    READ     | get a single gratitude entry by ID | &#9745; |
+| /api/gratitude/:date     |    POST     |   CREATE    | add an gratitude entry             | &#9745; |
+| /api/gratitude/:date/:id |     PUT     |   UPDATE    | update an gratitude entry          | &#9745; |
+| /api/gratitude/:date/:id |   DELETE    |   DELETE    | delete an gratitude entry          | &#9745; |
 
 ---
 
 #### Win Entries
 
-| Endpoint        | HTTP Method | CRUD Method | Result                 |     |
-| :-------------- | :---------: | :---------: | :--------------------- | --- |
-| /api/wins/      |     GET     |    READ     | get all wins           |     |
-| /api/wins/:date |     GET     |    READ     | get all wins by date   |     |
-| /api/wins/:id   |     GET     |    READ     | get a single win by ID |     |
-| /api/wins/      |    POST     |   CREATE    | add an win             |     |
-| /api/wins/:id   |     PUT     |   UPDATE    | update an win          |     |
-| /api/wins/:id   |   DELETE    |   DELETE    | delete an win          |     |
+| Endpoint            | HTTP Method | CRUD Method | Result                       |         |
+| :------------------ | :---------: | :---------: | :--------------------------- | ------- |
+| /api/wins/:date     |     GET     |    READ     | get all wins by date         | &#9745; |
+| /api/wins/:date/:id |     GET     |    READ     | get a single win entry by ID | &#9745; |
+| /api/wins/:date     |    POST     |   CREATE    | add an win entry             | &#9745; |
+| /api/wins/:date/:id |     PUT     |   UPDATE    | update an win entry          | &#9745; |
+| /api/wins/:date/:id |   DELETE    |   DELETE    | delete an win entry          | &#9745; |
 
 ---
 
 
 #### Ideas Entries
 
-| Endpoint         | HTTP Method | CRUD Method | Result                  |     |
-| :--------------- | :---------: | :---------: | :---------------------- | --- |
-| /api/ideas/      |     GET     |    READ     | get all ideas           |     |
-| /api/ideas/:date |     GET     |    READ     | get all ideas by date   |     |
-| /api/ideas/:id   |     GET     |    READ     | get a single idea by ID |     |
-| /api/ideas/      |    POST     |   CREATE    | add an idea             |     |
-| /api/ideas/:id   |     PUT     |   UPDATE    | update an idea          |     |
-| /api/ideas/:id   |   DELETE    |   DELETE    | delete an idea          |     |
+| Endpoint             | HTTP Method | CRUD Method | Result                        |         |
+| :------------------- | :---------: | :---------: | :---------------------------- | ------- |
+| /api/ideas/:date     |     GET     |    READ     | get all ideas by date         | &#9745; |
+| /api/ideas/:date/:id |     GET     |    READ     | get a single idea entry by ID | &#9745; |
+| /api/ideas/:date     |    POST     |   CREATE    | add an idea entry             | &#9745; |
+| /api/ideas/:date/:id |     PUT     |   UPDATE    | update an idea entry          | &#9745; |
+| /api/ideas/:date/:id |   DELETE    |   DELETE    | delete an idea entry          | &#9745; |
 
 ---
 
 
 #### Improvement Entries
 
-| Endpoint                | HTTP Method | CRUD Method | Result                         |     |
-| :---------------------- | :---------: | :---------: | :----------------------------- | --- |
-| /api/improvements/      |     GET     |    READ     | get all improvements           |     |
-| /api/improvements/:date |     GET     |    READ     | get all improvements by date   |     |
-| /api/improvements/:id   |     GET     |    READ     | get a single improvement by ID |     |
-| /api/improvements/      |    POST     |   CREATE    | add an improvement             |     |
-| /api/improvements/:id   |     PUT     |   UPDATE    | update an improvement          |     |
-| /api/improvements/:id   |   DELETE    |   DELETE    | delete an improvement          |     |
+| Endpoint                   | HTTP Method | CRUD Method | Result                               |         |
+| :------------------------- | :---------: | :---------: | :----------------------------------- | ------- |
+| /api/improvement/:date     |     GET     |    READ     | get all improvement by date          | &#9745; |
+| /api/improvement/:date/:id |     GET     |    READ     | get a single improvement entry by ID | &#9745; |
+| /api/improvement/:date     |    POST     |   CREATE    | add an improvement entry             | &#9745; |
+| /api/improvement/:date/:id |     PUT     |   UPDATE    | update an improvement entry          | &#9745; |
+| /api/improvement/:date/:id |   DELETE    |   DELETE    | delete an improvement entry          | &#9745; |
 
 
 --- 

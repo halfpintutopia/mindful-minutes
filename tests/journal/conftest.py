@@ -80,6 +80,22 @@ def custom_super_user():
 
 
 @pytest.fixture(scope="function")
+def add_custom_user():
+    """
+    Fixture to create a CustomUser object in the database
+    """
+    def _add_custom_user(email, password, first_name, last_name):
+        user = User.objects.create_user(
+            email=email,
+            password=password,
+            first_name=first_name,
+            last_name=last_name
+        )
+        return user
+    return _add_custom_user
+
+
+@pytest.fixture(scope="function")
 def add_appointment_entry():
     """
     Fixture to crete an AppointmentEntry object in the database

@@ -32,8 +32,6 @@ def test_add_gratitude_entry(authenticated_user):
         format="json"
     )
 
-    print("Response data", res.data)
-
     assert res.status_code == 201
     assert res.data["user"] == user.id
     assert res.data["content"] == "I am healthy. My studies are going well. I am free and strong."

@@ -7,7 +7,7 @@ from rest_framework.test import APIClient
 
 from journal.models import AppointmentEntry, TargetEntry, \
     NoteEntry, KnowledgeEntry, GratitudeEntry, WinEntry, \
-    IdeasEntry, ImprovementEntry, EmotionEntry
+    IdeasEntry, ImprovementEntry, EmotionEntry, UserSettings
 
 # retrieves the current active user model,
 # which is set as the default user model AUTH_USER_MODEL,
@@ -93,6 +93,22 @@ def add_custom_user():
         )
         return user
     return _add_custom_user
+
+
+@pytest.fixture(scope="function")
+def add_user_settings():
+    """
+    Fixture to create UserSettings object in the database
+    """
+    def _add_user_settings(start_week_day, morning_check_in, evening_check_in, user):
+        user_settings = UserSettings.objects.create(
+            user=user,
+            start_week_day=start_week_day,
+            morning_check_in=morning_check_in,
+            evening_check_in=evening_check_in
+        )
+        return user_settings
+    return _add_user_settings
 
 
 @pytest.fixture(scope="function")

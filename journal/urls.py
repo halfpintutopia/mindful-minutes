@@ -14,8 +14,24 @@ from .api_views.improvement_entries import ImprovementEntryList, \
     ImprovementEntryDetail
 from .api_views.custom_user import CustomUserList, CustomUserDetail
 from .api_views.user_settings import UserSettingsView
+from .api_views.emotion_entries import EmotionEntryList
 
 urlpatterns = [
+    path(
+        "api/users/<int:pk>/",
+        CustomUserDetail.as_view(),
+        name="user-detail"
+    ),
+    path(
+        "api/users/",
+        CustomUserList.as_view(),
+        name="user-list"
+    ),
+    path(
+        "api/user-settings/<int:user_id>/",
+        UserSettingsView.as_view(),
+        name="user-settings"
+    ),
     path(
         "api/appointments/<str:date_request>/<int:pk>/",
         AppointmentEntryDetail.as_view(),
@@ -96,19 +112,14 @@ urlpatterns = [
         ImprovementEntryList.as_view(),
         name="improvement-entry-list"
     ),
+    # path(
+    #     "api/emotions/<int:user_id>/<str:date_request>/",
+    #     EmotionEntryDetail.as_view(),
+    #     name="emotion-entry-list"
+    # ),
     path(
-        "api/users/<int:pk>/",
-        CustomUserDetail.as_view(),
-        name="user-detail"
-    ),
-    path(
-        "api/users/",
-        CustomUserList.as_view(),
-        name="user-list"
-    ),
-    path(
-        "api/user-settings/<int:user_id>/",
-        UserSettingsView.as_view(),
-        name="user-settings"
+        "api/emotions/<str:date_request>/",
+        EmotionEntryList.as_view(),
+        name="emotion-entry-list"
     )
 ]

@@ -13,6 +13,31 @@ from journal.models import EmotionEntry
 
 
 @pytest.mark.django_db
+def test_get_list_of_emotion_entries(authenticated_user, add_emotion_entry):
+    """
+    GIVEN a Django application
+    WHEN a user requests a list of all emotion entries
+    THEN the user should receive a list of all emotion entries
+    """
+    client, user = authenticated_user
+
+    emotion = "good"
+
+    emotion_entry = add_emotion_entry(
+        user=user,
+        emotion=emotion
+    )
+
+    url = reverse("emotion-entry-list-all")
+
+    res = client.get(
+        url
+    )
+
+    assert res.status_code == status.HTTP_200_OK
+
+
+@pytest.mark.django_db
 def test_add_emotion_entry(authenticated_user):
     """
     GIVEN a Django application
@@ -23,7 +48,7 @@ def test_add_emotion_entry(authenticated_user):
 
     current_date = date.today()
 
-    url = reverse("emotion-entry-list", args=[current_date])
+    url = reverse("emotion-entry-list-date", args=[current_date])
 
     payload = {
         "emotion": "great"
@@ -49,7 +74,7 @@ def test_add_emotion_entry_incorrect_date(authenticated_user):
 
     not_current_date = "2023-04-02"
 
-    url = reverse("emotion-entry-list", args=[not_current_date])
+    url = reverse("emotion-entry-list-date", args=[not_current_date])
 
     payload = {
         "emotion": "great"
@@ -73,7 +98,7 @@ def test_add_emotion_entry_invalid_user(client):
     """
     current_date = date.today()
 
-    url = reverse("emotion-entry-list", args=[current_date])
+    url = reverse("emotion-entry-list-date", args=[current_date])
 
     payload = {
         "emotion": "great"
@@ -87,3 +112,32 @@ def test_add_emotion_entry_invalid_user(client):
 
     assert res.status_code == status.HTTP_403_FORBIDDEN
 
+
+@pytest.mark.django_db
+def test_get_single_emotion_entry_by_date(authenticated_user, add_emotion_entry):
+    """
+    GIVEN a Django application
+    WHEN a user requests to get an emotion by date
+    THEN the emotion for the specified date is returned
+    """
+    client, user = authenticated_user
+
+    emotion = "good"
+
+    emotion_entry = add_emotion_entry(
+        user=user,
+        emotion=emotion
+    )
+
+    date = emotion_entry.created_on.strftime("%Y-%m-%d")
+
+    url = reverse("emotion-entry-detail-single", args=[date, emotion_entry.id])
+
+    res = client.get(url)
+
+    assert res.status_code == status.HTTP_200_OK
+    assert res.data.get("emotion") == emotion
+    assert res.data.get("user") == user.id
+
+
+# @pytest.mark.django_db

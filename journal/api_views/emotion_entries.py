@@ -18,7 +18,7 @@ class EmotionEntryList(APIView):
     """
     permission_classes = [IsAuthenticated]
 
-    def get(self, request, date_request, format=None):
+    def get(self, request, date_request=None, format=None):
         """
         List all emotion entries or filter by date
         """
@@ -30,7 +30,7 @@ class EmotionEntryList(APIView):
         """
         return self._handle_emotion_list_action(request, date_request)
 
-    def _handle_emotion_list_action(self, request, date_request):
+    def _handle_emotion_list_action(self, request, date_request=None):
         """
         Private helper method to handle both GET and POST requests
 
@@ -84,87 +84,87 @@ class EmotionEntryList(APIView):
         raise MethodNotAllowed(request.method)
 
 
-# class EmotionEntryDetail(APIView):
-#     """
-#     Retrieve, update or delete an emotion entry
-#     """
-#     permission_classes = [IsAuthenticated]
+class EmotionEntryDetail(APIView):
+    """
+    Retrieve, update or delete an emotion entry
+    """
+    permission_classes = [IsAuthenticated]
 
-#     def get_object(self, pk):
-#         """
-#         Helper method to get an emotion entry object from the database
-#         or raise a 404 error
-#         """
-#         try:
-#             return EmotionEntry.objects.get(pk=pk)
-#         except EmotionEntry.DoesNotExist:
-#             raise Http404
+    def get_object(self, pk):
+        """
+        Helper method to get an emotion entry object from the database
+        or raise a 404 error
+        """
+        try:
+            return EmotionEntry.objects.get(pk=pk)
+        except EmotionEntry.DoesNotExist:
+            raise Http404
 
-#     def get(self, request, date_request, pk, format=None):
-#         """
-#         Retrieve an emotion entry
-#         """
-#         return self._handle_emotion_detail_action(request, date_request, pk)
+    def get(self, request, date_request, pk, format=None):
+        """
+        Retrieve an emotion entry
+        """
+        return self._handle_emotion_detail_action(request, date_request, pk)
 
-#     def put(self, request, date_request, pk, format=None):
-#         """
-#         Update an emotion entry
-#         """
-#         return self._handle_emotion_detail_action(request, date_request, pk)
+    def put(self, request, date_request, pk, format=None):
+        """
+        Update an emotion entry
+        """
+        return self._handle_emotion_detail_action(request, date_request, pk)
 
-#     def delete(self, request, date_request, pk, format=None):
-#         """
-#         Delete an emotion entry
-#         """
-#         return self._handle_emotion_detail_action(request, date_request, pk)
+    def delete(self, request, date_request, pk, format=None):
+        """
+        Delete an emotion entry
+        """
+        return self._handle_emotion_detail_action(request, date_request, pk)
 
-#     def _handle_emotion_detail_action(self, request, date_request, pk):
-#         """
-#         Private helper method to handle GET, PUT and DELETE requests
+    def _handle_emotion_detail_action(self, request, date_request, pk):
+        """
+        Private helper method to handle GET, PUT and DELETE requests
 
-#         Check if request is allowed based on date and
-#         either retrieve, update or delete an emotion entry
-#         """
-#         current_date = date.today().strftime("%Y-%m-%d")
-#         if date_request != current_date:
-#             return Response(
-#                 {
-#                     "error":
-#                     "You are not allowed to change emotions \
-#                         for past or future dates."
-#                 },
-#                 status=status.HTTP_403_FORBIDDEN
-#             )
+        Check if request is allowed based on date and
+        either retrieve, update or delete an emotion entry
+        """
+        current_date = date.today().strftime("%Y-%m-%d")
+        if date_request != current_date:
+            return Response(
+                {
+                    "error":
+                    "You are not allowed to change emotions \
+                        for past or future dates."
+                },
+                status=status.HTTP_403_FORBIDDEN
+            )
 
-#         if pk is not None:
-#             try:
-#                 emotion_id = isinstance(pk, int)
-#                 emotion_entry = self.get_object(pk)
-#             except (ValueError, Http404):
-#                 if isinstance(pk, str):
-#                     return Response(
-#                         {"error": "Invalid emotion ID"},
-#                         status=status.HTTP_400_BAD_REQUEST
-#                     )
-#                 return Response(status=status.HTTP_404_NOT_FOUND)
+        if pk is not None:
+            try:
+                emotion_id = isinstance(pk, int)
+                emotion_entry = self.get_object(pk)
+            except (ValueError, Http404):
+                if isinstance(pk, str):
+                    return Response(
+                        {"error": "Invalid emotion ID"},
+                        status=status.HTTP_400_BAD_REQUEST
+                    )
+                return Response(status=status.HTTP_404_NOT_FOUND)
 
-#             if request.method == "GET":
-#                 serializer = EmotionEntrySerializer(emotion_entry)
-#                 return Response(serializer.data)
+            if request.method == "GET":
+                serializer = EmotionEntrySerializer(emotion_entry)
+                return Response(serializer.data)
 
-#             elif request.method == "PUT":
-#                 serializer = EmotionEntrySerializer(
-#                     emotion_entry, data=request.data)
-#                 if serializer.is_valid():
-#                     serializer.save(user=request.user)
-#                     return Response(serializer.data)
-#                 return Response(
-#                     serializer.errors,
-#                     status=status.HTTP_400_BAD_REQUEST
-#                 )
+            elif request.method == "PUT":
+                serializer = EmotionEntrySerializer(
+                    emotion_entry, data=request.data)
+                if serializer.is_valid():
+                    serializer.save(user=request.user)
+                    return Response(serializer.data)
+                return Response(
+                    serializer.errors,
+                    status=status.HTTP_400_BAD_REQUEST
+                )
 
-#             elif request.method == "DELETE":
-#                 emotion_entry.delete()
-#                 return Response(status=status.HTTP_204_NO_CONTENT)
+            elif request.method == "DELETE":
+                emotion_entry.delete()
+                return Response(status=status.HTTP_204_NO_CONTENT)
 
-#         return Response(status=status.HTTP_400_BAD_REQUEST)
+        return Response(status=status.HTTP_400_BAD_REQUEST)

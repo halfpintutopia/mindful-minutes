@@ -109,19 +109,19 @@ urlpatterns = [
         name="gratitude-entry-list-date"
     ),
     path(
-        "api/users/<str:slug>/wins/",
+        "api/users/<str:slug>/win/",
         WinEntryList.as_view(),
-        name="win-entry-list"
+        name="win-entry-list-all"
     ),
     path(
-        "api/users/<str:slug>/wins/<str:date_request>/<int:pk>/",
+        "api/users/<str:slug>/win/<str:date_request>/<int:pk>/",
         WinEntryDetail.as_view(),
-        name="win-entry-detail"
+        name="win-entry-detail-single"
     ),
     path(
-        "api/users/<str:slug>/wins/<str:date_request>/",
+        "api/users/<str:slug>/win/<str:date_request>/",
         WinEntryList.as_view(),
-        name="win-entry-list"
+        name="win-entry-list-date"
     ),
     path(
         "api/users/<str:slug>/ideas/",

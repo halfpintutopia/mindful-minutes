@@ -81,17 +81,17 @@ urlpatterns = [
     path(
         "api/users/<str:slug>/knowledge/",
         KnowledgeEntryList.as_view(),
-        name="knowledge-entry-list"
+        name="knowledge-entry-list-all"
     ),
     path(
         "api/users/<str:slug>/knowledge/<str:date_request>/<int:pk>/",
         KnowledgeEntryDetail.as_view(),
-        name="knowledge-entry-detail"
+        name="knowledge-entry-detail-single"
     ),
     path(
         "api/users/<str:slug>/knowledge/<str:date_request>/",
         KnowledgeEntryList.as_view(),
-        name="knowledge-entry-list"
+        name="knowledge-entry-list-date"
     ),
     path(
         "api/users/<str:slug>/gratitude/",

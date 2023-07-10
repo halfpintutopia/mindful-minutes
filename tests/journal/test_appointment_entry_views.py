@@ -589,8 +589,6 @@ def test_update_appointment_entry(
 
     current_date = date.today()
 
-    print("Current Date:", current_date)
-
     client, user = authenticated_user
 
     appointment_entry = add_appointment_entry(

@@ -272,9 +272,6 @@ def test_update_user_settings(authenticated_user, add_user_settings, test_data):
         morning_check_in=morning_check_in,
         evening_check_in=evening_check_in
     )
-
-    # print("payload", test_data["payload"])
-
     url = reverse("user-settings", args=[user.slug])
 
     client.force_authenticate(user=user)
@@ -288,8 +285,6 @@ def test_update_user_settings(authenticated_user, add_user_settings, test_data):
         payload,
         content_type="application/json",
     )
-
-    print("Response:", res.data)
 
     assert res.status_code == status.HTTP_200_OK
     assert res.data["start_week_day"] == test_data["payload"]["start_week_day"]

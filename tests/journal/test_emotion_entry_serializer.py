@@ -23,7 +23,6 @@ def test_valid_emotion_entry_serializer():
     for emotion in valid_emotions:
         valid_serializer_data = {"emotion": emotion}
         serializer = EmotionEntrySerializer(data=valid_serializer_data)
-        print(serializer)
         assert serializer.is_valid()
         assert serializer.validated_data == valid_serializer_data
         assert serializer.data == valid_serializer_data

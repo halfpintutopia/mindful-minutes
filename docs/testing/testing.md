@@ -22,6 +22,12 @@
 
 ### RESTful Routes
 
+Preferring the approach of a hierachical (nested) URL structure, rather flattened (shallow), to ensure consistency, and provides a clear and explicit indication of the relationship between the user and resource. This approach helps to prevent potential naming conflicts and provide predicable URL structure. Trying to maintain the practice of including the user identifier in the URL to make it more explicit and secure. By including the user 
+
+Testing api routes with the structure of
+- the dynamic segment
+  - user identifier `<int:user_id>`
+
 #### Custom User
 
 | Endpoint       | HTTP Method | CRUD Method | Result                  |         |

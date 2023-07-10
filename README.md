@@ -11,7 +11,9 @@
   - [Accessibility](#accessibility)
 - [Technologies Used](#technologies-used)
   - [Stack](#stack)
+  - [Packages](#packages)
   - [Frameworks, Libraries \& Additional Programs/Software used](#frameworks-libraries--additional-programssoftware-used)
+    - [Libraries](#libraries)
 - [Remote \& Local Deployment](#remote--local-deployment)
   - [Remote Deployment](#remote-deployment)
     - [Create Heroku App (via the Dashboard)](#create-heroku-app-via-the-dashboard)
@@ -34,8 +36,10 @@
     - [Agile](#agile)
     - [Deployment](#deployment)
     - [CI / CD](#ci--cd)
-    - [Django Testing](#django-testing)
     - [Django](#django)
+    - [Django Testing](#django-testing)
+      - [Automated testing](#automated-testing)
+    - [Django](#django-1)
     - [Performance and Optimisation](#performance-and-optimisation)
   - [Content](#content)
   - [Media](#media)
@@ -71,9 +75,30 @@ Personalise experience:
 - JavaScript
 - Python
 
+### Packages
+
+- [CKEditor](https://ckeditor.com/)
+  - Used this editor, rather than [Summernote](https://summernote.org), due to conflict with Django version. I previously worked with CKEditor when I worked with ConcreteCMS
+
 ### Frameworks, Libraries & Additional Programs/Software used
 
 - Django
+
+#### Libraries
+
+- [Black](https://black.readthedocs.io/)
+
+
+```
+# install packages
+pip install <package_name>
+
+# uninstall packages
+pip uninstall <package_name>
+
+# update requirements.txt file
+pip freeze --local > requirements.txt
+```
 
 ## Remote & Local Deployment
 
@@ -147,149 +172,7 @@ DISABLE_COLLECT_STATIC 1
 ## Data Models
 ### Schematics
 
-![Mindful Minutes ERD - Database ER diagram (crow's foot)](docs/media/images/mm_erd.png)
-
-For the diagram on [LucidChart](https://lucid.app), click [here](https://lucid.app/documents/view/eceb8ec6-75f3-4138-9efa-b05138d3aad4)
-
-
-<details>
-  <summary>Entity Relationship in PostgreSQL</summary>
-
-  ```sql
-  CREATE TABLE "user" (
-    "id" PK,
-    "first_name" string,
-    "last_name" string,
-    "email" string,
-    "password" string,
-    "created_on" datetime,
-    "updated_on" datetime
-  );
-
-  CREATE TABLE "optimise" (
-    "id" PK,
-    "user" FK,
-    "content" string,
-    "created_on" datetime,
-    "updated_on" datetime,
-    CONSTRAINT "FK_optimise.user"
-      FOREIGN KEY ("user")
-        REFERENCES "user"("id")
-  );
-
-  CREATE TABLE "notes" (
-    "id" PK,
-    "user" FK,
-    "content" string,
-    "created_on" datetime,
-    "updated_on" datetime,
-    CONSTRAINT "FK_notes.user"
-      FOREIGN KEY ("user")
-        REFERENCES "user"("id")
-  );
-
-  CREATE TABLE "thankful" (
-    "id" PK,
-    "user" FK,
-    "content" string,
-    "created_on" datetime,
-    "updated_on" datetime,
-    CONSTRAINT "FK_thankful.user"
-      FOREIGN KEY ("user")
-        REFERENCES "user"("id")
-  );
-
-  CREATE TABLE "settings" (
-    "id" PK,
-    "user" FK,
-    "verified" boolean,
-    "start_week_day" string,
-    "morning_check_in" time,
-    "evening_check_in" time,
-    "created_on" datetime,
-    "updated_on" datetime
-  );
-
-  CREATE TABLE "targets" (
-    "id" PK,
-    "user" FK,
-    "title" string,
-    "order" integer,
-    "created_on" datetime,
-    "updated_on" datetime,
-    CONSTRAINT "FK_targets.user"
-      FOREIGN KEY ("user")
-        REFERENCES "user"("id")
-  );
-
-  CREATE TABLE "sub_targets" (
-    "id" PK,
-    "target" FK,
-    "content" string,
-    "created_on" datetime,
-    "updated_on" datetime,
-    CONSTRAINT "FK_sub_targets.target"
-      FOREIGN KEY ("target")
-        REFERENCES "targets"("id")
-  );
-
-  CREATE TABLE "wins" (
-    "id" PK,
-    "user" FK,
-    "content" string,
-    "created_on" datetime,
-    "updated_on" datetime,
-    CONSTRAINT "FK_wins.user"
-      FOREIGN KEY ("user")
-        REFERENCES "User"("id")
-  );
-
-  CREATE TABLE "ideas" (
-    "id" PK,
-    "user" FK,
-    "content" string,
-    "created_on" datetime,
-    "updated_on" datetime,
-    CONSTRAINT "FK_ideas.user"
-      FOREIGN KEY ("user")
-        REFERENCES "user"("id")
-  );
-
-  CREATE TABLE "learnt" (
-    "id" PK,
-    "user" FK,
-    "content" string,
-    "created_on" datetime,
-    "updated_on" datetime,
-    CONSTRAINT "FK_learnt.user"
-      FOREIGN KEY ("user")
-        REFERENCES "user"("id")
-  );
-
-  CREATE TABLE "appointment_diary" (
-    "id" PK,
-    "user" FK,
-    "title" string,
-    "date" date,
-    "from" time,
-    "until" time,
-    "created_on" datetime,
-    "updated_on" datetime,
-    CONSTRAINT "FK_appointment_diary.user"
-      FOREIGN KEY ("user")
-        REFERENCES "user"("id")
-  );
-
-
-  CREATE TABLE "mood" (
-    "id" PK,
-    "user" FK,
-    "emotion" string,
-    "created_on" datetime,
-    "updated_on" datetime
-  );
-  ```
-</details>
+![Mindful Minutes ERD - Database ER diagram (crow's foot)](docs/media/images/mm_erd.png) created with [LucidChart](https://lucid.app).
 
 Considered creating a base model or mixin as models most of the models contained the same fields e.g.
 
@@ -341,6 +224,8 @@ For further details on testing, click [here](docs/testing/testing.md).
 
 ### Validator Testing
 
+- [CI Python Linter](https://pep8ci.herokuapp.com/)
+
 ## Credits
 
 ### References
@@ -371,7 +256,17 @@ For further details on testing, click [here](docs/testing/testing.md).
 
 - [GitHub Actions - Create starter workflows](https://docs.github.com/en/actions/using-workflows/creating-starter-workflows-for-your-organization)
 
+#### Django
+
+- [Django Documentation](https://docs.djangoproject.com)
+- [Test-Driven Development with Django, Django REST Framework and Docker](https://testdriven.io/courses/tdd-django)
+- [Django Girls Tutorial](https://tutorial.djangogirls.org/en/)
+- [Getting the Most Out of the Django's User Model](https://www.youtube.com/watch?v=sXZ3ntGp_Xc)
+- [Django - Extend User Model](https://simpleisbetterthancomplex.com/tutorial/2016/07/22/how-to-extend-django-user-model.html)
+
 #### Django Testing
+
+##### Automated testing
 
 - [Creating a Custom User Model in Django](https://testdriven.io/blog/django-custom-user-model/)
 - [Testing Models with Django using Faker and Factory Boy](https://medium.com/analytics-vidhya/factoryboy-usage-cd0398fd11d2)
@@ -379,6 +274,7 @@ For further details on testing, click [here](docs/testing/testing.md).
 - [Pytest](https://docs.pytest.org/en/latest/getting-started.html)
 - [Testing in Django with Selenium](https://ordinarycoders.com/blog/article/testing-django-selenium)
 - [How to authorize user in Django testing REST framework APIClient post method](https://stackoverflow.com/questions/70967642/how-to-authorize-user-in-django-testing-rest-framework-apiclient-post-method)
+- [Freezegun](https://github.com/spulec/freezegun)
 
 #### Django
 

@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'cloudinary',
     'ckeditor',
     'rest_framework',
+    "drf_yasg",
     'journal',
 ]
 

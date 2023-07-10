@@ -22,8 +22,6 @@ def test_add_custom_user(client):
     users = User.objects.all()
     assert len(users) == 0
 
-    url = reverse("user-list")
-
     email = fake.email()
     password = fake.password()
     first_name = fake.first_name()
@@ -35,6 +33,8 @@ def test_add_custom_user(client):
         "first_name": first_name,
         "last_name": last_name
     }
+
+    url = reverse("user-list")
 
     res = client.post(
         url,
@@ -155,7 +155,7 @@ def test_get_custom_user(client, add_custom_user):
         last_name=last_name
     )
 
-    url = reverse("user-detail", args=[user.id])
+    url = reverse("user-detail", args=[user.slug])
 
     res = client.get(
         url
@@ -241,7 +241,7 @@ def test_remove_custom_user(client, add_custom_user):
         last_name=last_name
     )
 
-    url = reverse("user-detail", args=[user.id])
+    url = reverse("user-detail", args=[user.slug])
 
     res = client.get(
         url
@@ -261,7 +261,7 @@ def test_remove_custom_user(client, add_custom_user):
     users = User.objects.all()
     assert len(users) == 0
 
-    url_retrieve = reverse("user-detail", args=[user.id])
+    url_retrieve = reverse("user-detail", args=[user.slug])
 
     res_retrieve = client.get(
         url_retrieve
@@ -387,7 +387,7 @@ def test_update_custom_user(client, add_custom_user, test_data):
     users = User.objects.all()
     assert len(users) == 1
 
-    url = reverse("user-detail", args=[user.id])
+    url = reverse("user-detail", args=[user.slug])
 
     res = client.put(
         url,
@@ -402,6 +402,7 @@ def test_update_custom_user(client, add_custom_user, test_data):
 
     users = User.objects.all()
     assert len(users) == 1
+
 
 @pytest.mark.django_db
 @pytest.mark.parametrize("test_data", [
@@ -493,7 +494,7 @@ def test_update_custom_user_invalid_data(client, add_custom_user, test_data):
     users = User.objects.all()
     assert len(users) == 1
 
-    url = reverse("user-detail", args=[user.id])
+    url = reverse("user-detail", args=[user.slug])
 
     res = client.put(
         url,

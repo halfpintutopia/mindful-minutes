@@ -69,47 +69,47 @@ class CustomUserDetail(APIView):
     """
     # permission_classes = [IsAuthenticated]
 
-    def get_object(self, pk):
+    def get_object(self, slug):
         """
         Helper method to get an user object from the database
         or raise a 404 error
         """
         try:
-            return User.objects.get(pk=pk)
+            return User.objects.get(slug=slug)
         except User.DoesNotExist:
             raise Http404
 
-    def get(self, request, pk, format=None):
+    def get(self, request, slug, format=None):
         """
         Retrieve an user
         """
-        return self._handle_user_detail_action(request, pk)
+        return self._handle_user_detail_action(request, slug)
 
-    def put(self, request, pk, format=None):
+    def put(self, request, slug, format=None):
         """
         Update an user
         """
-        return self._handle_user_detail_action(request, pk)
+        return self._handle_user_detail_action(request, slug)
 
-    def delete(self, request, pk, format=None):
+    def delete(self, request, slug, format=None):
         """
         Delete an user
         """
-        return self._handle_user_detail_action(request, pk)
+        return self._handle_user_detail_action(request, slug)
 
-    def _handle_user_detail_action(self, request, pk):
+    def _handle_user_detail_action(self, request, slug):
         """
         Private helper method to handle GET, PUT and DELETE requests
 
         Check if request is allowed based on date and
         either retrieve, update or delete an user
         """
-        if pk is not None:
+        if slug is not None:
             try:
-                user_id = isinstance(pk, int)
-                user = self.get_object(pk)
+                user_id = isinstance(slug, str)
+                user = self.get_object(slug)
             except (ValueError, Http404):
-                if isinstance(pk, str):
+                if not isinstance(slug, str):
                     return Response(
                         {"error": "Invalid user ID"},
                         status=status.HTTP_400_BAD_REQUEST

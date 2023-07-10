@@ -96,17 +96,17 @@ urlpatterns = [
     path(
         "api/users/<str:slug>/gratitude/",
         GratitudeEntryList.as_view(),
-        name="gratitude-entry-list"
+        name="gratitude-entry-list-all"
     ),
     path(
         "api/users/<str:slug>/gratitude/<str:date_request>/<int:pk>/",
         GratitudeEntryDetail.as_view(),
-        name="gratitude-entry-detail"
+        name="gratitude-entry-detail-single"
     ),
     path(
         "api/users/<str:slug>/gratitude/<str:date_request>/",
         GratitudeEntryList.as_view(),
-        name="gratitude-entry-list"
+        name="gratitude-entry-list-date"
     ),
     path(
         "api/users/<str:slug>/wins/",
@@ -157,11 +157,6 @@ urlpatterns = [
         'api/users/<str:slug>/emotions/',
         EmotionEntryList.as_view(),
         name='emotion-entry-list-all'
-    ),
-    path(
-        "api/users/<str:slug>/emotions/",
-        EmotionEntryList.as_view(),
-        name="emotion-entry-list-date"
     ),
     path(
         "api/users/<str:slug>/emotions/<str:date_request>/<int:pk>/",

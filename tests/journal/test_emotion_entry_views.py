@@ -1,4 +1,5 @@
 import json
+import random
 from datetime import date
 # https://dennisokeeffe.medium.com/mocking-python-datetime-in-tests-with-freezegun-f5532307d6d6
 from freezegun import freeze_time
@@ -23,12 +24,15 @@ def test_get_list_of_emotion_entries(authenticated_user, add_emotion_entry):
 
     emotion = "good"
 
-    emotion_entry = add_emotion_entry(
+    add_emotion_entry(
         user=user,
         emotion=emotion
     )
 
-    url = reverse("emotion-entry-list-all")
+    url = reverse(
+        "emotion-entry-list-all",
+        args=[user.slug]
+    )
 
     res = client.get(
         url
@@ -44,15 +48,18 @@ def test_add_emotion_entry(authenticated_user):
     WHEN a user adds a new emotion
     THEN the emotion is created and associated with the user
     """
-    (client, *_) = authenticated_user
+    client, user = authenticated_user
 
     current_date = date.today()
-
-    url = reverse("emotion-entry-list-date", args=[current_date])
 
     payload = {
         "emotion": "great"
     }
+
+    url = reverse(
+        "emotion-entry-list-date",
+        args=[user.slug, current_date]
+    )
 
     res = client.post(
         url,
@@ -70,15 +77,18 @@ def test_add_emotion_entry_incorrect_date(authenticated_user):
     WHEN a user adds a new emotion that is not the current date
     THEN the emotion is not created
     """
-    (client, *_) = authenticated_user
+    client, user = authenticated_user
 
     not_current_date = "2023-04-02"
-
-    url = reverse("emotion-entry-list-date", args=[not_current_date])
 
     payload = {
         "emotion": "great"
     }
+
+    url = reverse(
+        "emotion-entry-list-date",
+        args=[user.slug, not_current_date]
+    )
 
     res = client.post(
         url,
@@ -90,7 +100,7 @@ def test_add_emotion_entry_incorrect_date(authenticated_user):
 
 
 @pytest.mark.django_db
-def test_add_emotion_entry_invalid_user(client):
+def test_add_emotion_entry_invalid_user(client, custom_user):
     """
     GIVEN a Django application
     WHEN a user adds a new emotion with in invalid user
@@ -98,11 +108,14 @@ def test_add_emotion_entry_invalid_user(client):
     """
     current_date = date.today()
 
-    url = reverse("emotion-entry-list-date", args=[current_date])
-
     payload = {
         "emotion": "great"
     }
+
+    url = reverse(
+        "emotion-entry-list-date",
+        args=[custom_user.slug, current_date]
+    )
 
     res = client.post(
         url,
@@ -129,9 +142,12 @@ def test_get_single_emotion_entry_by_date(authenticated_user, add_emotion_entry)
         emotion=emotion
     )
 
-    date = emotion_entry.created_on.strftime("%Y-%m-%d")
+    emotion_date = emotion_entry.created_on.strftime("%Y-%m-%d")
 
-    url = reverse("emotion-entry-detail-single", args=[date, emotion_entry.id])
+    url = reverse(
+        "emotion-entry-detail-single",
+        args=[user.slug, emotion_date, emotion_entry.id]
+    )
 
     res = client.get(url)
 
@@ -140,4 +156,197 @@ def test_get_single_emotion_entry_by_date(authenticated_user, add_emotion_entry)
     assert res.data.get("user") == user.id
 
 
-# @pytest.mark.django_db
+@pytest.mark.django_db
+def test_delete_emotion_entry(authenticated_user, add_emotion_entry):
+    """
+    GIVEN a Django application
+    WHEN a user deletes an existing emotion entry
+    THEN the emotion is deleted and no longer accessible
+    """
+    client, user = authenticated_user
+
+    emotion = "good"
+
+    emotion_entry = add_emotion_entry(
+        user=user,
+        emotion=emotion
+    )
+
+    emotion_date = emotion_entry.created_on.strftime("%Y-%m-%d")
+
+    url = reverse(
+        "emotion-entry-detail-single",
+        args=[user.slug, emotion_date, emotion_entry.id]
+    )
+    res = client.delete(url)
+
+    assert res.status_code == status.HTTP_204_NO_CONTENT
+
+
+@pytest.mark.django_db
+def test_delete_emotion_entry_unauthenticated_user(
+    authenticated_user,
+    custom_user,
+    add_emotion_entry
+):
+    """
+    GIVEN a Django application
+    WHEN a user attempts to delete an existing emotion that is not theirs
+    THEN the emotion is not deleted
+    """
+    client, user = authenticated_user
+
+    emotion = "good"
+
+    emotion_entry = add_emotion_entry(
+        user=custom_user,
+        emotion=emotion
+    )
+
+    emotion_date = emotion_entry.created_on.strftime("%Y-%m-%d")
+
+    url = reverse(
+        "emotion-entry-detail-single",
+        args=[custom_user.slug, emotion_date, emotion_entry.id]
+    )
+
+    res = client.delete(url)
+
+    assert res.status_code == status.HTTP_403_FORBIDDEN
+
+
+@pytest.mark.django_db
+def test_delete_emotion_entry_invalid_id(
+    authenticated_user,
+    add_emotion_entry
+):
+    """
+    GIVEN a Django application
+    WHEN a user attempts to delete an emotion with an invalid id
+    THEN the emotion is not deleted
+    """
+    client, user = authenticated_user
+
+    emotion = "good"
+
+    emotion_entry = add_emotion_entry(
+        user=user,
+        emotion=emotion
+    )
+
+    invalid_number = random.randint(10, 100)
+    emotion_date = emotion_entry.created_on.strftime("%Y-%m-%d")
+
+    url = reverse(
+        "emotion-entry-detail-single",
+        args=[user.slug, emotion_date, invalid_number]
+    )
+
+    res = client.delete(url)
+
+    assert res.status_code == status.HTTP_404_NOT_FOUND
+
+
+@pytest.mark.django_db
+def test_delete_emotion_entry_not_current_date(
+    authenticated_user,
+    add_emotion_entry
+):
+    """
+    GIVEN a Django application
+    WHEN a user attempts to delete an emotion with an invalid id
+    THEN the emotion is not deleted
+    """
+    client, user = authenticated_user
+
+    emotion = "good"
+    with freeze_time("2023-05-02 12:00:00"):
+        emotion_entry = add_emotion_entry(
+            user=user,
+            emotion=emotion
+        )
+
+    emotion_date = emotion_entry.created_on.strftime("%Y-%m-%d")
+
+    url = reverse(
+        "emotion-entry-detail-single",
+        args=[user.slug, emotion_date, emotion_entry.id]
+    )
+
+    res = client.delete(url)
+
+    assert res.status_code == status.HTTP_403_FORBIDDEN
+
+
+@pytest.mark.django_db
+def test_update_emotion_entry(authenticated_user, add_emotion_entry):
+    """
+    GIVEN a Django application
+    WHEN a user updates an existing emotion
+    THEN the emotion is updated with the new data
+    """
+    client, user = authenticated_user
+
+    emotion = "good"
+
+    emotion_entry = add_emotion_entry(
+        user=user,
+        emotion=emotion
+    )
+
+    emotion_date = emotion_entry.created_on.strftime("%Y-%m-%d")
+
+    payload = {
+        "emotion": "excellent"
+    }
+
+    url = reverse(
+        "emotion-entry-detail-single",
+        args=[user.slug, emotion_date, emotion_entry.id]
+    )
+
+    res = client.put(
+        url,
+        data=payload
+    )
+
+    assert res.status_code == status.HTTP_200_OK
+
+
+@pytest.mark.django_db
+def test_update_emotion_entry_unauthenticated_user(
+    authenticated_user,
+    custom_user,
+    add_emotion_entry
+):
+    """
+    GIVEN a Django application
+    WHEN a user updates an existing emotion that is not theirs
+    THEN the emotion is not updated
+    """
+    client, user = authenticated_user
+
+    emotion = "good"
+
+    emotion_entry = add_emotion_entry(
+        user=custom_user,
+        emotion=emotion
+    )
+
+    emotion_date = emotion_entry.created_on.strftime("%Y-%m-%d")
+
+    payload = {
+        "emotion": "excellent"
+    }
+
+    url = reverse(
+        "emotion-entry-detail-single",
+        args=[custom_user.slug, emotion_date, emotion_entry.id]
+    )
+
+    res = client.put(
+        url,
+        data=payload
+    )
+
+    assert res.status_code == status.HTTP_403_FORBIDDEN

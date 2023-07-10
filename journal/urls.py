@@ -19,7 +19,7 @@ from .api_views.emotion_entries import EmotionEntryList, \
 
 urlpatterns = [
     path(
-        "api/users/<int:pk>/",
+        "api/users/<str:slug>/",
         CustomUserDetail.as_view(),
         name="user-detail"
     ),
@@ -29,102 +29,147 @@ urlpatterns = [
         name="user-list"
     ),
     path(
-        "api/user-settings/<int:user_id>/",
+        "api/users/<str:slug>/user-settings/<int:user_id>/",
         UserSettingsView.as_view(),
         name="user-settings"
     ),
     path(
-        "api/appointments/<str:date_request>/<int:pk>/",
-        AppointmentEntryDetail.as_view(),
-        name="appointment-entry-detail"
-    ),
-    path(
-        "api/appointments/<str:date_request>/",
+        'api/users/<str:slug>/appointments/',
         AppointmentEntryList.as_view(),
-        name="appointment-entry-list"
+        name='appointment-entry-list-all'
     ),
     path(
-        "api/targets/<str:date_request>/<int:pk>/",
-        TargetEntryDetail.as_view(),
-        name="target-entry-detail"
+        "api/users/<str:slug>/appointments/<str:date_request>/<int:pk>/",
+        AppointmentEntryDetail.as_view(),
+        name="appointment-entry-detail-single"
     ),
     path(
-        "api/targets/<str:date_request>/",
+        "api/users/<str:slug>/appointments/<str:date_request>/",
+        AppointmentEntryList.as_view(),
+        name="appointment-entry-list-date"
+    ),
+    path(
+        "api/users/<str:slug>/targets/",
         TargetEntryList.as_view(),
         name="target-entry-list"
     ),
     path(
-        "api/notes/<str:date_request>/<int:pk>/",
-        NoteEntryDetail.as_view(),
-        name="note-entry-detail"
+        "api/users/<str:slug>/targets/<str:date_request>/<int:pk>/",
+        TargetEntryDetail.as_view(),
+        name="target-entry-detail"
     ),
     path(
-        "api/notes/<str:date_request>/",
+        "api/users/<str:slug>/targets/<str:date_request>/",
+        TargetEntryList.as_view(),
+        name="target-entry-list"
+    ),
+    path(
+        "api/users/<str:slug>/notes/",
         NoteEntryList.as_view(),
         name="note-entry-list"
     ),
     path(
-        "api/knowledge/<str:date_request>/<int:pk>/",
-        KnowledgeEntryDetail.as_view(),
-        name="knowledge-entry-detail"
+        "api/users/<str:slug>/notes/<str:date_request>/<int:pk>/",
+        NoteEntryDetail.as_view(),
+        name="note-entry-detail"
     ),
     path(
-        "api/knowledge/<str:date_request>/",
+        "api/users/<str:slug>/notes/<str:date_request>/",
+        NoteEntryList.as_view(),
+        name="note-entry-list"
+    ),
+    path(
+        "api/users/<str:slug>/knowledge/",
         KnowledgeEntryList.as_view(),
         name="knowledge-entry-list"
     ),
     path(
-        "api/gratitude/<str:date_request>/<int:pk>/",
-        GratitudeEntryDetail.as_view(),
-        name="gratitude-entry-detail"
+        "api/users/<str:slug>/knowledge/<str:date_request>/<int:pk>/",
+        KnowledgeEntryDetail.as_view(),
+        name="knowledge-entry-detail"
     ),
     path(
-        "api/gratitude/<str:date_request>/",
+        "api/users/<str:slug>/knowledge/<str:date_request>/",
+        KnowledgeEntryList.as_view(),
+        name="knowledge-entry-list"
+    ),
+    path(
+        "api/users/<str:slug>/gratitude/",
         GratitudeEntryList.as_view(),
         name="gratitude-entry-list"
     ),
     path(
-        "api/wins/<str:date_request>/<int:pk>/",
-        WinEntryDetail.as_view(),
-        name="win-entry-detail"
+        "api/users/<str:slug>/gratitude/<str:date_request>/<int:pk>/",
+        GratitudeEntryDetail.as_view(),
+        name="gratitude-entry-detail"
     ),
     path(
-        "api/wins/<str:date_request>/",
+        "api/users/<str:slug>/gratitude/<str:date_request>/",
+        GratitudeEntryList.as_view(),
+        name="gratitude-entry-list"
+    ),
+    path(
+        "api/users/<str:slug>/wins/",
         WinEntryList.as_view(),
         name="win-entry-list"
     ),
     path(
-        "api/ideas/<str:date_request>/<int:pk>/",
-        IdeasEntryDetail.as_view(),
-        name="ideas-entry-detail"
+        "api/users/<str:slug>/wins/<str:date_request>/<int:pk>/",
+        WinEntryDetail.as_view(),
+        name="win-entry-detail"
     ),
     path(
-        "api/ideas/<str:date_request>/",
+        "api/users/<str:slug>/wins/<str:date_request>/",
+        WinEntryList.as_view(),
+        name="win-entry-list"
+    ),
+    path(
+        "api/users/<str:slug>/ideas/",
         IdeasEntryList.as_view(),
         name="ideas-entry-list"
     ),
     path(
-        "api/improvement/<str:date_request>/<int:pk>/",
-        ImprovementEntryDetail.as_view(),
-        name="improvement-entry-detail"
+        "api/users/<str:slug>/ideas/<str:date_request>/<int:pk>/",
+        IdeasEntryDetail.as_view(),
+        name="ideas-entry-detail"
     ),
     path(
-        "api/improvement/<str:date_request>/",
+        "api/users/<str:slug>/ideas/<str:date_request>/",
+        IdeasEntryList.as_view(),
+        name="ideas-entry-list"
+    ),
+    path(
+        "api/users/<str:slug>/improvement/",
         ImprovementEntryList.as_view(),
         name="improvement-entry-list"
     ),
     path(
-        'api/emotions/',
+        "api/users/<str:slug>/improvement/<str:date_request>/<int:pk>/",
+        ImprovementEntryDetail.as_view(),
+        name="improvement-entry-detail"
+    ),
+    path(
+        "api/users/<str:slug>/improvement/<str:date_request>/",
+        ImprovementEntryList.as_view(),
+        name="improvement-entry-list"
+    ),
+    path(
+        'api/users/<str:slug>/emotions/',
         EmotionEntryList.as_view(),
         name='emotion-entry-list-all'
     ),
     path(
-        "api/emotions/<str:date_request>/<int:pk>/",
+        "api/users/<str:slug>/emotions/",
+        EmotionEntryList.as_view(),
+        name="emotion-entry-list-date"
+    ),
+    path(
+        "api/users/<str:slug>/emotions/<str:date_request>/<int:pk>/",
         EmotionEntryDetail.as_view(),
         name="emotion-entry-detail-single"
     ),
     path(
-        "api/emotions/<str:date_request>/",
+        "api/users/<str:slug>/emotions/<str:date_request>/",
         EmotionEntryList.as_view(),
         name="emotion-entry-list-date"
     )

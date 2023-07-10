@@ -27,9 +27,6 @@ class CustomUser(AbstractUser):
 
     objects = CustomUserManager()
 
-    def __str__(self):
-        return self.email
-
     def save(self, *args, **kwargs):
         if not self.slug:
             slug_name = slugify(f"{self.first_name} {self.last_name}")
@@ -44,6 +41,11 @@ class CustomUser(AbstractUser):
                 duplicates = CustomUser.objects.filter(slug=slug).exclude(pk=self.pk)
 
             self.slug = slug
+
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.email
 
 
 class UserSettings(models.Model):
@@ -89,7 +91,6 @@ class AppointmentEntry(models.Model):
         related_name="appointment_entries"
     )
     title = models.CharField(_("Title"), max_length=255)
-    # TODO add slugs for title
     date = models.DateField(_("Date"))
     time_from = models.TimeField(_("From"))
     time_until = models.TimeField(_("Until"))

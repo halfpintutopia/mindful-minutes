@@ -141,17 +141,17 @@ urlpatterns = [
     path(
         "api/users/<str:slug>/improvement/",
         ImprovementEntryList.as_view(),
-        name="improvement-entry-list"
+        name="improvement-entry-list-all"
     ),
     path(
         "api/users/<str:slug>/improvement/<str:date_request>/<int:pk>/",
         ImprovementEntryDetail.as_view(),
-        name="improvement-entry-detail"
+        name="improvement-entry-detail-single"
     ),
     path(
         "api/users/<str:slug>/improvement/<str:date_request>/",
         ImprovementEntryList.as_view(),
-        name="improvement-entry-list"
+        name="improvement-entry-list-date"
     ),
     path(
         'api/users/<str:slug>/emotions/',

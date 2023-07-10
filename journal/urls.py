@@ -64,19 +64,19 @@ urlpatterns = [
         name="target-entry-list"
     ),
     path(
-        "api/users/<str:slug>/notes/",
+        "api/users/<str:slug>/note/",
         NoteEntryList.as_view(),
-        name="note-entry-list"
+        name="note-entry-list-all"
     ),
     path(
-        "api/users/<str:slug>/notes/<str:date_request>/<int:pk>/",
+        "api/users/<str:slug>/note/<str:date_request>/<int:pk>/",
         NoteEntryDetail.as_view(),
-        name="note-entry-detail"
+        name="note-entry-detail-single"
     ),
     path(
-        "api/users/<str:slug>/notes/<str:date_request>/",
+        "api/users/<str:slug>/note/<str:date_request>/",
         NoteEntryList.as_view(),
-        name="note-entry-list"
+        name="note-entry-list-date"
     ),
     path(
         "api/users/<str:slug>/knowledge/",

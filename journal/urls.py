@@ -49,19 +49,19 @@ urlpatterns = [
         name="appointment-entry-list-date"
     ),
     path(
-        "api/users/<str:slug>/targets/",
+        "api/users/<str:slug>/target/",
         TargetEntryList.as_view(),
-        name="target-entry-list"
+        name="target-entry-list-all"
     ),
     path(
-        "api/users/<str:slug>/targets/<str:date_request>/<int:pk>/",
+        "api/users/<str:slug>/target/<str:date_request>/<int:pk>/",
         TargetEntryDetail.as_view(),
-        name="target-entry-detail"
+        name="target-entry-detail-single"
     ),
     path(
-        "api/users/<str:slug>/targets/<str:date_request>/",
+        "api/users/<str:slug>/target/<str:date_request>/",
         TargetEntryList.as_view(),
-        name="target-entry-list"
+        name="target-entry-list-date"
     ),
     path(
         "api/users/<str:slug>/note/",

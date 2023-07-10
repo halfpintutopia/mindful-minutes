@@ -13,6 +13,40 @@ from journal.models import NoteEntry
 
 
 @pytest.mark.django_db
+def test_get_list_of_note_entries(authenticated_user, add_note_entry):
+    """
+    GIVEN a Django application
+    WHEN a user requests a list of all note entries
+    THEN the user should receive a list of all note entries
+    """
+    client, user = authenticated_user
+
+    note_entries = [
+        'Move dentist appointment.',
+        'Set up printer.',
+        'Order book.',
+        'Join Meetup in Zurich'
+    ]
+
+    for note in note_entries:
+        add_note_entry(
+            user=user,
+            content=note
+        )
+
+    url = reverse(
+        "note-entry-list-all",
+        args=[user.slug]
+    )
+
+    res = client.get(
+        url
+    )
+
+    assert res.status_code == status.HTTP_200_OK
+
+
+@pytest.mark.django_db
 def test_add_note_entry(authenticated_user):
     """
     GIVEN a Django application

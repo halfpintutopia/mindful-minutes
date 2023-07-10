@@ -13,6 +13,41 @@ from journal.models import GratitudeEntry
 
 
 @pytest.mark.django_db
+def test_get_list_of_gratitude_entries(authenticated_user, add_gratitude_entry):
+    """
+    GIVEN a Django application
+    WHEN a user requests a list of all gratitude entries
+    THEN the user should receive a list of all gratitude entries
+    """
+    client, user = authenticated_user
+
+    gratitudes = [
+        'I am healthy.',
+        'Thanks for a beautiful day.',
+        'I handed in my assignment',
+        'I received a 85% pass mark.',
+        'Celebration of the arrival of healthy twins.',
+    ]
+
+    for gratitude in gratitudes:
+        add_gratitude_entry(
+            user=user,
+            content=gratitude
+        )
+
+    url = reverse(
+        "gratitude-entry-list-all",
+        args=[user.slug]
+    )
+
+    res = client.get(
+        url
+    )
+
+    assert res.status_code == status.HTTP_200_OK
+
+
+@pytest.mark.django_db
 def test_add_gratitude_entry(authenticated_user):
     """
     GIVEN a Django application

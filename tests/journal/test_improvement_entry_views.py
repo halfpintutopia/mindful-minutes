@@ -13,6 +13,41 @@ from journal.models import ImprovementEntry
 
 
 @pytest.mark.django_db
+def test_get_list_of_improvement_entries(authenticated_user, add_improvement_entry):
+    """
+    GIVEN a Django application
+    WHEN a user requests a list of all improvement entries
+    THEN the user should receive a list of all improvement entries
+    """
+    client, user = authenticated_user
+
+    improvements = [
+        'Learn to be more time conscious.',
+        'Plan tasks, use tools such as Pomodoro to create smaller tasks.',
+        'Meditate for longer each day',
+        'Take more care with my teeth.',
+        'Drink more water',
+    ]
+
+    for improvement in improvements:
+        add_improvement_entry(
+            user=user,
+            content=improvement
+        )
+
+    url = reverse(
+        "improvement-entry-list-all",
+        args=[user.slug]
+    )
+
+    res = client.get(
+        url
+    )
+
+    assert res.status_code == status.HTTP_200_OK
+
+
+@pytest.mark.django_db
 def test_add_improvement_entry(authenticated_user):
     """
     GIVEN a Django application
@@ -326,7 +361,8 @@ def test_remove_improvement_entry(
     assert res_retrieve.status_code == status.HTTP_200_OK
     assert len(res_retrieve.data) == 0
 
-    assert not ImprovementEntry.objects.filter(id=improvement_entry.id).exists()
+    assert not ImprovementEntry.objects.filter(
+        id=improvement_entry.id).exists()
 
     improvement_entries = ImprovementEntry.objects.all()
     assert len(improvement_entries) == 0

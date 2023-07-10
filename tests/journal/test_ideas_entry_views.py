@@ -13,6 +13,41 @@ from journal.models import IdeasEntry
 
 
 @pytest.mark.django_db
+def test_get_list_of_ideas_entries(authenticated_user, add_ideas_entry):
+    """
+    GIVEN a Django application
+    WHEN a user requests a list of all ideas entries
+    THEN the user should receive a list of all ideas entries
+    """
+    client, user = authenticated_user
+
+    ideas = [
+        'Learn more about canvas.',
+        'Can I create a game with just CSS?',
+        'Pet Adoption for next project?',
+        'Learn more about Vue',
+        'Create a React project include GraphQL',
+    ]
+
+    for idea in ideas:
+        add_ideas_entry(
+            user=user,
+            content=idea
+        )
+
+    url = reverse(
+        "ideas-entry-list-all",
+        args=[user.slug]
+    )
+
+    res = client.get(
+        url
+    )
+
+    assert res.status_code == status.HTTP_200_OK
+
+
+@pytest.mark.django_db
 def test_add_ideas_entry(authenticated_user):
     """
     GIVEN a Django application

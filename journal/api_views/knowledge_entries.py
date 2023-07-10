@@ -18,7 +18,7 @@ class KnowledgeEntryList(APIView):
     """
     permission_classes = [IsAuthenticated]
 
-    def get(self, request, slug, date_request, format=None):
+    def get(self, request, slug, date_request=None, format=None):
         """
         List all knowledge entries or filter by date
         """

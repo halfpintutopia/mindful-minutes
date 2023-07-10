@@ -13,6 +13,40 @@ from journal.models import KnowledgeEntry
 
 
 @pytest.mark.django_db
+def test_get_list_of_knowledge_entries(authenticated_user, add_knowledge_entry):
+    """
+    GIVEN a Django application
+    WHEN a user requests a list of all knowledge entries
+    THEN the user should receive a list of all knowledge entries
+    """
+    client, user = authenticated_user
+
+    knowledge_entries = [
+        'Was able to explain specificity to a colleague.',
+        'Finished the course on Docker.',
+        'Wrote a blog entry to share knowledge regarding how to write an README.',
+        'Finished video on Django.'
+    ]
+
+    for knowledge in knowledge_entries:
+        add_knowledge_entry(
+            user=user,
+            content=knowledge
+        )
+
+    url = reverse(
+        "knowledge-entry-list-all",
+        args=[user.slug]
+    )
+
+    res = client.get(
+        url
+    )
+
+    assert res.status_code == status.HTTP_200_OK
+
+
+@pytest.mark.django_db
 def test_add_knowledge_entry(authenticated_user):
     """
     GIVEN a Django application

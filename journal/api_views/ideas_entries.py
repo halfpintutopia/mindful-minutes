@@ -18,7 +18,7 @@ class IdeasEntryList(APIView):
     """
     permission_classes = [IsAuthenticated]
 
-    def get(self, request, slug, date_request, format=None):
+    def get(self, request, slug, date_request=None, format=None):
         """
         List all ideas entries or filter by date
         """

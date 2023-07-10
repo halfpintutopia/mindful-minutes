@@ -11,6 +11,34 @@ from faker import Faker
 User = get_user_model()
 fake = Faker()
 
+@pytest.mark.django_db
+def test_list_all_custom_users(authenticated_user, add_custom_user):
+    """
+    GIVEN a Django application
+    WHEN the user requests all the appointment entries
+    THEN the user should receive a list of all the appointment entries
+    """
+    (client, *_) = authenticated_user
+
+    for num in range(4):
+        add_custom_user(
+            email=fake.email(),
+            password=fake.password(length=16),
+            first_name=fake.first_name(),
+            last_name=fake.last_name()
+        )
+
+    url = reverse(
+        "user-list"
+    )
+
+    res = client.get(
+        url,
+        content_type="application/json"
+    )
+
+    assert res.status_code == status.HTTP_200_OK
+
 
 @pytest.mark.django_db
 def test_add_custom_user(client):

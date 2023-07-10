@@ -1,5 +1,5 @@
 import json
-from datetime import date
+from datetime import datetime, date
 # https://dennisokeeffe.medium.com/mocking-python-datetime-in-tests-with-freezegun-f5532307d6d6
 from freezegun import freeze_time
 
@@ -10,6 +10,41 @@ from rest_framework import status
 import pytest
 
 from journal.models import TargetEntry
+
+
+@pytest.mark.django_db
+def test_get_list_of_target_entries(authenticated_user, add_target_entry):
+    """
+    GIVEN a Django application
+    WHEN a user requests a list of all target entries
+    THEN the user should receive a list of all target entries
+    """
+    client, user = authenticated_user
+
+    target_entries = [
+        ('Run for 20 minutes.', 1),
+        ('Swim 20 lengths', 2),
+        ('Read 2 chapters of Eloquent JavaScript', 4),
+        ('Watch Kyle Simpson', 3)
+    ]
+
+    for target, order in target_entries:
+        add_target_entry(
+            user=user,
+            title=target,
+            order=order
+        )
+
+    url = reverse(
+        "target-entry-list-all",
+        args=[user.slug]
+    )
+
+    res = client.get(
+        url
+    )
+
+    assert res.status_code == status.HTTP_200_OK
 
 
 @pytest.mark.django_db
@@ -435,7 +470,6 @@ def test_remove_target_not_current_date(
             order=1,
             user=user,
         )
-
 
     url = reverse(
         "target-entry-detail-single",

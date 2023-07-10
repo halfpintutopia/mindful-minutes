@@ -13,6 +13,40 @@ from journal.models import WinEntry
 
 
 @pytest.mark.django_db
+def test_get_list_of_win_entries(authenticated_user, add_win_entry):
+    """
+    GIVEN a Django application
+    WHEN a user requests a list of all win entries
+    THEN the user should receive a list of all win entries
+    """
+    client, user = authenticated_user
+
+    win_entries = [
+        'Meditated for 45 minutes',
+        'Handed in my last project',
+        'Did hot yoga',
+        'Did the Hackathon in Zurich'
+    ]
+
+    for win in win_entries:
+        add_win_entry(
+            user=user,
+            title=win,
+        )
+
+    url = reverse(
+        "win-entry-list-all",
+        args=[user.slug]
+    )
+
+    res = client.get(
+        url
+    )
+
+    assert res.status_code == status.HTTP_200_OK
+
+
+@pytest.mark.django_db
 def test_add_win_entry(authenticated_user):
     """
     GIVEN a Django application

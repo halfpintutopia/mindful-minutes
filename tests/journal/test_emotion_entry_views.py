@@ -22,12 +22,13 @@ def test_get_list_of_emotion_entries(authenticated_user, add_emotion_entry):
     """
     client, user = authenticated_user
 
-    emotion = "good"
+    emotions = ['good', 'great', 'good', 'bad', 'awful', 'excellent']
 
-    add_emotion_entry(
-        user=user,
-        emotion=emotion
-    )
+    for emotion in emotions:
+        add_emotion_entry(
+            user=user,
+            emotion=emotion
+        )
 
     url = reverse(
         "emotion-entry-list-all",

@@ -126,17 +126,17 @@ urlpatterns = [
     path(
         "api/users/<str:slug>/ideas/",
         IdeasEntryList.as_view(),
-        name="ideas-entry-list"
+        name="ideas-entry-list-all"
     ),
     path(
         "api/users/<str:slug>/ideas/<str:date_request>/<int:pk>/",
         IdeasEntryDetail.as_view(),
-        name="ideas-entry-detail"
+        name="ideas-entry-detail-single"
     ),
     path(
         "api/users/<str:slug>/ideas/<str:date_request>/",
         IdeasEntryList.as_view(),
-        name="ideas-entry-list"
+        name="ideas-entry-list-date"
     ),
     path(
         "api/users/<str:slug>/improvement/",

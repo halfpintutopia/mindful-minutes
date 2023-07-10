@@ -29,7 +29,7 @@ urlpatterns = [
         name="user-list"
     ),
     path(
-        "api/users/<str:slug>/user-settings/<int:user_id>/",
+        "api/users/<str:slug>/user-settings/",
         UserSettingsView.as_view(),
         name="user-settings"
     ),

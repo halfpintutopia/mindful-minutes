@@ -29,25 +29,25 @@ class UserSettingsView(APIView):
         except UserSettings.DoesNotExist:
             raise Http404
 
-    def get(self, request, user_id, format=None):
+    def get(self, request, slug, format=None):
         """
         Retrieve user settings for specified user
         """
-        if request.user.id != user_id:
+        if request.user.slug != slug:
             return Response(
                 {"error": "You are not authorised to access these settings."},
                 status=status.HTTP_403_FORBIDDEN
             )
 
-        user_settings = self.get_object(user_id)
+        user_settings = self.get_object(request.user.id)
         serializer = UserSettingsSerializer(user_settings)
         return Response(serializer.data)
 
-    def post(self, request, user_id, format=None):
+    def post(self, request, slug, format=None):
         """
         Create user settings for the specified user
         """
-        if request.user.id != user_id:
+        if request.user.slug != slug:
             return Response(
                 {"error": "You are not authorised to create these settings."},
                 status=status.HTTP_403_FORBIDDEN
@@ -66,31 +66,31 @@ class UserSettingsView(APIView):
             status=status.HTTP_400_BAD_REQUEST
         )
 
-    def delete(self, request, user_id, format=None):
+    def delete(self, request, slug, format=None):
         """
         Delete user setting of the specified user
         """
-        if request.user.id != user_id:
+        if request.user.slug != slug:
             return Response(
                 {"error": "You are not authorised to delete these settings."},
                 status=status.HTTP_403_FORBIDDEN
             )
 
-        user_settings = self.get_object(user_id)
+        user_settings = self.get_object(request.user.id)
         user_settings.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-    def put(self, request, user_id, format=None):
+    def put(self, request, slug, format=None):
         """
         Update user settings for the specified user 
         """
-        if request.user.id != user_id:
+        if request.user.slug != slug:
             return Response(
                 {"error": "You are not authorised to update these settings."},
                 status=status.HTTP_403_FORBIDDEN
             )
 
-        user_settings = get_object_or_404(UserSettings, user=user_id)
+        user_settings = get_object_or_404(UserSettings, user=request.user.id)
         serializer = UserSettingsSerializer(user_settings, data=request.data)
         if serializer.is_valid():
             serializer.save()

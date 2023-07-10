@@ -3,7 +3,6 @@ from datetime import time
 
 from django.urls import reverse
 
-from rest_framework.test import APIClient
 from rest_framework import status
 
 import pytest
@@ -20,7 +19,7 @@ def test_add_user_settings(authenticated_user):
     """
     client, user = authenticated_user
 
-    url = reverse("user-settings", args=[user.id])
+    url = reverse("user-settings", args=[user.slug])
 
     client.force_authenticate(user=user)
 
@@ -83,7 +82,7 @@ def test_add_user_settings_invalid_data(authenticated_user, test_data):
     """
     client, user = authenticated_user
 
-    url = reverse("user-settings", args=[user.id])
+    url = reverse("user-settings", args=[user.slug])
 
     client.force_authenticate(user=user)
 
@@ -122,7 +121,7 @@ def test_get_user_settings(authenticated_user, add_user_settings):
 
     client.force_authenticate(user=user)
 
-    url = reverse("user-settings", args=[user.id])
+    url = reverse("user-settings", args=[user.slug])
 
     res = client.get(
         url
@@ -178,7 +177,7 @@ def test_remove_user_settings(authenticated_user, add_user_settings):
         evening_check_in=evening_check_in
     )
 
-    url = reverse("user-settings", args=[user.id])
+    url = reverse("user-settings", args=[user.slug])
 
     client.force_authenticate(user=user)
 
@@ -276,7 +275,7 @@ def test_update_user_settings(authenticated_user, add_user_settings, test_data):
 
     # print("payload", test_data["payload"])
 
-    url = reverse("user-settings", args=[user.id])
+    url = reverse("user-settings", args=[user.slug])
 
     client.force_authenticate(user=user)
 
@@ -391,7 +390,7 @@ def test_update_user_settings_invalid_data(authenticated_user, add_user_settings
         evening_check_in=evening_check_in
     )
 
-    url = reverse("user-settings", args=[user.id])
+    url = reverse("user-settings", args=[user.slug])
 
     test_data["payload"]["user"] = user.id
 

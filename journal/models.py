@@ -1,8 +1,11 @@
+import uuid
+
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.template.defaultfilters import slugify
 
 from ckeditor.fields import RichTextField
 
@@ -16,6 +19,8 @@ class CustomUser(AbstractUser):
     """
     username = None
     email = models.EmailField(_("Email"), unique=True)
+    slug = models.SlugField(max_length=255, unique=True)
+    unique_identifier = models.UUIDField(default=uuid.uuid4, unique=True)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ['first_name', 'last_name']
@@ -24,6 +29,21 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.email
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            slug_name = slugify(f"{self.first_name} {self.last_name}")
+            slug = f"{slug_name}-{str(self.unique_identifier)}"
+
+            duplicates = CustomUser.objects.filter(slug=slug).exclude(pk=self.pk)
+
+            while duplicates.exists():
+                self.unique_identifier = uuid.uuid4()
+                slug = f"{slug_name}-{self.unique_identifier}"
+
+                duplicates = CustomUser.objects.filter(slug=slug).exclude(pk=self.pk)
+
+            self.slug = slug
 
 
 class UserSettings(models.Model):

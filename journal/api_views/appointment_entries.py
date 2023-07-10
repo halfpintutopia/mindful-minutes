@@ -8,6 +8,9 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import MethodNotAllowed
 
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
+
 from ..models import AppointmentEntry
 from ..serializers import AppointmentEntrySerializer
 
@@ -24,6 +27,17 @@ class AppointmentEntryList(APIView):
         """
         return self._handle_appointment_list_action(request, slug, date_request)
 
+    @swagger_auto_schema(
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                "title": openapi.Schema(type=openapi.TYPE_STRING),
+                "date": openapi.Schema(type=openapi.TYPE_STRING),
+                "time_from": openapi.Schema(type=openapi.TYPE_STRING),
+                "time_until": openapi.Schema(type=openapi.TYPE_STRING),
+            }
+        )
+    )
     def post(self, request, slug, date_request=None, format=None):
         """
         Create a new appointment entry

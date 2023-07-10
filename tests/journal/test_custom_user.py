@@ -27,6 +27,8 @@ def test_custom_user_model():
     assert user.is_staff is False
     assert user.is_superuser is False
     assert user.username is None
+    assert user.unique_identifier is not None
+    assert user.slug == f"normal-user-{user.unique_identifier}"
 
 
 @pytest.mark.django_db

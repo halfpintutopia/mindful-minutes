@@ -85,13 +85,6 @@ class AppointmentEntryList(APIView):
 
         raise MethodNotAllowed(request.method)
 
-        # return Response(
-        #     {"error":
-        #      f"The requested method: {request.method} is not allowed.",
-        #      },
-        #     status=status.HTTP_405_METHOD_NOT_ALLOWED
-        # )
-
 
 class AppointmentEntryDetail(APIView):
     """
@@ -145,35 +138,37 @@ class AppointmentEntryDetail(APIView):
                 status=status.HTTP_403_FORBIDDEN
             )
 
-        if pk is not None:
-            try:
-                isinstance(pk, int)
-                appointment_entry = self.get_object(pk)
-            except (ValueError, Http404):
-                if isinstance(pk, str):
+        if request.user.slug == slug:
+            if pk is not None:
+                try:
+                    isinstance(pk, int)
+                    appointment_entry = self.get_object(pk)
+                except (ValueError, Http404):
+                    if isinstance(pk, str):
+                        return Response(
+                            {"error": "Invalid appointment ID"},
+                            status=status.HTTP_400_BAD_REQUEST
+                        )
+                    return Response(status=status.HTTP_404_NOT_FOUND)
+
+                if request.method == "GET":
+                    serializer = AppointmentEntrySerializer(appointment_entry)
+                    return Response(serializer.data)
+
+                elif request.method == "PUT":
+                    serializer = AppointmentEntrySerializer(
+                        appointment_entry, data=request.data)
+                    if serializer.is_valid():
+                        serializer.save(user=request.user)
+                        return Response(serializer.data)
                     return Response(
-                        {"error": "Invalid appointment ID"},
+                        serializer.errors,
                         status=status.HTTP_400_BAD_REQUEST
                     )
-                return Response(status=status.HTTP_404_NOT_FOUND)
 
-            if request.method == "GET":
-                serializer = AppointmentEntrySerializer(appointment_entry)
-                return Response(serializer.data)
+                elif request.method == "DELETE":
+                    appointment_entry.delete()
+                    return Response(status=status.HTTP_204_NO_CONTENT)
 
-            elif request.method == "PUT":
-                serializer = AppointmentEntrySerializer(
-                    appointment_entry, data=request.data)
-                if serializer.is_valid():
-                    serializer.save(user=request.user)
-                    return Response(serializer.data)
-                return Response(
-                    serializer.errors,
-                    status=status.HTTP_400_BAD_REQUEST
-                )
-
-            elif request.method == "DELETE":
-                appointment_entry.delete()
-                return Response(status=status.HTTP_204_NO_CONTENT)
-
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        return Response(status=status.HTTP_403_FORBIDDEN)

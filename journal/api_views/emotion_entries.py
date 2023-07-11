@@ -8,6 +8,9 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import MethodNotAllowed
 
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
+
 from ..models import EmotionEntry
 from ..serializers import EmotionEntrySerializer
 
@@ -24,6 +27,14 @@ class EmotionEntryList(APIView):
         """
         return self._handle_emotion_list_action(request, slug, date_request)
 
+    @swagger_auto_schema(
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                "emotion": openapi.Schema(type=openapi.TYPE_STRING),
+            }
+        )
+    )
     def post(self, request, slug, date_request, format=None):
         """
         Create a new emotion entry
@@ -108,6 +119,14 @@ class EmotionEntryDetail(APIView):
         """
         return self._handle_emotion_detail_action(request, slug, date_request, pk)
 
+    @swagger_auto_schema(
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                "emotion": openapi.Schema(type=openapi.TYPE_STRING),
+            }
+        )
+    )
     def put(self, request, slug, date_request, pk, format=None):
         """
         Update an emotion entry

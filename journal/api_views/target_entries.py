@@ -8,6 +8,9 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import MethodNotAllowed
 
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
+
 from ..models import TargetEntry
 from ..serializers import TargetEntrySerializer
 
@@ -24,6 +27,15 @@ class TargetEntryList(APIView):
         """
         return self._handle_target_list_action(request, slug, date_request)
 
+    @swagger_auto_schema(
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                "title": openapi.Schema(type=openapi.TYPE_STRING),
+                "order": openapi.Schema(type=openapi.TYPE_INTEGER),
+            }
+        )
+    )
     def post(self, request, slug, date_request, format=None):
         """
         Create a new target entry
@@ -108,6 +120,15 @@ class TargetEntryDetail(APIView):
         """
         return self._handle_target_detail_action(request, slug, date_request, pk)
 
+    @swagger_auto_schema(
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                "title": openapi.Schema(type=openapi.TYPE_STRING),
+                "order": openapi.Schema(type=openapi.TYPE_INTEGER),
+            }
+        )
+    )
     def put(self, request, slug, date_request, pk, format=None):
         """
         Update an target entry

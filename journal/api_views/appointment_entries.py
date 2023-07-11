@@ -122,6 +122,17 @@ class AppointmentEntryDetail(APIView):
         """
         return self._handle_appointment_detail_action(request, slug, date_request, pk)
 
+    @swagger_auto_schema(
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                "title": openapi.Schema(type=openapi.TYPE_STRING),
+                "date": openapi.Schema(type=openapi.TYPE_STRING),
+                "time_from": openapi.Schema(type=openapi.TYPE_STRING),
+                "time_until": openapi.Schema(type=openapi.TYPE_STRING),
+            }
+        )
+    )
     def put(self, request, slug, date_request, pk, format=None):
         """
         Update an appointment entry

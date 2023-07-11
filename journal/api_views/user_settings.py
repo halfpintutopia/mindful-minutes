@@ -9,6 +9,9 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import MethodNotAllowed
 
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
+
 from ..models import UserSettings
 from ..serializers import UserSettingsSerializer
 
@@ -43,6 +46,16 @@ class UserSettingsView(APIView):
         serializer = UserSettingsSerializer(user_settings)
         return Response(serializer.data)
 
+    @swagger_auto_schema(
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                "start_week_day": openapi.Schema(type=openapi.TYPE_INTEGER),
+                "morning_check_in": openapi.Schema(type=openapi.TYPE_STRING),
+                "evening_check_in": openapi.Schema(type=openapi.TYPE_STRING),
+            }
+        )
+    )
     def post(self, request, slug, format=None):
         """
         Create user settings for the specified user
@@ -80,6 +93,16 @@ class UserSettingsView(APIView):
         user_settings.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+    @swagger_auto_schema(
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                "start_week_day": openapi.Schema(type=openapi.TYPE_INTEGER),
+                "morning_check_in": openapi.Schema(type=openapi.TYPE_STRING),
+                "evening_check_in": openapi.Schema(type=openapi.TYPE_STRING),
+            }
+        )
+    )
     def put(self, request, slug, format=None):
         """
         Update user settings for the specified user 

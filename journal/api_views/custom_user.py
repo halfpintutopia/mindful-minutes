@@ -9,6 +9,9 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import MethodNotAllowed
 
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
+
 from ..serializers import CustomUserSerializer
 
 User = get_user_model()
@@ -26,6 +29,17 @@ class CustomUserList(APIView):
         """
         return self._handle_user_list_action(request)
 
+    @swagger_auto_schema(
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                "email": openapi.Schema(type=openapi.TYPE_STRING),
+                "password": openapi.Schema(type=openapi.TYPE_STRING),
+                "first_name": openapi.Schema(type=openapi.TYPE_STRING),
+                "last_name": openapi.Schema(type=openapi.TYPE_STRING),
+            }
+        )
+    )
     def post(self, request, format=None):
         """
         Create a new user
@@ -85,6 +99,17 @@ class CustomUserDetail(APIView):
         """
         return self._handle_user_detail_action(request, slug)
 
+    @swagger_auto_schema(
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                "email": openapi.Schema(type=openapi.TYPE_STRING),
+                "password": openapi.Schema(type=openapi.TYPE_STRING),
+                "first_name": openapi.Schema(type=openapi.TYPE_STRING),
+                "last_name": openapi.Schema(type=openapi.TYPE_STRING),
+            }
+        )
+    )
     def put(self, request, slug, format=None):
         """
         Update an user

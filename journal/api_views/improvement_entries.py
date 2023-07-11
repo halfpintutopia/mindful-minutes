@@ -8,6 +8,9 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import MethodNotAllowed
 
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
+
 from ..models import ImprovementEntry
 from ..serializers import ImprovementEntrySerializer
 
@@ -24,6 +27,14 @@ class ImprovementEntryList(APIView):
         """
         return self._handle_improvement_list_action(request, slug, date_request)
 
+    @swagger_auto_schema(
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                "content": openapi.Schema(type=openapi.TYPE_STRING),
+            }
+        )
+    )
     def post(self, request, slug, date_request, format=None):
         """
         Create a new improvement entry
@@ -108,6 +119,14 @@ class ImprovementEntryDetail(APIView):
         """
         return self._handle_improvement_detail_action(request, slug, date_request, pk)
 
+    @swagger_auto_schema(
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                "content": openapi.Schema(type=openapi.TYPE_STRING),
+            }
+        )
+    )
     def put(self, request, slug, date_request, pk, format=None):
         """
         Update an improvement entry

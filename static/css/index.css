@@ -1,0 +1,138 @@
+/* ------------------- */
+/* Custom properties   */
+/* ------------------- */
+
+/* Flexible typography with CSS locks https://blog.typekit.com/2016/08/17/flexible-typography-with-css-locks/ */
+:root {
+    /* breakpoint variables */
+    --bp-small: 24.15;
+    --bp-medium: 45.75;
+    --bp-large: 60.25;
+    --bp-x-large: 75;
+
+    /* h1 variables */
+    --h1-font-size-min: 5;
+    --h1-font-size-max: 6.25;
+    --h2-font-size-min: 2.5;
+    --h2-font-size-max: 3.5;
+    --h3-font-size-min: 1.5;
+    --h3-font-size-max: 2;
+    --h4-font-size-min: 1.25;
+    --h4-font-size-max: 1.75;
+    --p-font-size-min: 1;
+    --p-font-size-max: 1.125;
+
+    h1 {
+        font-size: calc(var(--h1-font-size-min) * 1em);
+        line-height: 1.1;
+    }
+
+    h2 {
+        font-size: calc(var(--h2-font-size-min) * 1em);
+        line-height: 1.1;
+    }
+
+    h3 {
+        font-size: calc(var(--h3-font-size-min) * 1em);
+        line-height: 1.1;
+    }
+
+    h4 {
+        font-size: calc(var(--h4-font-size-min) * 1em);
+        line-height: 1.1;
+    }
+
+    p {
+        font-size: calc(var(--p-font-size-min) * 1em);
+    }
+
+    /* landscape on mobile */
+    @media screen and (width > 24.15em) {
+        h1 {
+            font-size: calc((var(--h1-font-size-min) * 1em) + (var(--h1-font-size-max) - var(--h1-font-size-min)) * ((100vw - (var(--bp-small) * 1em)) / var(--bp-xlarge) - var(--bp-small)));
+        }
+
+        h2 {
+            font-size: calc((var(--h2-font-size-min) * 1em) + (var(--h2-font-size-max) - var(--h2-font-size-min)) * ((100vw - (var(--bp-small) * 1em)) / var(--bp-xlarge) - var(--bp-small)));
+        }
+
+        h3 {
+            font-size: calc((var(--h3-font-size-min) * 1em) + (var(--h3-font-size-max) - var(--h3-font-size-min)) * ((100vw - (var(--bp-small) * 1em)) / var(--bp-xlarge) - var(--bp-small)));
+        }
+
+        h4 {
+            font-size: calc((var(--h4-font-size-min) * 1em) + (var(--h4-font-size-max) - var(--h4-font-size-min)) * ((100vw - (var(--bp-small) * 1em)) / var(--bp-xlarge) - var(--bp-small)));
+        }
+
+        p {
+            font-size: calc((var(--p-font-size-min) * 1em) + (var(--p-font-size-max) - var(--p-font-size-min)) * ((100vw - (var(--bp-small) * 1em)) / var(--bp-xlarge) - var(--bp-small)));
+        }
+    }
+
+    @media screen and (width > 75em) {
+        h1 {
+            font-size: calc(var(--h1-font-size-max) * 1em);
+        }
+
+        h2 {
+            font-size: calc(var(--h2-font-size-max) * 1em);
+        }
+
+        h3 {
+            font-size: calc(var(--h3-font-size-max) * 1em);
+        }
+
+        h4 {
+            font-size: calc(var(--h4-font-size-max) * 1em);
+        }
+
+        p {
+            font-size: calc(var(--p-font-size-max) * 1em);
+        }
+    }
+}
+
+/* ------------------- */
+/* Resets              */
+/* ------------------- */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font: inherit;
+}
+
+* + * {
+    margin: 1em 0 0;
+}
+
+html {
+    color-scheme: dark light;
+}
+
+body {
+    min-height: 100vh;
+    background-color: hsl(0, 0%, 95%);
+    color: hsl(0, 0%, 0%);
+}
+
+img,
+picture,
+svg,
+video {
+    display: block;
+    max-width: 100%;
+}
+
+input,
+textarea,
+button,
+select {
+    font: inherit;
+}

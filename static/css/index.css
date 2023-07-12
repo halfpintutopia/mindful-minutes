@@ -108,9 +108,9 @@
     font: inherit;
 }
 
-* + * {
+/* * + * {
     margin: 1em 0 0;
-}
+} */
 
 html {
     color-scheme: dark light;
@@ -118,8 +118,17 @@ html {
 
 body {
     min-height: 100vh;
-    background-color: hsl(0, 0%, 95%);
+    background-color: hsl(var(--clr-dark, black));
     color: hsl(0, 0%, 0%);
+    line-height: 1.5;
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: min-content 1fr;
+    overflow-x: hidden;
+
+
+    /* font-family: ;
+    font-size: ; */
 }
 
 img,

@@ -8,14 +8,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
 
-    <link rel="stylesheet" href="{% static 'css/index.css' %}" type="text/css">
-    <link rel="stylesheet" href="{% static 'css/utilities.css' %}" type="text/css">
-    <link rel="stylesheet" href="{% static 'css/header.css' %}" type="text/css">
-    <link rel="stylesheet" href="{% static 'css/footer.css' %}" type="text/css">
+    <link
+      rel="stylesheet"
+      href="{% static 'css/index.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/utilities.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/header.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/footer.css' %}"
+      type="text/css"
+    />
   </head>
 
   <body>
-    <header>
+    <header class="primary-header flex">
       {% block navigation_logo %}
       <img class="logo" src="" alt="" />
       {% endblock navigation_logo %} {% block navigation %}
@@ -23,10 +39,10 @@
         <span class="sr-only">Menu</span>
       </button>
       <nav>
-        <ul class="primary-navigation underline-indicators">
+        <ul id="primary-navigation" class="primary-navigation underline-indicators flex" data-visible="false">
           {% if user.is_authenticated %}
           <!-- Display navigation for authenticated user -->
-          <li class="active">
+          <li>
             <a class="uppercase" href="#">Morning</a>
           </li>
           <li>
@@ -39,7 +55,7 @@
             <a class="uppercase" href="#">My Account</a>
           </li>
           {% endif %}
-          <li>
+          <li class="active">
             <a class="uppercase" href="#">Learn</a>
           </li>
           <li>
@@ -58,10 +74,6 @@
       {% endblock navigation %}
     </header>
 
-    {% block content %}
-    {% endblock content %}
-
-    {% block footer %}
-    {% endblock footer %}
+    {% block content %} {% endblock content %} {% block footer %} {% endblock footer %}
   </body>
 </html>

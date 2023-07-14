@@ -351,13 +351,13 @@ def test_get_all_appointment_entries_by_date(
     WHEN the user requests to retrieve all appointment entries by date
     THEN check all appointment entries are retrieved
     """
+    client, user = authenticated_user
+
     with freeze_time(created_on_timestamp):
         appointment_entries = AppointmentEntry.objects.all()
         assert len(appointment_entries) == 0
 
         current_date = date.today()
-
-        client, user = authenticated_user
 
         add_appointment_entry(
             title="Dentist",

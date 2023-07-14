@@ -154,3 +154,10 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'journal.CustomUser'
+
+# https://stackoverflow.com/questions/71636502/django-allauth-customuser-object-has-no-attribute-username
+# https://django-allauth.readthedocs.io/en/latest/advanced.html#custom-user-models
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email'

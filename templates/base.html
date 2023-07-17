@@ -3,77 +3,78 @@
 
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>Mindful Minutes | {{ title }}</title>
 
     <link
-      rel="stylesheet"
-      href="{% static 'css/index.css' %}"
-      type="text/css"
+            rel="stylesheet"
+            href="{% static 'css/index.css' %}"
+            type="text/css"
     />
     <link
-      rel="stylesheet"
-      href="{% static 'css/utilities.css' %}"
-      type="text/css"
+            rel="stylesheet"
+            href="{% static 'css/utilities.css' %}"
+            type="text/css"
     />
     <link
-      rel="stylesheet"
-      href="{% static 'css/header.css' %}"
-      type="text/css"
+            rel="stylesheet"
+            href="{% static 'css/header.css' %}"
+            type="text/css"
     />
     <link
-      rel="stylesheet"
-      href="{% static 'css/footer.css' %}"
-      type="text/css"
+            rel="stylesheet"
+            href="{% static 'css/footer.css' %}"
+            type="text/css"
     />
-  </head>
+</head>
 
-  <body>
+<body>
     <header class="primary-header flex">
-      {% block navigation_logo %}
-      <img class="logo" src="" alt="" />
-      {% endblock navigation_logo %} {% block navigation %}
-      <button class="mobile-nav-toggle" aria-controls="primary-navigation">
-        <span class="sr-only">Menu</span>
-      </button>
-      <nav>
-        <ul id="primary-navigation" class="primary-navigation underline-indicators flex" data-visible="false">
-          {% if user.is_authenticated %}
-          <!-- Display navigation for authenticated user -->
-          <li>
-            <a class="uppercase" href="#">Morning</a>
-          </li>
-          <li>
-            <a class="uppercase" href="#">Evening</a>
-          </li>
-          <li>
-            <a class="uppercase" href="#">Search</a>
-          </li>
-          <li>
-            <a class="uppercase" href="#">My Account</a>
-          </li>
-          {% endif %}
-          <li class="active">
-            <a class="uppercase" href="#">Learn</a>
-          </li>
-          <li>
-            <a class="uppercase" href="#">Contact Us</a>
-          </li>
-          {% if user.is_authenticated %}
-          <!-- Display navigation for authenticated user -->
-          <button>Log out</button>
-          {% else %}
-          <button>Sign up</button>
-          <button>Log in</button>
-          {% endif %}
-        </ul>
-      </nav>
+        {% block navigation_logo %}
+            <img class="logo" src="" alt=""/>
+        {% endblock navigation_logo %} {% block navigation %}
+        <button class="mobile-nav-toggle" aria-controls="primary-navigation">
+            <span class="sr-only">Menu</span>
+        </button>
+        <nav>
+            <ul id="primary-navigation" class="primary-navigation underline-indicators flex" data-visible="false">
+                {% if user.is_authenticated %}
+                    <!-- Display navigation for authenticated user -->
+                    <li>
+                        <a class="uppercase" href="#">Morning</a>
+                    </li>
+                    <li>
+                        <a class="uppercase" href="#">Evening</a>
+                    </li>
+                    <li>
+                        <a class="uppercase" href="#">Search</a>
+                    </li>
+                    <li>
+                        <a class="uppercase" href="#">My Account</a>
+                    </li>
+                {% endif %}
+                <li class="active">
+                    <a class="uppercase" href="#">Learn</a>
+                </li>
+                <li>
+                    <a class="uppercase" href="#">Contact Us</a>
+                </li>
+                {% if user.is_authenticated %}
+                    <!-- Display navigation for authenticated user -->
+                    <button>Log out</button>
+                {% else %}
+                    <button>Sign up</button>
+                    <button>Log in</button>
+                {% endif %}
+            </ul>
+        </nav>
 
-      {% endblock navigation %}
+    {% endblock navigation %}
     </header>
 
     {% block content %} {% endblock content %} {% block footer %} {% endblock footer %}
-  </body>
+</body>
 </html>

@@ -57,7 +57,7 @@ def test_list_all_appointments(authenticated_user, add_appointment_entry):
 		)
 	
 	url = reverse(
-		"appointment-entry-list-all",
+		"appointment-entry-list",
 		args=[user.slug]
 		)
 	
@@ -94,7 +94,7 @@ def test_add_appointment_entry(authenticated_user):
 		}
 	
 	url = reverse(
-		"appointment-entry-list-date",
+		"appointment-entry-date-list",
 		args=[user.slug, current_date]
 		)
 	
@@ -147,7 +147,7 @@ def test_add_appointment_entry_incorrect_json(authenticated_user, test_data):
 	test_data["payload"]["user"] = user.id
 	
 	url = reverse(
-		"appointment-entry-list-date",
+		"appointment-entry-date-list",
 		args=[user.slug, str(current_date)]
 		)
 	
@@ -190,7 +190,7 @@ def test_add_appointment_entry_not_current_date(
 		}
 	
 	url = reverse(
-		"appointment-entry-list-date",
+		"appointment-entry-date-list",
 		args=[user.slug, date_param]
 		)
 	
@@ -231,7 +231,7 @@ def test_get_single_appointment_entry(
 	appointment_date = appointment_entry.created_on.strftime("%Y-%m-%d")
 	
 	url = reverse(
-		"appointment-entry-detail-single",
+		"appointment-entry-detail",
 		args=[user.slug, appointment_date, appointment_entry.id]
 		)
 	
@@ -264,7 +264,7 @@ def test_get_single_appointment_entry_incorrect_id(
 	invalid_id = 14258
 	
 	url = reverse(
-		"appointment-entry-detail-single",
+		"appointment-entry-detail",
 		args=[user.slug, current_date, invalid_id]
 		)
 	
@@ -326,7 +326,7 @@ def test_get_all_appointment_entries_by_current_date(
 		)
 	
 	url = reverse(
-		"appointment-entry-list-date",
+		"appointment-entry-date-list",
 		args=[user.slug, str(current_date)]
 		)
 	
@@ -402,7 +402,7 @@ def test_get_all_appointment_entries_by_date(
 			)
 	
 	url = reverse(
-		"appointment-entry-list-date",
+		"appointment-entry-date-list",
 		args=[user.slug, current_date]
 		)
 	
@@ -447,7 +447,7 @@ def test_remove_appointment_entry(
 	appointment_date = appointment_entry.created_on.strftime("%Y-%m-%d")
 	
 	url = reverse(
-		"appointment-entry-detail-single",
+		"appointment-entry-detail",
 		args=[user.slug, appointment_date, appointment_entry.id]
 		)
 	
@@ -467,7 +467,7 @@ def test_remove_appointment_entry(
 	assert res_delete.status_code == status.HTTP_204_NO_CONTENT
 	
 	url_retrieve = reverse(
-		"appointment-entry-list-date",
+		"appointment-entry-date-list",
 		args=[user.slug, appointment_date]
 		)
 	
@@ -506,7 +506,7 @@ def test_remove_appointment_invalid_id(
 	client, user = authenticated_user
 	
 	url = reverse(
-		"appointment-entry-detail-single",
+		"appointment-entry-detail",
 		args=[user.slug, current_date, invalid_id]
 		)
 	
@@ -556,7 +556,7 @@ def test_remove_appointment_not_current_date(
 	assert len(appointment_entries) == 1
 	
 	url = reverse(
-		"appointment-entry-detail-single",
+		"appointment-entry-detail",
 		args=[user.slug, date_and_time[0], appointment_entry.id]
 		)
 	
@@ -620,7 +620,7 @@ def test_update_appointment_entry(
 	test_data["payload"]["date"] = str(current_date)
 	
 	url = reverse(
-		"appointment-entry-detail-single",
+		"appointment-entry-detail",
 		args=[user.slug, current_date, appointment_entry.id]
 		)
 	
@@ -663,7 +663,7 @@ def test_update_appointment_entry_invalid_id(
 	invalid_id = 12574
 	
 	url = reverse(
-		"appointment-entry-detail-single",
+		"appointment-entry-detail",
 		args=[user.slug, current_date, invalid_id]
 		)
 	
@@ -708,7 +708,7 @@ def test_update_appointment_entry_incorrect_date(
 			)
 	
 	url = reverse(
-		"appointment-entry-detail-single",
+		"appointment-entry-detail",
 		args=[user.slug, date_and_time[0], appointment_entry.id]
 		)
 	
@@ -761,7 +761,7 @@ def test_update_appointment_entry_invalid_json(
 	appointment_date = appointment_entry.created_on.strftime("%Y-%m-%d")
 	
 	url = reverse(
-		"appointment-entry-detail-single",
+		"appointment-entry-detail",
 		args=[user.slug, appointment_date, appointment_entry.id]
 		)
 	

@@ -1,4 +1,4 @@
-from datetime import date, time
+from datetime import time
 
 import pytest
 
@@ -33,15 +33,15 @@ def test_custom_user_serializer(custom_user):
 	# with pytest.raises(AttributeError):
 	#     CustomUserSerializer(data={**serializer.data, "dark_mode": False})
 	
-	assert serializer.data.get("user_settings", {}).get(
+	assert serializer.data.get(
 		"start_week_day"
 		) == start_week_day
-	assert serializer.data.get("user_settings", {}).get(
+	assert serializer.data.get(
 		"morning_check_in"
 		) == morning_check_in.strftime("%H:%M:%S")
-	assert serializer.data.get("user_settings", {}).get(
+	assert serializer.data.get(
 		"evening_check_in"
 		) == evening_check_in.strftime("%H:%M:%S")
-	assert serializer.data.get("user_settings", {}).get(
+	assert serializer.data.get(
 		"user"
 		) == custom_user.id

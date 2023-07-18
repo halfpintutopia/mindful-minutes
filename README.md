@@ -167,6 +167,22 @@ DISABLE_COLLECT_STATIC 1
 
 ### Local Deployment
 
+#### GitHub Actions
+
+##### Configuration steps
+
+1. Docker Registry 
+   - Set up a Docker registry on Docker Hub
+2. Docker Registry Image
+   - Name and tag Docker image for project, with the following format:
+     - `registry-url/username/repo-name:tag` (e.g. `docker.io/username/project:latest`)
+3. GitHub Repository
+   - Set up repo secrets
+     - Go to "Settings" and under "Secrets and variables", click on "Actions"
+     - Create a secret for `DOCKER_REGISTRY_IMAGE`. Set this to the Docker Registry Image name and tag set in Step 2
+   - Create a new `YAML` file in the located in the `.github/workflows` directory located in the root of the repo 
+
+
 ### Contributing
 
 ## Data Models

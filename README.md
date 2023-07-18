@@ -271,6 +271,7 @@ For further details on testing, click [here](docs/testing/testing.md).
 #### CI / CD
 
 - [GitHub Actions - Create starter workflows](https://docs.github.com/en/actions/using-workflows/creating-starter-workflows-for-your-organization)
+- [Schedule Planner Repository](https://github.com/halfpintutopia/schedule-planner/blob/master/.gitlab-ci.yml)
 
 #### Django
 

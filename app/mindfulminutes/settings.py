@@ -11,14 +11,17 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 import os
+
 from pathlib import Path
+
 import dj_database_url
+
 from dotenv import load_dotenv, find_dotenv
 
 ENV_FILE = find_dotenv()
 
 if ENV_FILE:
-    load_dotenv()
+	load_dotenv()
 
 development = os.environ.get('DEVELOPMENT', False)
 
@@ -34,61 +37,61 @@ SECRET_KEY = os.environ.get('SECRET_KEY', '')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 if development:
-    DEBUG = True
+	DEBUG = True
 else:
-    DEBUG = False
+	DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '[::1]', os.getenv(
-        'PROJECT_DOMAIN'
+	'PROJECT_DOMAIN'
 )]
 # ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOST').split(' ')
 
 # Application definition
 
 INSTALLED_APPS = [
-        'django.contrib.admin',
-        'django.contrib.auth',
-        'django.contrib.contenttypes',
-        'django.contrib.sessions',
-        'django.contrib.messages',
-        'cloudinary_storage',
-        'django.contrib.staticfiles',
-        'allauth',
-        'allauth.account',
-        'allauth.socialaccount',
-        'cloudinary',
-        'ckeditor',
-        'rest_framework',
-        "drf_yasg",
-        'journal',
+	'django.contrib.admin',
+	'django.contrib.auth',
+	'django.contrib.contenttypes',
+	'django.contrib.sessions',
+	'django.contrib.messages',
+	'cloudinary_storage',
+	'django.contrib.staticfiles',
+	'allauth',
+	'allauth.account',
+	'allauth.socialaccount',
+	'cloudinary',
+	'ckeditor',
+	'rest_framework',
+	"drf_yasg",
+	'journal',
 ]
 
 MIDDLEWARE = [
-        'django.middleware.security.SecurityMiddleware',
-        'django.contrib.sessions.middleware.SessionMiddleware',
-        'django.middleware.common.CommonMiddleware',
-        'django.middleware.csrf.CsrfViewMiddleware',
-        'django.contrib.auth.middleware.AuthenticationMiddleware',
-        'django.contrib.messages.middleware.MessageMiddleware',
-        'django.middleware.clickjacking.XFrameOptionsMiddleware',
+	'django.middleware.security.SecurityMiddleware',
+	'django.contrib.sessions.middleware.SessionMiddleware',
+	'django.middleware.common.CommonMiddleware',
+	'django.middleware.csrf.CsrfViewMiddleware',
+	'django.contrib.auth.middleware.AuthenticationMiddleware',
+	'django.contrib.messages.middleware.MessageMiddleware',
+	'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 ROOT_URLCONF = 'mindfulminutes.urls'
 
 TEMPLATES = [
-        {
-                'BACKEND': 'django.template.backends.django.DjangoTemplates',
-                'DIRS': [TEMPLATES_DIR],
-                'APP_DIRS': True,
-                'OPTIONS': {
-                        'context_processors': [
-                                'django.template.context_processors.debug',
-                                'django.template.context_processors.request',
-                                'django.contrib.auth.context_processors.auth',
-                                'django.contrib.messages.context_processors.messages',
-                        ],
-                },
-        },
+	{
+		'BACKEND': 'django.template.backends.django.DjangoTemplates',
+		'DIRS': [TEMPLATES_DIR],
+		'APP_DIRS': True,
+		'OPTIONS': {
+			'context_processors': [
+				'django.template.context_processors.debug',
+				'django.template.context_processors.request',
+				'django.contrib.auth.context_processors.auth',
+				'django.contrib.messages.context_processors.messages',
+			],
+		},
+	},
 ]
 
 WSGI_APPLICATION = 'mindfulminutes.wsgi.application'
@@ -108,42 +111,44 @@ WSGI_APPLICATION = 'mindfulminutes.wsgi.application'
 # 		'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
 # 		}
 
-if development:
-    DATABASES = {
-            'default': {
-                    'ENGINE': os.environ.get('DB_ENGINE'),
-                    'NAME': os.environ.get('DB_NAME'),
-                    'USER': os.environ.get('DB_USER'),
-                    'PASSWORD': os.environ.get('DB_PASSWORD'),
-                    'HOST': os.environ.get('DB_HOST'),
-                    'PORT': os.environ.get('DB_PORT'),
-            }
-    }
-else:
-    DATABASES = {
-            'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
-    }
+DATABASES = {
+	'default': {
+		'ENGINE': os.environ.get('DB_ENGINE'),
+		'NAME': os.environ.get('DB_NAME'),
+		'USER': os.environ.get('DB_USER'),
+		'PASSWORD': os.environ.get('DB_PASSWORD'),
+		'HOST': os.environ.get('DB_HOST'),
+		'PORT': os.environ.get('DB_PORT'),
+	}
+}
+
+if not development:
+	DATABASE_URL = os.environ.get('DATABASE_URL')
+	db_from_env = dj_database_url.config(
+		default=DATABASE_URL, conn_max_age=500
+		)
+	DATABASES['default'].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-        {
-                'NAME': 'django.contrib.auth.password_validation'
-                        '.UserAttributeSimilarityValidator',
-        },
-        {
-                'NAME': 'django.contrib.auth.password_validation'
-                        '.MinimumLengthValidator',
-        },
-        {
-                'NAME': 'django.contrib.auth.password_validation'
-                        '.CommonPasswordValidator',
-        },
-        {
-                'NAME': 'django.contrib.auth.password_validation'
-                        '.NumericPasswordValidator',
-        },
+	{
+		'NAME': 'django.contrib.auth.password_validation'
+		        '.UserAttributeSimilarityValidator',
+	},
+	{
+		'NAME': 'django.contrib.auth.password_validation'
+		        '.MinimumLengthValidator',
+	},
+	{
+		'NAME': 'django.contrib.auth.password_validation'
+		        '.CommonPasswordValidator',
+	},
+	{
+		'NAME': 'django.contrib.auth.password_validation'
+		        '.NumericPasswordValidator',
+	},
 ]
 
 # Internationalization
@@ -162,7 +167,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_STORAGE = \
-    'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
+	'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
@@ -184,3 +189,11 @@ ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
+
+# Disable the Browsable API in production
+if not development:
+	REST_FRAMEWORK = {
+		"DEFAULT_RENDERER_CLASSES": (
+			"rest_framework.renderers.JSONRenderer",
+		)
+	}

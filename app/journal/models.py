@@ -1,13 +1,12 @@
 import uuid
 
+from ckeditor.fields import RichTextField
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
 from django.db import models
-from django.utils.translation import gettext_lazy as _
 from django.template.defaultfilters import slugify
-
-from ckeditor.fields import RichTextField
+from django.utils.translation import gettext_lazy as _
 
 from .managers import CustomUserManager
 
@@ -17,13 +16,14 @@ class CustomUser(AbstractUser):
     Custom user model where email is the the unique identifier
     instead of username for authentication instead of username
     """
+
     username = None
     email = models.EmailField(_("Email"), unique=True)
     slug = models.SlugField(max_length=255, unique=True)
     unique_identifier = models.UUIDField(default=uuid.uuid4, unique=True)
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ['first_name', 'last_name']
+    REQUIRED_FIELDS = ["first_name", "last_name"]
 
     objects = CustomUserManager()
 
@@ -53,6 +53,7 @@ class UserSettings(models.Model):
     User settings model to allow users set their start week day
     and check in times for morning and evening
     """
+
     DAY_OPTIONS = [
         (1, "Monday"),
         (2, "Tuesday"),
@@ -63,12 +64,9 @@ class UserSettings(models.Model):
         (7, "Sunday"),
     ]
     user = models.OneToOneField(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name="user_settings"
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="user_settings"
     )
-    start_week_day = models.IntegerField(
-        _("Start Week Day"), choices=DAY_OPTIONS)
+    start_week_day = models.IntegerField(_("Start Week Day"), choices=DAY_OPTIONS)
     morning_check_in = models.TimeField()
     evening_check_in = models.TimeField()
     created_on = models.DateTimeField(auto_now_add=True)
@@ -78,6 +76,7 @@ class UserSettings(models.Model):
         """
         Meta options for the UserSettings model
         """
+
         verbose_name_plural = "Users' Settings"
 
 
@@ -85,10 +84,11 @@ class AppointmentEntry(models.Model):
     """
     Appointment entry model to allow users to create appointment entries
     """
+
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        related_name="appointment_entries"
+        related_name="appointment_entries",
     )
     title = models.CharField(_("Title"), max_length=255)
     date = models.DateField(_("Date"))
@@ -101,6 +101,7 @@ class AppointmentEntry(models.Model):
         """_
         Meta options for the AppointmentEntry model
         """
+
         verbose_name_plural = "Appointment Entries"
         ordering = ["date", "time_from"]
 
@@ -122,10 +123,11 @@ class TargetEntry(models.Model):
     """
     TargetEntry model to allow users to create target entries
     """
+
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        related_name="target_entries"
+        related_name="target_entries",
     )
     title = models.CharField(_("Target"), max_length=255)
     order = models.IntegerField(_("Order"))
@@ -146,6 +148,7 @@ class TargetEntry(models.Model):
         """
         Meta options for the TargetEntry model
         """
+
         verbose_name_plural = "Target Entries"
         ordering = ["order"]
 
@@ -157,10 +160,9 @@ class NoteEntry(models.Model):
     """
     NoteEntry model to allow users to create note entries
     """
+
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name="note_entries"
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="note_entries"
     )
     content = RichTextField(_("Notes"))
     created_on = models.DateTimeField(auto_now_add=True)
@@ -177,6 +179,7 @@ class NoteEntry(models.Model):
         """
         Meta options for the TargetEntry model
         """
+
         verbose_name_plural = "Note Entries"
         ordering = ["created_on"]
 
@@ -185,10 +188,11 @@ class KnowledgeEntry(models.Model):
     """
     KnowledgeEntry model to allow users to create knowledge entries
     """
+
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        related_name="knowledge_entries"
+        related_name="knowledge_entries",
     )
     content = RichTextField(_("Knowledge Entry"))
     created_on = models.DateTimeField(auto_now_add=True)
@@ -205,6 +209,7 @@ class KnowledgeEntry(models.Model):
         """
         Meta options for the KnowledgeEntry model
         """
+
         verbose_name_plural = "Knowledge Entries"
         ordering = ["created_on"]
 
@@ -213,10 +218,11 @@ class GratitudeEntry(models.Model):
     """
     GratitudeEntry model to allow users to create gratitude entries
     """
+
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        related_name="gratitude_entries"
+        related_name="gratitude_entries",
     )
     content = RichTextField(_("Gratitude Entry"))
     created_on = models.DateTimeField(auto_now_add=True)
@@ -233,6 +239,7 @@ class GratitudeEntry(models.Model):
         """
         Meta options for the Target model
         """
+
         verbose_name_plural = "Gratitude Entries"
         ordering = ["created_on"]
 
@@ -241,10 +248,9 @@ class WinEntry(models.Model):
     """
     Win model to allow users to create win entries
     """
+
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name="win_entries"
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="win_entries"
     )
     title = models.CharField(_("Win Entry"), max_length=255)
     created_on = models.DateTimeField(auto_now_add=True)
@@ -261,6 +267,7 @@ class WinEntry(models.Model):
         """
         Meta options for the Win model
         """
+
         verbose_name_plural = "Win Entries"
         ordering = ["created_on"]
 
@@ -269,10 +276,9 @@ class IdeasEntry(models.Model):
     """
     IdeasEntry model to allow users to create ideas entries
     """
+
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name="ideas_entries"
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="ideas_entries"
     )
     content = RichTextField(_("Ideas Entry"))
     created_on = models.DateTimeField(auto_now_add=True)
@@ -289,6 +295,7 @@ class IdeasEntry(models.Model):
         """
         Meta options for the IdeaEntry model
         """
+
         verbose_name_plural = "Ideas Entries"
         ordering = ["created_on"]
 
@@ -297,10 +304,11 @@ class ImprovementEntry(models.Model):
     """
     ImprovementEntry model to allow users to create improvement entries
     """
+
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        related_name="improvement_entries"
+        related_name="improvement_entries",
     )
     content = RichTextField(_("Improvement Entry"))
     created_on = models.DateTimeField(auto_now_add=True)
@@ -317,6 +325,7 @@ class ImprovementEntry(models.Model):
         """
         Meta options for the ImprovementEntry model
         """
+
         verbose_name_plural = "Improvement Entries"
         ordering = ["created_on"]
 
@@ -325,6 +334,7 @@ class EmotionEntry(models.Model):
     """
     EmotionEntry model to allow users to create improvement entries
     """
+
     EMOTION_CHOICES = [
         ("awful", "Awful"),
         ("terrible", "Terrible"),
@@ -332,12 +342,12 @@ class EmotionEntry(models.Model):
         ("okay", "Okay"),
         ("good", "Good"),
         ("great", "Great"),
-        ("excellent", "Excellent")
+        ("excellent", "Excellent"),
     ]
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        related_name="emotion_entries"
+        related_name="emotion_entries",
     )
     emotion = models.CharField(max_length=10, choices=EMOTION_CHOICES)
     created_on = models.DateTimeField(auto_now_add=True)
@@ -354,5 +364,6 @@ class EmotionEntry(models.Model):
         """
         Meta options for the EmotionEntry model
         """
+
         verbose_name_plural = "Emotion Entries"
         ordering = ["created_on"]

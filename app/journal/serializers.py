@@ -1,9 +1,9 @@
-from rest_framework import serializers
 from django.contrib.auth import get_user_model
+from rest_framework import serializers
 
-from .models import UserSettings, AppointmentEntry, TargetEntry, NoteEntry, \
-    KnowledgeEntry, GratitudeEntry, WinEntry, IdeasEntry, ImprovementEntry, \
-    EmotionEntry
+from .models import (AppointmentEntry, EmotionEntry, GratitudeEntry,
+                     IdeasEntry, ImprovementEntry, KnowledgeEntry, NoteEntry,
+                     TargetEntry, UserSettings, WinEntry)
 
 User = get_user_model()
 
@@ -24,14 +24,14 @@ class UserSettingsSerializer(serializers.ModelSerializer):
 
         Defines the model and fields to be serialized
         """
+
         model = UserSettings
-        fields = [
-            "user",
-            "start_week_day",
-            "morning_check_in",
-            "evening_check_in"
-        ]
-        read_only_fields = ("id", "created_on", "updated_on",)
+        fields = ["user", "start_week_day", "morning_check_in", "evening_check_in"]
+        read_only_fields = (
+            "id",
+            "created_on",
+            "updated_on",
+        )
 
 
 class CustomUserSerializer(serializers.ModelSerializer):
@@ -39,6 +39,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
     CustomUserSerializer is a ModelSerializer
     that converts CustomUser model to JSON representation and vice versa
     """
+
     user_settings = UserSettingsSerializer(required=False)
 
     class Meta:
@@ -47,6 +48,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
         Defines the model and fields to be serialized
         """
+
         model = User
         fields = [
             "id",
@@ -56,12 +58,12 @@ class CustomUserSerializer(serializers.ModelSerializer):
             "is_staff",
             "is_active",
             "is_superuser",
-            "user_settings"
+            "user_settings",
         ]
 
         extra_kwargs = {
             "first_name": {"required": True},
-            "last_name": {"required": True}
+            "last_name": {"required": True},
         }
 
 
@@ -69,6 +71,7 @@ class AppointmentEntrySerializer(serializers.ModelSerializer):
     """
     Serializer for AppointmentEntry model to convert it to JSON representation
     """
+
     user = serializers.PrimaryKeyRelatedField(read_only=True)
     created_on = serializers.DateTimeField(format="%Y-%m-%d", read_only=True)
 
@@ -78,6 +81,7 @@ class AppointmentEntrySerializer(serializers.ModelSerializer):
 
         Defines the model and fields to be serialized
         """
+
         model = AppointmentEntry
         exclude = ("updated_on",)
         read_only_fields = ("id",)
@@ -87,6 +91,7 @@ class TargetEntrySerializer(serializers.ModelSerializer):
     """
     Serializer for TargetEntry model to convert it to JSON representation
     """
+
     user = serializers.PrimaryKeyRelatedField(read_only=True)
     created_on = serializers.DateTimeField(format="%Y-%m-%d", read_only=True)
 
@@ -96,6 +101,7 @@ class TargetEntrySerializer(serializers.ModelSerializer):
 
         Defines the model and fields to be serialized
         """
+
         model = TargetEntry
         exclude = ("updated_on",)
         read_only_fields = ("id",)
@@ -105,6 +111,7 @@ class NoteEntrySerializer(serializers.ModelSerializer):
     """
     Serializer for NoteEntry model to convert it to JSON representation
     """
+
     user = serializers.PrimaryKeyRelatedField(read_only=True)
     created_on = serializers.DateTimeField(format="%Y-%m-%d", read_only=True)
 
@@ -114,6 +121,7 @@ class NoteEntrySerializer(serializers.ModelSerializer):
 
         Defines the model and fields to be serialized
         """
+
         model = NoteEntry
         exclude = ("updated_on",)
         read_only_fields = ("id",)
@@ -123,6 +131,7 @@ class KnowledgeEntrySerializer(serializers.ModelSerializer):
     """
     Serializer for KnowledgeEntry model to convert it to JSON representation
     """
+
     user = serializers.PrimaryKeyRelatedField(read_only=True)
     created_on = serializers.DateTimeField(format="%Y-%m-%d", read_only=True)
 
@@ -132,6 +141,7 @@ class KnowledgeEntrySerializer(serializers.ModelSerializer):
 
         Defines the model and fields to be serialized
         """
+
         model = KnowledgeEntry
         exclude = ("updated_on",)
         read_only_fields = ("id",)
@@ -141,6 +151,7 @@ class GratitudeEntrySerializer(serializers.ModelSerializer):
     """
     Serializer for GratitudeEntry model to convert it to JSON representation
     """
+
     user = serializers.PrimaryKeyRelatedField(read_only=True)
     created_on = serializers.DateTimeField(format="%Y-%m-%d", read_only=True)
 
@@ -150,6 +161,7 @@ class GratitudeEntrySerializer(serializers.ModelSerializer):
 
         Defines the model and fields to be serialized
         """
+
         model = GratitudeEntry
         exclude = ("updated_on",)
         read_only_fields = ("id",)
@@ -159,6 +171,7 @@ class WinEntrySerializer(serializers.ModelSerializer):
     """
     Serializer for WinEntry model to convert it to JSON representation
     """
+
     user = serializers.PrimaryKeyRelatedField(read_only=True)
     created_on = serializers.DateTimeField(format="%Y-%m-%d", read_only=True)
 
@@ -168,6 +181,7 @@ class WinEntrySerializer(serializers.ModelSerializer):
 
         Defines the model and fields to be serialized
         """
+
         model = WinEntry
         exclude = ("updated_on",)
         read_only_fields = ("id",)
@@ -177,6 +191,7 @@ class IdeasEntrySerializer(serializers.ModelSerializer):
     """
     Serializer for IdeasEntry model to convert it to JSON representation
     """
+
     user = serializers.PrimaryKeyRelatedField(read_only=True)
     created_on = serializers.DateTimeField(format="%Y-%m-%d", read_only=True)
 
@@ -186,6 +201,7 @@ class IdeasEntrySerializer(serializers.ModelSerializer):
 
         Defines the model and fields to be serialized
         """
+
         model = IdeasEntry
         exclude = ("updated_on",)
         read_only_fields = ("id",)
@@ -195,6 +211,7 @@ class ImprovementEntrySerializer(serializers.ModelSerializer):
     """
     Serializer for ImprovementEntry model to convert it to JSON representation
     """
+
     user = serializers.PrimaryKeyRelatedField(read_only=True)
     created_on = serializers.DateTimeField(format="%Y-%m-%d", read_only=True)
 
@@ -204,6 +221,7 @@ class ImprovementEntrySerializer(serializers.ModelSerializer):
 
         Defines the model and fields to be serialized
         """
+
         model = ImprovementEntry
         exclude = ("updated_on",)
         read_only_fields = ("id",)
@@ -213,6 +231,7 @@ class EmotionEntrySerializer(serializers.ModelSerializer):
     """
     Serializer for EmotionEntry model to convert it to JSON representation
     """
+
     user = serializers.PrimaryKeyRelatedField(read_only=True)
     created_on = serializers.DateTimeField(format="%Y-%m-%d", read_only=True)
 
@@ -222,6 +241,7 @@ class EmotionEntrySerializer(serializers.ModelSerializer):
 
         Defines the model and fields to be serialized
         """
+
         model = EmotionEntry
         exclude = ("updated_on",)
         read_only_fields = ("id",)

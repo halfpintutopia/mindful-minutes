@@ -1,15 +1,13 @@
 from datetime import date
 
 from django.http import Http404
-
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.exceptions import MethodNotAllowed
-
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
+from rest_framework import status
+from rest_framework.exceptions import MethodNotAllowed
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from ..models import GratitudeEntry
 from ..serializers import GratitudeEntrySerializer
@@ -19,6 +17,7 @@ class GratitudeEntryList(APIView):
     """
     List all gratitude entries or create a new gratitude entry
     """
+
     permission_classes = [IsAuthenticated]
 
     def get(self, request, slug, date_request=None, format=None):
@@ -32,7 +31,7 @@ class GratitudeEntryList(APIView):
             type=openapi.TYPE_OBJECT,
             properties={
                 "content": openapi.Schema(type=openapi.TYPE_STRING),
-            }
+            },
         )
     )
     def post(self, request, slug, date_request, format=None):
@@ -56,18 +55,18 @@ class GratitudeEntryList(APIView):
                     except ValueError:
                         return Response(
                             {
-                                "error":
-                                "Invalid date format. Please user YYYY-MM-DD."
+                                "error": "Invalid date format. Please user "
+                                "YYYY-MM-DD."
                             },
-                            status=status.HTTP_400_BAD_REQUEST
+                            status=status.HTTP_400_BAD_REQUEST,
                         )
                     gratitude_entries = GratitudeEntry.objects.filter(
-                        created_on__date=requested_date)
+                        created_on__date=requested_date
+                    )
                 else:
                     gratitude_entries = GratitudeEntry.objects.all()
 
-                serializer = GratitudeEntrySerializer(
-                    gratitude_entries, many=True)
+                serializer = GratitudeEntrySerializer(gratitude_entries, many=True)
                 return Response(serializer.data)
 
         if request.method == "POST":
@@ -76,23 +75,16 @@ class GratitudeEntryList(APIView):
                 if date_request != current_date:
                     return Response(
                         {
-                            "error":
-                            "You are not allowed to change gratitudes \
-                                for past or future dates."
+                            "error": "You are not allowed to change gratitudes \
+                                    for past or future dates."
                         },
-                        status=status.HTTP_403_FORBIDDEN
+                        status=status.HTTP_403_FORBIDDEN,
                     )
                 serializer = GratitudeEntrySerializer(data=request.data)
                 if serializer.is_valid():
                     serializer.save(user=request.user)
-                    return Response(
-                        serializer.data,
-                        status=status.HTTP_201_CREATED
-                    )
-                return Response(
-                    serializer.errors,
-                    status=status.HTTP_400_BAD_REQUEST
-                )
+                    return Response(serializer.data, status=status.HTTP_201_CREATED)
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         raise MethodNotAllowed(request.method)
 
@@ -101,6 +93,7 @@ class GratitudeEntryDetail(APIView):
     """
     Retrieve, update or delete an gratitude entry
     """
+
     permission_classes = [IsAuthenticated]
 
     def get_object(self, pk):
@@ -124,7 +117,7 @@ class GratitudeEntryDetail(APIView):
             type=openapi.TYPE_OBJECT,
             properties={
                 "content": openapi.Schema(type=openapi.TYPE_STRING),
-            }
+            },
         )
     )
     def put(self, request, slug, date_request, pk, format=None):
@@ -150,22 +143,21 @@ class GratitudeEntryDetail(APIView):
         if date_request != current_date:
             return Response(
                 {
-                    "error":
-                    "You are not allowed to change gratitudes \
-                        for past or future dates."
+                    "error": "You are not allowed to change gratitudes \
+                            for past or future dates."
                 },
-                status=status.HTTP_403_FORBIDDEN
+                status=status.HTTP_403_FORBIDDEN,
             )
         if request.user.slug == slug:
             if pk is not None:
                 try:
-                    gratitude_id = isinstance(pk, int)
+                    isinstance(pk, int)
                     gratitude_entry = self.get_object(pk)
                 except (ValueError, Http404):
                     if isinstance(pk, str):
                         return Response(
                             {"error": "Invalid gratitude ID"},
-                            status=status.HTTP_400_BAD_REQUEST
+                            status=status.HTTP_400_BAD_REQUEST,
                         )
                     return Response(status=status.HTTP_404_NOT_FOUND)
 
@@ -175,13 +167,13 @@ class GratitudeEntryDetail(APIView):
 
                 elif request.method == "PUT":
                     serializer = GratitudeEntrySerializer(
-                        gratitude_entry, data=request.data)
+                        gratitude_entry, data=request.data
+                    )
                     if serializer.is_valid():
                         serializer.save(user=request.user)
                         return Response(serializer.data)
                     return Response(
-                        serializer.errors,
-                        status=status.HTTP_400_BAD_REQUEST
+                        serializer.errors, status=status.HTTP_400_BAD_REQUEST
                     )
 
                 elif request.method == "DELETE":

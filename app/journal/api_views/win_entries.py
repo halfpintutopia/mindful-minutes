@@ -1,15 +1,13 @@
 from datetime import date
 
 from django.http import Http404
-
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.exceptions import MethodNotAllowed
-
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
+from rest_framework import status
+from rest_framework.exceptions import MethodNotAllowed
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from ..models import WinEntry
 from ..serializers import WinEntrySerializer
@@ -19,6 +17,7 @@ class WinEntryList(APIView):
     """
     List all win entries or create a new win entry
     """
+
     permission_classes = [IsAuthenticated]
 
     def get(self, request, slug, date_request=None, format=None):
@@ -32,7 +31,7 @@ class WinEntryList(APIView):
             type=openapi.TYPE_OBJECT,
             properties={
                 "title": openapi.Schema(type=openapi.TYPE_STRING),
-            }
+            },
         )
     )
     def post(self, request, slug, date_request, format=None):
@@ -56,18 +55,18 @@ class WinEntryList(APIView):
                     except ValueError:
                         return Response(
                             {
-                                "error":
-                                "Invalid date format. Please user YYYY-MM-DD."
+                                "error": "Invalid date format. Please user "
+                                "YYYY-MM-DD."
                             },
-                            status=status.HTTP_400_BAD_REQUEST
+                            status=status.HTTP_400_BAD_REQUEST,
                         )
                     win_entries = WinEntry.objects.filter(
-                        created_on__date=requested_date)
+                        created_on__date=requested_date
+                    )
                 else:
                     win_entries = WinEntry.objects.all()
 
-                serializer = WinEntrySerializer(
-                    win_entries, many=True)
+                serializer = WinEntrySerializer(win_entries, many=True)
                 return Response(serializer.data)
 
         if request.method == "POST":
@@ -76,23 +75,16 @@ class WinEntryList(APIView):
                 if date_request != current_date:
                     return Response(
                         {
-                            "error":
-                            "You are not allowed to change wins \
-                                for past or future dates."
+                            "error": "You are not allowed to change wins \
+                                    for past or future dates."
                         },
-                        status=status.HTTP_403_FORBIDDEN
+                        status=status.HTTP_403_FORBIDDEN,
                     )
                 serializer = WinEntrySerializer(data=request.data)
                 if serializer.is_valid():
                     serializer.save(user=request.user)
-                    return Response(
-                        serializer.data,
-                        status=status.HTTP_201_CREATED
-                    )
-                return Response(
-                    serializer.errors,
-                    status=status.HTTP_400_BAD_REQUEST
-                )
+                    return Response(serializer.data, status=status.HTTP_201_CREATED)
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         raise MethodNotAllowed(request.method)
 
@@ -101,6 +93,7 @@ class WinEntryDetail(APIView):
     """
     Retrieve, update or delete an win entry
     """
+
     permission_classes = [IsAuthenticated]
 
     def get_object(self, pk):
@@ -124,7 +117,7 @@ class WinEntryDetail(APIView):
             type=openapi.TYPE_OBJECT,
             properties={
                 "title": openapi.Schema(type=openapi.TYPE_STRING),
-            }
+            },
         )
     )
     def put(self, request, slug, date_request, pk, format=None):
@@ -150,22 +143,21 @@ class WinEntryDetail(APIView):
         if date_request != current_date:
             return Response(
                 {
-                    "error":
-                    "You are not allowed to change wins \
-                        for past or future dates."
+                    "error": "You are not allowed to change wins \
+                            for past or future dates."
                 },
-                status=status.HTTP_403_FORBIDDEN
+                status=status.HTTP_403_FORBIDDEN,
             )
         if request.user.slug == slug:
             if pk is not None:
                 try:
-                    win_id = isinstance(pk, int)
+                    isinstance(pk, int)
                     win_entry = self.get_object(pk)
                 except (ValueError, Http404):
                     if isinstance(pk, str):
                         return Response(
                             {"error": "Invalid win ID"},
-                            status=status.HTTP_400_BAD_REQUEST
+                            status=status.HTTP_400_BAD_REQUEST,
                         )
                     return Response(status=status.HTTP_404_NOT_FOUND)
 
@@ -174,14 +166,12 @@ class WinEntryDetail(APIView):
                     return Response(serializer.data)
 
                 elif request.method == "PUT":
-                    serializer = WinEntrySerializer(
-                        win_entry, data=request.data)
+                    serializer = WinEntrySerializer(win_entry, data=request.data)
                     if serializer.is_valid():
                         serializer.save(user=request.user)
                         return Response(serializer.data)
                     return Response(
-                        serializer.errors,
-                        status=status.HTTP_400_BAD_REQUEST
+                        serializer.errors, status=status.HTTP_400_BAD_REQUEST
                     )
 
                 elif request.method == "DELETE":

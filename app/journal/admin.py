@@ -1,10 +1,11 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from .forms import CustomUserCreationForm, CustomUserChangeForm
-from .models import CustomUser, UserSettings, AppointmentEntry, \
-    TargetEntry, NoteEntry, KnowledgeEntry, GratitudeEntry, WinEntry, IdeasEntry, \
-    ImprovementEntry, EmotionEntry
+from .forms import CustomUserChangeForm, CustomUserCreationForm
+from .models import (AppointmentEntry, CustomUser, EmotionEntry,
+                     GratitudeEntry, IdeasEntry, ImprovementEntry,
+                     KnowledgeEntry, NoteEntry, TargetEntry, UserSettings,
+                     WinEntry)
 
 
 class CustomUserAdmin(UserAdmin):
@@ -13,34 +14,39 @@ class CustomUserAdmin(UserAdmin):
 
     The class defines the display and behaviour of the User model
     """
+
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
     model = CustomUser
     readonly_fields = ("last_login", "date_joined")
-    list_display = ("email", "first_name", "last_name",
-                    "is_active", "is_staff")
+    list_display = ("email", "first_name", "last_name", "is_active", "is_staff")
     list_filter = ("email", "first_name", "last_name", "is_active", "is_staff")
     fieldsets = (
         (None, {"fields": ("email", "first_name", "last_name", "password")}),
-        ("Permissions", {"fields": ("is_staff",
-         "is_active", "groups", "user_permissions")}),
-        ("Tracking", {"fields": ("last_login", "date_joined")})
+        (
+            "Permissions",
+            {"fields": ("is_staff", "is_active", "groups", "user_permissions")},
+        ),
+        ("Tracking", {"fields": ("last_login", "date_joined")}),
     )
     add_fieldsets = (
-        (None, {
-            "classes": ('wide',),
-            "fields": (
-                "email",
-                "first_name",
-                "last_name",
-                "password1",
-                "password2",
-                "is_staff",
-                "is_active",
-                "groups",
-                "user_permissions"
-            )}
-         ),
+        (
+            None,
+            {
+                "classes": ("wide",),
+                "fields": (
+                    "email",
+                    "first_name",
+                    "last_name",
+                    "password1",
+                    "password2",
+                    "is_staff",
+                    "is_active",
+                    "groups",
+                    "user_permissions",
+                ),
+            },
+        ),
     )
     search_fields = ["email", "first_name", "last_name"]
     ordering = ("email",)
@@ -53,23 +59,11 @@ class UserSettingsAdmin(admin.ModelAdmin):
 
     The class defines the display and behaviour of the UserSettings model
     """
+
     model = UserSettings
-    readonly_fields = (
-        "created_on",
-        "updated_on"
-    )
-    list_display = (
-        "user",
-        "start_week_day",
-        "morning_check_in",
-        "evening_check_in"
-    )
-    fields = (
-        "user",
-        "start_week_day",
-        "morning_check_in",
-        "evening_check_in"
-    )
+    readonly_fields = ("created_on", "updated_on")
+    list_display = ("user", "start_week_day", "morning_check_in", "evening_check_in")
+    fields = ("user", "start_week_day", "morning_check_in", "evening_check_in")
 
 
 @admin.register(AppointmentEntry)
@@ -79,21 +73,13 @@ class AppointmentEntryAdmin(admin.ModelAdmin):
 
     The class defines the display and behaviour fo the AppointmentEntry model
     """
-    readonly_fields = (
-        "created_on",
-        "updated_on"
-    )
-    list_display = (
-        "user",
-        "title",
-        "date",
-        "time_from",
-        "time_until"
-    )
+
+    readonly_fields = ("created_on", "updated_on")
+    list_display = ("user", "title", "date", "time_from", "time_until")
     fieldsets = (
         ("Owner", {"fields": ("user",)}),
         ("Title", {"fields": ("title",)}),
-        ("Date & Time", {"fields": ("date", "time_from", "time_until")})
+        ("Date & Time", {"fields": ("date", "time_from", "time_until")}),
     )
     search_fields = ["user", "title", "date"]
     ordering = ("date",)
@@ -106,17 +92,15 @@ class TargetEntryAdmin(admin.ModelAdmin):
 
     The class defines the display and behaviour fo the AppointmentEntry model
     """
-    readonly_fields = (
-        "created_on",
-        "updated_on"
-    )
-    list_display = (
+
+    readonly_fields = ("created_on", "updated_on")
+    list_display = ("order", "title", "user")
+    fields = (
         "order",
         "title",
-        "user"
-    )
-    fields = (
-        "order", "title", "user", "created_on", "updated_on",
+        "user",
+        "created_on",
+        "updated_on",
     )
     search_fields = ["user", "title", "created_on"]
     list_filter = ("title", "created_on")
@@ -130,16 +114,14 @@ class NoteAdmin(admin.ModelAdmin):
 
     The class defines the display and behaviour fo the AppointmentEntry model
     """
-    readonly_fields = (
-        "created_on",
-        "updated_on"
-    )
-    list_display = (
-        "user",
-        "content"
-    )
+
+    readonly_fields = ("created_on", "updated_on")
+    list_display = ("user", "content")
     fields = (
-        "user", "content", "created_on", "updated_on",
+        "user",
+        "content",
+        "created_on",
+        "updated_on",
     )
     search_fields = ["user", "content", "created_on"]
     ordering = ("created_on",)
@@ -152,16 +134,14 @@ class KnowledgeEntryAdmin(admin.ModelAdmin):
 
     The class defines the display and behaviour fo the AppointmentEntry model
     """
-    readonly_fields = (
-        "created_on",
-        "updated_on"
-    )
-    list_display = (
-        "user",
-        "content"
-    )
+
+    readonly_fields = ("created_on", "updated_on")
+    list_display = ("user", "content")
     fields = (
-        "user", "content", "created_on", "updated_on",
+        "user",
+        "content",
+        "created_on",
+        "updated_on",
     )
     search_fields = ["user", "content", "created_on"]
     ordering = ("created_on",)
@@ -174,16 +154,14 @@ class GratitudeEntryAdmin(admin.ModelAdmin):
 
     The class defines the display and behaviour fo the GratitudeEntry model
     """
-    readonly_fields = (
-        "created_on",
-        "updated_on"
-    )
-    list_display = (
-        "user",
-        "content"
-    )
+
+    readonly_fields = ("created_on", "updated_on")
+    list_display = ("user", "content")
     fields = (
-        "user", "content", "created_on", "updated_on",
+        "user",
+        "content",
+        "created_on",
+        "updated_on",
     )
     search_fields = ["user", "content", "created_on"]
     ordering = ("created_on",)
@@ -196,16 +174,14 @@ class WinEntryAdmin(admin.ModelAdmin):
 
     The class defines the display and behaviour fo the WinEntry model
     """
-    readonly_fields = (
-        "created_on",
-        "updated_on"
-    )
-    list_display = (
-        "user",
-        "title"
-    )
+
+    readonly_fields = ("created_on", "updated_on")
+    list_display = ("user", "title")
     fields = (
-        "user", "title", "created_on", "updated_on",
+        "user",
+        "title",
+        "created_on",
+        "updated_on",
     )
     search_fields = ["user", "title", "created_on"]
     ordering = ("created_on",)
@@ -218,16 +194,14 @@ class IdeasEntryAdmin(admin.ModelAdmin):
 
     The class defines the display and behaviour fo the IdeasEntry model
     """
-    readonly_fields = (
-        "created_on",
-        "updated_on"
-    )
-    list_display = (
-        "user",
-        "content"
-    )
+
+    readonly_fields = ("created_on", "updated_on")
+    list_display = ("user", "content")
     fields = (
-        "user", "content", "created_on", "updated_on",
+        "user",
+        "content",
+        "created_on",
+        "updated_on",
     )
     search_fields = ["user", "content", "created_on"]
     ordering = ("created_on",)
@@ -240,16 +214,14 @@ class ImprovementEntryAdmin(admin.ModelAdmin):
 
     The class defines the display and behaviour fo the ImprovementEntry model
     """
-    readonly_fields = (
-        "created_on",
-        "updated_on"
-    )
-    list_display = (
-        "user",
-        "content"
-    )
+
+    readonly_fields = ("created_on", "updated_on")
+    list_display = ("user", "content")
     fields = (
-        "user", "content", "created_on", "updated_on",
+        "user",
+        "content",
+        "created_on",
+        "updated_on",
     )
     search_fields = ["user", "content", "created_on"]
     ordering = ("created_on",)
@@ -262,16 +234,14 @@ class EmotionEntryAdmin(admin.ModelAdmin):
 
     The class defines the display and behaviour fo the EmotionEntry model
     """
-    readonly_fields = (
-        "created_on",
-        "updated_on"
-    )
-    list_display = (
-        "user",
-        "emotion"
-    )
+
+    readonly_fields = ("created_on", "updated_on")
+    list_display = ("user", "emotion")
     fields = (
-        "user", "emotion", "created_on", "updated_on",
+        "user",
+        "emotion",
+        "created_on",
+        "updated_on",
     )
     search_fields = ["user", "emotion", "created_on"]
     ordering = ("created_on",)

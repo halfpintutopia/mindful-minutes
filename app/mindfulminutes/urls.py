@@ -14,37 +14,38 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.conf import settings
-from django.urls import path, include
+import os
 
+from django.contrib import admin
+from django.urls import include, path
 from rest_framework import permissions
 
 urlpatterns = [
-        path('admin/', admin.site.urls),
-        path('accounts/', include('allauth.urls')),
-        path('', include('journal.urls')),
+    path("admin/", admin.site.urls),
+    path("accounts/", include("allauth.urls")),
+    path("", include("journal.urls")),
 ]
 
-if settings.DEBUG:
-    from drf_yasg.views import get_schema_view
+development = os.environ.get("DEVELOPMENT", False)
+
+if development:
     from drf_yasg import openapi
-    
+    from drf_yasg.views import get_schema_view
+
     schema_view = get_schema_view(
-            openapi.Info(
-                    title="Mindful Minutes API",
-                    default_version="v1",
-            ),
-            public=True,
-            permission_classes=(permissions.AllowAny,)
+        openapi.Info(
+            title="Mindful Minutes API",
+            default_version="v1",
+        ),
+        public=True,
+        permission_classes=(permissions.AllowAny,),
     )
-    
+
     urlpatterns += [
-            path('', include('journal.api_testing.urls')),
-            path(
-                    'swagger-docs/', schema_view.with_ui(
-                            'swagger',
-                            cache_timeout=0
-                    ), name="schema-swagger-ui"
-            ),
+        path("", include("journal.api_testing.urls")),
+        path(
+            "swagger-docs/",
+            schema_view.with_ui("swagger", cache_timeout=0),
+            name="schema-swagger-ui",
+        ),
     ]

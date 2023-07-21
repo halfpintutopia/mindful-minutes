@@ -1,15 +1,13 @@
 from datetime import date
 
 from django.http import Http404
-
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.exceptions import MethodNotAllowed
-
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
+from rest_framework import status
+from rest_framework.exceptions import MethodNotAllowed
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from ..models import TargetEntry
 from ..serializers import TargetEntrySerializer
@@ -19,6 +17,7 @@ class TargetEntryList(APIView):
     """
     List all target entries or create a new target entry
     """
+
     permission_classes = [IsAuthenticated]
 
     def get(self, request, slug, date_request=None, format=None):
@@ -33,7 +32,7 @@ class TargetEntryList(APIView):
             properties={
                 "title": openapi.Schema(type=openapi.TYPE_STRING),
                 "order": openapi.Schema(type=openapi.TYPE_INTEGER),
-            }
+            },
         )
     )
     def post(self, request, slug, date_request, format=None):
@@ -57,18 +56,18 @@ class TargetEntryList(APIView):
                     except ValueError:
                         return Response(
                             {
-                                "error":
-                                "Invalid date format. Please user YYYY-MM-DD."
+                                "error": "Invalid date format. Please user "
+                                "YYYY-MM-DD."
                             },
-                            status=status.HTTP_400_BAD_REQUEST
+                            status=status.HTTP_400_BAD_REQUEST,
                         )
                     target_entries = TargetEntry.objects.filter(
-                        created_on__date=requested_date)
+                        created_on__date=requested_date
+                    )
                 else:
                     target_entries = TargetEntry.objects.all()
 
-                serializer = TargetEntrySerializer(
-                    target_entries, many=True)
+                serializer = TargetEntrySerializer(target_entries, many=True)
                 return Response(serializer.data)
 
         if request.method == "POST":
@@ -77,23 +76,16 @@ class TargetEntryList(APIView):
                 if date_request != current_date:
                     return Response(
                         {
-                            "error":
-                            "You are not allowed to change targets \
-                                for past or future dates."
+                            "error": "You are not allowed to change targets \
+                                    for past or future dates."
                         },
-                        status=status.HTTP_403_FORBIDDEN
+                        status=status.HTTP_403_FORBIDDEN,
                     )
                 serializer = TargetEntrySerializer(data=request.data)
                 if serializer.is_valid():
                     serializer.save(user=request.user)
-                    return Response(
-                        serializer.data,
-                        status=status.HTTP_201_CREATED
-                    )
-                return Response(
-                    serializer.errors,
-                    status=status.HTTP_400_BAD_REQUEST
-                )
+                    return Response(serializer.data, status=status.HTTP_201_CREATED)
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         raise MethodNotAllowed(request.method)
 
@@ -102,6 +94,7 @@ class TargetEntryDetail(APIView):
     """
     Retrieve, update or delete an target entry
     """
+
     permission_classes = [IsAuthenticated]
 
     def get_object(self, pk):
@@ -126,7 +119,7 @@ class TargetEntryDetail(APIView):
             properties={
                 "title": openapi.Schema(type=openapi.TYPE_STRING),
                 "order": openapi.Schema(type=openapi.TYPE_INTEGER),
-            }
+            },
         )
     )
     def put(self, request, slug, date_request, pk, format=None):
@@ -152,22 +145,21 @@ class TargetEntryDetail(APIView):
         if date_request != current_date:
             return Response(
                 {
-                    "error":
-                    "You are not allowed to change targets \
-                        for past or future dates."
+                    "error": "You are not allowed to change targets \
+                            for past or future dates."
                 },
-                status=status.HTTP_403_FORBIDDEN
+                status=status.HTTP_403_FORBIDDEN,
             )
         if request.user.slug == slug:
             if pk is not None:
                 try:
-                    target_id = isinstance(pk, int)
+                    isinstance(pk, int)
                     target_entry = self.get_object(pk)
                 except (ValueError, Http404):
                     if isinstance(pk, str):
                         return Response(
                             {"error": "Invalid target ID"},
-                            status=status.HTTP_400_BAD_REQUEST
+                            status=status.HTTP_400_BAD_REQUEST,
                         )
                     return Response(status=status.HTTP_404_NOT_FOUND)
 
@@ -176,14 +168,12 @@ class TargetEntryDetail(APIView):
                     return Response(serializer.data)
 
                 elif request.method == "PUT":
-                    serializer = TargetEntrySerializer(
-                        target_entry, data=request.data)
+                    serializer = TargetEntrySerializer(target_entry, data=request.data)
                     if serializer.is_valid():
                         serializer.save(user=request.user)
                         return Response(serializer.data)
                     return Response(
-                        serializer.errors,
-                        status=status.HTTP_400_BAD_REQUEST
+                        serializer.errors, status=status.HTTP_400_BAD_REQUEST
                     )
 
                 elif request.method == "DELETE":

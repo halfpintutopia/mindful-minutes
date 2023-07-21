@@ -5,114 +5,108 @@ on:
     branches:
       - main # Trigger the workflow for the main branch
 
+# For authentication in GitHub Actions, use GitHub Container Registry (GHCR) to store the Docker image
+env:
+  IMAGE: ghcr.io/${{ github.repository }}/app:latest
+
 jobs:
-  pull:
-    runs-on: ubuntu-latest # Run the job on an Ubuntu environment
-
-  steps:
-    - name: Checkout codebase # Step to check the codebase in the repo
-      uses: actions/checkout@v2 # Uses the official checkout action
-
-    - name: Login to Docker Registry # Step to log in to the Docker registry
-      run: echo "${{ secrets.DOCKER_REGISTRY_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_REGISTRY_USERNAME }}" --password-stdin "${{ secrets.DOCKER_REGISTRY_URL }}"
-
-    - name: Pull Docker image # Step to pull the latest Docker image
-      run: docker pull ${{ secrets.DOCKER_REGISTRY_IMAGE }}:latest
-
   build:
-    runs-on: ubuntu-latest # Run the job on Ubuntu environment
+    name: Build and Push Docker Image
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout codebase # Step to check the codebase in the repo
         uses: actions/checkout@v2 # Uses the official checkout action
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.11
+
+      - name: Login to GitHub Container Registry # Docker login is now done using GITHUB_TOKEN
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+
+      - name: Pull Docker image # Step to pull the latest Docker image
+        run: docker pull $IMAGE:latest || true
 
       - name: Build Docker image # Step to build the Docker image
-        run: docker build --tag=${{ github.run_id }}:${{ github:ref }} --cache-from=${{ secrets.DOCKER_REGISTRY_IMAGE }}:latest --pull .
-
-  lint:
-    runs-on: ubuntu-latest # Run the job on an Ubuntu environment
-
-    steps:
-      - name: Checkout codebase # Step to check the codebase in the repo
-        uses: actions/checkout@v2 # Uses the official checkout action
-
-      - name: Lint # Step to run code linting
-        run: docker-compose -f docker-compose.test.yml run app flake8 .
+        run: |
+          cd app
+          docker build 
+            --cache-from $IMAGE:latest
+            --tag $IMAGE:latest
+            -- file ./Dockerfile.prod
+            -build-arg SECRET_KEY=$SECRET_KEY
+            .
+          docker push $IMAGE:latest
 
   test:
+    name: Test
+    needs: build
+    runs-on: ubuntu-latest # Run the job on an Ubuntu environment
+
+    services:
+      - name: postgres:latest
+        alias: postgres
+
+    variables:
+      DATABASE_TEST_URL: ${{ env.DATABASE_TEST_URL }}
+
+    steps:
+      - name: Checkout codebase # Step to check the codebase in the repo
+        uses: actions/checkout@v2 # Uses the official checkout action
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          pyhon-version: 3.11
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Lint with Flake8, Black and isort # Step to run code linting
+        run: |
+          cd app
+          pip install black==23.3.0 flake8=6.0.0 isort=5.12.0 pytest==7.2.2 pytest-django==4.5.2
+          pytest -p no:warnings
+          flake8 .
+          black . --check --exclude=migrations
+          isort . --check-only --skip env
+
+  # https://docs.github.com/en/actions/creating-actions/creating-a-docker-container-action
+  # docker: dind (Docker in Docker) start Docker container with Docker installed - allows for CI/CD to run Docker commands inside the container.
+  # DOCKER_DRIVER: overlay2 - specifies the storage driver use for Docker, responsible for managing filesystem and storage aspects of Docker containers and images - also provides good performance and stability.
+  # These two settings are not required in GitHub Actions as a different virtualization technology is used.
+  # GitHub Actions provides a Docker container environment that is automatically used for running Docker commands
+  deploy:
+    name: Deploy to production # Step to deploy to production
+    needs: test # Dependency on test job
     runs-on: ubuntu-latest # Run the job on an Ubuntu environment
 
     steps:
       - name: Checkout codebase # Step to check the codebase in the repo
         uses: actions/checkout@v2 # Uses the official checkout action
 
-      - name: Test # Step to run tests
-        run: |
-          export CI_PIPELINE_ID=${{ github.run_id }}
-          export CI_BUILD_REF_NAME=${{ github.ref }}
-          docker-compose -f docker-compose.test.yml run app sh /scripts/test.sh
-
-      - name: Archive coverage report # Step to archive the coverage report
-        uses: actions/uploads-artifact@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
         with:
-          name: coverage-report
-          path: htmlcov
+          python-version: 3.11
 
-  push_image:
-    runs-on: ubuntu-latest # Run the job on an Ubuntu environment
+      - name: Install dependencies
+        run: install -r requirements.txt
 
-    needs: build # Dependency on build job
-
-    if: github.ref == 'refs/heads/main' # Run the job only for the main branch
-
-    steps:
-      - name: Login to Docker Registry # Step to log in to the Docker registry
-        run: echo "${{ secrets.DOCKER_REGISTRY_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_REGISTRY_USERNAME }}" --password-stdin "${{ secrets.DOCKER_REGISTRY_URL }}"
-
-      - name: Tag Docker image # Step to tag the Docker image
-        run: docker tag ${{ github.run_id }}:${{ github.ref }} ${{ secrets.DOCKER_REGISTRY_IMAGE }}:${{ github.ref }}
-
-      - name: Push Docker image  # Step to push Docker image
-        run: docker push ${{ secrets.DOCKER_REGISTRY_IMAGE }}:${{ github.ref }}
-
-  push_latest:
-    runs-on: ubuntu-latest # Run the job on an Ubuntu environment
-
-    needs: build # Dependency on build job
-
-    if: github.ref == 'refs/heads/main' # Run the job only for the main branch
-
-    steps:
-      - name: Login to Docker Registry # Step to log in to the Docker registry
-        run: echo "${{ secrets.DOCKER_REGISTRY_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_REGISTRY_USERNAME }}" --password-stdin "${{ secrets.DOCKER_REGISTRY_URL }}"
-
-      - name: Tag Docker image as latest # Step to tag the Docker image as "latest"
-        run: docker tag ${{ github.run_id }}:${{ github.ref }} ${{ secrets.DOCKER_REGISTRY_IMAGE }}:latest
-
-      - name: Push Docker image  # Step to push the latest Docker image
-        run: docker push ${{ secrets.DOCKER_REGISTRY_IMAGE }}:latest
-
-  deploy_to_prod:
-    runs-on: ubuntu-latest # Run the job on an Ubuntu environment
-
-    needs: test # Dependency on test job
-
-    if: github.ref == 'refs/heads/main' # Run the job only for the main branch
-
-    steps:
-      name: Deploy to production # Step to deploy to production
-      run: |
-        docker-compose -f docker-compose.deploy.yml pull
-        docker-compose -f docker-compose.deploy.yml down
-        docker-compose -f docker-compose.deploy.yml up -d
-
-  cleanup:
-    runs-on: ubuntu-latest # Run the job on an Ubuntu environment
-
-    always: true
-
-    steps:
-      - name: Cleanup # Step to perform cleanup actions
+      - name: Deploy to Heroku
+        env:
+          HEROKU_APP_NAME: mindful-minutes
+          HEROKU_REGISTRY_IMAGE: registry.heroku.com/${HEROKU_APP_NAME}/web
         run: |
-          docker rmi -f ${{ github.run_id }}:${{ github.ref }}
-          docker-compose -f docker-compose.test.yml down --remove-orphans
+          cd app
+          docker build
+            --tag $HEROKU_REGISTRY_IME
+            --file ./Dockerfile.prod
+            --build-arg SECRET_KEY=$SECRET_KEY
+            .
+          docker login -u _ -p ${{ secrets.HEROKU_AUTH_TOKEN }} registry.heroku.com
+          docker push $HEROKU_REGISTRY_IMAGE
+          chmod +x ./release.sh
+          ./release.sh

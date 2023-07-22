@@ -16,10 +16,10 @@ jobs:
 
     steps:
       - name: Checkout codebase # Step to check the codebase in the repo
-        uses: actions/checkout@v2 # Uses the official checkout action
+        uses: actions/checkout@v3 # Uses the official checkout action
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: 3.11
 
@@ -36,7 +36,7 @@ jobs:
             --cache-from $IMAGE:latest
             --tag $IMAGE:latest
             -- file ./Dockerfile.prod
-            -build-arg SECRET_KEY=$SECRET_KEY
+            --build-arg SECRET_KEY=$SECRET_KEY
             .
           docker push $IMAGE:latest
 
@@ -50,14 +50,17 @@ jobs:
         alias: postgres
 
     variables:
-      DATABASE_TEST_URL: ${{ env.DATABASE_TEST_URL }}
+      POSTGRES_DB: ${{ env.DB_NAME }}
+      POSTGRES_USER: ${{ env.DB_USER }}
+      POSTGRES_PASSWORD: ${{ env.DB_PASSWORD }}
+      DATABASE_TEST_URL: postgresql://$POSTGRES_PASSWORD:$POSTGRES_USER@postgres:5432/$POSTGRES_DB
 
     steps:
       - name: Checkout codebase # Step to check the codebase in the repo
-        uses: actions/checkout@v2 # Uses the official checkout action
+        uses: actions/checkout@v3 # Uses the official checkout action
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           pyhon-version: 3.11
 
@@ -67,11 +70,13 @@ jobs:
       - name: Lint with Flake8, Black and isort # Step to run code linting
         run: |
           cd app
-          pip install black==23.3.0 flake8=6.0.0 isort=5.12.0 pytest==7.2.2 pytest-django==4.5.2
+          pip install black==23.3.0 flake8=6.0.0 isort=5.12.0 pytest==7.3.2 pytest-django==4.5.2
           pytest -p no:warnings
           flake8 .
           black . --check --exclude=migrations
           isort . --check-only --skip env
+          export DEBUG=0
+          python manage.py check --deploy --fail-level=WARNING
 
   # https://docs.github.com/en/actions/creating-actions/creating-a-docker-container-action
   # docker: dind (Docker in Docker) start Docker container with Docker installed - allows for CI/CD to run Docker commands inside the container.
@@ -85,10 +90,10 @@ jobs:
 
     steps:
       - name: Checkout codebase # Step to check the codebase in the repo
-        uses: actions/checkout@v2 # Uses the official checkout action
+        uses: actions/checkout@v3 # Uses the official checkout action
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: 3.11
 

@@ -1,3 +1,45 @@
+#################################################################################################################
+# BUILDER - first stage
+# Handles the build-specific processes
+# The Docker image is used as a build environment to compile and pakcage the applications's dependencies
+#################################################################################################################
+
+# Use an official Python runtime as the base image
+FROM python:3.10.6 as builder
+
+# Set the working directory in the container
+WORKDIR /usr/src/app
+
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+# Install system dependencies
+RUN apt-get update \
+    && apt-get -y install gcc postgresql \
+    && apt-get clean
+
+RUN pip install --upgrade pip
+COPY ./requirements.txt .
+RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels install -r requirements.txt
+
+# Copy the entire project directory to the working directory
+COPY . .
+
+# lint
+RUN pip install black==23.3.0 flake8==6.0.0 isort==5.12.0
+RUN flake8 .
+RUN black . --check --extend-exclude=migrations
+RUN isort . --check-only
+
+
+#################################################################################################################
+# FINAL - second stage
+# Prepares the final production image, resulting in a more lightweigh and secure Django image
+# The final Docker image for production is created, and the application's code
+# and the pre-built Python wheels from the "BUILDER" stage are copied over
+#################################################################################################################
+
 # Use an official Python runtime as the base image
 FROM python:3.10.6
 
@@ -16,12 +58,17 @@ RUN apt-get update \
     && apt-get -y install gcc postgresql \
     && apt-get clean
 
+# Install dependencies
+COPY --from=builder /usr/src/app/wheels /wheels
+COPY --from=builder /usr/src/app/requirements.txt .
 RUN pip install --upgrade pip
-COPY ./requirements.txt .
-RUN pip install -r requirements.txt
+RUN pip install --no-cache /wheels/*
 
 # Copy the entire project directory to the working directory
 COPY . .
+
+# Collect static files
+RUN python manage.py collectstatic --noinput
 
 # Best practice to run as non-root user
 # https://devcenter.heroku.com/articles/container-registry-and-runtime#run-the-image-as-a-non-root-user

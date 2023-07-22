@@ -32,10 +32,10 @@ jobs:
       - name: Build Docker image # Step to build the Docker image
         run: |
           cd app
-          docker build 
-            --cache-from $IMAGE:latest
-            --tag $IMAGE:latest
-            -- file ./Dockerfile.prod
+          docker build \
+            --cache-from $IMAGE:latest \
+            --tag $IMAGE:latest \
+            -- file ./Dockerfile.prod \
             --build-arg SECRET_KEY=$SECRET_KEY
           docker push $IMAGE:latest
 
@@ -54,7 +54,7 @@ jobs:
         ports:
           - 5432:5432
         # Set health checks to wait until postgres has started
-        options: >- 
+        options: >-
           --health-cmd pg_isready 
           --health-interval 10s 
           --health-timeout 5s 
@@ -108,9 +108,9 @@ jobs:
           HEROKU_REGISTRY_IMAGE: registry.heroku.com/${HEROKU_APP_NAME}/web
         run: |
           cd app
-          docker build
-            --tag $HEROKU_REGISTRY_IMAGE
-            --file ./Dockerfile.prod
+          docker build \
+            --tag $HEROKU_REGISTRY_IMAGE \
+            --file ./Dockerfile.prod \
             --build-arg SECRET_KEY=$SECRET_KEY
           docker login -u _ -p ${{ secrets.HEROKU_AUTH_TOKEN }} registry.heroku.com
           docker push $HEROKU_REGISTRY_IMAGE

@@ -1,93 +1,123 @@
-stages:
-  - pull
-  - build
-  - lint
-  - test
-  - push
-  - deploy
-  - cleanup
+name: Django CI/CD
 
-before_script:
-  - docker login -u "gitlab-ci-token" -p "$CI_BUILD_TOKEN" "$CI_REGISTRY"
+on:
+  push: # Push the workflow when the code is pushed to the repo
+    branches:
+      - main # Trigger the workflow for the main branch
 
-#before_script:
-#  - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
-#  - docker pull $CONTAINER_RELEASE_IMAGE
-#  - docker run --name gitlab-runner -d -i -v $PWD:/home/workdir $CONTAINER_RELEASE_IMAGE
+# For authentication in GitHub Actions, use GitHub Container Registry (GHCR) to store the Docker image
+env:
+  IMAGE: ghcr.io/${{ github.repository }}/app:latest
 
-pull:
-  stage: pull
-  allow_failure: true
-  script:
-    - docker pull "$CI_REGISTRY_IMAGE":latest
+jobs:
+  build:
+    name: Build and Push Docker Image
+    runs-on: ubuntu-latest
 
-pull:
-  stage: pull
-  allow_failure: true
-  script:
-    - docker pull "$CI_REGISTRY_IMAGE":latest
+    steps:
+      - name: Checkout codebase # Step to check the codebase in the repo
+        uses: actions/checkout@v3 # Uses the official checkout action
 
-build:
-  stage: build
-  script:
-    - docker build --tag="$CI_PIPELINE_ID":"$CI_BUILD_REF_NAME" --cache-from="$CI_REGISTRY_IMAGE":latest --pull .
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
 
-lint:
-  stage: lint
-  script:
-   - export CI_PIPELINE_ID=$CI_PIPELINE_ID
-   - export CI_BUILD_REF_NAME=$CI_BUILD_REF_NAME
-   - docker-compose -p "$CI_PIPELINE_ID" -f docker-compose.test.yml run app flake8 .
+      - name: Login to GitHub Container Registry # Docker login is now done using GITHUB_TOKEN
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
 
-test:
-  stage: test
-  script:
-    - export CI_PIPELINE_ID=$CI_PIPELINE_ID
-    - export CI_BUILD_REF_NAME=$CI_BUILD_REF_NAME
-    - docker-compose -p "$CI_PIPELINE_ID" -f docker-compose.test.yml run app sh /scripts/test.sh
-  artifacts:
-    paths:
-      - htmlcov
+      - name: Pull Docker image # Step to pull the latest Docker image
+        run: docker pull $IMAGE:latest || true
 
-push image:
-  stage: push
-  only:
-    - master
-    - tags
-  script:
-    - docker tag "$CI_PIPELINE_ID":"$CI_BUILD_REF_NAME" "$CI_REGISTRY_IMAGE":"$CI_BUILD_REF_NAME"
-    - docker push "$CI_REGISTRY_IMAGE":"$CI_BUILD_REF_NAME"
+      - name: Build Docker image # Step to build the Docker image
+        run: |
+          cd app
+          docker build 
+            --cache-from $IMAGE:latest
+            --tag $IMAGE:latest
+            -- file ./Dockerfile.prod
+            --build-arg SECRET_KEY=$SECRET_KEY
+            .
+          docker push $IMAGE:latest
 
-push latest:
-  stage: push
-  script:
-    - docker tag "$CI_PIPELINE_ID":"$CI_BUILD_REF_NAME" "$CI_REGISTRY_IMAGE":latest
-    - docker push "$CI_REGISTRY_IMAGE":latest
+  test:
+    name: Test
+    needs: build
+    runs-on: ubuntu-latest # Run the job on an Ubuntu environment
 
-pages:
-  stage: deploy
-  dependencies:
-    - test
-  script:
-    - mv htmlcov public
-  artifacts:
-    paths:
-      - public
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_DB: api-test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        # Set health checks to wait until postgres has started
+        options: >- 
+          --health-cmd pg_isready 
+          --health-interval 10s 
+          --health-timeout 5s 
+          --health-retries 5
 
-deploy to prod:
-  stage: deploy
-  only:
-    - master
-    - tags
-  when: manual
-  script:
-    - docker-compose -f docker-compose.deploy.yml pull
-    - docker-compose -f docker-compose.deploy.yml down
-    - docker-compose -f docker-compose.deploy.yml up -d
+    steps:
+      - name: Checkout codebase # Step to check the codebase in the repo
+        uses: actions/checkout@v3 # Uses the official checkout action
 
-cleanup:
-  stage: cleanup
-  when: always
-  script:
-     - docker rmi -f "$CI_PIPELINE_ID":"$CI_BUILD_REF_NAME"
-     - docker-compose -p "$CI_PIPELINE_ID" -f docker-compose.test.yml down --remove-orphans
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          pyhon-version: 3.11
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Lint with Flake8, Black and isort # Step to run code linting
+        run: |
+          cd app
+          pip install black==23.3.0 flake8=6.0.0 isort=5.12.0 pytest==7.3.2 pytest-django==4.5.2
+          pytest -p no:warnings
+          flake8 .
+          black . --check --exclude=migrations
+          isort . --check-only --skip env
+          export DEBUG=0
+          python manage.py check --deploy --fail-level=WARNING
+
+  # https://docs.github.com/en/actions/creating-actions/creating-a-docker-container-action
+  # docker: dind (Docker in Docker) start Docker container with Docker installed - allows for CI/CD to run Docker commands inside the container.
+  # DOCKER_DRIVER: overlay2 - specifies the storage driver use for Docker, responsible for managing filesystem and storage aspects of Docker containers and images - also provides good performance and stability.
+  # These two settings are not required in GitHub Actions as a different virtualization technology is used.
+  # GitHub Actions provides a Docker container environment that is automatically used for running Docker commands
+  deploy:
+    name: Deploy to production # Step to deploy to production
+    needs: test # Dependency on test job
+    runs-on: ubuntu-latest # Run the job on an Ubuntu environment
+
+    steps:
+      - name: Checkout codebase # Step to check the codebase in the repo
+        uses: actions/checkout@v3 # Uses the official checkout action
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+
+      - name: Install dependencies
+        run: install -r requirements.txt
+
+      - name: Deploy to Heroku
+        env:
+          HEROKU_APP_NAME: mindful-minutes
+          HEROKU_REGISTRY_IMAGE: registry.heroku.com/${HEROKU_APP_NAME}/web
+        run: |
+          cd app
+          docker build
+            --tag $HEROKU_REGISTRY_IME
+            --file ./Dockerfile.prod
+            --build-arg SECRET_KEY=$SECRET_KEY
+            .
+          docker login -u _ -p ${{ secrets.HEROKU_AUTH_TOKEN }} registry.heroku.com
+          docker push $HEROKU_REGISTRY_IMAGE
+          chmod +x ./release.sh
+          ./release.sh

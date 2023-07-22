@@ -1,0 +1,33 @@
+# Use an official Python runtime as the base image
+FROM python:3.10.6
+
+# Set the working directory in the container
+WORKDIR /usr/src/app
+
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+ENV DEBUG 0
+ENV SECRET_KEY $SECRET_KEY
+ENV DJANGO_ALLOWED_HOSTS .herokuapp.com
+
+# Install system dependencies
+RUN apt-get update \
+    && apt-get -y install gcc postgresql \
+    && apt-get clean
+
+RUN pip install --upgrade pip
+COPY ./requirements.txt .
+RUN pip install -r requirements.txt
+
+# Copy the entire project directory to the working directory
+COPY . .
+
+# Best practice to run as non-root user
+# https://devcenter.heroku.com/articles/container-registry-and-runtime#run-the-image-as-a-non-root-user
+# Add and run as non-root user
+RUN adduser --disabled-password siri
+USER siri
+
+# Start the Django production server
+CMD gunicorn mindfulminutes.wsgi:application --bind 0.0.0.0:$PORT

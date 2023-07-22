@@ -1,11 +1,8 @@
 <!-- omit from toc -->
-
 # Mindful Minutes
 
 <!-- omit from toc -->
-
 ## Table of Contents
-
 - [Product Information](#product-information)
 - [UX / UI Design](#ux--ui-design)
     - [Design Thinking](#design-thinking)
@@ -636,6 +633,7 @@ For further details on testing, click [here](docs/testing/testing.md).
 
 #### CI / CD
 
+- [GitHub Actions in action - Setting up Django and Postgres](https://www.hacksoft.io/blog/github-actions-in-action-setting-up-django-and-postgres#psycopg2-dependencies-no-longer-needed-)
 - [GitHub Actions - Create starter workflows](https://docs.github.com/en/actions/using-workflows/creating-starter-workflows-for-your-organization)
 - [Schedule Planner Repository](https://github.com/halfpintutopia/schedule-planner/blob/master/.gitlab-ci.yml)
 - [Pushing container images to GitHub Container Actions](https://dev.to/willvelida/pushing-container-images-to-github-container-registry-with-github-actions-1m6b)
@@ -643,6 +641,10 @@ For further details on testing, click [here](docs/testing/testing.md).
 - [GitHub Actions - Automate your GitHub workflows](https://github.com/actions)
 - [GitHub Action: Ubuntu-latest workflows will use Ubuntu-22.04](https://github.blog/changelog/2022-11-09-github-actions-ubuntu-latest-workflows-will-use-ubuntu-22-04/)
 - [Heroku Dev Center - Container Registry & Runtime (Docker Deploy)](https://devcenter.heroku.com/articles/container-registry-and-runtime)
+- [Creating PostgreSQL service containers](https://docs.github.com/en/actions/using-containerized-services/creating-postgresql-service-containers)
+- [This is a good starting point getting Python, Django, Postgres running as a service, pytest, black and pip caching rolling with GitHub Actions](https://gist.github.com/jefftriplett/d35e120ef9884bcff61c5ade0740f52d)
+- [Setup postgres in GitHub Actions for Django](https://stackoverflow.com/questions/63066240/setup-postgres-in-github-actions-for-django)
+- [GitHub Actions - Variables](https://docs.github.com/en/actions/learn-github-actions/variables)
 
 #### Django
 

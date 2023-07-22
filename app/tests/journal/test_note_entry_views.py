@@ -58,7 +58,9 @@ def test_add_note_entry(authenticated_user):
 
     url = reverse("note-entry-list-date", args=[user.slug, current_date])
 
-    res = client.post(url, json.dumps(note_data), content_type="application/json")
+    res = client.post(
+        url, json.dumps(note_data), content_type="application/json"
+    )
 
     assert res.status_code == status.HTTP_201_CREATED
     assert res.data["user"] == user.id
@@ -153,7 +155,8 @@ def test_get_single_note_entry(authenticated_user, add_note_entry):
     )
 
     url = reverse(
-        "note-entry-detail-single", args=[user.slug, current_date, note_entry.id]
+        "note-entry-detail-single",
+        args=[user.slug, current_date, note_entry.id],
     )
 
     res = client.get(url, content_type="application/json")
@@ -187,7 +190,9 @@ def test_get_single_note_entry_incorrect_id(
 
 
 @pytest.mark.django_db
-def test_get_all_note_entries_by_current_date(authenticated_user, add_note_entry):
+def test_get_all_note_entries_by_current_date(
+    authenticated_user, add_note_entry
+):
     """
     GIVEN a Django application
     WHEN the user requests to retrieve all note entries
@@ -355,7 +360,8 @@ def test_remove_note_not_current_date(
         )
 
     url = reverse(
-        "note-entry-detail-single", args=[user.slug, date_and_time[0], note_entry.id]
+        "note-entry-detail-single",
+        args=[user.slug, date_and_time[0], note_entry.id],
     )
 
     res = client.delete(url, content_type="application/json")
@@ -403,7 +409,8 @@ def test_update_note_entry(authenticated_user, add_note_entry, test_data):
     test_data["payload"]["user"] = user.id
 
     url = reverse(
-        "note-entry-detail-single", args=[user.slug, current_date, note_entry.id]
+        "note-entry-detail-single",
+        args=[user.slug, current_date, note_entry.id],
     )
 
     res = client.put(
@@ -448,7 +455,9 @@ def test_update_note_entry_incorrect_data(authenticated_user, add_note_entry):
         "note-entry-detail-single", args=[user.slug, current_date, invalid_id]
     )
 
-    res = client.put(url, json.dumps(note_data), content_type="application/json")
+    res = client.put(
+        url, json.dumps(note_data), content_type="application/json"
+    )
 
     assert res.status_code == status.HTTP_404_NOT_FOUND
 
@@ -477,7 +486,8 @@ def test_update_note_entry_incorrect_date(
         )
 
     url = reverse(
-        "note-entry-detail-single", args=[user.slug, date_and_time[0], note_entry.id]
+        "note-entry-detail-single",
+        args=[user.slug, date_and_time[0], note_entry.id],
     )
 
     res = client.put(url, content_type="application/json")
@@ -499,7 +509,9 @@ def test_update_note_entry_incorrect_date(
         },
     ],
 )
-def test_update_note_entry_invalid_json(authenticated_user, add_note_entry, test_data):
+def test_update_note_entry_invalid_json(
+    authenticated_user, add_note_entry, test_data
+):
     """
     GIVEN a Django application
     WHEN the user requests to update an note entry with invalid JSON
@@ -515,9 +527,12 @@ def test_update_note_entry_invalid_json(authenticated_user, add_note_entry, test
     )
 
     url = reverse(
-        "note-entry-detail-single", args=[user.slug, current_date, note_entry.id]
+        "note-entry-detail-single",
+        args=[user.slug, current_date, note_entry.id],
     )
 
-    res = client.put(url, test_data["payload"], content_type="application/json")
+    res = client.put(
+        url, test_data["payload"], content_type="application/json"
+    )
 
     assert res.status_code == status.HTTP_400_BAD_REQUEST

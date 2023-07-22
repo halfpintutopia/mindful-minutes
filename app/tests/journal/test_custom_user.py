@@ -92,7 +92,10 @@ def test_create_user_without_password():
     """
     with pytest.raises(ValueError):
         User.objects.create_user(
-            email="normal@user.com", password="", first_name="Normal", last_name="User"
+            email="normal@user.com",
+            password="",
+            first_name="Normal",
+            last_name="User",
         )
 
 

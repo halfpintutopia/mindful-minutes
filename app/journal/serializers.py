@@ -26,7 +26,12 @@ class UserSettingsSerializer(serializers.ModelSerializer):
         """
 
         model = UserSettings
-        fields = ["user", "start_week_day", "morning_check_in", "evening_check_in"]
+        fields = [
+            "user",
+            "start_week_day",
+            "morning_check_in",
+            "evening_check_in",
+        ]
         read_only_fields = (
             "id",
             "created_on",

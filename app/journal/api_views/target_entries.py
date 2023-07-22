@@ -84,8 +84,12 @@ class TargetEntryList(APIView):
                 serializer = TargetEntrySerializer(data=request.data)
                 if serializer.is_valid():
                     serializer.save(user=request.user)
-                    return Response(serializer.data, status=status.HTTP_201_CREATED)
-                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                    return Response(
+                        serializer.data, status=status.HTTP_201_CREATED
+                    )
+                return Response(
+                    serializer.errors, status=status.HTTP_400_BAD_REQUEST
+                )
 
         raise MethodNotAllowed(request.method)
 
@@ -111,7 +115,9 @@ class TargetEntryDetail(APIView):
         """
         Retrieve an target entry
         """
-        return self._handle_target_detail_action(request, slug, date_request, pk)
+        return self._handle_target_detail_action(
+            request, slug, date_request, pk
+        )
 
     @swagger_auto_schema(
         request_body=openapi.Schema(
@@ -126,13 +132,17 @@ class TargetEntryDetail(APIView):
         """
         Update an target entry
         """
-        return self._handle_target_detail_action(request, slug, date_request, pk)
+        return self._handle_target_detail_action(
+            request, slug, date_request, pk
+        )
 
     def delete(self, request, slug, date_request, pk, format=None):
         """
         Delete an target entry
         """
-        return self._handle_target_detail_action(request, slug, date_request, pk)
+        return self._handle_target_detail_action(
+            request, slug, date_request, pk
+        )
 
     def _handle_target_detail_action(self, request, slug, date_request, pk):
         """
@@ -168,7 +178,9 @@ class TargetEntryDetail(APIView):
                     return Response(serializer.data)
 
                 elif request.method == "PUT":
-                    serializer = TargetEntrySerializer(target_entry, data=request.data)
+                    serializer = TargetEntrySerializer(
+                        target_entry, data=request.data
+                    )
                     if serializer.is_valid():
                         serializer.save(user=request.user)
                         return Response(serializer.data)

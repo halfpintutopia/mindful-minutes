@@ -32,13 +32,17 @@ class CustomUser(AbstractUser):
             slug_name = slugify(f"{self.first_name} {self.last_name}")
             slug = f"{slug_name}-{str(self.unique_identifier)}"
 
-            duplicates = CustomUser.objects.filter(slug=slug).exclude(pk=self.pk)
+            duplicates = CustomUser.objects.filter(slug=slug).exclude(
+                pk=self.pk
+            )
 
             while duplicates.exists():
                 self.unique_identifier = uuid.uuid4()
                 slug = f"{slug_name}-{self.unique_identifier}"
 
-                duplicates = CustomUser.objects.filter(slug=slug).exclude(pk=self.pk)
+                duplicates = CustomUser.objects.filter(slug=slug).exclude(
+                    pk=self.pk
+                )
 
             self.slug = slug
 
@@ -64,9 +68,13 @@ class UserSettings(models.Model):
         (7, "Sunday"),
     ]
     user = models.OneToOneField(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="user_settings"
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="user_settings",
     )
-    start_week_day = models.IntegerField(_("Start Week Day"), choices=DAY_OPTIONS)
+    start_week_day = models.IntegerField(
+        _("Start Week Day"), choices=DAY_OPTIONS
+    )
     morning_check_in = models.TimeField()
     evening_check_in = models.TimeField()
     created_on = models.DateTimeField(auto_now_add=True)
@@ -162,7 +170,9 @@ class NoteEntry(models.Model):
     """
 
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="note_entries"
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="note_entries",
     )
     content = RichTextField(_("Notes"))
     created_on = models.DateTimeField(auto_now_add=True)
@@ -250,7 +260,9 @@ class WinEntry(models.Model):
     """
 
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="win_entries"
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="win_entries",
     )
     title = models.CharField(_("Win Entry"), max_length=255)
     created_on = models.DateTimeField(auto_now_add=True)
@@ -278,7 +290,9 @@ class IdeasEntry(models.Model):
     """
 
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="ideas_entries"
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="ideas_entries",
     )
     content = RichTextField(_("Ideas Entry"))
     created_on = models.DateTimeField(auto_now_add=True)

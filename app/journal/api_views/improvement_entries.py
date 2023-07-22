@@ -24,7 +24,9 @@ class ImprovementEntryList(APIView):
         """
         List all improvement entries or filter by date
         """
-        return self._handle_improvement_list_action(request, slug, date_request)
+        return self._handle_improvement_list_action(
+            request, slug, date_request
+        )
 
     @swagger_auto_schema(
         request_body=openapi.Schema(
@@ -38,7 +40,9 @@ class ImprovementEntryList(APIView):
         """
         Create a new improvement entry
         """
-        return self._handle_improvement_list_action(request, slug, date_request)
+        return self._handle_improvement_list_action(
+            request, slug, date_request
+        )
 
     def _handle_improvement_list_action(self, request, slug, date_request):
         """
@@ -66,7 +70,9 @@ class ImprovementEntryList(APIView):
                 else:
                     improvement_entries = ImprovementEntry.objects.all()
 
-                serializer = ImprovementEntrySerializer(improvement_entries, many=True)
+                serializer = ImprovementEntrySerializer(
+                    improvement_entries, many=True
+                )
                 return Response(serializer.data)
 
         if request.method == "POST":
@@ -75,7 +81,8 @@ class ImprovementEntryList(APIView):
                 if date_request != current_date:
                     return Response(
                         {
-                            "error": "You are not allowed to change improvements \
+                            "error": "You are not allowed to change "
+                            "improvements \
                                     for past or future dates."
                         },
                         status=status.HTTP_403_FORBIDDEN,
@@ -83,8 +90,12 @@ class ImprovementEntryList(APIView):
                 serializer = ImprovementEntrySerializer(data=request.data)
                 if serializer.is_valid():
                     serializer.save(user=request.user)
-                    return Response(serializer.data, status=status.HTTP_201_CREATED)
-                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                    return Response(
+                        serializer.data, status=status.HTTP_201_CREATED
+                    )
+                return Response(
+                    serializer.errors, status=status.HTTP_400_BAD_REQUEST
+                )
 
         raise MethodNotAllowed(request.method)
 
@@ -110,7 +121,9 @@ class ImprovementEntryDetail(APIView):
         """
         Retrieve an improvement entry
         """
-        return self._handle_improvement_detail_action(request, slug, date_request, pk)
+        return self._handle_improvement_detail_action(
+            request, slug, date_request, pk
+        )
 
     @swagger_auto_schema(
         request_body=openapi.Schema(
@@ -124,15 +137,21 @@ class ImprovementEntryDetail(APIView):
         """
         Update an improvement entry
         """
-        return self._handle_improvement_detail_action(request, slug, date_request, pk)
+        return self._handle_improvement_detail_action(
+            request, slug, date_request, pk
+        )
 
     def delete(self, request, slug, date_request, pk, format=None):
         """
         Delete an improvement entry
         """
-        return self._handle_improvement_detail_action(request, slug, date_request, pk)
+        return self._handle_improvement_detail_action(
+            request, slug, date_request, pk
+        )
 
-    def _handle_improvement_detail_action(self, request, slug, date_request, pk):
+    def _handle_improvement_detail_action(
+        self, request, slug, date_request, pk
+    ):
         """
         Private helper method to handle GET, PUT and DELETE requests
 

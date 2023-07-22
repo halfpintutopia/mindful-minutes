@@ -10,7 +10,15 @@ def test_valid_emotion_entry_serializer():
     WHEN the data us passed to the serializer
     THEN the serializer should be valid
     """
-    valid_emotions = ["awful", "terrible", "bad", "okay", "good", "great", "excellent"]
+    valid_emotions = [
+        "awful",
+        "terrible",
+        "bad",
+        "okay",
+        "good",
+        "great",
+        "excellent",
+    ]
 
     for emotion in valid_emotions:
         valid_serializer_data = {"emotion": emotion}

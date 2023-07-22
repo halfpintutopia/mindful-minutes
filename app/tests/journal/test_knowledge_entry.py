@@ -19,7 +19,8 @@ def test_create_knowledge_entry(custom_user):
     assert len(knowledge_entries) == 1
     assert knowledge_entries[0].user == custom_user
     assert (
-        knowledge_entries[0].content == "Understand what 'hoisting' means in JavaScript"
+        knowledge_entries[0].content
+        == "Understand what 'hoisting' means in JavaScript"
     )
     assert (
         isinstance(knowledge_entries[0].content, str)

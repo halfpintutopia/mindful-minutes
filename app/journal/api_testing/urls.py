@@ -18,7 +18,9 @@ from ..api_views.user_settings import UserSettingsView
 from ..api_views.win_entries import WinEntryDetail, WinEntryList
 
 urlpatterns = [
-    path("api/users/<str:slug>/", CustomUserDetail.as_view(), name="user-detail"),
+    path(
+        "api/users/<str:slug>/", CustomUserDetail.as_view(), name="user-detail"
+    ),
     path("api/users/", CustomUserList.as_view(), name="user-list"),
     path(
         "api/users/<str:slug>/user-settings/",
@@ -101,7 +103,9 @@ urlpatterns = [
         name="gratitude-entry-list-date",
     ),
     path(
-        "api/users/<str:slug>/win/", WinEntryList.as_view(), name="win-entry-list-all"
+        "api/users/<str:slug>/win/",
+        WinEntryList.as_view(),
+        name="win-entry-list-all",
     ),
     path(
         "api/users/<str:slug>/win/<str:date_request>/<int:pk>/",

@@ -66,7 +66,9 @@ class GratitudeEntryList(APIView):
                 else:
                     gratitude_entries = GratitudeEntry.objects.all()
 
-                serializer = GratitudeEntrySerializer(gratitude_entries, many=True)
+                serializer = GratitudeEntrySerializer(
+                    gratitude_entries, many=True
+                )
                 return Response(serializer.data)
 
         if request.method == "POST":
@@ -75,7 +77,8 @@ class GratitudeEntryList(APIView):
                 if date_request != current_date:
                     return Response(
                         {
-                            "error": "You are not allowed to change gratitudes \
+                            "error": "You are not allowed to change "
+                            "gratitudes \
                                     for past or future dates."
                         },
                         status=status.HTTP_403_FORBIDDEN,
@@ -83,8 +86,12 @@ class GratitudeEntryList(APIView):
                 serializer = GratitudeEntrySerializer(data=request.data)
                 if serializer.is_valid():
                     serializer.save(user=request.user)
-                    return Response(serializer.data, status=status.HTTP_201_CREATED)
-                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                    return Response(
+                        serializer.data, status=status.HTTP_201_CREATED
+                    )
+                return Response(
+                    serializer.errors, status=status.HTTP_400_BAD_REQUEST
+                )
 
         raise MethodNotAllowed(request.method)
 
@@ -110,7 +117,9 @@ class GratitudeEntryDetail(APIView):
         """
         Retrieve an gratitude entry
         """
-        return self._handle_gratitude_detail_action(request, slug, date_request, pk)
+        return self._handle_gratitude_detail_action(
+            request, slug, date_request, pk
+        )
 
     @swagger_auto_schema(
         request_body=openapi.Schema(
@@ -124,13 +133,17 @@ class GratitudeEntryDetail(APIView):
         """
         Update an gratitude entry
         """
-        return self._handle_gratitude_detail_action(request, slug, date_request, pk)
+        return self._handle_gratitude_detail_action(
+            request, slug, date_request, pk
+        )
 
     def delete(self, request, slug, date_request, pk, format=None):
         """
         Delete an gratitude entry
         """
-        return self._handle_gratitude_detail_action(request, slug, date_request, pk)
+        return self._handle_gratitude_detail_action(
+            request, slug, date_request, pk
+        )
 
     def _handle_gratitude_detail_action(self, request, slug, date_request, pk):
         """

@@ -25,7 +25,10 @@ def authenticated_user():
     last_name = fake.last_name()
 
     user = User.objects.create_user(
-        email=email, password=password, first_name=first_name, last_name=last_name
+        email=email,
+        password=password,
+        first_name=first_name,
+        last_name=last_name,
     )
 
     # Acts as a simulated web browser that allows
@@ -50,7 +53,10 @@ def custom_user():
     last_name = fake.last_name()
 
     return User.objects.create_user(
-        email=email, password=password, first_name=first_name, last_name=last_name
+        email=email,
+        password=password,
+        first_name=first_name,
+        last_name=last_name,
     )
 
 
@@ -65,7 +71,10 @@ def custom_super_user():
     last_name = fake.last_name()
 
     return User.objects.create_superuser(
-        email=email, password=password, first_name=first_name, last_name=last_name
+        email=email,
+        password=password,
+        first_name=first_name,
+        last_name=last_name,
     )
 
 
@@ -77,7 +86,10 @@ def add_custom_user():
 
     def _add_custom_user(email, password, first_name, last_name):
         user = User.objects.create_user(
-            email=email, password=password, first_name=first_name, last_name=last_name
+            email=email,
+            password=password,
+            first_name=first_name,
+            last_name=last_name,
         )
         return user
 
@@ -90,7 +102,9 @@ def add_user_settings():
     Fixture to create UserSettings object in the database
     """
 
-    def _add_user_settings(start_week_day, morning_check_in, evening_check_in, user):
+    def _add_user_settings(
+        start_week_day, morning_check_in, evening_check_in, user
+    ):
         user_settings = UserSettings.objects.create(
             user=user,
             start_week_day=start_week_day,
@@ -128,7 +142,9 @@ def add_target_entry():
     """
 
     def _add_target_entry(title, order, user):
-        target_entry = TargetEntry.objects.create(user=user, title=title, order=order)
+        target_entry = TargetEntry.objects.create(
+            user=user, title=title, order=order
+        )
         return target_entry
 
     return _add_target_entry
@@ -157,7 +173,9 @@ def add_knowledge_entry():
     """
 
     def _add_knowledge_entry(content, user):
-        knowledge_entry = KnowledgeEntry.objects.create(user=user, content=content)
+        knowledge_entry = KnowledgeEntry.objects.create(
+            user=user, content=content
+        )
         return knowledge_entry
 
     return _add_knowledge_entry
@@ -170,7 +188,9 @@ def add_gratitude_entry():
     """
 
     def _add_gratitude_entry(content, user):
-        gratitude_entry = GratitudeEntry.objects.create(user=user, content=content)
+        gratitude_entry = GratitudeEntry.objects.create(
+            user=user, content=content
+        )
         return gratitude_entry
 
     return _add_gratitude_entry
@@ -209,7 +229,9 @@ def add_improvement_entry():
     """
 
     def _add_improvement_entry(content, user):
-        improvement_entry = ImprovementEntry.objects.create(user=user, content=content)
+        improvement_entry = ImprovementEntry.objects.create(
+            user=user, content=content
+        )
         return improvement_entry
 
     return _add_improvement_entry

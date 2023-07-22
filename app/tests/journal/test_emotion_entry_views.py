@@ -46,7 +46,9 @@ def test_add_emotion_entry(authenticated_user):
 
     url = reverse("emotion-entry-list-date", args=[user.slug, current_date])
 
-    res = client.post(url, data=json.dumps(payload), content_type="application/json")
+    res = client.post(
+        url, data=json.dumps(payload), content_type="application/json"
+    )
 
     assert res.status_code == status.HTTP_201_CREATED
 
@@ -64,9 +66,13 @@ def test_add_emotion_entry_incorrect_date(authenticated_user):
 
     payload = {"emotion": "great"}
 
-    url = reverse("emotion-entry-list-date", args=[user.slug, not_current_date])
+    url = reverse(
+        "emotion-entry-list-date", args=[user.slug, not_current_date]
+    )
 
-    res = client.post(url, data=json.dumps(payload), content_type="application/json")
+    res = client.post(
+        url, data=json.dumps(payload), content_type="application/json"
+    )
 
     assert res.status_code == status.HTTP_403_FORBIDDEN
 
@@ -82,15 +88,21 @@ def test_add_emotion_entry_invalid_user(client, custom_user):
 
     payload = {"emotion": "great"}
 
-    url = reverse("emotion-entry-list-date", args=[custom_user.slug, current_date])
+    url = reverse(
+        "emotion-entry-list-date", args=[custom_user.slug, current_date]
+    )
 
-    res = client.post(url, data=json.dumps(payload), content_type="application/json")
+    res = client.post(
+        url, data=json.dumps(payload), content_type="application/json"
+    )
 
     assert res.status_code == status.HTTP_403_FORBIDDEN
 
 
 @pytest.mark.django_db
-def test_get_single_emotion_entry_by_date(authenticated_user, add_emotion_entry):
+def test_get_single_emotion_entry_by_date(
+    authenticated_user, add_emotion_entry
+):
     """
     GIVEN a Django application
     WHEN a user requests to get an emotion by date
@@ -105,7 +117,8 @@ def test_get_single_emotion_entry_by_date(authenticated_user, add_emotion_entry)
     emotion_date = emotion_entry.created_on.strftime("%Y-%m-%d")
 
     url = reverse(
-        "emotion-entry-detail-single", args=[user.slug, emotion_date, emotion_entry.id]
+        "emotion-entry-detail-single",
+        args=[user.slug, emotion_date, emotion_entry.id],
     )
 
     res = client.get(url)
@@ -131,7 +144,8 @@ def test_delete_emotion_entry(authenticated_user, add_emotion_entry):
     emotion_date = emotion_entry.created_on.strftime("%Y-%m-%d")
 
     url = reverse(
-        "emotion-entry-detail-single", args=[user.slug, emotion_date, emotion_entry.id]
+        "emotion-entry-detail-single",
+        args=[user.slug, emotion_date, emotion_entry.id],
     )
     res = client.delete(url)
 
@@ -166,7 +180,9 @@ def test_delete_emotion_entry_unauthenticated_user(
 
 
 @pytest.mark.django_db
-def test_delete_emotion_entry_invalid_id(authenticated_user, add_emotion_entry):
+def test_delete_emotion_entry_invalid_id(
+    authenticated_user, add_emotion_entry
+):
     """
     GIVEN a Django application
     WHEN a user attempts to delete an emotion with an invalid id
@@ -182,7 +198,8 @@ def test_delete_emotion_entry_invalid_id(authenticated_user, add_emotion_entry):
     emotion_date = emotion_entry.created_on.strftime("%Y-%m-%d")
 
     url = reverse(
-        "emotion-entry-detail-single", args=[user.slug, emotion_date, invalid_number]
+        "emotion-entry-detail-single",
+        args=[user.slug, emotion_date, invalid_number],
     )
 
     res = client.delete(url)
@@ -191,7 +208,9 @@ def test_delete_emotion_entry_invalid_id(authenticated_user, add_emotion_entry):
 
 
 @pytest.mark.django_db
-def test_delete_emotion_entry_not_current_date(authenticated_user, add_emotion_entry):
+def test_delete_emotion_entry_not_current_date(
+    authenticated_user, add_emotion_entry
+):
     """
     GIVEN a Django application
     WHEN a user attempts to delete an emotion with an invalid id
@@ -206,7 +225,8 @@ def test_delete_emotion_entry_not_current_date(authenticated_user, add_emotion_e
     emotion_date = emotion_entry.created_on.strftime("%Y-%m-%d")
 
     url = reverse(
-        "emotion-entry-detail-single", args=[user.slug, emotion_date, emotion_entry.id]
+        "emotion-entry-detail-single",
+        args=[user.slug, emotion_date, emotion_entry.id],
     )
 
     res = client.delete(url)
@@ -232,7 +252,8 @@ def test_update_emotion_entry(authenticated_user, add_emotion_entry):
     payload = {"emotion": "excellent"}
 
     url = reverse(
-        "emotion-entry-detail-single", args=[user.slug, emotion_date, emotion_entry.id]
+        "emotion-entry-detail-single",
+        args=[user.slug, emotion_date, emotion_entry.id],
     )
 
     res = client.put(url, data=payload)

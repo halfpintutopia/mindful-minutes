@@ -83,8 +83,12 @@ class WinEntryList(APIView):
                 serializer = WinEntrySerializer(data=request.data)
                 if serializer.is_valid():
                     serializer.save(user=request.user)
-                    return Response(serializer.data, status=status.HTTP_201_CREATED)
-                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                    return Response(
+                        serializer.data, status=status.HTTP_201_CREATED
+                    )
+                return Response(
+                    serializer.errors, status=status.HTTP_400_BAD_REQUEST
+                )
 
         raise MethodNotAllowed(request.method)
 
@@ -166,7 +170,9 @@ class WinEntryDetail(APIView):
                     return Response(serializer.data)
 
                 elif request.method == "PUT":
-                    serializer = WinEntrySerializer(win_entry, data=request.data)
+                    serializer = WinEntrySerializer(
+                        win_entry, data=request.data
+                    )
                     if serializer.is_valid():
                         serializer.save(user=request.user)
                         return Response(serializer.data)

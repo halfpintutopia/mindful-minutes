@@ -39,7 +39,12 @@ if development:
 else:
     DEBUG = False
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost", "[::1]", os.getenv("PROJECT_DOMAIN")]
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "localhost",
+    "[::1]",
+    os.getenv("PROJECT_DOMAIN"),
+]
 # ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOST').split(' ')
 
 if not development:
@@ -143,7 +148,9 @@ DATABASES = {
 
 if not development:
     DATABASE_URL = os.environ.get("DATABASE_URL")
-    db_from_env = dj_database_url.config(default=DATABASE_URL, conn_max_age=500)
+    db_from_env = dj_database_url.config(
+        default=DATABASE_URL, conn_max_age=500
+    )
     DATABASES["default"].update(db_from_env)
 
 # Password validation
@@ -155,13 +162,16 @@ AUTH_PASSWORD_VALIDATORS = [
         ".UserAttributeSimilarityValidator",
     },
     {
-        "NAME": "django.contrib.auth.password_validation" ".MinimumLengthValidator",
+        "NAME": "django.contrib.auth.password_validation"
+        ".MinimumLengthValidator",
     },
     {
-        "NAME": "django.contrib.auth.password_validation" ".CommonPasswordValidator",
+        "NAME": "django.contrib.auth.password_validation"
+        ".CommonPasswordValidator",
     },
     {
-        "NAME": "django.contrib.auth.password_validation" ".NumericPasswordValidator",
+        "NAME": "django.contrib.auth.password_validation"
+        ".NumericPasswordValidator",
     },
 ]
 
@@ -180,7 +190,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = "/static/"
-STATICFILES_STORAGE = "cloudinary_storage.storage.StaticHashedCloudinaryStorage"
+STATICFILES_STORAGE = (
+    "cloudinary_storage.storage.StaticHashedCloudinaryStorage"
+)
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 

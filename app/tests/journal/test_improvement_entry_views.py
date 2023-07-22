@@ -12,7 +12,9 @@ from journal.models import ImprovementEntry
 
 
 @pytest.mark.django_db
-def test_get_list_of_improvement_entries(authenticated_user, add_improvement_entry):
+def test_get_list_of_improvement_entries(
+    authenticated_user, add_improvement_entry
+):
     """
     GIVEN a Django application
     WHEN a user requests a list of all improvement entries
@@ -57,7 +59,9 @@ def test_add_improvement_entry(authenticated_user):
         "user": user.id,
     }
 
-    url = reverse("improvement-entry-list-date", args=[user.slug, current_date])
+    url = reverse(
+        "improvement-entry-list-date", args=[user.slug, current_date]
+    )
 
     res = client.post(
         url, json.dumps(improvement_data), content_type="application/json"
@@ -99,7 +103,9 @@ def test_add_improvement_entry_incorrect_json(authenticated_user, test_data):
 
     test_data["payload"]["user"] = user.id
 
-    url = reverse("improvement-entry-list-date", args=[user.slug, current_date])
+    url = reverse(
+        "improvement-entry-list-date", args=[user.slug, current_date]
+    )
 
     res = client.post(
         url, json.dumps(test_data["payload"]), content_type="application/json"
@@ -112,7 +118,9 @@ def test_add_improvement_entry_incorrect_json(authenticated_user, test_data):
 
 @pytest.mark.django_db
 @pytest.mark.parametrize("date_param", ["2023-07-01", "2023-06-20"])
-def test_add_improvement_entry_not_current_date(authenticated_user, date_param):
+def test_add_improvement_entry_not_current_date(
+    authenticated_user, date_param
+):
     """
     GIVEN a Django application
     WHEN the user attempts to add an improvement entry on a date,
@@ -140,7 +148,9 @@ def test_add_improvement_entry_not_current_date(authenticated_user, date_param):
 
 
 @pytest.mark.django_db
-def test_get_single_improvement_entry(authenticated_user, add_improvement_entry):
+def test_get_single_improvement_entry(
+    authenticated_user, add_improvement_entry
+):
     """
     GIVEN a Django application
     WHEN the user requests to retrieve an improvement entry
@@ -183,7 +193,8 @@ def test_get_single_improvement_entry_incorrect_id(
     invalid_id = 14258
 
     url = reverse(
-        "improvement-entry-detail-single", args=[user.slug, current_date, invalid_id]
+        "improvement-entry-detail-single",
+        args=[user.slug, current_date, invalid_id],
     )
 
     res = client.get(url)
@@ -213,14 +224,18 @@ def test_get_all_improvement_entries_by_current_date(
         user=user,
     )
 
-    url = reverse("improvement-entry-list-date", args=[user.slug, current_date])
+    url = reverse(
+        "improvement-entry-list-date", args=[user.slug, current_date]
+    )
 
     res = client.get(url)
 
     assert res.status_code == status.HTTP_200_OK
     assert res.data[0]["created_on"] == str(current_date)
 
-    improvement_entries = ImprovementEntry.objects.filter(created_on__date=current_date)
+    improvement_entries = ImprovementEntry.objects.filter(
+        created_on__date=current_date
+    )
     assert len(improvement_entries) == 1
 
 
@@ -253,7 +268,9 @@ def test_get_all_improvement_entries_by_date(
             user=user,
         )
 
-    url = reverse("improvement-entry-list-date", args=[user.slug, date_and_time[0]])
+    url = reverse(
+        "improvement-entry-list-date", args=[user.slug, date_and_time[0]]
+    )
     res = client.get(url)
 
     assert res.status_code == status.HTTP_200_OK
@@ -307,7 +324,9 @@ def test_remove_improvement_entry(authenticated_user, add_improvement_entry):
     assert res_retrieve.status_code == status.HTTP_200_OK
     assert len(res_retrieve.data) == 0
 
-    assert not ImprovementEntry.objects.filter(id=improvement_entry.id).exists()
+    assert not ImprovementEntry.objects.filter(
+        id=improvement_entry.id
+    ).exists()
 
     improvement_entries = ImprovementEntry.objects.all()
     assert len(improvement_entries) == 0
@@ -329,7 +348,8 @@ def test_remove_improvement_invalid_id(authenticated_user):
     client, user = authenticated_user
 
     url = reverse(
-        "improvement-entry-detail-single", args=[user.slug, current_date, invalid_id]
+        "improvement-entry-detail-single",
+        args=[user.slug, current_date, invalid_id],
     )
 
     res = client.delete(url, content_type="application/json")
@@ -397,7 +417,9 @@ def test_remove_improvement_not_current_date(
         },
     ],
 )
-def test_update_improvement_entry(authenticated_user, add_improvement_entry, test_data):
+def test_update_improvement_entry(
+    authenticated_user, add_improvement_entry, test_data
+):
     """
     GIVEN a Django application
     WHEN the user requests to update an improvement entry
@@ -463,10 +485,13 @@ def test_update_improvement_entry_incorrect_data(
     }
 
     url = reverse(
-        "improvement-entry-detail-single", args=[user.slug, current_date, invalid_id]
+        "improvement-entry-detail-single",
+        args=[user.slug, current_date, invalid_id],
     )
 
-    res = client.put(url, json.dumps(improvement_data), content_type="application/json")
+    res = client.put(
+        url, json.dumps(improvement_data), content_type="application/json"
+    )
 
     assert res.status_code == status.HTTP_404_NOT_FOUND
 
@@ -541,6 +566,8 @@ def test_update_improvement_entry_invalid_json(
         args=[user.slug, current_date, improvement_entry.id],
     )
 
-    res = client.put(url, test_data["payload"], content_type="application/json")
+    res = client.put(
+        url, test_data["payload"], content_type="application/json"
+    )
 
     assert res.status_code == status.HTTP_400_BAD_REQUEST

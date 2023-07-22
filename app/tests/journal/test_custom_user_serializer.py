@@ -33,7 +33,8 @@ def test_custom_user_serializer(custom_user):
     # with pytest.raises(AttributeError):
     #     CustomUserSerializer(data={**serializer.data, "dark_mode": False})
     assert (
-        serializer.data.get("user_settings", {}).get("start_week_day") == start_week_day
+        serializer.data.get("user_settings", {}).get("start_week_day")
+        == start_week_day
     )
     assert serializer.data.get("user_settings", {}).get(
         "morning_check_in"
@@ -41,4 +42,6 @@ def test_custom_user_serializer(custom_user):
     assert serializer.data.get("user_settings", {}).get(
         "evening_check_in"
     ) == evening_check_in.strftime("%H:%M:%S")
-    assert serializer.data.get("user_settings", {}).get("user") == custom_user.id
+    assert (
+        serializer.data.get("user_settings", {}).get("user") == custom_user.id
+    )

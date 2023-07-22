@@ -19,13 +19,26 @@ class CustomUserAdmin(UserAdmin):
     form = CustomUserChangeForm
     model = CustomUser
     readonly_fields = ("last_login", "date_joined")
-    list_display = ("email", "first_name", "last_name", "is_active", "is_staff")
+    list_display = (
+        "email",
+        "first_name",
+        "last_name",
+        "is_active",
+        "is_staff",
+    )
     list_filter = ("email", "first_name", "last_name", "is_active", "is_staff")
     fieldsets = (
         (None, {"fields": ("email", "first_name", "last_name", "password")}),
         (
             "Permissions",
-            {"fields": ("is_staff", "is_active", "groups", "user_permissions")},
+            {
+                "fields": (
+                    "is_staff",
+                    "is_active",
+                    "groups",
+                    "user_permissions",
+                )
+            },
         ),
         ("Tracking", {"fields": ("last_login", "date_joined")}),
     )
@@ -62,7 +75,12 @@ class UserSettingsAdmin(admin.ModelAdmin):
 
     model = UserSettings
     readonly_fields = ("created_on", "updated_on")
-    list_display = ("user", "start_week_day", "morning_check_in", "evening_check_in")
+    list_display = (
+        "user",
+        "start_week_day",
+        "morning_check_in",
+        "evening_check_in",
+    )
     fields = ("user", "start_week_day", "morning_check_in", "evening_check_in")
 
 

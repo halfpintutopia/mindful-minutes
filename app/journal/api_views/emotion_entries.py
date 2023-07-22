@@ -83,8 +83,12 @@ class EmotionEntryList(APIView):
                 serializer = EmotionEntrySerializer(data=request.data)
                 if serializer.is_valid():
                     serializer.save(user=request.user)
-                    return Response(serializer.data, status=status.HTTP_201_CREATED)
-                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                    return Response(
+                        serializer.data, status=status.HTTP_201_CREATED
+                    )
+                return Response(
+                    serializer.errors, status=status.HTTP_400_BAD_REQUEST
+                )
 
         raise MethodNotAllowed(request.method)
 
@@ -110,7 +114,9 @@ class EmotionEntryDetail(APIView):
         """
         Retrieve an emotion entry
         """
-        return self._handle_emotion_detail_action(request, slug, date_request, pk)
+        return self._handle_emotion_detail_action(
+            request, slug, date_request, pk
+        )
 
     @swagger_auto_schema(
         request_body=openapi.Schema(
@@ -124,13 +130,17 @@ class EmotionEntryDetail(APIView):
         """
         Update an emotion entry
         """
-        return self._handle_emotion_detail_action(request, slug, date_request, pk)
+        return self._handle_emotion_detail_action(
+            request, slug, date_request, pk
+        )
 
     def delete(self, request, slug, date_request, pk, format=None):
         """
         Delete an emotion entry
         """
-        return self._handle_emotion_detail_action(request, slug, date_request, pk)
+        return self._handle_emotion_detail_action(
+            request, slug, date_request, pk
+        )
 
     def _handle_emotion_detail_action(self, request, slug, date_request, pk):
         """

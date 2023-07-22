@@ -2,10 +2,19 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
 from .forms import CustomUserChangeForm, CustomUserCreationForm
-from .models import (AppointmentEntry, CustomUser, EmotionEntry,
-                     GratitudeEntry, IdeasEntry, ImprovementEntry,
-                     KnowledgeEntry, NoteEntry, TargetEntry, UserSettings,
-                     WinEntry)
+from .models import (
+    AppointmentEntry,
+    CustomUser,
+    EmotionEntry,
+    GratitudeEntry,
+    IdeasEntry,
+    ImprovementEntry,
+    KnowledgeEntry,
+    NoteEntry,
+    TargetEntry,
+    UserSettings,
+    WinEntry,
+)
 
 
 class CustomUserAdmin(UserAdmin):

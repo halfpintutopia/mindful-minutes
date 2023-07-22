@@ -1,9 +1,18 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
-from .models import (AppointmentEntry, EmotionEntry, GratitudeEntry,
-                     IdeasEntry, ImprovementEntry, KnowledgeEntry, NoteEntry,
-                     TargetEntry, UserSettings, WinEntry)
+from .models import (
+    AppointmentEntry,
+    EmotionEntry,
+    GratitudeEntry,
+    IdeasEntry,
+    ImprovementEntry,
+    KnowledgeEntry,
+    NoteEntry,
+    TargetEntry,
+    UserSettings,
+    WinEntry,
+)
 
 User = get_user_model()
 

@@ -3,9 +3,18 @@ from django.contrib.auth import get_user_model
 from faker import Faker
 from rest_framework.test import APIClient
 
-from journal.models import (AppointmentEntry, EmotionEntry, GratitudeEntry,
-                            IdeasEntry, ImprovementEntry, KnowledgeEntry,
-                            NoteEntry, TargetEntry, UserSettings, WinEntry)
+from journal.models import (
+    AppointmentEntry,
+    EmotionEntry,
+    GratitudeEntry,
+    IdeasEntry,
+    ImprovementEntry,
+    KnowledgeEntry,
+    NoteEntry,
+    TargetEntry,
+    UserSettings,
+    WinEntry,
+)
 
 # retrieves the current active user model,
 # which is set as the default user model AUTH_USER_MODEL,

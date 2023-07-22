@@ -1,17 +1,25 @@
 from django.urls import path
 
-from ..api_views.appointment_entries import (AppointmentEntryDetail,
-                                             AppointmentEntryList,
-                                             AppointmentEntryListCreate)
+from ..api_views.appointment_entries import (
+    AppointmentEntryDetail,
+    AppointmentEntryList,
+    AppointmentEntryListCreate,
+)
 from ..api_views.custom_user import CustomUserDetail, CustomUserList
 from ..api_views.emotion_entries import EmotionEntryDetail, EmotionEntryList
-from ..api_views.gratitude_entries import (GratitudeEntryDetail,
-                                           GratitudeEntryList)
+from ..api_views.gratitude_entries import (
+    GratitudeEntryDetail,
+    GratitudeEntryList,
+)
 from ..api_views.ideas_entries import IdeasEntryDetail, IdeasEntryList
-from ..api_views.improvement_entries import (ImprovementEntryDetail,
-                                             ImprovementEntryList)
-from ..api_views.knowledge_entries import (KnowledgeEntryDetail,
-                                           KnowledgeEntryList)
+from ..api_views.improvement_entries import (
+    ImprovementEntryDetail,
+    ImprovementEntryList,
+)
+from ..api_views.knowledge_entries import (
+    KnowledgeEntryDetail,
+    KnowledgeEntryList,
+)
 from ..api_views.note_entries import NoteEntryDetail, NoteEntryList
 from ..api_views.target_entries import TargetEntryDetail, TargetEntryList
 from ..api_views.user_settings import UserSettingsView

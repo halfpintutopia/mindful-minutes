@@ -79,8 +79,8 @@ jobs:
           pip install black==23.3.0 flake8=6.0.0 isort=5.12.0 pytest==7.3.2 pytest-django==4.5.2
           pytest -p no:warnings
           flake8 .
-          isort . --check-only --skip venv
           black . -l 79 --check --exclude=migrations|venv
+          isort . --check-only --skip venv
           export DEBUG=0
           python manage.py check --deploy --fail-level=WARNING
 

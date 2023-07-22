@@ -29,8 +29,8 @@ COPY . .
 # lint
 RUN pip install black==23.3.0 flake8==6.0.0 isort==5.12.0
 RUN flake8 .
-RUN isort . --check-only
 RUN black . -l 79 --check --exclude=migrations|venv
+RUN isort . --check-only
 
 
 #################################################################################################################

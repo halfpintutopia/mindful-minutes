@@ -46,14 +46,20 @@ jobs:
     runs-on: ubuntu-latest # Run the job on an Ubuntu environment
 
     services:
-      - name: postgres:latest
-        alias: postgres
-
-    variables:
-      POSTGRES_DB: ${{ env.DB_NAME }}
-      POSTGRES_USER: ${{ env.DB_USER }}
-      POSTGRES_PASSWORD: ${{ env.DB_PASSWORD }}
-      DATABASE_TEST_URL: postgresql://$POSTGRES_PASSWORD:$POSTGRES_USER@postgres:5432/$POSTGRES_DB
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+        ports:
+          - 5432:5432
+        # Set health checks to wait until postgres has started
+        options: >- 
+          --health-cmd pg_isready 
+          --health-interval 10s 
+          --health-timeout 5s 
+          --health-retries 5
 
     steps:
       - name: Checkout codebase # Step to check the codebase in the repo

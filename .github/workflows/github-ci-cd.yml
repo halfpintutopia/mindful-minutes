@@ -7,7 +7,7 @@ on:
 
 # For authentication in GitHub Actions, use GitHub Container Registry (GHCR) to store the Docker image
 env:
-  IMAGE: ghcr.io/${{ github.repository }}/app:latest
+  IMAGE: ghcr.io/${{ github.repository }}/app
 
 jobs:
   build:

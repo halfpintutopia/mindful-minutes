@@ -19,6 +19,11 @@ RUN apt-get update \
     && apt-get -y install gcc postgresql \
     && apt-get clean
 
+# Create and activate a virual environment
+# To resolve: WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead
+#RUN python -m venv /usr/src/app/venv
+#ENV PATH="/usr/src/app/venv/bin:$PATH"
+
 RUN pip install --upgrade pip
 COPY ./requirements.txt .
 RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels install -r requirements.txt
@@ -29,7 +34,7 @@ COPY . .
 # lint
 RUN pip install black==23.3.0 flake8==6.0.0 isort==5.12.0
 RUN flake8 .
-RUN black . -l 79 --check --exclude=migrations
+RUN black . -l 79 --check --extend-exclude=migrations
 RUN isort . --check-only
 
 
@@ -68,7 +73,7 @@ RUN pip install --no-cache /wheels/*
 COPY . .
 
 # Collect static files
-RUN python manage.py collectstatic --noinput
+RUN #python manage.py collectstatic --noinput
 
 # Best practice to run as non-root user
 # https://devcenter.heroku.com/articles/container-registry-and-runtime#run-the-image-as-a-non-root-user

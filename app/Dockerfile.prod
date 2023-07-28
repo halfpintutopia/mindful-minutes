@@ -58,12 +58,12 @@ ENV DEBUG 0
 ARG SECRET_KEY
 ENV SECRET_KEY $SECRET_KEY
 # Set Cloudinary environment variables from build arguments
-ARG CLOUDINARY_CLOUD_NAME
-ARG CLOUDINARY_API_KEY
-ARG CLOUDINARY_API_SECRET
-ENV CLOUDINARY_CLOUD_NAME=$CLOUDINARY_CLOUD_NAME
-ENV CLOUDINARY_API_KEY=$CLOUDINARY_API_KEY
-ENV CLOUDINARY_API_SECRET=$CLOUDINARY_API_SECRET
+ARG CLOUD_NAME
+ARG API_KEY
+ARG API_SECRET
+ENV CLOUD_NAME $CLOUD_NAME
+ENV API_KEY $API_KEY
+ENV API_SECRET $API_SECRET
 ENV DJANGO_ALLOWED_HOSTS .herokuapp.com
 
 # Install system dependencies
@@ -91,4 +91,4 @@ USER siri
 
 # Start the Django production server https://www.heroku.com/dynos
 # https://devcenter.heroku.com/articles/dynos
-CMD gunicorn mindfulminutes.wsgi:application --bind 0.0.0.0:$PORT
+CMD gunicorn mindfulminutes.wsgi.application --bind 0.0.0.0:$PORT

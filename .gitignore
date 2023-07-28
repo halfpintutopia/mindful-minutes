@@ -12,4 +12,5 @@ env
 *.sqlite3
 .vscode
 venv
-app/.env.dev
+.env.*
+.devcontainer

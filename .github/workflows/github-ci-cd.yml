@@ -55,9 +55,9 @@ jobs:
           context: ./app
           file: app/Dockerfile.prod
           build-args: |
-            CLOUDINARY_CLOUD_NAME=${{ secrets.CLOUDINARY_CLOUD_NAME }}
-            CLOUDINARY_API_KEY=${{ secrets.CLOUDINARY_API_KEY }}
-            CLOUDINARY_API_SECRET=${{ secrets.CLOUDINARY_API_SECRET }}
+            CLOUD_NAME=${{ secrets.CLOUD_NAME }}
+            API_KEY=${{ secrets.API_KEY }}
+            API_SECRET=${{ secrets.API_SECRET }}
 
   test:
     name: Test with pytest, Flake8, Black and isort
@@ -150,9 +150,9 @@ jobs:
           push: false
           tags: ${{ env.IMAGE }}/${{ env.USER }}:${{ env.TAG }}
           build-args: |
-            CLOUDINARY_CLOUD_NAME=${{ secrets.CLOUDINARY_CLOUD_NAME }}
-            CLOUDINARY_API_KEY=${{ secrets.CLOUDINARY_API_KEY }}
-            CLOUDINARY_API_SECRET=${{ secrets.CLOUDINARY_API_SECRET }}
+            CLOUD_NAME=${{ secrets.CLOUD_NAME }}
+            API_KEY=${{ secrets.API_KEY }}
+            API_SECRET=${{ secrets.API_SECRET }}
 
       - name: Login to GitHub Container Registry # Docker login is now done using GITHUB_TOKEN
         uses: docker/login-action@v2

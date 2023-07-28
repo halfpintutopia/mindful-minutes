@@ -1,8 +1,11 @@
 <!-- omit from toc -->
+
 # Mindful Minutes
 
 <!-- omit from toc -->
+
 ## Table of Contents
+
 - [Product Information](#product-information)
 - [UX / UI Design](#ux--ui-design)
     - [Design Thinking](#design-thinking)
@@ -276,8 +279,8 @@ test:
         pip install black==23.3.0 flake8==6.0.0 isort==5.12.0 pytest==7.2.2
         pytest -p no:warnings
         flake8 .
-        black . --check --exclude=migrations
         isort . --check-only --skip env
+        black . --check --exclude=migrations|venv
 ```
 
 - `ubuntu-latest`
@@ -547,32 +550,32 @@ Considered creating a base model or mixin as models most of the models contained
 ```python
 # Creating the base model to be inherited by models
 class BaseModel(models.Model):
-	field_1 = models.CharField(max_length=50)
-	field_2 = models.IntegerField()
-	field_3 = models.TimeField()
-	
-	class Meta:
-		abstract = True
+    field_1 = models.CharField(max_length=50)
+    field_2 = models.IntegerField()
+    field_3 = models.TimeField()
+
+    class Meta:
+        abstract = True
 
 
 # implementation of BaseModel by inheritance as follows:
 class ModelOne(BaseModel):
-	additional_field_1 = models.TextField()
+    additional_field_1 = models.TextField()
 
 
 # Creating the mixin to be reused by models
 class MixinModel(models.Model):
-	field_1 = models.CharField(max_length=50)
-	field_2 = models.IntegerField()
-	field_3 = models.TimeField()
-	
-	class Meta:
-		abstract = True
+    field_1 = models.CharField(max_length=50)
+    field_2 = models.IntegerField()
+    field_3 = models.TimeField()
+
+    class Meta:
+        abstract = True
 
 
 # implementation of reusing the MixinModel
 class ModelTwo(MixinModel):
-	additional_field_1 = models.TextField()
+    additional_field_1 = models.TextField()
 ```
 
 As the models had the exactly the same fields with not additional fields or behaviours, I chose to keep the models
@@ -601,11 +604,29 @@ For further details on testing, click [here](docs/testing/testing.md).
 
 ### References
 
-[Add 'go to top' button on Readme.md](https://github.com/orgs/community/discussions/42712)
+- [Add 'go to top' button on Readme.md](https://github.com/orgs/community/discussions/42712)
+- [How to Create Reusable SVG Icon React Components](https://www.freecodecamp.org/news/how-to-create-reusable-icon-react-components-for-colors-and-sizes-customization/)
+- [Help with snapping nodes to guidelines](https://alpha.inkscape.org/vectors/www.inkscapeforum.com/viewtopic6b46.html?t=18613)
+- [Adobe Express - Convert your image to an SVG for free](https://www.adobe.com/express/feature/image/convert/svg)
+- [CodePen|The Hamburger Menu by Matthew Blode](https://codepen.io/mblode/pen/YzozOm)
+- [CodePen|🍔 <-> ❌ (version 1) by Tomino Martinius](https://codepen.io/Zaku/pen/vYReWM)
+- [CodePen|Menu "Hamburger" Icon Animations by Jesse Couch](https://codepen.io/designcouch/pen/ExvwPY)
+- [Getting started with Variable fonts on the web - Kevin Powell](https://www.youtube.com/watch?v=0fVymQ7SZw0)
+- [Figma Dev Mode is here! - Kevin Powell](https://www.youtube.com/watch?v=063yVWoQvoY)
+- [Responsive navbar tutorial using HTML CSS & JS - Kevin Powell](https://www.youtube.com/watch?v=HbBMp6yUXO0)
+
+#### Definitions
+
+- Web Dyno
+    - a lightweight Linux container used to run a single process, sucha as a web server or a background worker. Dynos
+      are the building blocks of a Heroku application's runtime environment. It refers to the dyno responsible for
+      handling incoming HTTP requests for you web application. It runs the web server specified in the Dockerfile. 
 
 ### Code Used
 
 ### References & Resources
+
+- [Remix Icon - Simply Delightful Icon System](https://remixicon.com/)
 
 #### Additional Courses
 
@@ -628,8 +649,19 @@ For further details on testing, click [here](docs/testing/testing.md).
 
 #### Deployment
 
+- [Heroku Dev Center - The Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)
 - [How to use Environment Variables in Django](https://codinggear.blog/django-environment-variables/)
 - [Django Deployment checklist](https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/)
+
+##### Issues / Bugs
+
+- [Error saving credentials: error storing credentials - err: exit status 1, out: `error getting credentials - err: exit status 1](https://stackoverflow.com/questions/71770693/error-saving-credentials-error-storing-credentials-err-exit-status-1-out)
+- [How to make isort black compatible. Original Question: isort conflicts with black?](https://github.com/PyCQA/isort/issues/1518)
+- [Configuration via a file](https://black.readthedocs.io/en/stable/usage_and_configuration/the_basics.html#configuration-via-a-file)
+- [How can I stop black formatter from formatting migrations files of a Django project?](https://www.reddit.com/r/django/comments/w1qgyn/how_can_i_stop_black_formatter_from_formatting/)
+- [Pushed docker image to registry.heroku.com via Github actions but it doesn't show up anywhere? ](https://www.reddit.com/r/Heroku/comments/tdyx2x/comment/i0sz50k/)
+- [H14 error in heroku - "no web processes running"](https://stackoverflow.com/questions/41804507/h14-error-in-heroku-no-web-processes-running)
+- [Causes of Heroku H10-App Crashed Error And How To Solve Them](https://dev.to/lawrence_eagles/causes-of-heroku-h10-app-crashed-error-and-how-to-solve-them-3jnl)
 
 #### CI / CD
 
@@ -645,6 +677,7 @@ For further details on testing, click [here](docs/testing/testing.md).
 - [This is a good starting point getting Python, Django, Postgres running as a service, pytest, black and pip caching rolling with GitHub Actions](https://gist.github.com/jefftriplett/d35e120ef9884bcff61c5ade0740f52d)
 - [Setup postgres in GitHub Actions for Django](https://stackoverflow.com/questions/63066240/setup-postgres-in-github-actions-for-django)
 - [GitHub Actions - Variables](https://docs.github.com/en/actions/learn-github-actions/variables)
+- [How to connect to Postgres in GitHub Actions](https://stackoverflow.com/questions/57915791/how-to-connect-to-postgres-in-github-actions)
 
 #### Django
 
@@ -654,11 +687,16 @@ For further details on testing, click [here](docs/testing/testing.md).
 - [Getting the Most Out of the Django's User Model](https://www.youtube.com/watch?v=sXZ3ntGp_Xc)
 - [Django - Extend User Model](https://simpleisbetterthancomplex.com/tutorial/2016/07/22/how-to-extend-django-user-model.html)
 
+##### Python Dependencies / Packages
+
+- [How to Auto-Format Your Python Code with Black](https://www.freecodecamp.org/news/auto-format-your-python-code-with-black/)
+
 #### Heroku
 
 - [How should I generate an API key that allows me to use Heroku Platform API?](https://help.heroku.com/PBGP6IDE/how-should-i-generate-an-api-key-that-allows-me-to-use-the-heroku-platform-api)
 - [Getting Started with the Platform API](https://devcenter.heroku.com/articles/platform-api-quickstart)
-  . [Heroku CLI Authentication](https://devcenter.heroku.com/articles/authentication)
+- [Heroku CLI Authentication](https://devcenter.heroku.com/articles/authentication)
+- [Heroku CLI Commands](https://devcenter.heroku.com/articles/heroku-cli-commands)
 
 #### Testing
 
@@ -671,6 +709,7 @@ For further details on testing, click [here](docs/testing/testing.md).
 - [Testing in Django with Selenium](https://ordinarycoders.com/blog/article/testing-django-selenium)
 - [How to authorize user in Django testing REST framework APIClient post method](https://stackoverflow.com/questions/70967642/how-to-authorize-user-in-django-testing-rest-framework-apiclient-post-method)
 - [Freezegun](https://github.com/spulec/freezegun)
+- [Pycharm|Pytest](https://www.jetbrains.com/help/pycharm/pytest.html)
 
 #### Django
 

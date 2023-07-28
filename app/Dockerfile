@@ -20,11 +20,11 @@ COPY ./requirements-dev.txt /usr/src/app/requirements-dev.txt
 RUN pip install -r requirements-dev.txt
 
 # Copy entrypoint and update permissions
-COPY ./scripts/entrypoint.sh /usr/src/app/scripts/entrypoint.sh
-RUN chmod +x /usr/src/app/scripts/entrypoint.sh
+COPY ./entrypoint.sh /usr/src/app/entrypoint.sh
+RUN chmod +x /usr/src/app/entrypoint.sh
 
 # Copy the entire project directory to the working directory
 COPY . .
 
 # Run entrypoint.sh
-ENTRYPOINT ["/usr/src/app/scripts/entrypoint.sh"]
+ENTRYPOINT ["/usr/src/app/entrypoint.sh"]

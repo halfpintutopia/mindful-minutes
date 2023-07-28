@@ -21,6 +21,7 @@ jobs:
       IMAGE: ghcr.io/${{ github.repository }}
       TAG: latest
       DJANGO_ALLOWED_HOSTS: .herokuapp.com
+      CLOUDINARY_URL: ${{ secrets.CLOUDINARY_URL }} # Use the secret as an environment variable
 
     steps:
       - name: Checkout codebase # Step to check the codebase in the repo

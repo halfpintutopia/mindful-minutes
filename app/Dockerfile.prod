@@ -5,7 +5,7 @@
 #################################################################################################################
 
 # Use an official Python runtime as the base image
-FROM python:3.10.6 as builder
+FROM python:3.11 as builder
 
 # Set the working directory in the container
 WORKDIR /usr/src/app
@@ -33,7 +33,7 @@ COPY . .
 
 # lint
 RUN pip install black==23.3.0 flake8==6.0.0 isort==5.12.0
-RUN flake8 .
+RUN flake8 . --exclude="migrations"
 RUN black . -l 79 --check --extend-exclude=migrations
 RUN isort . --check-only
 
@@ -46,7 +46,7 @@ RUN isort . --check-only
 #################################################################################################################
 
 # Use an official Python runtime as the base image
-FROM python:3.10.6
+FROM python:3.11
 
 # Set the working directory in the container
 WORKDIR /usr/src/app
@@ -55,6 +55,7 @@ WORKDIR /usr/src/app
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 ENV DEBUG 0
+ARG SECRET_KEY
 ENV SECRET_KEY $SECRET_KEY
 ENV DJANGO_ALLOWED_HOSTS .herokuapp.com
 
@@ -73,7 +74,7 @@ RUN pip install --no-cache /wheels/*
 COPY . .
 
 # Collect static files
-RUN #python manage.py collectstatic --noinput
+RUN python manage.py collectstatic --noinput
 
 # Best practice to run as non-root user
 # https://devcenter.heroku.com/articles/container-registry-and-runtime#run-the-image-as-a-non-root-user
@@ -81,5 +82,6 @@ RUN #python manage.py collectstatic --noinput
 RUN adduser --disabled-password siri
 USER siri
 
-# Start the Django production server
+# Start the Django production server https://www.heroku.com/dynos
+# https://devcenter.heroku.com/articles/dynos
 CMD gunicorn mindfulminutes.wsgi:application --bind 0.0.0.0:$PORT

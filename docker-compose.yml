@@ -14,7 +14,7 @@ services:
       - app-db
   # Database service https://hub.docker.com/_/postgres
   app-db:
-    image: postgres:15.3
+    image: postgres:10.3
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     environment:

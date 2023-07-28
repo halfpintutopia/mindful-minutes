@@ -54,8 +54,8 @@ jobs:
         with:
           context: ./app
           file: app/Dockerfile.prod
-        build-args: |
-          CLOUDINARY_URL=${{ secrets.CLOUDINARY_URL }}
+          build-args: |
+            CLOUDINARY_URL=${{ secrets.CLOUDINARY_URL }}
 
 
   test:

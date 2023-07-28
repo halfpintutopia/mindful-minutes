@@ -21,6 +21,7 @@ jobs:
       IMAGE: ghcr.io/${{ github.repository }}
       TAG: latest
       DJANGO_ALLOWED_HOSTS: .herokuapp.com
+      CLOUDINARY_URL: ${{ secrets.CLOUDINARY_URL }} # This needs to be set in repo SECRET
 
     steps:
       - name: Checkout codebase # Step to check the codebase in the repo
@@ -118,7 +119,7 @@ jobs:
   # GitHub Actions provides a Docker container environment that is automatically used for running Docker commands
   deploy:
     name: Deploy to production # Step to deploy to production
-    needs: build # Dependency on build job
+    needs: test # Dependency on test job
     runs-on: ubuntu-latest # Run the job on an Ubuntu environment
 
     steps:

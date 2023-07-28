@@ -2,6 +2,8 @@
 
 # Mindful Minutes
 
+[![Django CI/CD](https://github.com/halfpintutopia/temp-tdd-django-project/actions/workflows/github-ci-cd.yml/badge.svg)](https://github.com/halfpintutopia/temp-tdd-django-project/actions/workflows/github-ci-cd.yml)
+
 <!-- omit from toc -->
 
 ## Table of Contents

@@ -149,6 +149,10 @@ jobs:
           file: ./app/Dockerfile.prod
           push: false
           tags: ${{ env.IMAGE }}/${{ env.USER }}:${{ env.TAG }}
+          build-args: |
+            CLOUDINARY_CLOUD_NAME=${{ secrets.CLOUDINARY_CLOUD_NAME }}
+            CLOUDINARY_API_KEY=${{ secrets.CLOUDINARY_API_KEY }}
+            CLOUDINARY_API_SECRET=${{ secrets.CLOUDINARY_API_SECRET }}
 
       - name: Login to GitHub Container Registry # Docker login is now done using GITHUB_TOKEN
         uses: docker/login-action@v2

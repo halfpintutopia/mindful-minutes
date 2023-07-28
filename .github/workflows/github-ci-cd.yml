@@ -21,7 +21,6 @@ jobs:
       IMAGE: ghcr.io/${{ github.repository }}
       TAG: latest
       DJANGO_ALLOWED_HOSTS: .herokuapp.com
-      CLOUDINARY_URL: ${{ secrets.CLOUDINARY_URL }} # This needs to be set in repo SECRET
 
     steps:
       - name: Checkout codebase # Step to check the codebase in the repo
@@ -55,6 +54,8 @@ jobs:
         with:
           context: ./app
           file: app/Dockerfile.prod
+        build-args: |
+          CLOUDINARY_URL=${{ secrets.CLOUDINARY_URL }}
 
 
   test:

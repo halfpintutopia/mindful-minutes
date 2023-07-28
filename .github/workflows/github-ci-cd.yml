@@ -55,6 +55,7 @@ jobs:
           context: ./app
           file: app/Dockerfile.prod
 
+
   test:
     name: Test with pytest, Flake8, Black and isort
     needs: build
@@ -108,6 +109,7 @@ jobs:
           export DEBUG=0
           python manage.py check --deploy --fail-level=WARNING
         working-directory: app
+
 
   # https://docs.github.com/en/actions/creating-actions/creating-a-docker-container-action
   # docker: dind (Docker in Docker) start Docker container with Docker installed - allows for CI/CD to run Docker commands inside the container.

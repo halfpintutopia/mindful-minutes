@@ -155,10 +155,8 @@ jobs:
             API_KEY=${{ secrets.API_KEY }}
             API_SECRET=${{ secrets.API_SECRET }}
 
-      - name: Login to Heroku Container registry
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        run: heroku container:login
+      - name: Login to Heroku Container registry # https://dev.to/heroku/deploying-to-heroku-from-github-actions-29ej
+        run: echo ${{ secrets.HEROKU_AUTH_TOKEN }} | docker login --username=_ --password-stdin registry.heroku.com
 
       - name: Push the image to Heroku Container Registry
         run: docker tag ${{ env.IMAGE }}/${{ env.USER }}:${{ env.TAG }} registry.heroku.com/${{ env.HEROKU_APP_NAME }}/web && docker push registry.heroku.com/${{ env.HEROKU_APP_NAME }}/web

@@ -21,8 +21,6 @@ ENV_FILE = find_dotenv()
 if ENV_FILE:
     load_dotenv()
 
-development = os.environ.get("DEVELOPMENT", False)
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
@@ -34,14 +32,11 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
 SECRET_KEY = os.environ.get("SECRET_KEY", "")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-if development:
-    DEBUG = True
-else:
-    DEBUG = False
+DEBUG = int(os.environ.get("DEBUG", default=0))
 
 ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
 
-if not development:
+if not DEBUG:
     # Instruct web browser to remember the HSTS policy for 3600 secs (1
     # hour), in this time if the user tries to access the website using HTTP
     # the browser automatically converts it to HTTPS - mitigates the risk of
@@ -218,7 +213,7 @@ ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = "email"
 
 # Disable the Browsable API in production
-if not development:
+if not DEBUG:
     REST_FRAMEWORK = {
         "DEFAULT_RENDERER_CLASSES": ("rest_framework.renderers.JSONRenderer",)
     }

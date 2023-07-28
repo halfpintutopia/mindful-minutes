@@ -191,9 +191,14 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 # Configure the handling of static files
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
-MEDIA_URL = "/media/"
 # Replace 'your_cloudinary_url_here' with your actual Cloudinary URL
+# CLOUDINARY_STORAGE = {
+#     'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
+#     'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
+#     'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
+# }
 CLOUDINARY_URL = os.environ.get("CLOUDINARY_URL")
+MEDIA_URL = "/media/"
 DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
 # Default primary key field type

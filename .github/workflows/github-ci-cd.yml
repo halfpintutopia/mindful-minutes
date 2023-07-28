@@ -7,12 +7,20 @@ on:
 
 # For authentication in GitHub Actions, use GitHub Container Registry (GHCR) to store the Docker image
 env:
-  IMAGE: ghcr.io/${{ github.repository }}/app
+  IMAGE: ghcr.io/${{ github.repository }}
+  USER: app
+  TAG: latest
+  DJANGO_ALLOWED_HOSTS: .herokuapp.com
+  HEROKU_APP_NAME: boiling-dawn-92103
 
 jobs:
   build:
     name: Build and Push Docker Image
     runs-on: ubuntu-latest
+    env:
+      IMAGE: ghcr.io/${{ github.repository }}
+      TAG: latest
+      DJANGO_ALLOWED_HOSTS: .herokuapp.com
 
     steps:
       - name: Checkout codebase # Step to check the codebase in the repo
@@ -21,30 +29,38 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.11
+          python-version: '3.11'
+
+      - name: Use Docker Build Cache # Ensure cache is only used when the `Dockerfile` has not changed - utilising Docker build to improve the build speed and efficiency
+        uses: actions/cache@v3 # https://github.com/actions/cache caching the Docker build cache directory using a key that includes the OS and has of the `Dockerfile`
+        with:
+          path: /var/lib/docker
+          key: ${{ runner.os }}-docker-${{ hashFiles('app/Dockerfile.prod') }}
+          restore-keys: |
+            ${{ runner.os }}-docker-
 
       - name: Login to GitHub Container Registry # Docker login is now done using GITHUB_TOKEN
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Pull Docker image # Step to pull the latest Docker image
-        run: docker pull $IMAGE:latest || true
+      - name: Pull Docker image # Step to pull the latest Docker image if exists
+        run: docker pull $IMAGE:$TAG || true
 
       - name: Build Docker image # Step to build the Docker image
-        run: |
-          cd app
-          docker build \
-            --cache-from $IMAGE:latest \
-            --tag $IMAGE:latest \
-            --file ./Dockerfile.prod \
-            --build-arg SECRET_KEY=$SECRET_KEY \
-            .
-          docker push $IMAGE:latest
+        uses: docker/build-push-action@v3
+        with:
+          context: ./app
+          file: app/Dockerfile.prod
 
   test:
-    name: Test
+    name: Test with pytest, Flake8, Black and isort
     needs: build
     runs-on: ubuntu-latest # Run the job on an Ubuntu environment
-
+    env:
+      SECRET_KEY: ${{ secrets.SECRET_KEY }} # This needs to be set in repo SECRET
     services:
       postgres:
         image: postgres:10.3
@@ -68,21 +84,30 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          pyhon-version: 3.10
+          pyhon-version: '3.11'
+
+      - name: Create and activate virtual environment
+        run: |
+          python -m venv app/env
+          source app/env/bin/activate
+        working-directory: app
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
-
-      - name: Lint with Flake8, Black and isort # Step to run code linting
         run: |
-          cd app
-          pip install black==23.3.0 flake8=6.0.0 isort=5.12.0 pytest==7.3.2 pytest-django==4.5.2
+          pip install -r requirements.txt
+          pip install black==23.3.0 flake8==6.0.0 isort==5.12.0 pytest==7.3.1 pytest-django==4.5.2
+        working-directory: app
+
+      - name: Run tests and linting and run Django deployment checklist # Step to run code linting
+        run: |
+          export DEBUG=1
           pytest -p no:warnings
           flake8 .
-          black . -l 79 --check --exclude=migrations|venv
-          isort . --check-only --skip venv
+          black . --line-length=79 --extend-exclude="migrations|env|venv"
+          isort . --check-only --skip env
           export DEBUG=0
           python manage.py check --deploy --fail-level=WARNING
+        working-directory: app
 
   # https://docs.github.com/en/actions/creating-actions/creating-a-docker-container-action
   # docker: dind (Docker in Docker) start Docker container with Docker installed - allows for CI/CD to run Docker commands inside the container.
@@ -91,30 +116,54 @@ jobs:
   # GitHub Actions provides a Docker container environment that is automatically used for running Docker commands
   deploy:
     name: Deploy to production # Step to deploy to production
-    needs: test # Dependency on test job
+    needs: build # Dependency on build job
     runs-on: ubuntu-latest # Run the job on an Ubuntu environment
 
     steps:
+      - name: Install cURL
+        run: sudo apt-get install -y curl
+
       - name: Checkout codebase # Step to check the codebase in the repo
         uses: actions/checkout@v3 # Uses the official checkout action
 
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.10
+          python-version: '3.11'
 
-      - name: Deploy to Heroku
-        env:
-          HEROKU_APP_NAME: boiling-dawn-92103
-          HEROKU_REGISTRY_IMAGE: registry.heroku.com/${HEROKU_APP_NAME}/web
+      - name: Log in to GitHub Container Registry (ghcr)
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and tag new image
+        uses: docker/build-push-action@v3
+        with:
+          context: ./app
+          file: ./app/Dockerfile.prod
+          push: false
+          tags: ${{ env.IMAGE }}/${{ env.USER }}:${{ env.TAG }}
+
+      - name: Login to GitHub Container Registry # Docker login is now done using GITHUB_TOKEN
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push the image to Heroku Container Registry
+        run: docker tag ${{ env.IMAGE }}/${{ env.USER }}:${{ env.TAG }} registry.heroku.com/${{ env.HEROKU_APP_NAME }}/web && docker push registry.heroku.com/${{ env.HEROKU_APP_NAME }}/web
+
+      - name: Execute release.sh
         run: |
-          cd app
-          docker build \
-            --tag $HEROKU_REGISTRY_IMAGE \
-            --file ./Dockerfile.prod \
-            --build-arg SECRET_KEY=$SECRET_KEY \
-            .
-          docker login -u _ -p ${{ secrets.HEROKU_AUTH_TOKEN }} registry.heroku.com
-          docker push $HEROKU_REGISTRY_IMAGE
-          chmod +x ./release.sh
+          chmod +x release.sh
           ./release.sh
+
+  debug_trace:
+    name: Enable Debug Trace
+    runs-on: ubuntu-latest
+    steps:
+      - name: Enable Debug Trace
+        run: echo "DEBUG_TRACE=true" >> $GITHUB_ENV

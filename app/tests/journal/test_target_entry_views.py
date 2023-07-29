@@ -31,7 +31,7 @@ def test_get_list_of_target_entries(authenticated_user, add_target_entry):
     for target, order in target_entries:
         add_target_entry(user=user, title=target, order=order)
 
-    url = reverse("target-entry-list-all", args=[user.slug])
+    url = reverse("target-entry-list", args=[user.slug])
 
     res = client.get(url)
 
@@ -58,7 +58,7 @@ def test_add_target_entry(authenticated_user):
         "user": user.id,
     }
 
-    url = reverse("target-entry-list-date", args=[user.slug, current_date])
+    url = reverse("target-entry-date-list", args=[user.slug, current_date])
 
     res = client.post(
         url, json.dumps(target_data), content_type="application/json"
@@ -102,7 +102,7 @@ def test_add_target_entry_incorrect_json(authenticated_user, test_data):
 
     test_data["payload"]["user"] = user.id
 
-    url = reverse("target-entry-list-date", args=[user.slug, current_date])
+    url = reverse("target-entry-date-list", args=[user.slug, current_date])
 
     res = client.post(
         url, json.dumps(test_data["payload"]), content_type="application/json"
@@ -133,7 +133,7 @@ def test_add_target_entry_not_current_date(authenticated_user, date_param):
         "user": user.id,
     }
 
-    url = reverse("target-entry-list-date", args=[user.slug, date_param])
+    url = reverse("target-entry-date-list", args=[user.slug, date_param])
 
     res = client.post(url, target_data, content_type="application/json")
 
@@ -161,7 +161,7 @@ def test_get_single_target_entry(authenticated_user, add_target_entry):
     )
 
     url = reverse(
-        "target-entry-detail-single",
+        "target-entry-detail",
         args=[user.slug, current_date, target_entry.id],
     )
 
@@ -188,7 +188,7 @@ def test_get_single_target_entry_incorrect_id(
     invalid_id = 14258
 
     url = reverse(
-        "target-entry-detail-single",
+        "target-entry-detail",
         args=[user.slug, current_date, invalid_id],
     )
 
@@ -238,7 +238,7 @@ def test_get_all_target_entries_by_current_date(
         user=user,
     )
 
-    url = reverse("target-entry-list-date", args=[user.slug, current_date])
+    url = reverse("target-entry-date-list", args=[user.slug, current_date])
 
     res = client.get(url)
 
@@ -297,7 +297,7 @@ def test_get_all_target_entries_by_date(
             user=user,
         )
 
-    url = reverse("target-entry-list-date", args=[user.slug, date_and_time[0]])
+    url = reverse("target-entry-date-list", args=[user.slug, date_and_time[0]])
     res = client.get(url)
 
     assert res.status_code == status.HTTP_200_OK
@@ -330,7 +330,7 @@ def test_remove_target_entry(authenticated_user, add_target_entry):
     target_date = target_entry.created_on.strftime("%Y-%m-%d")
 
     url = reverse(
-        "target-entry-detail-single",
+        "target-entry-detail",
         args=[user.slug, target_date, target_entry.id],
     )
 
@@ -345,7 +345,7 @@ def test_remove_target_entry(authenticated_user, add_target_entry):
     assert res_delete.status_code == status.HTTP_204_NO_CONTENT
 
     url_retrieve = reverse(
-        "target-entry-list-date", args=[user.slug, target_date]
+        "target-entry-date-list", args=[user.slug, target_date]
     )
 
     res_retrieve = client.get(url_retrieve, content_type="application/json")
@@ -375,7 +375,7 @@ def test_remove_target_invalid_id(authenticated_user):
     client, user = authenticated_user
 
     url = reverse(
-        "target-entry-detail-single",
+        "target-entry-detail",
         args=[user.slug, current_date, invalid_id],
     )
 
@@ -416,7 +416,7 @@ def test_remove_target_not_current_date(
         )
 
     url = reverse(
-        "target-entry-detail-single",
+        "target-entry-detail",
         args=[user.slug, date_and_time[0], target_entry.id],
     )
 
@@ -474,7 +474,7 @@ def test_update_target_entry(authenticated_user, add_target_entry, test_data):
     test_data["payload"]["user"] = user.id
 
     url = reverse(
-        "target-entry-detail-single",
+        "target-entry-detail",
         args=[user.slug, current_date, target_entry.id],
     )
 
@@ -523,7 +523,7 @@ def test_update_target_entry_incorrect_data(
     }
 
     url = reverse(
-        "target-entry-detail-single",
+        "target-entry-detail",
         args=[user.slug, current_date, invalid_id],
     )
 
@@ -559,7 +559,7 @@ def test_update_target_entry_incorrect_date(
         )
 
     url = reverse(
-        "target-entry-detail-single",
+        "target-entry-detail",
         args=[user.slug, date_and_time[0], target_entry.id],
     )
 
@@ -602,7 +602,7 @@ def test_update_target_entry_invalid_json(
     )
 
     url = reverse(
-        "target-entry-detail-single",
+        "target-entry-detail",
         args=[user.slug, current_date, target_entry.id],
     )
 

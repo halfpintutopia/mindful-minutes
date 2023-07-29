@@ -17,65 +17,82 @@ class WinEntryList(APIView):
     """
     List all win entries or create a new win entry
     """
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, slug):
+        """
+        List all win entries
+        """
+        if request.method == "GET":
+            if request.user.slug == slug:
+
+                win_entries = WinEntry.objects.all()
+
+                serializer = WinEntrySerializer(
+                    win_entries, many=True
+                )
+                return Response(serializer.data)
+
+            raise MethodNotAllowed(request.method)
+
+
+class WinEntryListCreate(APIView):
+    """
+    List or create win entries for a specific date
+    """
 
     permission_classes = [IsAuthenticated]
 
-    def get(self, request, slug, date_request=None, format=None):
+    def get(self, request, slug, date_request=None):
         """
         List all win entries or filter by date
         """
-        return self._handle_win_list_action(request, slug, date_request)
+        if request.user.slug == slug:
+            if date_request is not None:
+                try:
+                    requested_date = date.fromisoformat(date_request)
+                except ValueError:
+                    return Response(
+                        {
+                            "error": "Invalid date format. Please user "
+                            "YYYY-MM-DD."
+                        },
+                        status=status.HTTP_400_BAD_REQUEST,
+                    )
+                win_entries = WinEntry.objects.filter(
+                    created_on__date=requested_date
+                )
+
+                serializer = WinEntrySerializer(
+                    win_entries, many=True
+                )
+                return Response(serializer.data)
+
+        raise MethodNotAllowed(request.method)
 
     @swagger_auto_schema(
         request_body=openapi.Schema(
             type=openapi.TYPE_OBJECT,
             properties={
                 "title": openapi.Schema(type=openapi.TYPE_STRING),
+                "date": openapi.Schema(type=openapi.TYPE_STRING),
+                "time_from": openapi.Schema(type=openapi.TYPE_STRING),
+                "time_until": openapi.Schema(type=openapi.TYPE_STRING),
             },
         )
     )
-    def post(self, request, slug, date_request, format=None):
+    def post(self, request, slug, date_request=None):
         """
         Create a new win entry
         """
-        return self._handle_win_list_action(request, slug, date_request)
-
-    def _handle_win_list_action(self, request, slug, date_request):
-        """
-        Private helper method to handle both GET and POST requests
-
-        Check if request is allowed based on the date and either
-        lists all win entries or creates a new win entry
-        """
-        if request.method == "GET":
-            if request.user.slug == slug:
-                if date_request is not None:
-                    try:
-                        requested_date = date.fromisoformat(date_request)
-                    except ValueError:
-                        return Response(
-                            {
-                                "error": "Invalid date format. Please user "
-                                "YYYY-MM-DD."
-                            },
-                            status=status.HTTP_400_BAD_REQUEST,
-                        )
-                    win_entries = WinEntry.objects.filter(
-                        created_on__date=requested_date
-                    )
-                else:
-                    win_entries = WinEntry.objects.all()
-
-                serializer = WinEntrySerializer(win_entries, many=True)
-                return Response(serializer.data)
-
         if request.method == "POST":
             if request.user.slug == slug:
                 current_date = date.today().strftime("%Y-%m-%d")
                 if date_request != current_date:
                     return Response(
                         {
-                            "error": "You are not allowed to change wins \
+                            "error": "You are not allowed to change "
+                            "wins \
                                     for past or future dates."
                         },
                         status=status.HTTP_403_FORBIDDEN,
@@ -95,14 +112,14 @@ class WinEntryList(APIView):
 
 class WinEntryDetail(APIView):
     """
-    Retrieve, update or delete an win entry
+    Retrieve, update or delete a win entry
     """
 
     permission_classes = [IsAuthenticated]
 
     def get_object(self, pk):
         """
-        Helper method to get an win entry object from the database
+        Helper method to get a win entry object from the database
         or raise a 404 error
         """
         try:
@@ -110,38 +127,49 @@ class WinEntryDetail(APIView):
         except WinEntry.DoesNotExist:
             raise Http404
 
-    def get(self, request, slug, date_request, pk, format=None):
+    def get(self, request, slug, date_request, pk):
         """
-        Retrieve an win entry
+        Retrieve a win entry
         """
-        return self._handle_win_detail_action(request, slug, date_request, pk)
+        return self._handle_win_detail_action(
+            request, slug, date_request, pk
+        )
 
     @swagger_auto_schema(
         request_body=openapi.Schema(
             type=openapi.TYPE_OBJECT,
             properties={
                 "title": openapi.Schema(type=openapi.TYPE_STRING),
+                "date": openapi.Schema(type=openapi.TYPE_STRING),
+                "time_from": openapi.Schema(type=openapi.TYPE_STRING),
+                "time_until": openapi.Schema(type=openapi.TYPE_STRING),
             },
         )
     )
-    def put(self, request, slug, date_request, pk, format=None):
+    def put(self, request, slug, date_request, pk):
         """
-        Update an win entry
+        Update a win entry
         """
-        return self._handle_win_detail_action(request, slug, date_request, pk)
+        return self._handle_win_detail_action(
+            request, slug, date_request, pk
+        )
 
-    def delete(self, request, slug, date_request, pk, format=None):
+    def delete(self, request, slug, date_request, pk):
         """
-        Delete an win entry
+        Delete a win entry
         """
-        return self._handle_win_detail_action(request, slug, date_request, pk)
+        return self._handle_win_detail_action(
+            request, slug, date_request, pk
+        )
 
-    def _handle_win_detail_action(self, request, slug, date_request, pk):
+    def _handle_win_detail_action(
+        self, request, slug, date_request, pk
+    ):
         """
         Private helper method to handle GET, PUT and DELETE requests
 
         Check if request is allowed based on date and
-        either retrieve, update or delete an win entry
+        either retrieve, update or delete a win entry
         """
         current_date = date.today().strftime("%Y-%m-%d")
         if date_request != current_date:
@@ -152,6 +180,7 @@ class WinEntryDetail(APIView):
                 },
                 status=status.HTTP_403_FORBIDDEN,
             )
+
         if request.user.slug == slug:
             if pk is not None:
                 try:

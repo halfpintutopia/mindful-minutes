@@ -17,65 +17,82 @@ class IdeasEntryList(APIView):
     """
     List all ideas entries or create a new ideas entry
     """
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, slug):
+        """
+        List all ideas entries
+        """
+        if request.method == "GET":
+            if request.user.slug == slug:
+
+                ideas_entries = IdeasEntry.objects.all()
+
+                serializer = IdeasEntrySerializer(
+                    ideas_entries, many=True
+                )
+                return Response(serializer.data)
+
+            raise MethodNotAllowed(request.method)
+
+
+class IdeasEntryListCreate(APIView):
+    """
+    List or create ideas entries for a specific date
+    """
 
     permission_classes = [IsAuthenticated]
 
-    def get(self, request, slug, date_request=None, format=None):
+    def get(self, request, slug, date_request=None):
         """
         List all ideas entries or filter by date
         """
-        return self._handle_ideas_list_action(request, slug, date_request)
+        if request.user.slug == slug:
+            if date_request is not None:
+                try:
+                    requested_date = date.fromisoformat(date_request)
+                except ValueError:
+                    return Response(
+                        {
+                            "error": "Invalid date format. Please user "
+                            "YYYY-MM-DD."
+                        },
+                        status=status.HTTP_400_BAD_REQUEST,
+                    )
+                ideas_entries = IdeasEntry.objects.filter(
+                    created_on__date=requested_date
+                )
+
+                serializer = IdeasEntrySerializer(
+                    ideas_entries, many=True
+                )
+                return Response(serializer.data)
+
+        raise MethodNotAllowed(request.method)
 
     @swagger_auto_schema(
         request_body=openapi.Schema(
             type=openapi.TYPE_OBJECT,
             properties={
-                "content": openapi.Schema(type=openapi.TYPE_STRING),
+                "title": openapi.Schema(type=openapi.TYPE_STRING),
+                "date": openapi.Schema(type=openapi.TYPE_STRING),
+                "time_from": openapi.Schema(type=openapi.TYPE_STRING),
+                "time_until": openapi.Schema(type=openapi.TYPE_STRING),
             },
         )
     )
-    def post(self, request, slug, date_request, format=None):
+    def post(self, request, slug, date_request=None):
         """
         Create a new ideas entry
         """
-        return self._handle_ideas_list_action(request, slug, date_request)
-
-    def _handle_ideas_list_action(self, request, slug, date_request):
-        """
-        Private helper method to handle both GET and POST requests
-
-        Check if request is allowed based on the date and either
-        lists all ideas entries or creates a new ideas entry
-        """
-        if request.method == "GET":
-            if request.user.slug == slug:
-                if date_request is not None:
-                    try:
-                        requested_date = date.fromisoformat(date_request)
-                    except ValueError:
-                        return Response(
-                            {
-                                "error": "Invalid date format. Please user "
-                                "YYYY-MM-DD."
-                            },
-                            status=status.HTTP_400_BAD_REQUEST,
-                        )
-                    ideas_entries = IdeasEntry.objects.filter(
-                        created_on__date=requested_date
-                    )
-                else:
-                    ideas_entries = IdeasEntry.objects.all()
-
-                serializer = IdeasEntrySerializer(ideas_entries, many=True)
-                return Response(serializer.data)
-
         if request.method == "POST":
             if request.user.slug == slug:
                 current_date = date.today().strftime("%Y-%m-%d")
                 if date_request != current_date:
                     return Response(
                         {
-                            "error": "You are not allowed to change ideass \
+                            "error": "You are not allowed to change "
+                            "ideass \
                                     for past or future dates."
                         },
                         status=status.HTTP_403_FORBIDDEN,
@@ -110,7 +127,7 @@ class IdeasEntryDetail(APIView):
         except IdeasEntry.DoesNotExist:
             raise Http404
 
-    def get(self, request, slug, date_request, pk, format=None):
+    def get(self, request, slug, date_request, pk):
         """
         Retrieve an ideas entry
         """
@@ -122,11 +139,14 @@ class IdeasEntryDetail(APIView):
         request_body=openapi.Schema(
             type=openapi.TYPE_OBJECT,
             properties={
-                "content": openapi.Schema(type=openapi.TYPE_STRING),
+                "title": openapi.Schema(type=openapi.TYPE_STRING),
+                "date": openapi.Schema(type=openapi.TYPE_STRING),
+                "time_from": openapi.Schema(type=openapi.TYPE_STRING),
+                "time_until": openapi.Schema(type=openapi.TYPE_STRING),
             },
         )
     )
-    def put(self, request, slug, date_request, pk, format=None):
+    def put(self, request, slug, date_request, pk):
         """
         Update an ideas entry
         """
@@ -134,7 +154,7 @@ class IdeasEntryDetail(APIView):
             request, slug, date_request, pk
         )
 
-    def delete(self, request, slug, date_request, pk, format=None):
+    def delete(self, request, slug, date_request, pk):
         """
         Delete an ideas entry
         """
@@ -142,7 +162,9 @@ class IdeasEntryDetail(APIView):
             request, slug, date_request, pk
         )
 
-    def _handle_ideas_detail_action(self, request, slug, date_request, pk):
+    def _handle_ideas_detail_action(
+        self, request, slug, date_request, pk
+    ):
         """
         Private helper method to handle GET, PUT and DELETE requests
 
@@ -158,6 +180,7 @@ class IdeasEntryDetail(APIView):
                 },
                 status=status.HTTP_403_FORBIDDEN,
             )
+
         if request.user.slug == slug:
             if pk is not None:
                 try:

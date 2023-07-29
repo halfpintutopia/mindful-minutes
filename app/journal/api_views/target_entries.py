@@ -17,66 +17,82 @@ class TargetEntryList(APIView):
     """
     List all target entries or create a new target entry
     """
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, slug):
+        """
+        List all target entries
+        """
+        if request.method == "GET":
+            if request.user.slug == slug:
+
+                target_entries = TargetEntry.objects.all()
+
+                serializer = TargetEntrySerializer(
+                    target_entries, many=True
+                )
+                return Response(serializer.data)
+
+            raise MethodNotAllowed(request.method)
+
+
+class TargetEntryListCreate(APIView):
+    """
+    List or create target entries for a specific date
+    """
 
     permission_classes = [IsAuthenticated]
 
-    def get(self, request, slug, date_request=None, format=None):
+    def get(self, request, slug, date_request=None):
         """
         List all target entries or filter by date
         """
-        return self._handle_target_list_action(request, slug, date_request)
+        if request.user.slug == slug:
+            if date_request is not None:
+                try:
+                    requested_date = date.fromisoformat(date_request)
+                except ValueError:
+                    return Response(
+                        {
+                            "error": "Invalid date format. Please user "
+                            "YYYY-MM-DD."
+                        },
+                        status=status.HTTP_400_BAD_REQUEST,
+                    )
+                target_entries = TargetEntry.objects.filter(
+                    created_on__date=requested_date
+                )
+
+                serializer = TargetEntrySerializer(
+                    target_entries, many=True
+                )
+                return Response(serializer.data)
+
+        raise MethodNotAllowed(request.method)
 
     @swagger_auto_schema(
         request_body=openapi.Schema(
             type=openapi.TYPE_OBJECT,
             properties={
                 "title": openapi.Schema(type=openapi.TYPE_STRING),
-                "order": openapi.Schema(type=openapi.TYPE_INTEGER),
+                "date": openapi.Schema(type=openapi.TYPE_STRING),
+                "time_from": openapi.Schema(type=openapi.TYPE_STRING),
+                "time_until": openapi.Schema(type=openapi.TYPE_STRING),
             },
         )
     )
-    def post(self, request, slug, date_request, format=None):
+    def post(self, request, slug, date_request=None):
         """
         Create a new target entry
         """
-        return self._handle_target_list_action(request, slug, date_request)
-
-    def _handle_target_list_action(self, request, slug, date_request):
-        """
-        Private helper method to handle both GET and POST requests
-
-        Check if request is allowed based on the date and either
-        lists all target entries or creates a new target entry
-        """
-        if request.method == "GET":
-            if request.user.slug == slug:
-                if date_request is not None:
-                    try:
-                        requested_date = date.fromisoformat(date_request)
-                    except ValueError:
-                        return Response(
-                            {
-                                "error": "Invalid date format. Please user "
-                                "YYYY-MM-DD."
-                            },
-                            status=status.HTTP_400_BAD_REQUEST,
-                        )
-                    target_entries = TargetEntry.objects.filter(
-                        created_on__date=requested_date
-                    )
-                else:
-                    target_entries = TargetEntry.objects.all()
-
-                serializer = TargetEntrySerializer(target_entries, many=True)
-                return Response(serializer.data)
-
         if request.method == "POST":
             if request.user.slug == slug:
                 current_date = date.today().strftime("%Y-%m-%d")
                 if date_request != current_date:
                     return Response(
                         {
-                            "error": "You are not allowed to change targets \
+                            "error": "You are not allowed to change "
+                            "targets \
                                     for past or future dates."
                         },
                         status=status.HTTP_403_FORBIDDEN,
@@ -96,14 +112,14 @@ class TargetEntryList(APIView):
 
 class TargetEntryDetail(APIView):
     """
-    Retrieve, update or delete an target entry
+    Retrieve, update or delete a target entry
     """
 
     permission_classes = [IsAuthenticated]
 
     def get_object(self, pk):
         """
-        Helper method to get an target entry object from the database
+        Helper method to get a target entry object from the database
         or raise a 404 error
         """
         try:
@@ -111,9 +127,9 @@ class TargetEntryDetail(APIView):
         except TargetEntry.DoesNotExist:
             raise Http404
 
-    def get(self, request, slug, date_request, pk, format=None):
+    def get(self, request, slug, date_request, pk):
         """
-        Retrieve an target entry
+        Retrieve a target entry
         """
         return self._handle_target_detail_action(
             request, slug, date_request, pk
@@ -124,32 +140,36 @@ class TargetEntryDetail(APIView):
             type=openapi.TYPE_OBJECT,
             properties={
                 "title": openapi.Schema(type=openapi.TYPE_STRING),
-                "order": openapi.Schema(type=openapi.TYPE_INTEGER),
+                "date": openapi.Schema(type=openapi.TYPE_STRING),
+                "time_from": openapi.Schema(type=openapi.TYPE_STRING),
+                "time_until": openapi.Schema(type=openapi.TYPE_STRING),
             },
         )
     )
-    def put(self, request, slug, date_request, pk, format=None):
+    def put(self, request, slug, date_request, pk):
         """
-        Update an target entry
-        """
-        return self._handle_target_detail_action(
-            request, slug, date_request, pk
-        )
-
-    def delete(self, request, slug, date_request, pk, format=None):
-        """
-        Delete an target entry
+        Update a target entry
         """
         return self._handle_target_detail_action(
             request, slug, date_request, pk
         )
 
-    def _handle_target_detail_action(self, request, slug, date_request, pk):
+    def delete(self, request, slug, date_request, pk):
+        """
+        Delete a target entry
+        """
+        return self._handle_target_detail_action(
+            request, slug, date_request, pk
+        )
+
+    def _handle_target_detail_action(
+        self, request, slug, date_request, pk
+    ):
         """
         Private helper method to handle GET, PUT and DELETE requests
 
         Check if request is allowed based on date and
-        either retrieve, update or delete an target entry
+        either retrieve, update or delete a target entry
         """
         current_date = date.today().strftime("%Y-%m-%d")
         if date_request != current_date:
@@ -160,6 +180,7 @@ class TargetEntryDetail(APIView):
                 },
                 status=status.HTTP_403_FORBIDDEN,
             )
+
         if request.user.slug == slug:
             if pk is not None:
                 try:

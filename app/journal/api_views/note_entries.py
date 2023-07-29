@@ -17,65 +17,82 @@ class NoteEntryList(APIView):
     """
     List all note entries or create a new note entry
     """
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, slug):
+        """
+        List all note entries
+        """
+        if request.method == "GET":
+            if request.user.slug == slug:
+
+                note_entries = NoteEntry.objects.all()
+
+                serializer = NoteEntrySerializer(
+                    note_entries, many=True
+                )
+                return Response(serializer.data)
+
+            raise MethodNotAllowed(request.method)
+
+
+class NoteEntryListCreate(APIView):
+    """
+    List or create note entries for a specific date
+    """
 
     permission_classes = [IsAuthenticated]
 
-    def get(self, request, slug, date_request=None, format=None):
+    def get(self, request, slug, date_request=None):
         """
         List all note entries or filter by date
         """
-        return self._handle_note_list_action(request, slug, date_request)
+        if request.user.slug == slug:
+            if date_request is not None:
+                try:
+                    requested_date = date.fromisoformat(date_request)
+                except ValueError:
+                    return Response(
+                        {
+                            "error": "Invalid date format. Please user "
+                            "YYYY-MM-DD."
+                        },
+                        status=status.HTTP_400_BAD_REQUEST,
+                    )
+                note_entries = NoteEntry.objects.filter(
+                    created_on__date=requested_date
+                )
+
+                serializer = NoteEntrySerializer(
+                    note_entries, many=True
+                )
+                return Response(serializer.data)
+
+        raise MethodNotAllowed(request.method)
 
     @swagger_auto_schema(
         request_body=openapi.Schema(
             type=openapi.TYPE_OBJECT,
             properties={
-                "content": openapi.Schema(type=openapi.TYPE_STRING),
+                "title": openapi.Schema(type=openapi.TYPE_STRING),
+                "date": openapi.Schema(type=openapi.TYPE_STRING),
+                "time_from": openapi.Schema(type=openapi.TYPE_STRING),
+                "time_until": openapi.Schema(type=openapi.TYPE_STRING),
             },
         )
     )
-    def post(self, request, slug, date_request, format=None):
+    def post(self, request, slug, date_request=None):
         """
         Create a new note entry
         """
-        return self._handle_note_list_action(request, slug, date_request)
-
-    def _handle_note_list_action(self, request, slug, date_request):
-        """
-        Private helper method to handle both GET and POST requests
-
-        Check if request is allowed based on the date and either
-        lists all note entries or creates a new note entry
-        """
-        if request.method == "GET":
-            if request.user.slug == slug:
-                if date_request is not None:
-                    try:
-                        requested_date = date.fromisoformat(date_request)
-                    except ValueError:
-                        return Response(
-                            {
-                                "error": "Invalid date format. Please user "
-                                "YYYY-MM-DD."
-                            },
-                            status=status.HTTP_400_BAD_REQUEST,
-                        )
-                    note_entries = NoteEntry.objects.filter(
-                        created_on__date=requested_date
-                    )
-                else:
-                    note_entries = NoteEntry.objects.all()
-
-                serializer = NoteEntrySerializer(note_entries, many=True)
-                return Response(serializer.data)
-
         if request.method == "POST":
             if request.user.slug == slug:
                 current_date = date.today().strftime("%Y-%m-%d")
                 if date_request != current_date:
                     return Response(
                         {
-                            "error": "You are not allowed to change notes \
+                            "error": "You are not allowed to change "
+                            "notes \
                                     for past or future dates."
                         },
                         status=status.HTTP_403_FORBIDDEN,
@@ -95,14 +112,14 @@ class NoteEntryList(APIView):
 
 class NoteEntryDetail(APIView):
     """
-    Retrieve, update or delete an note entry
+    Retrieve, update or delete a note entry
     """
 
     permission_classes = [IsAuthenticated]
 
     def get_object(self, pk):
         """
-        Helper method to get an note entry object from the database
+        Helper method to get a note entry object from the database
         or raise a 404 error
         """
         try:
@@ -110,38 +127,49 @@ class NoteEntryDetail(APIView):
         except NoteEntry.DoesNotExist:
             raise Http404
 
-    def get(self, request, slug, date_request, pk, format=None):
+    def get(self, request, slug, date_request, pk):
         """
-        Retrieve an note entry
+        Retrieve a note entry
         """
-        return self._handle_note_detail_action(request, slug, date_request, pk)
+        return self._handle_note_detail_action(
+            request, slug, date_request, pk
+        )
 
     @swagger_auto_schema(
         request_body=openapi.Schema(
             type=openapi.TYPE_OBJECT,
             properties={
-                "content": openapi.Schema(type=openapi.TYPE_STRING),
+                "title": openapi.Schema(type=openapi.TYPE_STRING),
+                "date": openapi.Schema(type=openapi.TYPE_STRING),
+                "time_from": openapi.Schema(type=openapi.TYPE_STRING),
+                "time_until": openapi.Schema(type=openapi.TYPE_STRING),
             },
         )
     )
-    def put(self, request, slug, date_request, pk, format=None):
+    def put(self, request, slug, date_request, pk):
         """
-        Update an note entry
+        Update a note entry
         """
-        return self._handle_note_detail_action(request, slug, date_request, pk)
+        return self._handle_note_detail_action(
+            request, slug, date_request, pk
+        )
 
-    def delete(self, request, slug, date_request, pk, format=None):
+    def delete(self, request, slug, date_request, pk):
         """
-        Delete an note entry
+        Delete a note entry
         """
-        return self._handle_note_detail_action(request, slug, date_request, pk)
+        return self._handle_note_detail_action(
+            request, slug, date_request, pk
+        )
 
-    def _handle_note_detail_action(self, request, slug, date_request, pk):
+    def _handle_note_detail_action(
+        self, request, slug, date_request, pk
+    ):
         """
         Private helper method to handle GET, PUT and DELETE requests
 
         Check if request is allowed based on date and
-        either retrieve, update or delete an note entry
+        either retrieve, update or delete a note entry
         """
         current_date = date.today().strftime("%Y-%m-%d")
         if date_request != current_date:
@@ -152,6 +180,7 @@ class NoteEntryDetail(APIView):
                 },
                 status=status.HTTP_403_FORBIDDEN,
             )
+
         if request.user.slug == slug:
             if pk is not None:
                 try:

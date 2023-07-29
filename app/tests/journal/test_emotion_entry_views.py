@@ -25,7 +25,7 @@ def test_get_list_of_emotion_entries(authenticated_user, add_emotion_entry):
     for emotion in emotions:
         add_emotion_entry(user=user, emotion=emotion)
 
-    url = reverse("emotion-entry-list-all", args=[user.slug])
+    url = reverse("emotion-entry-list", args=[user.slug])
 
     res = client.get(url)
 
@@ -45,7 +45,7 @@ def test_add_emotion_entry(authenticated_user):
 
     payload = {"emotion": "great"}
 
-    url = reverse("emotion-entry-list-date", args=[user.slug, current_date])
+    url = reverse("emotion-entry-date-list", args=[user.slug, current_date])
 
     res = client.post(
         url, data=json.dumps(payload), content_type="application/json"
@@ -68,7 +68,7 @@ def test_add_emotion_entry_incorrect_date(authenticated_user):
     payload = {"emotion": "great"}
 
     url = reverse(
-        "emotion-entry-list-date", args=[user.slug, not_current_date]
+        "emotion-entry-date-list", args=[user.slug, not_current_date]
     )
 
     res = client.post(
@@ -90,7 +90,7 @@ def test_add_emotion_entry_invalid_user(client, custom_user):
     payload = {"emotion": "great"}
 
     url = reverse(
-        "emotion-entry-list-date", args=[custom_user.slug, current_date]
+        "emotion-entry-date-list", args=[custom_user.slug, current_date]
     )
 
     res = client.post(
@@ -118,7 +118,7 @@ def test_get_single_emotion_entry_by_date(
     emotion_date = emotion_entry.created_on.strftime("%Y-%m-%d")
 
     url = reverse(
-        "emotion-entry-detail-single",
+        "emotion-entry-detail",
         args=[user.slug, emotion_date, emotion_entry.id],
     )
 
@@ -145,7 +145,7 @@ def test_delete_emotion_entry(authenticated_user, add_emotion_entry):
     emotion_date = emotion_entry.created_on.strftime("%Y-%m-%d")
 
     url = reverse(
-        "emotion-entry-detail-single",
+        "emotion-entry-detail",
         args=[user.slug, emotion_date, emotion_entry.id],
     )
     res = client.delete(url)
@@ -171,7 +171,7 @@ def test_delete_emotion_entry_unauthenticated_user(
     emotion_date = emotion_entry.created_on.strftime("%Y-%m-%d")
 
     url = reverse(
-        "emotion-entry-detail-single",
+        "emotion-entry-detail",
         args=[custom_user.slug, emotion_date, emotion_entry.id],
     )
 
@@ -199,7 +199,7 @@ def test_delete_emotion_entry_invalid_id(
     emotion_date = emotion_entry.created_on.strftime("%Y-%m-%d")
 
     url = reverse(
-        "emotion-entry-detail-single",
+        "emotion-entry-detail",
         args=[user.slug, emotion_date, invalid_number],
     )
 
@@ -226,7 +226,7 @@ def test_delete_emotion_entry_not_current_date(
     emotion_date = emotion_entry.created_on.strftime("%Y-%m-%d")
 
     url = reverse(
-        "emotion-entry-detail-single",
+        "emotion-entry-detail",
         args=[user.slug, emotion_date, emotion_entry.id],
     )
 
@@ -253,7 +253,7 @@ def test_update_emotion_entry(authenticated_user, add_emotion_entry):
     payload = {"emotion": "excellent"}
 
     url = reverse(
-        "emotion-entry-detail-single",
+        "emotion-entry-detail",
         args=[user.slug, emotion_date, emotion_entry.id],
     )
 
@@ -282,7 +282,7 @@ def test_update_emotion_entry_unauthenticated_user(
     payload = {"emotion": "excellent"}
 
     url = reverse(
-        "emotion-entry-detail-single",
+        "emotion-entry-detail",
         args=[custom_user.slug, emotion_date, emotion_entry.id],
     )
 

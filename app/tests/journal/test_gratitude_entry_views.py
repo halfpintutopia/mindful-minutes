@@ -34,7 +34,7 @@ def test_get_list_of_gratitude_entries(
     for gratitude in gratitudes:
         add_gratitude_entry(user=user, content=gratitude)
 
-    url = reverse("gratitude-entry-list-all", args=[user.slug])
+    url = reverse("gratitude-entry-list", args=[user.slug])
 
     res = client.get(url)
 
@@ -61,7 +61,7 @@ def test_add_gratitude_entry(authenticated_user):
         "user": user.id,
     }
 
-    url = reverse("gratitude-entry-list-date", args=[user.slug, current_date])
+    url = reverse("gratitude-entry-date-list", args=[user.slug, current_date])
 
     res = client.post(
         url, json.dumps(gratitude_data), content_type="application/json"
@@ -108,7 +108,7 @@ def test_add_gratitude_entry_incorrect_json(authenticated_user, test_data):
 
     test_data["payload"]["user"] = user.id
 
-    url = reverse("gratitude-entry-list-date", args=[user.slug, current_date])
+    url = reverse("gratitude-entry-date-list", args=[user.slug, current_date])
 
     res = client.post(
         url, json.dumps(test_data["payload"]), content_type="application/json"
@@ -139,7 +139,7 @@ def test_add_gratitude_entry_not_current_date(authenticated_user, date_param):
         "user": user.id,
     }
 
-    url = reverse("gratitude-entry-list-date", args=[user.slug, date_param])
+    url = reverse("gratitude-entry-date-list", args=[user.slug, date_param])
 
     res = client.post(url, gratitude_data, content_type="application/json")
 
@@ -167,7 +167,7 @@ def test_get_single_gratitude_entry(authenticated_user, add_gratitude_entry):
     )
 
     url = reverse(
-        "gratitude-entry-detail-single",
+        "gratitude-entry-detail",
         args=[user.slug, current_date, gratitude_entry.id],
     )
 
@@ -197,7 +197,7 @@ def test_get_single_gratitude_entry_incorrect_id(
     invalid_id = 14258
 
     url = reverse(
-        "gratitude-entry-detail-single",
+        "gratitude-entry-detail",
         args=[user.slug, current_date, invalid_id],
     )
 
@@ -229,7 +229,7 @@ def test_get_all_gratitude_entries_by_current_date(
         user=user,
     )
 
-    url = reverse("gratitude-entry-list-date", args=[user.slug, current_date])
+    url = reverse("gratitude-entry-date-list", args=[user.slug, current_date])
 
     res = client.get(url)
 
@@ -274,7 +274,7 @@ def test_get_all_gratitude_entries_by_date(
         )
 
     url = reverse(
-        "gratitude-entry-list-date", args=[user.slug, date_and_time[0]]
+        "gratitude-entry-date-list", args=[user.slug, date_and_time[0]]
     )
     res = client.get(url)
 
@@ -308,7 +308,7 @@ def test_remove_gratitude_entry(authenticated_user, add_gratitude_entry):
     gratitude_date = gratitude_entry.created_on.strftime("%Y-%m-%d")
 
     url = reverse(
-        "gratitude-entry-detail-single",
+        "gratitude-entry-detail",
         args=[user.slug, gratitude_date, gratitude_entry.id],
     )
 
@@ -326,7 +326,7 @@ def test_remove_gratitude_entry(authenticated_user, add_gratitude_entry):
     assert res_delete.status_code == status.HTTP_204_NO_CONTENT
 
     url_retrieve = reverse(
-        "gratitude-entry-list-date", args=[user.slug, gratitude_date]
+        "gratitude-entry-date-list", args=[user.slug, gratitude_date]
     )
 
     res_retrieve = client.get(url_retrieve, content_type="application/json")
@@ -356,7 +356,7 @@ def test_remove_gratitude_invalid_id(authenticated_user):
     client, user = authenticated_user
 
     url = reverse(
-        "gratitude-entry-detail-single",
+        "gratitude-entry-detail",
         args=[user.slug, current_date, invalid_id],
     )
 
@@ -398,7 +398,7 @@ def test_remove_gratitude_not_current_date(
         )
 
     url = reverse(
-        "gratitude-entry-detail-single",
+        "gratitude-entry-detail",
         args=[user.slug, date_and_time[0], gratitude_entry.id],
     )
 
@@ -453,7 +453,7 @@ def test_update_gratitude_entry(
     test_data["payload"]["user"] = user.id
 
     url = reverse(
-        "gratitude-entry-detail-single",
+        "gratitude-entry-detail",
         args=[user.slug, current_date, gratitude_entry.id],
     )
 
@@ -500,7 +500,7 @@ def test_update_gratitude_entry_incorrect_data(
     }
 
     url = reverse(
-        "gratitude-entry-detail-single",
+        "gratitude-entry-detail",
         args=[user.slug, current_date, invalid_id],
     )
 
@@ -537,7 +537,7 @@ def test_update_gratitude_entry_incorrect_date(
         )
 
     url = reverse(
-        "gratitude-entry-detail-single",
+        "gratitude-entry-detail",
         args=[user.slug, date_and_time[0], gratitude_entry.id],
     )
 
@@ -579,7 +579,7 @@ def test_update_gratitude_entry_invalid_json(
     )
 
     url = reverse(
-        "gratitude-entry-detail-single",
+        "gratitude-entry-detail",
         args=[user.slug, current_date, gratitude_entry.id],
     )
 

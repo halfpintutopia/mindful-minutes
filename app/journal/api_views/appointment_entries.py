@@ -17,10 +17,9 @@ class AppointmentEntryList(APIView):
     """
     List all appointment entries or create a new appointment entry
     """
-
     permission_classes = [IsAuthenticated]
 
-    def get(self, request, slug, date_request=None):
+    def get(self, request, slug):
         """
         List all appointment entries
         """
@@ -59,7 +58,7 @@ class AppointmentEntryListCreate(APIView):
                     return Response(
                         {
                             "error": "Invalid date format. Please user "
-                            "YYYY-MM-DD."
+                                     "YYYY-MM-DD."
                         },
                         status=status.HTTP_400_BAD_REQUEST,
                     )
@@ -96,8 +95,8 @@ class AppointmentEntryListCreate(APIView):
                     return Response(
                         {
                             "error": "You are not allowed to change "
-                            "appointments \
-                                    for past or future dates."
+                                     "appointments \
+                                             for past or future dates."
                         },
                         status=status.HTTP_403_FORBIDDEN,
                     )

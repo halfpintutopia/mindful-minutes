@@ -34,7 +34,7 @@ def test_get_list_of_win_entries(authenticated_user, add_win_entry):
             title=win,
         )
 
-    url = reverse("win-entry-list-all", args=[user.slug])
+    url = reverse("win-entry-list", args=[user.slug])
 
     res = client.get(url)
 
@@ -60,7 +60,7 @@ def test_add_win_entry(authenticated_user):
         "user": user.id,
     }
 
-    url = reverse("win-entry-list-date", args=[user.slug, current_date])
+    url = reverse("win-entry-date-list", args=[user.slug, current_date])
 
     res = client.post(
         url, json.dumps(win_data), content_type="application/json"
@@ -103,7 +103,7 @@ def test_add_win_entry_incorrect_json(authenticated_user, test_data):
 
     test_data["payload"]["user"] = user.id
 
-    url = reverse("win-entry-list-date", args=[user.slug, current_date])
+    url = reverse("win-entry-date-list", args=[user.slug, current_date])
 
     res = client.post(
         url, json.dumps(test_data["payload"]), content_type="application/json"
@@ -133,7 +133,7 @@ def test_add_win_entry_not_current_date(authenticated_user, date_param):
         "user": user.id,
     }
 
-    url = reverse("win-entry-list-date", args=[user.slug, date_param])
+    url = reverse("win-entry-date-list", args=[user.slug, date_param])
 
     res = client.post(url, win_data, content_type="application/json")
 
@@ -160,7 +160,7 @@ def test_get_single_win_entry(authenticated_user, add_win_entry):
     )
 
     url = reverse(
-        "win-entry-detail-single", args=[user.slug, current_date, win_entry.id]
+        "win-entry-detail", args=[user.slug, current_date, win_entry.id]
     )
 
     res = client.get(url, content_type="application/json")
@@ -185,7 +185,7 @@ def test_get_single_win_entry_incorrect_id(
     invalid_id = 14258
 
     url = reverse(
-        "win-entry-detail-single", args=[user.slug, current_date, invalid_id]
+        "win-entry-detail", args=[user.slug, current_date, invalid_id]
     )
 
     res = client.get(url)
@@ -230,7 +230,7 @@ def test_get_all_win_entries_by_current_date(
         user=user,
     )
 
-    url = reverse("win-entry-list-date", args=[user.slug, current_date])
+    url = reverse("win-entry-date-list", args=[user.slug, current_date])
 
     res = client.get(url)
 
@@ -285,7 +285,7 @@ def test_get_all_win_entries_by_date(
             user=user,
         )
 
-    url = reverse("win-entry-list-date", args=[user.slug, date_and_time[0]])
+    url = reverse("win-entry-date-list", args=[user.slug, date_and_time[0]])
     res = client.get(url)
 
     assert res.status_code == status.HTTP_200_OK
@@ -315,7 +315,7 @@ def test_remove_win_entry(authenticated_user, add_win_entry):
     win_date = win_entry.created_on.strftime("%Y-%m-%d")
 
     url = reverse(
-        "win-entry-detail-single", args=[user.slug, win_date, win_entry.id]
+        "win-entry-detail", args=[user.slug, win_date, win_entry.id]
     )
 
     res = client.get(url, content_type="application/json")
@@ -327,7 +327,7 @@ def test_remove_win_entry(authenticated_user, add_win_entry):
 
     assert res_delete.status_code == status.HTTP_204_NO_CONTENT
 
-    url_retrieve = reverse("win-entry-list-date", args=[user.slug, win_date])
+    url_retrieve = reverse("win-entry-date-list", args=[user.slug, win_date])
 
     res_retrieve = client.get(url_retrieve, content_type="application/json")
 
@@ -356,7 +356,7 @@ def test_remove_win_invalid_id(authenticated_user):
     client, user = authenticated_user
 
     url = reverse(
-        "win-entry-detail-single", args=[user.slug, current_date, invalid_id]
+        "win-entry-detail", args=[user.slug, current_date, invalid_id]
     )
 
     res = client.delete(url, content_type="application/json")
@@ -394,7 +394,7 @@ def test_remove_win_not_current_date(
         )
 
     url = reverse(
-        "win-entry-detail-single",
+        "win-entry-detail",
         args=[user.slug, date_and_time[0], win_entry.id],
     )
 
@@ -448,7 +448,7 @@ def test_update_win_entry(authenticated_user, add_win_entry, test_data):
     test_data["payload"]["user"] = user.id
 
     url = reverse(
-        "win-entry-detail-single", args=[user.slug, current_date, win_entry.id]
+        "win-entry-detail", args=[user.slug, current_date, win_entry.id]
     )
 
     res = client.put(
@@ -490,7 +490,7 @@ def test_update_win_entry_incorrect_data(authenticated_user, add_win_entry):
     }
 
     url = reverse(
-        "win-entry-detail-single", args=[user.slug, current_date, invalid_id]
+        "win-entry-detail", args=[user.slug, current_date, invalid_id]
     )
 
     res = client.put(
@@ -524,7 +524,7 @@ def test_update_win_entry_incorrect_date(
         )
 
     url = reverse(
-        "win-entry-detail-single",
+        "win-entry-detail",
         args=[user.slug, date_and_time[0], win_entry.id],
     )
 
@@ -565,7 +565,7 @@ def test_update_win_entry_invalid_json(
     )
 
     url = reverse(
-        "win-entry-detail-single", args=[user.slug, current_date, win_entry.id]
+        "win-entry-detail", args=[user.slug, current_date, win_entry.id]
     )
 
     res = client.put(

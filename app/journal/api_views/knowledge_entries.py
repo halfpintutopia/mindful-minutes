@@ -15,62 +15,76 @@ from ..serializers import KnowledgeEntrySerializer
 
 class KnowledgeEntryList(APIView):
     """
-    List all knowledge entries or create a new knowledge entry
+    List all knowledge entries or create new knowledge entry
     """
-
     permission_classes = [IsAuthenticated]
 
-    def get(self, request, slug, date_request=None, format=None):
+    def get(self, request, slug):
         """
-        List all knowledge entries or filter by date
-        """
-        return self._handle_knowledge_list_action(request, slug, date_request)
-
-    @swagger_auto_schema(
-        request_body=openapi.Schema(
-            type=openapi.TYPE_OBJECT,
-            properties={
-                "content": openapi.Schema(type=openapi.TYPE_STRING),
-            },
-        )
-    )
-    def post(self, request, slug, date_request, format=None):
-        """
-        Create a new knowledge entry
-        """
-        return self._handle_knowledge_list_action(request, slug, date_request)
-
-    def _handle_knowledge_list_action(self, request, slug, date_request):
-        """
-        Private helper method to handle both GET and POST requests
-
-        Check if request is allowed based on the date and either
-        lists all knowledge entries or creates a new knowledge entry
+        List all knowledge entries
         """
         if request.method == "GET":
             if request.user.slug == slug:
-                if date_request is not None:
-                    try:
-                        requested_date = date.fromisoformat(date_request)
-                    except ValueError:
-                        return Response(
-                            {
-                                "error": "Invalid date format. Please user "
-                                "YYYY-MM-DD."
-                            },
-                            status=status.HTTP_400_BAD_REQUEST,
-                        )
-                    knowledge_entries = KnowledgeEntry.objects.filter(
-                        created_on__date=requested_date
-                    )
-                else:
-                    knowledge_entries = KnowledgeEntry.objects.all()
+
+                knowledge_entries = KnowledgeEntry.objects.all()
 
                 serializer = KnowledgeEntrySerializer(
                     knowledge_entries, many=True
                 )
                 return Response(serializer.data)
 
+            raise MethodNotAllowed(request.method)
+
+
+class KnowledgeEntryListCreate(APIView):
+    """
+    List or create knowledge entries for a specific date
+    """
+
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, slug, date_request=None):
+        """
+        List all knowledge entries or filter by date
+        """
+        if request.user.slug == slug:
+            if date_request is not None:
+                try:
+                    requested_date = date.fromisoformat(date_request)
+                except ValueError:
+                    return Response(
+                        {
+                            "error": "Invalid date format. Please user "
+                            "YYYY-MM-DD."
+                        },
+                        status=status.HTTP_400_BAD_REQUEST,
+                    )
+                knowledge_entries = KnowledgeEntry.objects.filter(
+                    created_on__date=requested_date
+                )
+
+                serializer = KnowledgeEntrySerializer(
+                    knowledge_entries, many=True
+                )
+                return Response(serializer.data)
+
+        raise MethodNotAllowed(request.method)
+
+    @swagger_auto_schema(
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                "title": openapi.Schema(type=openapi.TYPE_STRING),
+                "date": openapi.Schema(type=openapi.TYPE_STRING),
+                "time_from": openapi.Schema(type=openapi.TYPE_STRING),
+                "time_until": openapi.Schema(type=openapi.TYPE_STRING),
+            },
+        )
+    )
+    def post(self, request, slug, date_request=None):
+        """
+        Create new knowledge entry
+        """
         if request.method == "POST":
             if request.user.slug == slug:
                 current_date = date.today().strftime("%Y-%m-%d")
@@ -113,7 +127,7 @@ class KnowledgeEntryDetail(APIView):
         except KnowledgeEntry.DoesNotExist:
             raise Http404
 
-    def get(self, request, slug, date_request, pk, format=None):
+    def get(self, request, slug, date_request, pk):
         """
         Retrieve an knowledge entry
         """
@@ -125,11 +139,14 @@ class KnowledgeEntryDetail(APIView):
         request_body=openapi.Schema(
             type=openapi.TYPE_OBJECT,
             properties={
-                "content": openapi.Schema(type=openapi.TYPE_STRING),
+                "title": openapi.Schema(type=openapi.TYPE_STRING),
+                "date": openapi.Schema(type=openapi.TYPE_STRING),
+                "time_from": openapi.Schema(type=openapi.TYPE_STRING),
+                "time_until": openapi.Schema(type=openapi.TYPE_STRING),
             },
         )
     )
-    def put(self, request, slug, date_request, pk, format=None):
+    def put(self, request, slug, date_request, pk):
         """
         Update an knowledge entry
         """
@@ -137,7 +154,7 @@ class KnowledgeEntryDetail(APIView):
             request, slug, date_request, pk
         )
 
-    def delete(self, request, slug, date_request, pk, format=None):
+    def delete(self, request, slug, date_request, pk):
         """
         Delete an knowledge entry
         """
@@ -145,7 +162,9 @@ class KnowledgeEntryDetail(APIView):
             request, slug, date_request, pk
         )
 
-    def _handle_knowledge_detail_action(self, request, slug, date_request, pk):
+    def _handle_knowledge_detail_action(
+        self, request, slug, date_request, pk
+    ):
         """
         Private helper method to handle GET, PUT and DELETE requests
 
@@ -161,6 +180,7 @@ class KnowledgeEntryDetail(APIView):
                 },
                 status=status.HTTP_403_FORBIDDEN,
             )
+
         if request.user.slug == slug:
             if pk is not None:
                 try:

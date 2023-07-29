@@ -34,7 +34,7 @@ def test_get_list_of_improvement_entries(
     for improvement in improvements:
         add_improvement_entry(user=user, content=improvement)
 
-    url = reverse("improvement-entry-list-all", args=[user.slug])
+    url = reverse("improvement-entry-list", args=[user.slug])
 
     res = client.get(url)
 
@@ -61,7 +61,7 @@ def test_add_improvement_entry(authenticated_user):
     }
 
     url = reverse(
-        "improvement-entry-list-date", args=[user.slug, current_date]
+        "improvement-entry-date-list", args=[user.slug, current_date]
     )
 
     res = client.post(
@@ -105,7 +105,7 @@ def test_add_improvement_entry_incorrect_json(authenticated_user, test_data):
     test_data["payload"]["user"] = user.id
 
     url = reverse(
-        "improvement-entry-list-date", args=[user.slug, current_date]
+        "improvement-entry-date-list", args=[user.slug, current_date]
     )
 
     res = client.post(
@@ -138,7 +138,7 @@ def test_add_improvement_entry_not_current_date(
         "user": user.id,
     }
 
-    url = reverse("improvement-entry-list-date", args=[user.slug, date_param])
+    url = reverse("improvement-entry-date-list", args=[user.slug, date_param])
 
     res = client.post(url, improvement_data, content_type="application/json")
 
@@ -167,7 +167,7 @@ def test_get_single_improvement_entry(
     )
 
     url = reverse(
-        "improvement-entry-detail-single",
+        "improvement-entry-detail",
         args=[user.slug, current_date, improvement_entry.id],
     )
 
@@ -194,7 +194,7 @@ def test_get_single_improvement_entry_incorrect_id(
     invalid_id = 14258
 
     url = reverse(
-        "improvement-entry-detail-single",
+        "improvement-entry-detail",
         args=[user.slug, current_date, invalid_id],
     )
 
@@ -226,7 +226,7 @@ def test_get_all_improvement_entries_by_current_date(
     )
 
     url = reverse(
-        "improvement-entry-list-date", args=[user.slug, current_date]
+        "improvement-entry-date-list", args=[user.slug, current_date]
     )
 
     res = client.get(url)
@@ -270,7 +270,7 @@ def test_get_all_improvement_entries_by_date(
         )
 
     url = reverse(
-        "improvement-entry-list-date", args=[user.slug, date_and_time[0]]
+        "improvement-entry-date-list", args=[user.slug, date_and_time[0]]
     )
     res = client.get(url)
 
@@ -303,7 +303,7 @@ def test_remove_improvement_entry(authenticated_user, add_improvement_entry):
     improvement_date = improvement_entry.created_on.strftime("%Y-%m-%d")
 
     url = reverse(
-        "improvement-entry-detail-single",
+        "improvement-entry-detail",
         args=[user.slug, improvement_date, improvement_entry.id],
     )
 
@@ -317,7 +317,7 @@ def test_remove_improvement_entry(authenticated_user, add_improvement_entry):
     assert res_delete.status_code == status.HTTP_204_NO_CONTENT
 
     url_retrieve = reverse(
-        "improvement-entry-list-date", args=[user.slug, improvement_date]
+        "improvement-entry-date-list", args=[user.slug, improvement_date]
     )
 
     res_retrieve = client.get(url_retrieve, content_type="application/json")
@@ -349,7 +349,7 @@ def test_remove_improvement_invalid_id(authenticated_user):
     client, user = authenticated_user
 
     url = reverse(
-        "improvement-entry-detail-single",
+        "improvement-entry-detail",
         args=[user.slug, current_date, invalid_id],
     )
 
@@ -389,7 +389,7 @@ def test_remove_improvement_not_current_date(
         )
 
     url = reverse(
-        "improvement-entry-detail-single",
+        "improvement-entry-detail",
         args=[user.slug, date_and_time[0], improvement_entry.id],
     )
 
@@ -441,7 +441,7 @@ def test_update_improvement_entry(
     test_data["payload"]["user"] = user.id
 
     url = reverse(
-        "improvement-entry-detail-single",
+        "improvement-entry-detail",
         args=[user.slug, current_date, improvement_entry.id],
     )
 
@@ -486,7 +486,7 @@ def test_update_improvement_entry_incorrect_data(
     }
 
     url = reverse(
-        "improvement-entry-detail-single",
+        "improvement-entry-detail",
         args=[user.slug, current_date, invalid_id],
     )
 
@@ -522,7 +522,7 @@ def test_update_improvement_entry_incorrect_date(
         )
 
     url = reverse(
-        "improvement-entry-detail-single",
+        "improvement-entry-detail",
         args=[user.slug, date_and_time[0], improvement_entry.id],
     )
 
@@ -563,7 +563,7 @@ def test_update_improvement_entry_invalid_json(
     )
 
     url = reverse(
-        "improvement-entry-detail-single",
+        "improvement-entry-detail",
         args=[user.slug, current_date, improvement_entry.id],
     )
 

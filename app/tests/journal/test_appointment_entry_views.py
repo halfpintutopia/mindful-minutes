@@ -205,7 +205,6 @@ def test_get_single_appointment_entry(
     )
 
     appointment_date = appointment_entry.created_on.strftime("%Y-%m-%d")
-
     url = reverse(
         "appointment-entry-detail",
         args=[user.slug, appointment_date, appointment_entry.id],

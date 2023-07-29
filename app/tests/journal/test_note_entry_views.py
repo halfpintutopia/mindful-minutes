@@ -31,7 +31,7 @@ def test_get_list_of_note_entries(authenticated_user, add_note_entry):
     for note in note_entries:
         add_note_entry(user=user, content=note)
 
-    url = reverse("note-entry-list-all", args=[user.slug])
+    url = reverse("note-entry-list", args=[user.slug])
 
     res = client.get(url)
 
@@ -57,7 +57,7 @@ def test_add_note_entry(authenticated_user):
         "user": user.id,
     }
 
-    url = reverse("note-entry-list-date", args=[user.slug, current_date])
+    url = reverse("note-entry-date-list", args=[user.slug, current_date])
 
     res = client.post(
         url, json.dumps(note_data), content_type="application/json"
@@ -99,7 +99,7 @@ def test_add_note_entry_incorrect_json(authenticated_user, test_data):
 
     test_data["payload"]["user"] = user.id
 
-    url = reverse("note-entry-list-date", args=[user.slug, current_date])
+    url = reverse("note-entry-date-list", args=[user.slug, current_date])
 
     res = client.post(
         url, json.dumps(test_data["payload"]), content_type="application/json"
@@ -129,7 +129,7 @@ def test_add_note_entry_not_current_date(authenticated_user, date_param):
         "user": user.id,
     }
 
-    url = reverse("note-entry-list-date", args=[user.slug, date_param])
+    url = reverse("note-entry-date-list", args=[user.slug, date_param])
 
     res = client.post(url, note_data, content_type="application/json")
 
@@ -156,7 +156,7 @@ def test_get_single_note_entry(authenticated_user, add_note_entry):
     )
 
     url = reverse(
-        "note-entry-detail-single",
+        "note-entry-detail",
         args=[user.slug, current_date, note_entry.id],
     )
 
@@ -182,7 +182,7 @@ def test_get_single_note_entry_incorrect_id(
     invalid_id = 14258
 
     url = reverse(
-        "note-entry-detail-single", args=[user.slug, current_date, invalid_id]
+        "note-entry-detail", args=[user.slug, current_date, invalid_id]
     )
 
     res = client.get(url)
@@ -212,7 +212,7 @@ def test_get_all_note_entries_by_current_date(
         user=user,
     )
 
-    url = reverse("note-entry-list-date", args=[user.slug, current_date])
+    url = reverse("note-entry-date-list", args=[user.slug, current_date])
 
     res = client.get(url)
 
@@ -252,7 +252,7 @@ def test_get_all_note_entries_by_date(
             user=user,
         )
 
-    url = reverse("note-entry-list-date", args=[user.slug, date_and_time[0]])
+    url = reverse("note-entry-date-list", args=[user.slug, date_and_time[0]])
     res = client.get(url)
 
     assert res.status_code == status.HTTP_200_OK
@@ -282,7 +282,7 @@ def test_remove_note_entry(authenticated_user, add_note_entry):
     note_date = note_entry.created_on.strftime("%Y-%m-%d")
 
     url = reverse(
-        "note-entry-detail-single", args=[user.slug, note_date, note_entry.id]
+        "note-entry-detail", args=[user.slug, note_date, note_entry.id]
     )
 
     res = client.get(url, content_type="application/json")
@@ -294,7 +294,7 @@ def test_remove_note_entry(authenticated_user, add_note_entry):
 
     assert res_delete.status_code == status.HTTP_204_NO_CONTENT
 
-    url_retrieve = reverse("note-entry-list-date", args=[user.slug, note_date])
+    url_retrieve = reverse("note-entry-date-list", args=[user.slug, note_date])
 
     res_retrieve = client.get(url_retrieve, content_type="application/json")
 
@@ -323,7 +323,7 @@ def test_remove_note_invalid_id(authenticated_user):
     client, user = authenticated_user
 
     url = reverse(
-        "note-entry-detail-single", args=[user.slug, current_date, invalid_id]
+        "note-entry-detail", args=[user.slug, current_date, invalid_id]
     )
 
     res = client.delete(url, content_type="application/json")
@@ -361,7 +361,7 @@ def test_remove_note_not_current_date(
         )
 
     url = reverse(
-        "note-entry-detail-single",
+        "note-entry-detail",
         args=[user.slug, date_and_time[0], note_entry.id],
     )
 
@@ -410,7 +410,7 @@ def test_update_note_entry(authenticated_user, add_note_entry, test_data):
     test_data["payload"]["user"] = user.id
 
     url = reverse(
-        "note-entry-detail-single",
+        "note-entry-detail",
         args=[user.slug, current_date, note_entry.id],
     )
 
@@ -453,7 +453,7 @@ def test_update_note_entry_incorrect_data(authenticated_user, add_note_entry):
     }
 
     url = reverse(
-        "note-entry-detail-single", args=[user.slug, current_date, invalid_id]
+        "note-entry-detail", args=[user.slug, current_date, invalid_id]
     )
 
     res = client.put(
@@ -487,7 +487,7 @@ def test_update_note_entry_incorrect_date(
         )
 
     url = reverse(
-        "note-entry-detail-single",
+        "note-entry-detail",
         args=[user.slug, date_and_time[0], note_entry.id],
     )
 
@@ -528,7 +528,7 @@ def test_update_note_entry_invalid_json(
     )
 
     url = reverse(
-        "note-entry-detail-single",
+        "note-entry-detail",
         args=[user.slug, current_date, note_entry.id],
     )
 

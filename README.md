@@ -680,6 +680,7 @@ For further details on testing, click [here](docs/testing/testing.md).
 - [Setup postgres in GitHub Actions for Django](https://stackoverflow.com/questions/63066240/setup-postgres-in-github-actions-for-django)
 - [GitHub Actions - Variables](https://docs.github.com/en/actions/learn-github-actions/variables)
 - [How to connect to Postgres in GitHub Actions](https://stackoverflow.com/questions/57915791/how-to-connect-to-postgres-in-github-actions)
+- [Deploy Django application to Heroku with GitHub Actions](https://medium.com/@raynoldw222/deploy-applications-to-heroku-with-github-actions-21f5406482ff)
 
 #### Django
 

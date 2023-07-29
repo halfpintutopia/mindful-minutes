@@ -49,7 +49,7 @@ jobs:
       - name: Pull Docker image # Step to pull the latest Docker image if exists
         run: docker pull $IMAGE:$TAG || true
 
-      - name: Build Docker image # Step to build the Docker image
+      - name: Build Docker image # Step to build the Docker image https://github.com/docker/build-push-action
         uses: docker/build-push-action@v3
         with:
           context: ./app

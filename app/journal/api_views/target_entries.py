@@ -17,6 +17,7 @@ class TargetEntryList(APIView):
     """
     List all target entries or create a new target entry
     """
+
     permission_classes = [IsAuthenticated]
 
     def get(self, request, slug):
@@ -25,12 +26,9 @@ class TargetEntryList(APIView):
         """
         if request.method == "GET":
             if request.user.slug == slug:
-
                 target_entries = TargetEntry.objects.all()
 
-                serializer = TargetEntrySerializer(
-                    target_entries, many=True
-                )
+                serializer = TargetEntrySerializer(target_entries, many=True)
                 return Response(serializer.data)
 
             raise MethodNotAllowed(request.method)
@@ -63,9 +61,7 @@ class TargetEntryListCreate(APIView):
                     created_on__date=requested_date
                 )
 
-                serializer = TargetEntrySerializer(
-                    target_entries, many=True
-                )
+                serializer = TargetEntrySerializer(target_entries, many=True)
                 return Response(serializer.data)
 
         raise MethodNotAllowed(request.method)
@@ -162,9 +158,7 @@ class TargetEntryDetail(APIView):
             request, slug, date_request, pk
         )
 
-    def _handle_target_detail_action(
-        self, request, slug, date_request, pk
-    ):
+    def _handle_target_detail_action(self, request, slug, date_request, pk):
         """
         Private helper method to handle GET, PUT and DELETE requests
 

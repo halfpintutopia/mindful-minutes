@@ -17,6 +17,7 @@ class EmotionEntryList(APIView):
     """
     List all emotion entries or create a new emotion entry
     """
+
     permission_classes = [IsAuthenticated]
 
     def get(self, request, slug):
@@ -25,12 +26,9 @@ class EmotionEntryList(APIView):
         """
         if request.method == "GET":
             if request.user.slug == slug:
-
                 emotion_entries = EmotionEntry.objects.all()
 
-                serializer = EmotionEntrySerializer(
-                    emotion_entries, many=True
-                )
+                serializer = EmotionEntrySerializer(emotion_entries, many=True)
                 return Response(serializer.data)
 
             raise MethodNotAllowed(request.method)
@@ -63,9 +61,7 @@ class EmotionEntryListCreate(APIView):
                     created_on__date=requested_date
                 )
 
-                serializer = EmotionEntrySerializer(
-                    emotion_entries, many=True
-                )
+                serializer = EmotionEntrySerializer(emotion_entries, many=True)
                 return Response(serializer.data)
 
         raise MethodNotAllowed(request.method)
@@ -162,9 +158,7 @@ class EmotionEntryDetail(APIView):
             request, slug, date_request, pk
         )
 
-    def _handle_emotion_detail_action(
-        self, request, slug, date_request, pk
-    ):
+    def _handle_emotion_detail_action(self, request, slug, date_request, pk):
         """
         Private helper method to handle GET, PUT and DELETE requests
 

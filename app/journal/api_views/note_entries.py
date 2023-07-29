@@ -17,6 +17,7 @@ class NoteEntryList(APIView):
     """
     List all note entries or create a new note entry
     """
+
     permission_classes = [IsAuthenticated]
 
     def get(self, request, slug):
@@ -25,12 +26,9 @@ class NoteEntryList(APIView):
         """
         if request.method == "GET":
             if request.user.slug == slug:
-
                 note_entries = NoteEntry.objects.all()
 
-                serializer = NoteEntrySerializer(
-                    note_entries, many=True
-                )
+                serializer = NoteEntrySerializer(note_entries, many=True)
                 return Response(serializer.data)
 
             raise MethodNotAllowed(request.method)
@@ -63,9 +61,7 @@ class NoteEntryListCreate(APIView):
                     created_on__date=requested_date
                 )
 
-                serializer = NoteEntrySerializer(
-                    note_entries, many=True
-                )
+                serializer = NoteEntrySerializer(note_entries, many=True)
                 return Response(serializer.data)
 
         raise MethodNotAllowed(request.method)
@@ -131,9 +127,7 @@ class NoteEntryDetail(APIView):
         """
         Retrieve a note entry
         """
-        return self._handle_note_detail_action(
-            request, slug, date_request, pk
-        )
+        return self._handle_note_detail_action(request, slug, date_request, pk)
 
     @swagger_auto_schema(
         request_body=openapi.Schema(
@@ -150,21 +144,15 @@ class NoteEntryDetail(APIView):
         """
         Update a note entry
         """
-        return self._handle_note_detail_action(
-            request, slug, date_request, pk
-        )
+        return self._handle_note_detail_action(request, slug, date_request, pk)
 
     def delete(self, request, slug, date_request, pk):
         """
         Delete a note entry
         """
-        return self._handle_note_detail_action(
-            request, slug, date_request, pk
-        )
+        return self._handle_note_detail_action(request, slug, date_request, pk)
 
-    def _handle_note_detail_action(
-        self, request, slug, date_request, pk
-    ):
+    def _handle_note_detail_action(self, request, slug, date_request, pk):
         """
         Private helper method to handle GET, PUT and DELETE requests
 

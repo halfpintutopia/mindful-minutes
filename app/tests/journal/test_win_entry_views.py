@@ -314,9 +314,7 @@ def test_remove_win_entry(authenticated_user, add_win_entry):
 
     win_date = win_entry.created_on.strftime("%Y-%m-%d")
 
-    url = reverse(
-        "win-entry-detail", args=[user.slug, win_date, win_entry.id]
-    )
+    url = reverse("win-entry-detail", args=[user.slug, win_date, win_entry.id])
 
     res = client.get(url, content_type="application/json")
 

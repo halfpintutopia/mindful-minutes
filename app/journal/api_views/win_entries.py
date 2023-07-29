@@ -17,6 +17,7 @@ class WinEntryList(APIView):
     """
     List all win entries or create a new win entry
     """
+
     permission_classes = [IsAuthenticated]
 
     def get(self, request, slug):
@@ -25,12 +26,9 @@ class WinEntryList(APIView):
         """
         if request.method == "GET":
             if request.user.slug == slug:
-
                 win_entries = WinEntry.objects.all()
 
-                serializer = WinEntrySerializer(
-                    win_entries, many=True
-                )
+                serializer = WinEntrySerializer(win_entries, many=True)
                 return Response(serializer.data)
 
             raise MethodNotAllowed(request.method)
@@ -63,9 +61,7 @@ class WinEntryListCreate(APIView):
                     created_on__date=requested_date
                 )
 
-                serializer = WinEntrySerializer(
-                    win_entries, many=True
-                )
+                serializer = WinEntrySerializer(win_entries, many=True)
                 return Response(serializer.data)
 
         raise MethodNotAllowed(request.method)
@@ -131,9 +127,7 @@ class WinEntryDetail(APIView):
         """
         Retrieve a win entry
         """
-        return self._handle_win_detail_action(
-            request, slug, date_request, pk
-        )
+        return self._handle_win_detail_action(request, slug, date_request, pk)
 
     @swagger_auto_schema(
         request_body=openapi.Schema(
@@ -150,21 +144,15 @@ class WinEntryDetail(APIView):
         """
         Update a win entry
         """
-        return self._handle_win_detail_action(
-            request, slug, date_request, pk
-        )
+        return self._handle_win_detail_action(request, slug, date_request, pk)
 
     def delete(self, request, slug, date_request, pk):
         """
         Delete a win entry
         """
-        return self._handle_win_detail_action(
-            request, slug, date_request, pk
-        )
+        return self._handle_win_detail_action(request, slug, date_request, pk)
 
-    def _handle_win_detail_action(
-        self, request, slug, date_request, pk
-    ):
+    def _handle_win_detail_action(self, request, slug, date_request, pk):
         """
         Private helper method to handle GET, PUT and DELETE requests
 

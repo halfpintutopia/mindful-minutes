@@ -17,6 +17,7 @@ class IdeasEntryList(APIView):
     """
     List all ideas entries or create a new ideas entry
     """
+
     permission_classes = [IsAuthenticated]
 
     def get(self, request, slug):
@@ -25,12 +26,9 @@ class IdeasEntryList(APIView):
         """
         if request.method == "GET":
             if request.user.slug == slug:
-
                 ideas_entries = IdeasEntry.objects.all()
 
-                serializer = IdeasEntrySerializer(
-                    ideas_entries, many=True
-                )
+                serializer = IdeasEntrySerializer(ideas_entries, many=True)
                 return Response(serializer.data)
 
             raise MethodNotAllowed(request.method)
@@ -63,9 +61,7 @@ class IdeasEntryListCreate(APIView):
                     created_on__date=requested_date
                 )
 
-                serializer = IdeasEntrySerializer(
-                    ideas_entries, many=True
-                )
+                serializer = IdeasEntrySerializer(ideas_entries, many=True)
                 return Response(serializer.data)
 
         raise MethodNotAllowed(request.method)
@@ -162,9 +158,7 @@ class IdeasEntryDetail(APIView):
             request, slug, date_request, pk
         )
 
-    def _handle_ideas_detail_action(
-        self, request, slug, date_request, pk
-    ):
+    def _handle_ideas_detail_action(self, request, slug, date_request, pk):
         """
         Private helper method to handle GET, PUT and DELETE requests
 

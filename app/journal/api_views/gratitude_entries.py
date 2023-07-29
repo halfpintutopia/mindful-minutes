@@ -17,6 +17,7 @@ class GratitudeEntryList(APIView):
     """
     List all gratitude entries or create a new gratitude entry
     """
+
     permission_classes = [IsAuthenticated]
 
     def get(self, request, slug):
@@ -25,7 +26,6 @@ class GratitudeEntryList(APIView):
         """
         if request.method == "GET":
             if request.user.slug == slug:
-
                 gratitude_entries = GratitudeEntry.objects.all()
 
                 serializer = GratitudeEntrySerializer(
@@ -162,9 +162,7 @@ class GratitudeEntryDetail(APIView):
             request, slug, date_request, pk
         )
 
-    def _handle_gratitude_detail_action(
-        self, request, slug, date_request, pk
-    ):
+    def _handle_gratitude_detail_action(self, request, slug, date_request, pk):
         """
         Private helper method to handle GET, PUT and DELETE requests
 

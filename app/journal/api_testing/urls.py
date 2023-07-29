@@ -6,32 +6,47 @@ from ..api_views.appointment_entries import (
     AppointmentEntryListCreate,
 )
 from ..api_views.custom_user import CustomUserDetail, CustomUserList
-from ..api_views.emotion_entries import EmotionEntryDetail, EmotionEntryList, \
-    EmotionEntryListCreate
+from ..api_views.emotion_entries import (
+    EmotionEntryDetail,
+    EmotionEntryList,
+    EmotionEntryListCreate,
+)
 from ..api_views.gratitude_entries import (
     GratitudeEntryDetail,
     GratitudeEntryList,
-    GratitudeEntryListCreate
+    GratitudeEntryListCreate,
 )
-from ..api_views.ideas_entries import IdeasEntryDetail, IdeasEntryList, \
-    IdeasEntryListCreate
+from ..api_views.ideas_entries import (
+    IdeasEntryDetail,
+    IdeasEntryList,
+    IdeasEntryListCreate,
+)
 from ..api_views.improvement_entries import (
     ImprovementEntryDetail,
     ImprovementEntryList,
-    ImprovementEntryListCreate
+    ImprovementEntryListCreate,
 )
 from ..api_views.knowledge_entries import (
     KnowledgeEntryDetail,
     KnowledgeEntryList,
-    KnowledgeEntryListCreate
+    KnowledgeEntryListCreate,
 )
-from ..api_views.note_entries import NoteEntryDetail, NoteEntryList, \
-    NoteEntryListCreate
-from ..api_views.target_entries import TargetEntryDetail, TargetEntryList, \
-    TargetEntryListCreate
+from ..api_views.note_entries import (
+    NoteEntryDetail,
+    NoteEntryList,
+    NoteEntryListCreate,
+)
+from ..api_views.target_entries import (
+    TargetEntryDetail,
+    TargetEntryList,
+    TargetEntryListCreate,
+)
 from ..api_views.user_settings import UserSettingsView
-from ..api_views.win_entries import WinEntryDetail, WinEntryList, \
-    WinEntryListCreate
+from ..api_views.win_entries import (
+    WinEntryDetail,
+    WinEntryList,
+    WinEntryListCreate,
+)
 
 urlpatterns = [
     path(

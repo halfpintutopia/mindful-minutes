@@ -17,6 +17,7 @@ class KnowledgeEntryList(APIView):
     """
     List all knowledge entries or create new knowledge entry
     """
+
     permission_classes = [IsAuthenticated]
 
     def get(self, request, slug):
@@ -25,7 +26,6 @@ class KnowledgeEntryList(APIView):
         """
         if request.method == "GET":
             if request.user.slug == slug:
-
                 knowledge_entries = KnowledgeEntry.objects.all()
 
                 serializer = KnowledgeEntrySerializer(
@@ -162,9 +162,7 @@ class KnowledgeEntryDetail(APIView):
             request, slug, date_request, pk
         )
 
-    def _handle_knowledge_detail_action(
-        self, request, slug, date_request, pk
-    ):
+    def _handle_knowledge_detail_action(self, request, slug, date_request, pk):
         """
         Private helper method to handle GET, PUT and DELETE requests
 

@@ -17,6 +17,7 @@ class ImprovementEntryList(APIView):
     """
     List all improvement entries or create a new improvement entry
     """
+
     permission_classes = [IsAuthenticated]
 
     def get(self, request, slug):
@@ -25,7 +26,6 @@ class ImprovementEntryList(APIView):
         """
         if request.method == "GET":
             if request.user.slug == slug:
-
                 improvement_entries = ImprovementEntry.objects.all()
 
                 serializer = ImprovementEntrySerializer(

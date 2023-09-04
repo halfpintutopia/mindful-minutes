@@ -2,8 +2,68 @@
 /* Custom properties   */
 /* ------------------- */
 
-/* Flexible typography with CSS locks https://blog.typekit.com/2016/08/17/flexible-typography-with-css-locks/ */
 :root {
+    /* Colours */
+    --mischka-50: 240 6% 97%;
+    --mischka-100: 220 10% 94%;
+    --mischka-200: 223 12% 89%;
+    --mischka-300: 233 11% 83%; /* main */
+    --mischka-400: 240 10% 74%;
+    --mischka-500: 244 9% 67%;
+    --mischka-600: 247 8% 59%;
+    --mischka-700: 247 6% 51%;
+    --mischka-800: 249 6% 41%;
+    --mischka-900: 247 5% 34%;
+    --mischka-950: 250 6% 20%;
+
+    --green-smoke-50: 77 28% 95%;
+    --green-smoke-100: 78 24% 89%;
+    --green-smoke-200: 83 23% 80%;
+    --green-smoke-300: 84 23% 67%;
+    --green-smoke-400: 84 21% 56%; /* main */
+    --green-smoke-500: 85 21% 44%;
+    --green-smoke-600: 87 23% 35%;
+    --green-smoke-700: 87 21% 27%;
+    --green-smoke-800: 90 19% 23%;
+    --green-smoke-900: 88 17% 20%;
+    --green-smoke-950: 87 22% 10%;
+
+    --porsche-50: 40 67% 96%;
+    --porsche-100: 40 67% 96%;
+    --porsche-200: 38 63% 83%;
+    --porsche-300: 36 62% 72%;
+    --porsche-400: 33 61% 62%; /* main */
+    --porsche-500: 33 61% 62%;
+    --porsche-600: 27 58% 48%;
+    --porsche-700: 23 56% 40%;
+    --porsche-800: 20 50% 34%;
+    --porsche-900: 21 48% 28%;
+    --porsche-950: 19 51% 15%;
+
+    --swirl-50: 30 22% 96%;
+    --swirl-100: 37 19% 92%;
+    --swirl-200: 33 19% 82%; /* main */
+    --swirl-300: 33 19% 72%;
+    --swirl-400: 29 19% 61%;
+    --swirl-500: 25 19% 53%;
+    --swirl-600: 22 18% 48%;
+    --swirl-700: 20 17% 40%;
+    --swirl-800: 16 15% 34%;
+    --swirl-900: 15 14% 28%;
+    --swirl-950: 15 16% 15%;
+
+    --sandrift-50: 30 22% 96%;
+    --sandrift-100: 37 19% 92%;
+    --sandrift-200: 33 19% 82%;
+    --sandrift-300: 33 19% 72%;
+    --sandrift-400: 29 19% 61%; /* main */
+    --sandrift-500: 25 19% 53%;
+    --sandrift-600: 22 18% 48%;
+    --sandrift-700: 20 17% 40%;
+    --sandrift-800: 16 15% 34%;
+    --sandrift-900: 15 14% 28%;
+    --sandrift-950: 15 16% 15%;
+
     /* breakpoint variables */
     --bp-small: 24.15;
     --bp-medium: 45.75;
@@ -21,79 +81,80 @@
     --h4-font-size-max: 1.75;
     --p-font-size-min: 1;
     --p-font-size-max: 1.125;
+}
 
+/* Flexible typography with CSS locks https://blog.typekit.com/2016/08/17/flexible-typography-with-css-locks/ */
+h1 {
+    font-size: calc(var(--h1-font-size-min) * 1em);
+    line-height: 1.1;
+}
+
+h2 {
+    font-size: calc(var(--h2-font-size-min) * 1em);
+    line-height: 1.1;
+}
+
+h3 {
+    font-size: calc(var(--h3-font-size-min) * 1em);
+    line-height: 1.1;
+}
+
+h4 {
+    font-size: calc(var(--h4-font-size-min) * 1em);
+    line-height: 1.1;
+}
+
+p {
+    font-size: calc(var(--p-font-size-min) * 1em);
+}
+
+/* landscape on mobile */
+@media screen and (width > 24.15em) {
     h1 {
-        font-size: calc(var(--h1-font-size-min) * 1em);
-        line-height: 1.1;
+        font-size: calc((var(--h1-font-size-min) * 1em) + (var(--h1-font-size-max) - var(--h1-font-size-min)) * ((100vw - (var(--bp-small) * 1em)) / var(--bp-x-large) - var(--bp-small)));
     }
 
     h2 {
-        font-size: calc(var(--h2-font-size-min) * 1em);
-        line-height: 1.1;
+        font-size: calc((var(--h2-font-size-min) * 1em) + (var(--h2-font-size-max) - var(--h2-font-size-min)) * ((100vw - (var(--bp-small) * 1em)) / var(--bp-x-large) - var(--bp-small)));
     }
 
     h3 {
-        font-size: calc(var(--h3-font-size-min) * 1em);
-        line-height: 1.1;
+        font-size: calc((var(--h3-font-size-min) * 1em) + (var(--h3-font-size-max) - var(--h3-font-size-min)) * ((100vw - (var(--bp-small) * 1em)) / var(--bp-x-large) - var(--bp-small)));
     }
 
     h4 {
-        font-size: calc(var(--h4-font-size-min) * 1em);
-        line-height: 1.1;
+        font-size: calc((var(--h4-font-size-min) * 1em) + (var(--h4-font-size-max) - var(--h4-font-size-min)) * ((100vw - (var(--bp-small) * 1em)) / var(--bp-x-large) - var(--bp-small)));
     }
 
     p {
-        font-size: calc(var(--p-font-size-min) * 1em);
+        font-size: calc((var(--p-font-size-min) * 1em) + (var(--p-font-size-max) - var(--p-font-size-min)) * ((100vw - (var(--bp-small) * 1em)) / var(--bp-x-large) - var(--bp-small)));
+    }
+}
+
+@media screen and (width > 75em) {
+    h1 {
+        font-size: calc(var(--h1-font-size-max) * 1em);
     }
 
-    /* landscape on mobile */
-    @media screen and (width > 24.15em) {
-        h1 {
-            font-size: calc((var(--h1-font-size-min) * 1em) + (var(--h1-font-size-max) - var(--h1-font-size-min)) * ((100vw - (var(--bp-small) * 1em)) / var(--bp-xlarge) - var(--bp-small)));
-        }
-
-        h2 {
-            font-size: calc((var(--h2-font-size-min) * 1em) + (var(--h2-font-size-max) - var(--h2-font-size-min)) * ((100vw - (var(--bp-small) * 1em)) / var(--bp-xlarge) - var(--bp-small)));
-        }
-
-        h3 {
-            font-size: calc((var(--h3-font-size-min) * 1em) + (var(--h3-font-size-max) - var(--h3-font-size-min)) * ((100vw - (var(--bp-small) * 1em)) / var(--bp-xlarge) - var(--bp-small)));
-        }
-
-        h4 {
-            font-size: calc((var(--h4-font-size-min) * 1em) + (var(--h4-font-size-max) - var(--h4-font-size-min)) * ((100vw - (var(--bp-small) * 1em)) / var(--bp-xlarge) - var(--bp-small)));
-        }
-
-        p {
-            font-size: calc((var(--p-font-size-min) * 1em) + (var(--p-font-size-max) - var(--p-font-size-min)) * ((100vw - (var(--bp-small) * 1em)) / var(--bp-xlarge) - var(--bp-small)));
-        }
+    h2 {
+        font-size: calc(var(--h2-font-size-max) * 1em);
     }
 
-    @media screen and (width > 75em) {
-        h1 {
-            font-size: calc(var(--h1-font-size-max) * 1em);
-        }
+    h3 {
+        font-size: calc(var(--h3-font-size-max) * 1em);
+    }
 
-        h2 {
-            font-size: calc(var(--h2-font-size-max) * 1em);
-        }
+    h4 {
+        font-size: calc(var(--h4-font-size-max) * 1em);
+    }
 
-        h3 {
-            font-size: calc(var(--h3-font-size-max) * 1em);
-        }
-
-        h4 {
-            font-size: calc(var(--h4-font-size-max) * 1em);
-        }
-
-        p {
-            font-size: calc(var(--p-font-size-max) * 1em);
-        }
+    p {
+        font-size: calc(var(--p-font-size-max) * 1em);
     }
 }
 
 /* ------------------- */
-/* Resets              */
+/* Resets                */
 /* ------------------- */
 
 *,
@@ -118,10 +179,9 @@ html {
 
 body {
     min-height: 100vh;
-    background-color: hsl(var(--clr-dark, black));
+    background-color: hsl(var(--green-smoke-950), black);
     color: hsl(0, 0%, 0%);
     line-height: 1.5;
-    min-height: 100vh;
     display: grid;
     grid-template-rows: min-content 1fr;
     overflow-x: hidden;
@@ -144,4 +204,16 @@ textarea,
 button,
 select {
     font: inherit;
+}
+
+/* remove animations for people who have turned them off */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
 }

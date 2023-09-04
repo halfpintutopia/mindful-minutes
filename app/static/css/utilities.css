@@ -33,8 +33,8 @@
 .skip-to-content {
     position: absolute;
     z-index: 9999;
-    background-color: hsl(var(--clr-white, white));
-    color: hsl(var(--clr-dark, black));
+    background-color: hsl(var(--porsche-50), white);
+    color: hsl(var(--green-smoke-950), black);
     padding: .5em 1em;
     margin-inline: auto;
     transform: translateY(-100%);
@@ -47,4 +47,36 @@
 
 .uppercase {
     text-transform: uppercase;
+}
+
+.background-dark {
+    background-color: hsl(var(--green-smoke-950));
+}
+
+.background-dark-accent {
+    background-color: hsl(var(--green-smoke-700));
+}
+
+.background-accent {
+    background-color: hsl(var(--green-smoke-100));
+}
+
+.background-light {
+    background-color: hsl(var(--porsche-50));
+}
+
+.text-dark {
+    color: hsl(var(--green-smoke-950));
+}
+
+.text-dark-accent {
+    color: hsl(var(--green-smoke-700));
+}
+
+.text-accent {
+    color: hsl(var(--green-smoke-100));
+}
+
+.text-white {
+    color: hsl(var(--porsche-50));
 }

@@ -1,7 +1,6 @@
 from django.urls import path
 
-from .views.index_views import index
-from .views.index_views import design_system
+from .views.index_views import design_system, index
 
 urlpatterns = [
     path("", index, name="home"),

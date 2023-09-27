@@ -1,6 +1,12 @@
 /* ------------------- */
 /* Custom properties   */
 /* ------------------- */
+@font-face {
+    font-family: 'Roboto Flex';
+    src: url("../fonts/RobotoFlex.woff2") format('woff2-variations');
+    font-weight: 0 1000;
+    font-display: swap;
+}
 
 :root {
     /* Colours */
@@ -70,6 +76,8 @@
     --bp-large: 60.25;
     --bp-x-large: 75;
 
+    --roboto-flex: 'Roboto Flex', sans-serif;
+
     /* h1 variables */
     --h1-font-size-min: 5;
     --h1-font-size-max: 6.25;
@@ -84,27 +92,32 @@
 }
 
 /* Flexible typography with CSS locks https://blog.typekit.com/2016/08/17/flexible-typography-with-css-locks/ */
-h1 {
+h1, .header-one {
+    font-family: var(--roboto-flex);
     font-size: calc(var(--h1-font-size-min) * 1em);
     line-height: 1.1;
 }
 
 h2 {
+    font-family: var(--roboto-flex);
     font-size: calc(var(--h2-font-size-min) * 1em);
     line-height: 1.1;
 }
 
 h3 {
+    font-family: var(--roboto-flex);
     font-size: calc(var(--h3-font-size-min) * 1em);
     line-height: 1.1;
 }
 
 h4 {
+    font-family: var(--roboto-flex);
     font-size: calc(var(--h4-font-size-min) * 1em);
     line-height: 1.1;
 }
 
 p {
+    font-family: var(--roboto-flex);
     font-size: calc(var(--p-font-size-min) * 1em);
 }
 
@@ -187,8 +200,8 @@ body {
     overflow-x: hidden;
 
 
-    /* font-family: ;
-    font-size: ; */
+    font-family: var(--roboto-flex);
+    font-size: 16px;
 }
 
 img,

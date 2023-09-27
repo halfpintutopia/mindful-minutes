@@ -1,0 +1,28 @@
+#colors h2 {
+    text-transform: uppercase;
+}
+
+#colors .border {
+    padding: 3rem 1rem 1rem 1rem;
+    border: 1px solid white;
+}
+
+#colors .mischka {
+    background-color: hsl(var(--mischka-300));
+}
+
+#colors .green-smoke {
+    background-color: hsl(var(--green-smoke-400));
+}
+
+#colors .porsche {
+    background-color: hsl(var(--porsche-400));
+}
+
+#colors .swirl {
+    background-color: hsl(var(--swirl-200));
+}
+
+#colors .sandrift {
+    background-color: hsl(var(--sandrift-400));
+}

@@ -2,7 +2,7 @@
 
 # Mindful Minutes
 
-[![Django CI/CD](https://github.com/halfpintutopia/temp-tdd-django-project/actions/workflows/github-ci-cd.yml/badge.svg)](https://github.com/halfpintutopia/temp-tdd-django-project/actions/workflows/github-ci-cd.yml)
+[![Django CI/CD](https://github.com/halfpintutopia/mindful-minutes/actions/workflows/github-ci-cd.yml/badge.svg)](https://github.com/halfpintutopia/mindful-minutes/actions/workflows/github-ci-cd.yml)
 
 <!-- omit from toc -->
 
@@ -613,9 +613,12 @@ For further details on testing, click [here](docs/testing/testing.md).
 - [CodePen|The Hamburger Menu by Matthew Blode](https://codepen.io/mblode/pen/YzozOm)
 - [CodePen|🍔 <-> ❌ (version 1) by Tomino Martinius](https://codepen.io/Zaku/pen/vYReWM)
 - [CodePen|Menu "Hamburger" Icon Animations by Jesse Couch](https://codepen.io/designcouch/pen/ExvwPY)
-- [Getting started with Variable fonts on the web - Kevin Powell](https://www.youtube.com/watch?v=0fVymQ7SZw0)
+- [Getting started with Variable fonts on the web - Kevin Powell](https://www.youtube.com/watch?v=0fVymQ7SZw0) **
 - [Figma Dev Mode is here! - Kevin Powell](https://www.youtube.com/watch?v=063yVWoQvoY)
 - [Responsive navbar tutorial using HTML CSS & JS - Kevin Powell](https://www.youtube.com/watch?v=HbBMp6yUXO0)
+- [Support CSS Nesting Module](https://youtrack.jetbrains.com/issue/WEB-57875)
+- [Can I Use CSS Nesting](https://caniuse.com/css-nesting)
+- [Adobe Color - Lab](https://color.adobe.com/color-labs/recolor-svg)
 
 #### Definitions
 

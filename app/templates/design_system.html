@@ -9,6 +9,20 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Mindful Minutes | {{ title }}</title>
 
+    <script>
+        window.typetura = {
+            selectors: [
+                ".flex",
+                "article",
+                "section",
+                "aside"
+            ], // list of selectors to be used as contexts
+            base: 20,  // target base font size in px. Mostly used by official packages.
+            scale: 1 // scale factor to make headlines bigger or smaller. Mostly used by official packages.
+        };
+    </script>
+    <script src="{% static 'js/typetura.min.js' %}"></script>
+
     <link
             rel="stylesheet"
             href="{% static 'css/index.css' %}"
@@ -82,6 +96,49 @@
                 <div>
                     <p>Heading 1 - Roboto Flex - 32px</p>
                     <h1>Make time a habit</h1>
+                </div>
+            </div>
+            <div class="flex">
+                <div>
+                    <p>Heading 2 - Roboto Flex - 36px</p>
+                    <h2>Set meaningful goals</h2>
+                </div>
+                <div>
+                    <p>Heading 2 - Roboto Flex - 26px</p>
+                    <h2>Set meaningful goals</h2>
+                </div>
+            </div>
+
+            <div class="flex">
+                <div>
+                    <p>Heading 3 - Roboto Flex - 36px</p>
+                    <h3>Unlock your full potential.</h3>
+                </div>
+                <div>
+                    <p>Heading 3 - Roboto Flex - 26px</p>
+                    <h3>Unlock your full potential.</h3>
+                </div>
+            </div>
+
+            <div class="flex">
+                <div>
+                    <p>Heading 4 - Roboto Flex - 36px</p>
+                    <h4>Start each day with intention</h4>
+                </div>
+                <div>
+                    <p>Heading 4 - Roboto Flex - 26px</p>
+                    <h4>Start each day with intention</h4>
+                </div>
+            </div>
+
+            <div class="flex">
+                <div>
+                    <p>Paragraph / Body text - Roboto Flex - 36px</p>
+                    <p>Develop a habit of self-reflection and self-awareness. Reflect on your day, celebrate wins and identify areas for improvement.</p>
+                </div>
+                <div>
+                    <p>Paragraph / Body text - Roboto Flex - 26px</p>
+                    <p>Develop a habit of self-reflection and self-awareness. Reflect on your day, celebrate wins and identify areas for improvement.</p>
                 </div>
             </div>
         </section>

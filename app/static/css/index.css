@@ -3,7 +3,7 @@
 /* ------------------- */
 @font-face {
     font-family: 'Roboto Flex';
-    src: url("../fonts/RobotoFlex.woff2") format('woff2-variations');
+    src: url("../fonts/RobotoFlex.woff2") format('woff2');
     font-weight: 0 1000;
     font-display: swap;
 }
@@ -79,64 +79,177 @@
     --roboto-flex: 'Roboto Flex', sans-serif;
 
     /* h1 variables */
-    --h1-font-size-min: 5;
-    --h1-font-size-max: 6.25;
-    --h2-font-size-min: 2.5;
-    --h2-font-size-max: 3.5;
-    --h3-font-size-min: 1.5;
-    --h3-font-size-max: 2;
-    --h4-font-size-min: 1.25;
-    --h4-font-size-max: 1.75;
-    --p-font-size-min: 1;
-    --p-font-size-max: 1.125;
+    /*--h1-font-size-min: 5;*/
+    /*--h1-font-size-max: 6.25;*/
+    /*--h2-font-size-min: 2.5;*/
+    /*--h2-font-size-max: 3.5;*/
+    /*--h3-font-size-min: 1.5;*/
+    /*--h3-font-size-max: 2;*/
+    /*--h4-font-size-min: 1.25;*/
+    /*--h4-font-size-max: 1.75;*/
+    /*--p-font-size-min: 1;*/
+    /*--p-font-size-max: 1.125;*/
+
+    --h1-font-size-min: 5rem;
+    --h1-font-size-max: 6.25rem;
+    --h2-font-size-min: 2.5rem;
+    --h2-font-size-max: 3.5rem;
+    --h3-font-size-min: 1.5rem;
+    --h3-font-size-max: 2rem;
+    --h4-font-size-min: 1.25rem;
+    --h4-font-size-max: 1.75rem;
+    --p-font-size-min: 1rem;
+    --p-font-size-max: 1.125rem;
+
+    --fs-h1: 5rem;
+    /*--fs-h1: calc((var(--h1-font-size-min) * 1rem) + (var(--h1-font-size-max) - var(--h1-font-size-min)) * ((100vw - (var(--bp-small) * 1rem)) / var(--bp-x-large) - var(--bp-small)));*/
+    /*--fs-h1: clamp(5rem, 12vw + 1rem, 6.25rem);*/
+    --fs-h2: 2.5rem;
+    --fs-h3: 1.5rem;
+    --fs-h4: 1.25rem;
+    --fs-p: 1rem;
+}
+
+
+@media (min-width: 40em) {
+    :root {
+        --fs-h1: 6.25rem;
+        --fs-h2: 3.5rem;
+        --fs-h3: 2rem;
+        --fs-h4: 1.75rem;
+        --fs-p: 1.125rem;
+    }
 }
 
 /* Flexible typography with CSS locks https://blog.typekit.com/2016/08/17/flexible-typography-with-css-locks/ */
-h1, .header-one {
+h1, .primary-heading {
     font-family: var(--roboto-flex);
-    font-size: calc(var(--h1-font-size-min) * 1em);
-    line-height: 1.1;
+    /*    font-variation-settings: */
+    /*"wght" 400,*/
+    /*"wdth" 100,*/
+    /*"slnt" 0,*/
+    /*"GRAD" 0,*/
+    /*"XTRA" 468,*/
+    /*"XOPQ" 96,*/
+    /*"YOPQ" 79,*/
+    /*"YTLC" 514,*/
+    /*"YTUC" 712,*/
+    /*"YTAS" 750,*/
+    /*"YTDE" -203,*/
+    /*"YTFI" 738,*/
+    /*"opsz" 14;*/
+    font-variation-settings: "wdth" 100, "GRAD" -135,
+
+    "XTRA" 420,
+    "XOPQ" 72,
+    "YOPQ" 36,
+    "YTLC" 423,
+    "YTUC" 742,
+    "YTDE" -150,
+    "opsz" 48;
+    font-weight: 500;
+    /*font-size: var(--fs-h1);*/
+    --tt-key: primary-heading;
+    --tt-ease: linear;
+    line-height: 1.25;
+    margin-top: 0.9375em;
+    margin-bottom: 0.3125em;
 }
 
-h2 {
+
+h2, .secondary-heading {
     font-family: var(--roboto-flex);
-    font-size: calc(var(--h2-font-size-min) * 1em);
-    line-height: 1.1;
+    font-variation-settings: "wdth" 100, "GRAD" -135,
+    "XTRA" 420,
+    "XOPQ" 72,
+    "YOPQ" 36,
+    "YTLC" 423,
+    "YTUC" 742,
+    "YTDE" -150,
+    "opsz" 36;
+    font-weight: 500;
+    /*font-size: calc(var(--h2-font-size-min) * 1em);*/
+    --tt-key: secondary-heading;
+    --tt-ease: linear;
+    line-height: 1.15;
 }
 
-h3 {
+
+h3, .tertiary-heading {
     font-family: var(--roboto-flex);
-    font-size: calc(var(--h3-font-size-min) * 1em);
-    line-height: 1.1;
+    font-variation-settings: "wdth" 74, "GRAD" -58,
+    "XTRA" 436,
+    "XOPQ" 77,
+    "YOPQ" 49,
+    "YTLC" 432,
+    "YTUC" 652,
+    "YTDE" -172,
+    "opsz" 36;
+    font-weight: 250;
+    /*font-size: calc(var(--h3-font-size-min) * 1em);*/
+    --tt-key: tertiary-heading;
+    --tt-ease: linear;
+    line-height: 1.13;
 }
 
-h4 {
+h4, .quaternary-heading {
     font-family: var(--roboto-flex);
-    font-size: calc(var(--h4-font-size-min) * 1em);
-    line-height: 1.1;
+    font-variation-settings: "wdth" 74, "GRAD" -58,
+    "XTRA" 436,
+    "XOPQ" 77,
+    "YOPQ" 49,
+    "YTLC" 432,
+    "YTUC" 652,
+    "YTDE" -172,
+    "opsz" 27;
+    font-weight: 250;
+    /*font-size: calc(var(--h4-font-size-min) * 1em);*/
+    --tt-key: quaternary-heading;
+    --tt-ease: linear;
+    line-height: 1.11;
 }
 
-p {
+p, .body-text {
     font-family: var(--roboto-flex);
-    font-size: calc(var(--p-font-size-min) * 1em);
+    font-variation-settings: "wdth" 74, "GRAD" -58,
+    "XTRA" 436,
+    "XOPQ" 77,
+    "YOPQ" 49,
+    "YTLC" 432,
+    "YTUC" 652,
+    "YTDE" -172,
+    "opsz" 18;
+    font-weight: 250;
+    /*font-size: calc(var(--p-font-size-min) * 1em);*/
+    --tt-key: body-paragraph;
+    --tt-ease: linear;
+    line-height: 1.25;
 }
 
-/* landscape on mobile */
-@media screen and (width > 24.15em) {
+/*
+!* landscape on mobile *!
+@media screen and (width > 43.75em) {
     h1 {
-        font-size: calc((var(--h1-font-size-min) * 1em) + (var(--h1-font-size-max) - var(--h1-font-size-min)) * ((100vw - (var(--bp-small) * 1em)) / var(--bp-x-large) - var(--bp-small)));
+        !*font-size: calc((var(--h1-font-size-min) * 1em) + (var(--h1-font-size-max) - var(--h1-font-size-min)) * ((100vw - (var(--bp-small) * 1em)) / var(--bp-x-large) - var(--bp-small)));*!
+        font-size: 2.5em;
+        line-height: 1.125;
+        margin-top: 0.73333334em;
+        margin-bottom: 0.24444445em;
     }
 
     h2 {
         font-size: calc((var(--h2-font-size-min) * 1em) + (var(--h2-font-size-max) - var(--h2-font-size-min)) * ((100vw - (var(--bp-small) * 1em)) / var(--bp-x-large) - var(--bp-small)));
+        line-height: 1.25;
     }
 
     h3 {
         font-size: calc((var(--h3-font-size-min) * 1em) + (var(--h3-font-size-max) - var(--h3-font-size-min)) * ((100vw - (var(--bp-small) * 1em)) / var(--bp-x-large) - var(--bp-small)));
+        line-height: 1.25;
     }
 
     h4 {
         font-size: calc((var(--h4-font-size-min) * 1em) + (var(--h4-font-size-max) - var(--h4-font-size-min)) * ((100vw - (var(--bp-small) * 1em)) / var(--bp-x-large) - var(--bp-small)));
+        line-height: 1.22;
     }
 
     p {
@@ -144,9 +257,12 @@ p {
     }
 }
 
-@media screen and (width > 75em) {
+@media screen and (width > 56.25em) {
     h1 {
         font-size: calc(var(--h1-font-size-max) * 1em);
+        line-height: 1.05;
+        margin-top: 0.6875em;
+        margin-bottom: 0.22916667em;
     }
 
     h2 {
@@ -163,6 +279,51 @@ p {
 
     p {
         font-size: calc(var(--p-font-size-max) * 1em);
+    }
+}*/
+
+@keyframes primary-heading {
+    0% {
+        font-size: var(--h1-font-size-min);
+    }
+    100% {
+        font-size: var(--h1-font-size-max);
+    }
+}
+
+@keyframes secondary-heading {
+    0% {
+        font-size: var(--h2-font-size-min);
+    }
+    100% {
+        font-size: var(--h2-font-size-max);
+    }
+}
+
+@keyframes tertiary-heading {
+    0% {
+        font-size: var(--h3-font-size-min);
+    }
+    100% {
+        font-size: var(--h3-font-size-max);
+    }
+}
+
+@keyframes quaternary-heading {
+    0% {
+        font-size: var(--h4-font-size-min);
+    }
+    100% {
+        font-size: var(--h4-font-size-max);
+    }
+}
+
+@keyframes body-paragraph {
+    0% {
+        font-size: var(--p-font-size-min);
+    }
+    100% {
+        font-size: var(--p-font-size-max);
     }
 }
 
@@ -194,14 +355,13 @@ body {
     min-height: 100vh;
     background-color: hsl(var(--green-smoke-950), black);
     color: hsl(0, 0%, 0%);
-    line-height: 1.5;
     display: grid;
     grid-template-rows: min-content 1fr;
     overflow-x: hidden;
 
-
     font-family: var(--roboto-flex);
     font-size: 16px;
+    line-height: 1.375;
 }
 
 img,

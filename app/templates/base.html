@@ -8,6 +8,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
     <title>Mindful Minutes | {{ title }}</title>
+    <script>
+        window.typetura = {
+            selectors: [".typetura"], // list of selectors to be used as contexts
+            base: 20,  // target base font size in px. Mostly used by official packages.
+            scale: 1 // scale factor to make headlines bigger or smaller. Mostly used by official packages.
+        };
+    </script>
+    <script src="{% static 'js/typetura.min.js' %}"></script>
+    {% block custom_js %}
+    {% endblock %}
 
     <link
             rel="stylesheet"
@@ -29,8 +39,11 @@
             href="{% static 'css/footer.css' %}"
             type="text/css"
     />
-</head>
 
+    {% block custom_css %}
+    {% endblock %}
+</head>
+<div class="skip-to-content"></div>
 <body>
     <header class="primary-header flex">
         {% block navigation_logo %}

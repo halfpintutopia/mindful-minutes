@@ -91,7 +91,7 @@ Personalise experience:
     - Used this editor, rather than [Summernote](https://summernote.org), due to conflict with Django version. I
       previously worked with CKEditor when I worked with ConcreteCMS
 
-### Frameworks, Libraries & Additional Programs/Software used
+### Frameworks, Libraries & Additional Programs/Software/Tools used
 
 - Django
 
@@ -105,6 +105,13 @@ Personalise experience:
     - A production-grade WSGI server
 - [Django All Auth](https://django-allauth.readthedocs.io/en/latest/)
 - [pytest-xdist](https://pypi.org/project/pytest-xdist/)
+
+#### Tools
+
+- [Typetura](https://docs.typetura.com)
+    - I chose a lightweight tool rather than Bootstrap and the integrated RFS. Typetura is a service and tool enabling
+      developers to implement responsive typography. I chose Typetura as I enjoy having fine-grained control over the
+      typography.
 
 ```
 # install packages
@@ -606,6 +613,8 @@ For further details on testing, click [here](docs/testing/testing.md).
 
 ### References
 
+#### Style
+
 - [Add 'go to top' button on Readme.md](https://github.com/orgs/community/discussions/42712)
 - [How to Create Reusable SVG Icon React Components](https://www.freecodecamp.org/news/how-to-create-reusable-icon-react-components-for-colors-and-sizes-customization/)
 - [Help with snapping nodes to guidelines](https://alpha.inkscape.org/vectors/www.inkscapeforum.com/viewtopic6b46.html?t=18613)
@@ -619,13 +628,15 @@ For further details on testing, click [here](docs/testing/testing.md).
 - [Support CSS Nesting Module](https://youtrack.jetbrains.com/issue/WEB-57875)
 - [Can I Use CSS Nesting](https://caniuse.com/css-nesting)
 - [Adobe Color - Lab](https://color.adobe.com/color-labs/recolor-svg)
+- [Strengthening Typography with Responsive Techniques and Typetura](https://www.youtube.com/watch?v=fs9uJ7I4a70)
+- [Cubic Bezier](https://cubic-bezier.com)
 
 #### Definitions
 
 - Web Dyno
     - a lightweight Linux container used to run a single process, sucha as a web server or a background worker. Dynos
       are the building blocks of a Heroku application's runtime environment. It refers to the dyno responsible for
-      handling incoming HTTP requests for you web application. It runs the web server specified in the Dockerfile. 
+      handling incoming HTTP requests for you web application. It runs the web server specified in the Dockerfile.
 
 ### Code Used
 

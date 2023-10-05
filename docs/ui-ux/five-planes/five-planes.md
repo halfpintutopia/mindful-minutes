@@ -512,6 +512,10 @@ References:
 - [Flexible typography with CSS locks](https://blog.typekit.com/2016/08/17/flexible-typography-with-css-locks/)
 - [The evolution of typography with variable fonts](https://www.monotype.com/resources/articles/the-evolution-of-typography-with-variable-fonts)
 - [Wakamai Fondue](https://wakamaifondue.com/beta/)
+- [Google Fonts - Roboto Flex](https://fonts.google.com/specimen/Roboto+Flex?query=roboto+flex)
+- [GitHub - GoogleFonts - Roboto-Flex](https://github.com/googlefonts/roboto-flex/blob/main/fonts/RobotoFlex%5BGRAD%2CXOPQ%2CXTRA%2CYOPQ%2CYTAS%2CYTDE%2CYTFI%2CYTLC%2CYTUC%2Copsz%2Cslnt%2Cwdth%2Cwght%5D.ttf)
+- [TFF to WOFF2 Converter](https://cloudconvert.com/ttf-to-woff2)
+- [V-Fonts](https://v-fonts.com)
 
 ---
 

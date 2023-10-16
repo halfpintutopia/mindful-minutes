@@ -123,31 +123,28 @@
 
 /* Flexible typography with CSS locks https://blog.typekit.com/2016/08/17/flexible-typography-with-css-locks/ */
 h1, .primary-heading {
-    font-family: var(--roboto-flex);
-    /*    font-variation-settings: */
-    /*"wght" 400,*/
-    /*"wdth" 100,*/
-    /*"slnt" 0,*/
-    /*"GRAD" 0,*/
-    /*"XTRA" 468,*/
-    /*"XOPQ" 96,*/
-    /*"YOPQ" 79,*/
-    /*"YTLC" 514,*/
-    /*"YTUC" 712,*/
-    /*"YTAS" 750,*/
-    /*"YTDE" -203,*/
-    /*"YTFI" 738,*/
-    /*"opsz" 14;*/
-    font-variation-settings: "wdth" 100, "GRAD" -135,
-
-    "XTRA" 420,
-    "XOPQ" 72,
-    "YOPQ" 36,
-    "YTLC" 423,
-    "YTUC" 742,
-    "YTDE" -150,
-    "opsz" 48;
-    font-weight: 500;
+        /*
+    wght weight
+    wdth width
+    GRAD grade
+    XTRA parametric-counter-width
+    XOPQ parametric-thick-stroke
+    YOPQ parametric-thin-stroke
+    YTLC parametric-lowercase-height
+    YTUC parametric-uppercase-height
+    YTDE parametric-descender-depth
+    opsz optical-size
+    */
+    --font-weight: 500;
+    --font-width: 100;
+    --font-grade: -135;
+    --font-parametric-counter-width: 420;
+    --font-parametric-thick-stroke: 72;
+    --font-parametric-thin-stroke: 36;
+    --font-parametric-lowercase-height: 423;
+    --font-parametric-uppercase-height: 742;
+    --font-parametric-descender-depth: -150;
+    --font-optical-size: 48;
     /*font-size: var(--fs-h1);*/
     --tt-key: primary-heading;
     --tt-ease: linear;
@@ -158,16 +155,16 @@ h1, .primary-heading {
 
 
 h2, .secondary-heading {
-    font-family: var(--roboto-flex);
-    font-variation-settings: "wdth" 100, "GRAD" -135,
-    "XTRA" 420,
-    "XOPQ" 72,
-    "YOPQ" 36,
-    "YTLC" 423,
-    "YTUC" 742,
-    "YTDE" -150,
-    "opsz" 36;
-    font-weight: 500;
+    --font-weight: 500;
+    --font-width: 100;
+    --font-grade: -135;
+    --font-parametric-counter-width: 420;
+    --font-parametric-thick-stroke: 72;
+    --font-parametric-thin-stroke: 36;
+    --font-parametric-lowercase-height: 423;
+    --font-parametric-uppercase-height: 742;
+    --font-parametric-descender-depth: -150;
+    --font-optical-size: 36;
     /*font-size: calc(var(--h2-font-size-min) * 1em);*/
     --tt-key: secondary-heading;
     --tt-ease: linear;
@@ -176,16 +173,16 @@ h2, .secondary-heading {
 
 
 h3, .tertiary-heading {
-    font-family: var(--roboto-flex);
-    font-variation-settings: "wdth" 74, "GRAD" -58,
-    "XTRA" 436,
-    "XOPQ" 77,
-    "YOPQ" 49,
-    "YTLC" 432,
-    "YTUC" 652,
-    "YTDE" -172,
-    "opsz" 36;
-    font-weight: 250;
+    --font-weight: 250;
+    --font-width: 74;
+    --font-grade: -58;
+    --font-parametric-counter-width: 436;
+    --font-parametric-thick-stroke: 77;
+    --font-parametric-thin-stroke: 49;
+    --font-parametric-lowercase-height: 432;
+    --font-parametric-uppercase-height: 652;
+    --font-parametric-descender-depth: -172;
+    --font-optical-size: 36;
     /*font-size: calc(var(--h3-font-size-min) * 1em);*/
     --tt-key: tertiary-heading;
     --tt-ease: linear;
@@ -193,38 +190,32 @@ h3, .tertiary-heading {
 }
 
 h4, .quaternary-heading {
-    font-family: var(--roboto-flex);
-    font-variation-settings: "wdth" 74, "GRAD" -58,
-    "XTRA" 436,
-    "XOPQ" 77,
-    "YOPQ" 49,
-    "YTLC" 432,
-    "YTUC" 652,
-    "YTDE" -172,
-    "opsz" 27;
-    font-weight: 250;
+    --font-weight: 250;
+    --font-width: 74;
+    --font-grade: -58;
+    --font-parametric-counter-width: 436;
+    --font-parametric-thick-stroke: 77;
+    --font-parametric-thin-stroke: 49;
+    --font-parametric-lowercase-height: 432;
+    --font-parametric-uppercase-height: 652;
+    --font-parametric-descender-depth: -172;
+    --font-optical-size: 27;
     /*font-size: calc(var(--h4-font-size-min) * 1em);*/
     --tt-key: quaternary-heading;
     --tt-ease: linear;
     line-height: 1.11;
 }
 
-p, .body-text {
-    font-family: var(--roboto-flex);
-    font-variation-settings: "wdth" 74, "GRAD" -58,
-    "XTRA" 436,
-    "XOPQ" 77,
-    "YOPQ" 49,
-    "YTLC" 432,
-    "YTUC" 652,
-    "YTDE" -172,
-    "opsz" 18;
-    font-weight: 250;
+p {
     /*font-size: calc(var(--p-font-size-min) * 1em);*/
     --tt-key: body-paragraph;
     --tt-ease: linear;
     line-height: 1.25;
 }
+
+/*section {
+    padding-block: min(10vh, 5rem);
+}*/
 
 /*
 !* landscape on mobile *!
@@ -352,6 +343,29 @@ html {
 }
 
 body {
+    /*
+    wght --font-weight: 400;
+    wdth --font-width: 100;
+    GRAD --font-grade: 0;
+    XTRA --font-parametric-counter-width: 468;
+    XOPQ --font-parametric-thick-stroke: 96;
+    YOPQ --font-parametric-thin-stroke: 79;
+    YTLC --font-parametric-lowercase-height: 514;
+    YTUC --font-parametric-uppercase-height: 712;
+    YTDE --font-parametric-descender-depth: -203;
+    opsz --font-optical-size: 14;
+    */
+    --font-weight: 250;
+    --font-width: 74;
+    --font-grade: -58;
+    --font-parametric-counter-width: 436;
+    --font-parametric-thick-stroke: 77;
+    --font-parametric-thin-stroke: 49;
+    --font-parametric-lowercase-height: 432;
+    --font-parametric-uppercase-height: 652;
+    --font-parametric-descender-depth: -172;
+    --font-optical-size: 18;
+
     min-height: 100vh;
     background-color: hsl(var(--green-smoke-950), black);
     color: hsl(0, 0%, 0%);
@@ -360,7 +374,20 @@ body {
     overflow-x: hidden;
 
     font-family: var(--roboto-flex);
-    font-size: 16px;
+    /*font-size: 16px;*/
+    --tt-key: body-paragraph;
+    --tt-ease: linear;
+    font-variation-settings:
+        "wght" var(--font-weight),
+        "wdth" var(--font-width),
+        "GRAD" var(--font-grade),
+        "XTRA" var(--font-parametric-counter-width),
+        "XOPQ" var(--font-parametric-thick-stroke),
+        "YOPQ" var(--font-parametric-thin-stroke),
+        "YTLC" var(--font-parametric-lowercase-height),
+        "YTUC" var(--font-parametric-uppercase-height),
+        "YTDE" var(--font-parametric-descender-depth),
+        "opsz" var(--font-optical-size);
     line-height: 1.375;
 }
 

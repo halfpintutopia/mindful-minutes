@@ -2,9 +2,37 @@
 /* Utilities           */
 /* ------------------- */
 
+/* Layouts */
+.container {
+    padding-inline: 2rem;
+    margin-inline: auto;
+    max-width: 80rem;
+}
+
 .flex {
     display: flex;
     gap: var(--gap, 1rem);
+    flex-wrap: wrap;
+}
+
+.flex > * {
+    flex: 1;
+}
+
+.flex-with-sidebar {
+    align-items: start;
+    max-width: calc(var(--bp-x-large) * 1rem);
+    margin-inline: auto;
+}
+
+.flex-with-sidebar > :first-child {
+    flex-basis: 500px;
+    flex-grow: 9999;
+}
+
+.flex-with-sidebar > :last-child {
+    flex-basis: 300px;
+    flex-grow: 1;
 }
 
 .grid {
@@ -12,12 +40,25 @@
     gap: var(--gap, 1rem);
 }
 
-.container {
-    padding-inline: 2rem;
-    margin-inline: auto;
-    max-width: 80rem;
+.auto-grid {
+    grid-template-columns: repeat(
+            auto-fit,
+            minmax(min(10rem, 100%), 1fr));
 }
 
+.horizontal-grid {
+    grid-auto-flow: column;
+    grid-auto-columns: 45%;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    scroll-padding: 1rem;
+}
+
+.horizontal-grid > * {
+    scroll-snap-align: start;
+}
+
+/* Screen Reader */
 .sr-only {
     position: absolute;
     width: 1px;

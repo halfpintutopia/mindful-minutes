@@ -14,7 +14,7 @@ services:
       - app-db
   # Database service https://hub.docker.com/_/postgres
   app-db:
-    image: postgres:latest
+    image: postgres:15.4
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     env_file:

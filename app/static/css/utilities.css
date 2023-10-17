@@ -4,9 +4,75 @@
 
 /* Layouts */
 .container {
-    padding-inline: 2rem;
+    padding-inline: var(--container-padding-inline);
     margin-inline: auto;
-    max-width: 80rem;
+    max-width: var(--container-max-width);
+}
+
+/* https://www.youtube.com/watch?v=Ivk8Blw2VTI&t=2s */
+.container-escape-split-width {
+    padding-block: 0;
+}
+
+.container-escape-split-width > :not(img) {
+    padding-block: var(--section-padding-block);
+    padding-inline: var(--container-padding-inline);
+}
+
+@media screen and (width > 56.25em) {
+    .container-escape-split-width {
+        display: grid;
+        grid-template-columns:
+                minmax(var(--container-padding-inline), 1fr)
+                minmax(0, calc(var(--container-max-width) / 2))
+                minmax(0, calc(var(--container-max-width) / 2))
+                minmax(var(--container-padding-inline), 1fr);
+        position: relative;
+    }
+
+    .container-escape-split-width > img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .container-escape-split-width > img:first-child {
+        grid-column: 1 / 3;
+    }
+
+    .container-escape-split-width > img:last-child {
+        grid-column: 3 / -1;
+    }
+
+
+    .container-escape-split-width > :not(img) {
+        display: grid;
+        align-content: center;
+        justify-items: start;
+    }
+
+    .container-escape-split-width > :not(img):first-child {
+        grid-column: 2 / 3;
+    }
+
+    .container-escape-split-width > :not(img):last-child {
+        grid-column: 3 / 4;
+    }
+
+    .container-escape-split-width > :not(img)::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-color: inherit;
+    }
+
+    .container-escape-split-width > :not(img):first-child::before {
+        grid-column: 1 / 2;
+    }
+
+    .container-escape-split-width > :not(img):last-child::before {
+        grid-column: 4 / 5;
+    }
 }
 
 .flex {
@@ -46,6 +112,28 @@
             minmax(min(10rem, 100%), 1fr));
 }
 
+.grid-columns {
+    --column-count: 1;
+    grid-template-columns: repeat(
+            var(--column-count), 1fr);
+}
+
+/* https://www.youtube.com/watch?v=r1IitKbJRFE */
+@media screen and (width > 56.25em) {
+    .grid-columns[data-columns="2"] {
+        --column-count: 2;
+    }
+
+    .grid-columns[data-columns="3"] {
+        --column-count: 3;
+    }
+
+    .grid-columns[data-columns="4"] {
+        --column-count: 4;
+    }
+}
+
+
 .horizontal-grid {
     grid-auto-flow: column;
     grid-auto-columns: 45%;
@@ -56,6 +144,10 @@
 
 .horizontal-grid > * {
     scroll-snap-align: start;
+}
+
+section {
+    padding-block: var(--section-padding-block);
 }
 
 /* Screen Reader */
@@ -90,6 +182,8 @@
     text-transform: uppercase;
 }
 
+
+/* Background */
 .background-dark {
     background-color: hsl(var(--green-smoke-950));
 }
@@ -121,3 +215,4 @@
 .text-white {
     color: hsl(var(--porsche-50));
 }
+

@@ -108,6 +108,11 @@
     --fs-h3: 1.5rem;
     --fs-h4: 1.25rem;
     --fs-p: 1rem;
+
+    /* Spacing */
+    --container-padding-inline: 2rem;
+    --container-max-width: 80rem;
+    --section-padding-block: 3rem;
 }
 
 

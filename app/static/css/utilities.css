@@ -9,6 +9,40 @@
     max-width: var(--container-max-width);
 }
 
+/*.container {*/
+/*    width: min(100% - var(--container-padding), var(--container-max-width));*/
+/*    margin-inline: auto;*/
+/*}*/
+
+/*.container[data-width="regular"] {*/
+/*    --container-max-width: var(--container-width-wide);*/
+/*    --container-padding: calc(var(--standard-padding) * 2);*/
+/*}*/
+
+/*@media only screen and (width >=768px) {*/
+/*    .container[data-width="regular"] {*/
+/*        --container-max-width: var(--container-width-regular);*/
+/*        --container-padding: calc(var(--standard-padding) * 2);*/
+/*    }*/
+/*}*/
+
+/*.container[data-width="wide"] {*/
+/*    --container-max-width: var(--container-width-wide);*/
+/*    --container-padding: calc(var(--standard-padding) * 2);*/
+/*}*/
+
+/*.container[data-width="full"] {*/
+/*    --container-max-width: var(--container-width-full);*/
+/*}*/
+
+/*@media only screen and (width >=768px) {*/
+/*    .container[data-width="full"] {*/
+/*        --container-max-width: var(--container-width-wide);*/
+/*        --container-padding: calc(var(--standard-padding) * 2);*/
+/*    }*/
+/*}*/
+
+
 /* https://www.youtube.com/watch?v=Ivk8Blw2VTI&t=2s */
 .container-escape-split-width {
     padding-block: 0;
@@ -89,15 +123,18 @@
     align-items: start;
     max-width: calc(var(--bp-x-large) * 1rem);
     margin-inline: auto;
+    gap: var(--gap);
 }
 
+/* https://www.youtube.com/watch?v=p3_xN2Zp1TY */
+/*https://every-layout.dev/layouts/sidebar/*/
 .flex-with-sidebar > :first-child {
     flex-basis: 500px;
-    flex-grow: 9999;
+    flex-grow: 9999; /*hack: put at a really high number as rate of growth is bigger, will take up all available space*/
 }
 
 .flex-with-sidebar > :last-child {
-    flex-basis: 300px;
+    flex-basis: 300px; /*size to remain when in 2 column layout*/
     flex-grow: 1;
 }
 
@@ -133,13 +170,12 @@
     }
 }
 
-
 .horizontal-grid {
     grid-auto-flow: column;
-    grid-auto-columns: 45%;
+    grid-auto-columns: calc(50% - (var(--gap) / 2)); /*decide how big the columns are*/
     overflow-x: scroll;
     scroll-snap-type: x mandatory;
-    scroll-padding: 1rem;
+    scroll-padding: var(--gap);
 }
 
 .horizontal-grid > * {

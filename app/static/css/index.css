@@ -76,6 +76,12 @@
     --bp-large: 60.25;
     --bp-x-large: 75;
 
+    /*https://www.freecodecamp.org/news/the-100-correct-way-to-do-css-breakpoints-88d6a5ba1862/*/
+    --tablet: 34.5; /*rem*/
+    --tablet-landscape: 56.25;
+    --desktop: 75;
+    --big-desktop: 112.5;
+
     --roboto-flex: 'Roboto Flex', sans-serif;
 
     /* h1 variables */
@@ -100,6 +106,10 @@
     --h4-font-size-max: 1.75rem;
     --p-font-size-min: 1rem;
     --p-font-size-max: 1.125rem;
+    --a-font-size-min: 1rem;
+    --a-font-size-max: 1.125rem;
+    --nav-item-font-size-min: 1.125rem;
+    --nav-item-font-size-max: 1.25rem;
 
     --fs-h1: 5rem;
     /*--fs-h1: calc((var(--h1-font-size-min) * 1rem) + (var(--h1-font-size-max) - var(--h1-font-size-min)) * ((100vw - (var(--bp-small) * 1rem)) / var(--bp-x-large) - var(--bp-small)));*/
@@ -113,6 +123,12 @@
     --container-padding-inline: 2rem;
     --container-max-width: 80rem;
     --section-padding-block: 3rem;
+    --padding: max(3vh, 1rem) 1.5rem;
+    --margin: max(6vh, 2rem);
+
+    /* z-index */
+    --header-layer: 1000;
+    --top-layer: 9999;
 }
 
 
@@ -128,18 +144,18 @@
 
 /* Flexible typography with CSS locks https://blog.typekit.com/2016/08/17/flexible-typography-with-css-locks/ */
 h1, .primary-heading {
-        /*
-    wght weight
-    wdth width
-    GRAD grade
-    XTRA parametric-counter-width
-    XOPQ parametric-thick-stroke
-    YOPQ parametric-thin-stroke
-    YTLC parametric-lowercase-height
-    YTUC parametric-uppercase-height
-    YTDE parametric-descender-depth
-    opsz optical-size
-    */
+    /*
+wght weight
+wdth width
+GRAD grade
+XTRA parametric-counter-width
+XOPQ parametric-thick-stroke
+YOPQ parametric-thin-stroke
+YTLC parametric-lowercase-height
+YTUC parametric-uppercase-height
+YTDE parametric-descender-depth
+opsz optical-size
+*/
     --font-weight: 500;
     --font-width: 100;
     --font-grade: -135;
@@ -218,65 +234,35 @@ p {
     line-height: 1.25;
 }
 
-/*section {
-    padding-block: min(10vh, 5rem);
-}*/
-
-/*
-!* landscape on mobile *!
-@media screen and (width > 43.75em) {
-    h1 {
-        !*font-size: calc((var(--h1-font-size-min) * 1em) + (var(--h1-font-size-max) - var(--h1-font-size-min)) * ((100vw - (var(--bp-small) * 1em)) / var(--bp-x-large) - var(--bp-small)));*!
-        font-size: 2.5em;
-        line-height: 1.125;
-        margin-top: 0.73333334em;
-        margin-bottom: 0.24444445em;
-    }
-
-    h2 {
-        font-size: calc((var(--h2-font-size-min) * 1em) + (var(--h2-font-size-max) - var(--h2-font-size-min)) * ((100vw - (var(--bp-small) * 1em)) / var(--bp-x-large) - var(--bp-small)));
-        line-height: 1.25;
-    }
-
-    h3 {
-        font-size: calc((var(--h3-font-size-min) * 1em) + (var(--h3-font-size-max) - var(--h3-font-size-min)) * ((100vw - (var(--bp-small) * 1em)) / var(--bp-x-large) - var(--bp-small)));
-        line-height: 1.25;
-    }
-
-    h4 {
-        font-size: calc((var(--h4-font-size-min) * 1em) + (var(--h4-font-size-max) - var(--h4-font-size-min)) * ((100vw - (var(--bp-small) * 1em)) / var(--bp-x-large) - var(--bp-small)));
-        line-height: 1.22;
-    }
-
-    p {
-        font-size: calc((var(--p-font-size-min) * 1em) + (var(--p-font-size-max) - var(--p-font-size-min)) * ((100vw - (var(--bp-small) * 1em)) / var(--bp-x-large) - var(--bp-small)));
-    }
+a {
+    --font-weight: 500;
+    --font-width: 74;
+    --font-grade: -58;
+    --font-parametric-counter-width: 436;
+    --font-parametric-thick-stroke: 77;
+    --font-parametric-thin-stroke: 49;
+    --font-parametric-lowercase-height: 432;
+    --font-parametric-uppercase-height: 652;
+    --font-parametric-descender-depth: -172;
+    --font-optical-size: 18;
+    --tt-key: anchor-text;
+    --tt-ease: linear;
 }
 
-@media screen and (width > 56.25em) {
-    h1 {
-        font-size: calc(var(--h1-font-size-max) * 1em);
-        line-height: 1.05;
-        margin-top: 0.6875em;
-        margin-bottom: 0.22916667em;
-    }
-
-    h2 {
-        font-size: calc(var(--h2-font-size-max) * 1em);
-    }
-
-    h3 {
-        font-size: calc(var(--h3-font-size-max) * 1em);
-    }
-
-    h4 {
-        font-size: calc(var(--h4-font-size-max) * 1em);
-    }
-
-    p {
-        font-size: calc(var(--p-font-size-max) * 1em);
-    }
-}*/
+nav ul a {
+    --font-weight: 500;
+    --font-width: 100;
+    --font-grade: -135;
+    --font-parametric-counter-width: 420;
+    --font-parametric-thick-stroke: 72;
+    --font-parametric-thin-stroke: 36;
+    --font-parametric-lowercase-height: 423;
+    --font-parametric-uppercase-height: 742;
+    --font-parametric-descender-depth: -150;
+    --font-optical-size: 20;
+    --tt-key: nav-item;
+    --tt-ease: linear;
+}
 
 @keyframes primary-heading {
     0% {
@@ -323,6 +309,24 @@ p {
     }
 }
 
+@keyframes anchor-text {
+    0% {
+        font-size: var(--a-font-size-min);
+    }
+    100% {
+        font-size: var(--a-font-size-max);
+    }
+}
+
+@keyframes nav-item {
+    0% {
+        font-size: var(--nav-item-font-size-min);
+    }
+    100% {
+        font-size: var(--nav-item-font-size-max);
+    }
+}
+
 /* ------------------- */
 /* Resets                */
 /* ------------------- */
@@ -339,9 +343,9 @@ p {
     font: inherit;
 }
 
-/* * + * {
-    margin: 1em 0 0;
-} */
+/** + * {*/
+/*    margin: 1em 0 0;*/
+/*}*/
 
 html {
     color-scheme: dark light;
@@ -382,17 +386,16 @@ body {
     /*font-size: 16px;*/
     --tt-key: body-paragraph;
     --tt-ease: linear;
-    font-variation-settings:
-        "wght" var(--font-weight),
-        "wdth" var(--font-width),
-        "GRAD" var(--font-grade),
-        "XTRA" var(--font-parametric-counter-width),
-        "XOPQ" var(--font-parametric-thick-stroke),
-        "YOPQ" var(--font-parametric-thin-stroke),
-        "YTLC" var(--font-parametric-lowercase-height),
-        "YTUC" var(--font-parametric-uppercase-height),
-        "YTDE" var(--font-parametric-descender-depth),
-        "opsz" var(--font-optical-size);
+    font-variation-settings: "wght" var(--font-weight),
+    "wdth" var(--font-width),
+    "GRAD" var(--font-grade),
+    "XTRA" var(--font-parametric-counter-width),
+    "XOPQ" var(--font-parametric-thick-stroke),
+    "YOPQ" var(--font-parametric-thin-stroke),
+    "YTLC" var(--font-parametric-lowercase-height),
+    "YTUC" var(--font-parametric-uppercase-height),
+    "YTDE" var(--font-parametric-descender-depth),
+    "opsz" var(--font-optical-size);
     line-height: 1.375;
 }
 

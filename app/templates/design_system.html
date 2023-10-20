@@ -48,10 +48,45 @@
             href="{% static 'css/design_system.css' %}"
             type="text/css"
     />
+    <link
+            rel="stylesheet"
+            href="{% static 'css/infinite_scroll.css' %}"
+            type="text/css"
+    />
 </head>
 <body>
+    <header class="primary-header container" data-width="wide">
+        <div>
+            <img class="logo" src="" alt="Logo"/>
+        </div>
 
-    <div class="container">
+        <button class="mobile-nav-toggle" aria-controls="primary-navigation" aria-expanded="false">
+            <svg width="48px" height="48px" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                <g>
+                    <line x1="0" y1="17" x2="48" y2="17" stroke-width="1"></line>
+                    <line x1="0" y1="31" x2="48" y2="31" stroke-width="1"></line>
+                </g>
+
+                <g>
+                    <line x1="0" y1="24" x2="48" y2="24" stroke-width="1"></line>
+                    <line x1="0" y1="24" x2="48" y2="24" stroke-width="1"></line>
+                </g>
+            </svg>
+            <span class="sr-only">Menu</span>
+        </button>
+
+        <nav>
+            <ul id="primary-navigation" data-visible="false" class="primary-navigation">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Pricing</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container" data-width="wide">
         <h1>Design system</h1>
 
         <section id="colors">
@@ -172,11 +207,10 @@
         </section>
 
 
-
     </div>
-
+    {#https://awik.io/generate-random-images-unsplash-without-using-api/#}
     <div>
-         <section class="container-escape-split-width">
+        <section class="container-escape-split-width">
             <img src="https://source.unsplash.com/random/300×300/?city,night"
                  alt="Random Unsplash image">
             <div class="background-light">
@@ -208,20 +242,54 @@
                     quisquam suscipit veritatis. Incidunt, ipsa.</p>
                 <a href="#" class="button">Keep reading</a>
             </div>
-            <img src="https://source.unsplash.com/random/300×300/?art,abstract"
+            <img src="https://source.unsplash.com/random/150x150/?art,abstract"
                  alt="Random Unsplash image">
         </section>
         <section class="container-escape-split-width">
-            <img src="https://source.unsplash.com/random/300×300/?cat"
+            <img src="https://source.unsplash.com/random/150x150/?cat"
                  alt="Random Unsplash image">
-            <img src="https://source.unsplash.com/random/300×300/?dog"
+            <img src="https://source.unsplash.com/random/150x150/?dog"
                  alt="Random Unsplash image">
         </section>
     </div>
 
-    <div>
-        <h1></h1>
+    <div class="container" data-width="wide">
+        <h2>Infinite Scroll</h2>
+
+        <div class="infinite-scroller">
+            <ul class="infinite-scroller__inner tag-list">
+                <li>HTML</li>
+                <li>CSS</li>
+                <li>JS</li>
+                <li>SSG</li>
+                <li>webdev</li>
+                <li>animation</li>
+                <li>UI/UX</li>
+                <li>TypeScript</li>
+                <li>PHP</li>
+                <li>ReactJS</li>
+            </ul>
+        </div>
+
+        <div class="infinite-scroller" data-direction="right" data-speed="fast">
+            <div class="infinite-scroller__inner">
+                <img src="https://source.unsplash.com/random/150x150/?cat"
+                     alt="Random Unsplash image">
+                <img src="https://source.unsplash.com/random/150x150/?dog"
+                     alt="Random Unsplash image">
+                <img src="https://source.unsplash.com/random/150x150/?bird,colorful"
+                     alt="Random Unsplash image">
+                <img src="https://source.unsplash.com/random/150x150/?beaver"
+                     alt="Random Unsplash image">
+                <img src="https://source.unsplash.com/random/150x150/?otter"
+                     alt="Random Unsplash image">
+                <img src="https://source.unsplash.com/random/150x150/?badger"
+                     alt="Random Unsplash image">
+            </div>
+        </div>
     </div>
 
+    <script defer src="{% static 'js/infinite_scroll.js' %}"></script>
+    <script defer src="{% static 'js/nav-header.js' %}"></script>
 </body>
 </html>

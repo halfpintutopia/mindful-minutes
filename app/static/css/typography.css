@@ -1,0 +1,231 @@
+/* Flexible typography with CSS locks https://blog.typekit.com/2016/08/17/flexible-typography-with-css-locks/ */
+h1, .primary-heading {
+    --font-weight: 500;
+    --font-width: 100;
+    --font-grade: -135;
+    --font-parametric-counter-width: 420;
+    --font-parametric-thick-stroke: 72;
+    --font-parametric-thin-stroke: 36;
+    --font-parametric-lowercase-height: 423;
+    --font-parametric-uppercase-height: 742;
+    --font-parametric-descender-depth: -150;
+    --font-optical-size: 48;
+    /*font-size: var(--fs-h1);*/
+    --tt-key: primary-heading;
+    --tt-ease: linear;
+
+    font-variation-settings: "wght" var(--font-weight),
+    "wdth" var(--font-width),
+    "GRAD" var(--font-grade),
+    "XTRA" var(--font-parametric-counter-width),
+    "XOPQ" var(--font-parametric-thick-stroke),
+    "YOPQ" var(--font-parametric-thin-stroke),
+    "YTLC" var(--font-parametric-lowercase-height),
+    "YTUC" var(--font-parametric-uppercase-height),
+    "YTDE" var(--font-parametric-descender-depth),
+    "opsz" var(--font-optical-size);
+    line-height: 1.25;
+    margin-top: 0.9375em;
+    margin-bottom: 0.3125em;
+}
+
+
+h2, .secondary-heading {
+    --font-weight: 500;
+    --font-width: 100;
+    --font-grade: -135;
+    --font-parametric-counter-width: 420;
+    --font-parametric-thick-stroke: 72;
+    --font-parametric-thin-stroke: 36;
+    --font-parametric-lowercase-height: 423;
+    --font-parametric-uppercase-height: 742;
+    --font-parametric-descender-depth: -150;
+    --font-optical-size: 36;
+    /*font-size: calc(var(--h2-font-size-min) * 1em);*/
+    --tt-key: secondary-heading;
+    --tt-ease: linear;
+
+    font-variation-settings: "wght" var(--font-weight),
+    "wdth" var(--font-width),
+    "GRAD" var(--font-grade),
+    "XTRA" var(--font-parametric-counter-width),
+    "XOPQ" var(--font-parametric-thick-stroke),
+    "YOPQ" var(--font-parametric-thin-stroke),
+    "YTLC" var(--font-parametric-lowercase-height),
+    "YTUC" var(--font-parametric-uppercase-height),
+    "YTDE" var(--font-parametric-descender-depth),
+    "opsz" var(--font-optical-size);
+    line-height: 1.15;
+}
+
+
+h3, .tertiary-heading {
+    --font-weight: 250;
+    --font-width: 74;
+    --font-grade: -58;
+    --font-parametric-counter-width: 436;
+    --font-parametric-thick-stroke: 77;
+    --font-parametric-thin-stroke: 49;
+    --font-parametric-lowercase-height: 432;
+    --font-parametric-uppercase-height: 652;
+    --font-parametric-descender-depth: -172;
+    --font-optical-size: 36;
+    /*font-size: calc(var(--h3-font-size-min) * 1em);*/
+    --tt-key: tertiary-heading;
+    --tt-ease: linear;
+
+    font-variation-settings: "wght" var(--font-weight),
+    "wdth" var(--font-width),
+    "GRAD" var(--font-grade),
+    "XTRA" var(--font-parametric-counter-width),
+    "XOPQ" var(--font-parametric-thick-stroke),
+    "YOPQ" var(--font-parametric-thin-stroke),
+    "YTLC" var(--font-parametric-lowercase-height),
+    "YTUC" var(--font-parametric-uppercase-height),
+    "YTDE" var(--font-parametric-descender-depth),
+    "opsz" var(--font-optical-size);
+    line-height: 1.13;
+}
+
+h4, .quaternary-heading {
+    --font-weight: 250;
+    --font-width: 74;
+    --font-grade: -58;
+    --font-parametric-counter-width: 436;
+    --font-parametric-thick-stroke: 77;
+    --font-parametric-thin-stroke: 49;
+    --font-parametric-lowercase-height: 432;
+    --font-parametric-uppercase-height: 652;
+    --font-parametric-descender-depth: -172;
+    --font-optical-size: 27;
+    /*font-size: calc(var(--h4-font-size-min) * 1em);*/
+    --tt-key: quaternary-heading;
+    --tt-ease: linear;
+
+    font-variation-settings: "wght" var(--font-weight),
+    "wdth" var(--font-width),
+    "GRAD" var(--font-grade),
+    "XTRA" var(--font-parametric-counter-width),
+    "XOPQ" var(--font-parametric-thick-stroke),
+    "YOPQ" var(--font-parametric-thin-stroke),
+    "YTLC" var(--font-parametric-lowercase-height),
+    "YTUC" var(--font-parametric-uppercase-height),
+    "YTDE" var(--font-parametric-descender-depth),
+    "opsz" var(--font-optical-size);
+    line-height: 1.11;
+}
+
+p {
+    /*font-size: calc(var(--p-font-size-min) * 1em);*/
+    --tt-key: body-paragraph;
+    --tt-ease: linear;
+    line-height: 1.25;
+}
+
+
+a {
+    --font-weight: 500;
+    --font-width: 74;
+    --font-grade: -58;
+    --font-parametric-counter-width: 436;
+    --font-parametric-thick-stroke: 77;
+    --font-parametric-thin-stroke: 49;
+    --font-parametric-lowercase-height: 432;
+    --font-parametric-uppercase-height: 652;
+    --font-parametric-descender-depth: -172;
+    --font-optical-size: 18;
+    --tt-key: anchor-text;
+    --tt-ease: linear;
+
+    font-variation-settings: "wght" var(--font-weight),
+    "wdth" var(--font-width),
+    "GRAD" var(--font-grade),
+    "XTRA" var(--font-parametric-counter-width),
+    "XOPQ" var(--font-parametric-thick-stroke),
+    "YOPQ" var(--font-parametric-thin-stroke),
+    "YTLC" var(--font-parametric-lowercase-height),
+    "YTUC" var(--font-parametric-uppercase-height),
+    "YTDE" var(--font-parametric-descender-depth),
+    "opsz" var(--font-optical-size);
+
+    text-decoration: none;
+    color: inherit;
+}
+
+nav ul a {
+    --font-weight: 500;
+    --font-width: 100;
+    --font-grade: -135;
+    --font-parametric-counter-width: 420;
+    --font-parametric-thick-stroke: 72;
+    --font-parametric-thin-stroke: 36;
+    --font-parametric-lowercase-height: 423;
+    --font-parametric-uppercase-height: 742;
+    --font-parametric-descender-depth: -150;
+    --font-optical-size: 20;
+    --tt-key: nav-item;
+    --tt-ease: linear;
+}
+
+@keyframes primary-heading {
+    0% {
+        font-size: var(--h1-font-size-min);
+    }
+    100% {
+        font-size: var(--h1-font-size-max);
+    }
+}
+
+@keyframes secondary-heading {
+    0% {
+        font-size: var(--h2-font-size-min);
+    }
+    100% {
+        font-size: var(--h2-font-size-max);
+    }
+}
+
+@keyframes tertiary-heading {
+    0% {
+        font-size: var(--h3-font-size-min);
+    }
+    100% {
+        font-size: var(--h3-font-size-max);
+    }
+}
+
+@keyframes quaternary-heading {
+    0% {
+        font-size: var(--h4-font-size-min);
+    }
+    100% {
+        font-size: var(--h4-font-size-max);
+    }
+}
+
+@keyframes body-paragraph {
+    0% {
+        font-size: var(--p-font-size-min);
+    }
+    100% {
+        font-size: var(--p-font-size-max);
+    }
+}
+
+@keyframes anchor-text {
+    0% {
+        font-size: var(--a-font-size-min);
+    }
+    100% {
+        font-size: var(--a-font-size-max);
+    }
+}
+
+@keyframes nav-item {
+    0% {
+        font-size: var(--nav-item-font-size-min);
+    }
+    100% {
+        font-size: var(--nav-item-font-size-max);
+    }
+}

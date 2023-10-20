@@ -2,6 +2,71 @@
 /* Navigation          */
 /* ------------------- */
 
+/* https://www.youtube.com/watch?v=G_h2pGZcOzc&t=25s */
+nav ul {
+    --_gap: 2rem;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+nav li {
+    overflow: hidden;
+    position: relative;
+    padding: calc(var(--_gap) / 2);
+}
+
+nav li::after {
+    --_scale-transition: 300ms;
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0.5rem;
+    height: 3px;
+    width: 100%;
+    background-color: hsl(var(--green-smoke-950));
+    translate: var(--_translate, 0);
+    scale: var(--_scale-width, 0) 1; /*shrinking it 0 on the x axis and 1 on the y axis*/
+    transition: scale 300ms var(--_scale-delay, 0ms), translate 500ms var(--_translate-delay, 0ms);
+}
+
+nav li:hover,
+nav li:focus-within,
+nav li.active {
+    --_scale-width: 1;
+}
+
+@supports selector(:has(h1)) {
+    nav li:hover + li {
+        --_translate: -100%;
+    }
+
+    nav li:has(+ :hover) {
+        --_translate: 100%;
+    }
+
+    nav li:hover + li,
+    nav li:has(+ :hover) {
+        --_scale-delay: 300ms;
+        --_translate-delay: 200ms;
+    }
+}
+
+
+nav ul a {
+    color: inherit;
+    opacity: 0.7;
+    text-decoration: none;
+    text-transform: uppercase;
+    position: relative;
+}
+
+nav ul a:hover,
+nav ul a:focus-visible {
+    opacity: 1;
+}
+
 .logo {
     margin: 1.5rem clamp(1.5rem, 5vw, 3.5rem);
 }
@@ -167,4 +232,10 @@
 .underline-indicators > [aria-selected="true"] {
     color: hsl(var(--clr-white, white) / 1);
     border-color: hsl(var(--clr-white, white) / 1);
+}
+
+/* https://www.youtube.com/watch?v=0-WRRh3ZXhw */
+.header {
+    height: 100vh;
+    height: 100dvh;
 }

@@ -126,6 +126,11 @@
     --padding: max(3vh, 1rem) 1.5rem;
     --margin: max(6vh, 2rem);
 
+    --container-width-wide: 87.5rem;
+    --container-width-regular: 75rem;
+    --container-width-full: 100%;
+    --standard-padding: 1rem;
+
     /* z-index */
     --header-layer: 1000;
     --top-layer: 9999;

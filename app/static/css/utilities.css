@@ -3,44 +3,44 @@
 /* ------------------- */
 
 /* Layouts */
+/*.container {*/
+/*    padding-inline: var(--container-padding-inline);*/
+/*    margin-inline: auto;*/
+/*    max-width: var(--container-max-width);*/
+/*}*/
+
 .container {
-    padding-inline: var(--container-padding-inline);
+    width: min(100% - var(--container-padding), var(--container-max-width));
     margin-inline: auto;
-    max-width: var(--container-max-width);
 }
 
-/*.container {*/
-/*    width: min(100% - var(--container-padding), var(--container-max-width));*/
-/*    margin-inline: auto;*/
-/*}*/
+.container[data-width="regular"] {
+    --container-max-width: var(--container-width-wide);
+    --container-padding: calc(var(--standard-padding) * 2);
+}
 
-/*.container[data-width="regular"] {*/
-/*    --container-max-width: var(--container-width-wide);*/
-/*    --container-padding: calc(var(--standard-padding) * 2);*/
-/*}*/
+@media only screen and (width >=768px) {
+    .container[data-width="regular"] {
+        --container-max-width: var(--container-width-regular);
+        --container-padding: calc(var(--standard-padding) * 2);
+    }
+}
 
-/*@media only screen and (width >=768px) {*/
-/*    .container[data-width="regular"] {*/
-/*        --container-max-width: var(--container-width-regular);*/
-/*        --container-padding: calc(var(--standard-padding) * 2);*/
-/*    }*/
-/*}*/
+.container[data-width="wide"] {
+    --container-max-width: var(--container-width-wide);
+    --container-padding: calc(var(--standard-padding) * 2);
+}
 
-/*.container[data-width="wide"] {*/
-/*    --container-max-width: var(--container-width-wide);*/
-/*    --container-padding: calc(var(--standard-padding) * 2);*/
-/*}*/
+.container[data-width="full"] {
+    --container-max-width: var(--container-width-full);
+}
 
-/*.container[data-width="full"] {*/
-/*    --container-max-width: var(--container-width-full);*/
-/*}*/
-
-/*@media only screen and (width >=768px) {*/
-/*    .container[data-width="full"] {*/
-/*        --container-max-width: var(--container-width-wide);*/
-/*        --container-padding: calc(var(--standard-padding) * 2);*/
-/*    }*/
-/*}*/
+@media only screen and (width >=768px) {
+    .container[data-width="full"] {
+        --container-max-width: var(--container-width-wide);
+        --container-padding: calc(var(--standard-padding) * 2);
+    }
+}
 
 
 /* https://www.youtube.com/watch?v=Ivk8Blw2VTI&t=2s */

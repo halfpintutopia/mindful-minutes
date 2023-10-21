@@ -8,6 +8,13 @@
     font-display: swap;
 }
 
+@font-face {
+    font-family: 'Caveat';
+    src: url("../fonts/Caveat.woff2") format("woff2-variations");
+    font-weight: 0 1000;
+    font-display: swap;
+}
+
 :root {
     /* Colours */
     --mischka-50: 240 6% 97%;
@@ -83,6 +90,7 @@
     --big-desktop: 112.5;
 
     --roboto-flex: 'Roboto Flex', sans-serif;
+    --caveat: 'Caveat', cursive;
 
     /* h1 variables */
     /*--h1-font-size-min: 5;*/
@@ -110,6 +118,8 @@
     --a-font-size-max: 1.125rem;
     --nav-item-font-size-min: 1.125rem;
     --nav-item-font-size-max: 1.25rem;
+    --page-marker-font-size-min: 0.875rem;
+    --page-marker-font-size-max: 1rem;
 
     --fs-h1: 5rem;
     /*--fs-h1: calc((var(--h1-font-size-min) * 1rem) + (var(--h1-font-size-max) - var(--h1-font-size-min)) * ((100vw - (var(--bp-small) * 1rem)) / var(--bp-x-large) - var(--bp-small)));*/
@@ -194,17 +204,16 @@ body {
     /*font-size: 16px;*/
     --tt-key: body-paragraph;
     --tt-ease: linear;
-    font-variation-settings:
-            "wght" var(--font-weight),
-            "wdth" var(--font-width),
-            "GRAD" var(--font-grade),
-            "XTRA" var(--font-parametric-counter-width),
-            "XOPQ" var(--font-parametric-thick-stroke),
-            "YOPQ" var(--font-parametric-thin-stroke),
-            "YTLC" var(--font-parametric-lowercase-height),
-            "YTUC" var(--font-parametric-uppercase-height),
-            "YTDE" var(--font-parametric-descender-depth),
-            "opsz" var(--font-optical-size);
+    font-variation-settings: "wght" var(--font-weight),
+    "wdth" var(--font-width),
+    "GRAD" var(--font-grade),
+    "XTRA" var(--font-parametric-counter-width),
+    "XOPQ" var(--font-parametric-thick-stroke),
+    "YOPQ" var(--font-parametric-thin-stroke),
+    "YTLC" var(--font-parametric-lowercase-height),
+    "YTUC" var(--font-parametric-uppercase-height),
+    "YTDE" var(--font-parametric-descender-depth),
+    "opsz" var(--font-optical-size);
     line-height: 1.375;
 }
 

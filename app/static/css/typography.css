@@ -167,6 +167,13 @@ nav ul a {
     --tt-ease: linear;
 }
 
+.page-marker {
+    font-family: var(--caveat);
+    font-variation-settings: "wght" 500;
+    --tt-key: page-marker;
+    --tt-ease: linear;
+}
+
 @keyframes primary-heading {
     0% {
         font-size: var(--h1-font-size-min);
@@ -227,5 +234,14 @@ nav ul a {
     }
     100% {
         font-size: var(--nav-item-font-size-max);
+    }
+}
+
+@keyframes page-marker {
+    0% {
+        font-size: var(--page-marker-font-size-min);
+    }
+    100% {
+        font-size: var(--page-marker-font-size-max);
     }
 }

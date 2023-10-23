@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
     <title>Mindful Minutes | {{ title }}</title>
+    <link rel="icon" type="image/x-icon" href="">
     <script>
         window.typetura = {
             selectors: [".typetura"], // list of selectors to be used as contexts
@@ -16,8 +17,7 @@
         };
     </script>
     <script src="{% static 'js/typetura.min.js' %}"></script>
-    {% block custom_js %}
-    {% endblock %}
+    <script src="https://kit.fontawesome.com/28847961b6.js" rel="preconnect" crossorigin="anonymous"></script>
 
     <link
             rel="stylesheet"
@@ -31,6 +31,11 @@
     />
     <link
             rel="stylesheet"
+            href="{% static 'css/typography.css' %}"
+            type="text/css"
+    />
+    <link
+            rel="stylesheet"
             href="{% static 'css/header.css' %}"
             type="text/css"
     />
@@ -39,56 +44,69 @@
             href="{% static 'css/footer.css' %}"
             type="text/css"
     />
+    <link
+            rel="stylesheet"
+            href="{% static 'css/buttons.css' %}"
+            type="text/css"
+    />
 
     {% block custom_css %}
     {% endblock %}
 </head>
 <div class="skip-to-content"></div>
 <body>
-    <header class="primary-header flex">
-        {% block navigation_logo %}
-            <img class="logo" src="" alt=""/>
-        {% endblock navigation_logo %}
-        {% block navigation %}
-        <button class="mobile-nav-toggle" aria-controls="primary-navigation">
-            <span class="sr-only">Menu</span>
-        </button>
-        <nav>
-            <ul id="primary-navigation" class="primary-navigation underline-indicators flex" data-visible="false">
-                {% if user.is_authenticated %}
-                    <!-- Display navigation for authenticated user -->
-                    <li>
-                        <a class="uppercase" href="#">Morning</a>
-                    </li>
-                    <li>
-                        <a class="uppercase" href="#">Evening</a>
-                    </li>
-                    <li>
-                        <a class="uppercase" href="#">Search</a>
-                    </li>
-                    <li>
-                        <a class="uppercase" href="#">My Account</a>
-                    </li>
-                {% endif %}
-                <li class="active">
-                    <a class="uppercase" href="#">Learn</a>
-                </li>
-                <li>
-                    <a class="uppercase" href="#">Contact Us</a>
-                </li>
-                {% if user.is_authenticated %}
-                    <!-- Display navigation for authenticated user -->
-                    <button>Log out</button>
-                {% else %}
-                    <button>Sign up</button>
-                    <button>Log in</button>
-                {% endif %}
-            </ul>
-        </nav>
 
-    {% endblock navigation %}
+
+    {% block navigation_logo %}
+    {% endblock navigation_logo %}
+    <header>
+        {% block progress_bar %}
+        {% endblock %}
+
+        {% block navigation %}
+            <section class="header-base">
+                <div class="primary-header container" data-width="wide">
+                    <div>
+                        <img class="logo" src="" alt="Logo"/>
+                    </div>
+
+                    <button class="mobile-nav-toggle" aria-controls="primary-navigation" aria-expanded="false">
+                        <svg width="48px" height="48px" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                            <g>
+                                <line x1="0" y1="17" x2="48" y2="17" stroke-width="1"></line>
+                                <line x1="0" y1="31" x2="48" y2="31" stroke-width="1"></line>
+                            </g>
+
+                            <g>
+                                <line x1="0" y1="24" x2="48" y2="24" stroke-width="1"></line>
+                                <line x1="0" y1="24" x2="48" y2="24" stroke-width="1"></line>
+                            </g>
+                        </svg>
+                        <span class="sr-only">Menu</span>
+                    </button>
+
+                    <nav>
+                        <ul id="primary-navigation" data-visible="false" class="primary-navigation">
+                            <li class="active"><a href="#">Home</a></li>
+                            <li><a href="#">About</a></li>
+                            <li><a href="#">Pricing</a></li>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </section>
+
+        {% endblock navigation %}
     </header>
 
-    {% block content %} {% endblock content %} {% block footer %} {% endblock footer %}
+    {% block content %} {% endblock content %}
+
+    {% block footer %} {% endblock footer %}
+
+    <script defer src="{% static 'js/nav-header.js' %}"></script>
+
+    {% block custom_js %}
+    {% endblock %}
 </body>
 </html>

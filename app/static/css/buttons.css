@@ -1,0 +1,12 @@
+.btn {
+	/*min-width: 5.125em;*/
+	height: 1.875em;
+	border: none;
+	outline-color: transparent;
+	border-radius: var(--_btn-radius);
+	box-shadow: var(--box-shadow);
+	text-transform: uppercase;
+	max-width: max-content;
+	padding-inline: 1em;
+}
+

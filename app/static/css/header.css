@@ -72,6 +72,9 @@ nav ul a:focus-visible {
 }
 
 /*-----------------------------*/
+.header-base {
+    box-shadow: 0 4px 4px 0 hsla(0, 0%, 0%, 0.25);
+}
 
 .logo {
     margin: 1.5rem clamp(1.5rem, 5vw, 3.5rem);
@@ -119,8 +122,13 @@ nav ul a:focus-visible {
     background: none;
 }
 
+.form-header .mobile-nav-toggle {
+    position: unset;
+}
+
 /*https://codepen.io/staffanmowitz/pen/KoKgmo*/
 .mobile-nav-toggle svg {
+    --_stroke: ;
     stroke: #000;
     transition: 0.2s;
 }
@@ -207,6 +215,10 @@ nav ul a:focus-visible {
     .mobile-nav-toggle {
         display: none;
     }
+
+    .form-header .mobile-nav-toggle {
+        display: block;
+    }
 }
 
 /*.mobile-nav-toggle {*/
@@ -282,7 +294,6 @@ nav ul a:focus-visible {
     /*.primary-navigation {*/
     /*    padding-inline: clamp(3rem, 7vw, 7rem);*/
     /*}*/
-
     /* .primary-navigation a > span {
         display: none;
     } */
@@ -338,7 +349,8 @@ nav ul a:focus-visible {
 }
 
 /* https://www.youtube.com/watch?v=0-WRRh3ZXhw */
-.header {
-    height: 100vh;
-    height: 100dvh;
+/* Hero section */
+.hero {
+    height: 100vh; /*fallback*/
+    height: 100dvh; /*100svh*/
 }

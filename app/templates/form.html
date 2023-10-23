@@ -1,9 +1,45 @@
 <!-- form.html -->
 {% extends 'base.html' %}
 
+{% load static %}
+
+
+{% block custom_css %}
+    <link
+            rel="stylesheet"
+            href="{% static 'css/form.css' %}"
+            type="text/css"
+    />
+{% endblock %}
+
+{% block progress_bar %}
+    <div class="progress-bar"></div>
+{% endblock %}
 
 {% block navigation %}
-<!-- Form navigation -->
+    <section>
+        <div class="primary-header form-header container" data-width="wide">
+            <div>
+                <img class="logo" src="" alt="Logo"/>
+            </div>
+
+            <button class="mobile-nav-toggle" aria-controls="primary-navigation" aria-expanded="true">
+                <svg width="48px" height="48px" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                    <g>
+                        <line x1="0" y1="17" x2="48" y2="17" stroke-width="1"></line>
+                        <line x1="0" y1="31" x2="48" y2="31" stroke-width="1"></line>
+                    </g>
+
+                    <g>
+                        <line x1="0" y1="24" x2="48" y2="24" stroke-width="1"></line>
+                        <line x1="0" y1="24" x2="48" y2="24" stroke-width="1"></line>
+                    </g>
+                </svg>
+                <span class="sr-only">Return to home page</span>
+            </button>
+
+        </div>
+    </section>
 
 {% endblock navigation %}
 
@@ -11,12 +47,15 @@
 {% endblock %}
 
 {% block content %}
-<!-- Form content -->
+    <!-- Form content -->
     <div></div>
 {% endblock content %}
 
 
-
 {% block footer %}
-<!-- Form footer -->
+    <!-- Form footer -->
 {% endblock footer %}
+
+{% block custom_js %}
+    <script defer src="{% static 'js/form.js' %}"></script>
+{% endblock %}

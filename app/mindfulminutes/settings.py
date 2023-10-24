@@ -85,12 +85,10 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
-    "cloudinary_storage",
-    "django.contrib.staticfiles",
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
-    "cloudinary",
+    "django.contrib.staticfiles",
     "ckeditor",
     "rest_framework",
     "drf_yasg",
@@ -99,6 +97,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -189,12 +188,10 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 # Add compression support
-STATICFILES_STORAGE = (
-    "cloudinary_storage.storage.StaticHashedCloudinaryStorage"
-)
+STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 # Configure the handling of static files
-STATIC_ROOT = os.path.join(BASE_DIR, "-")
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 # Replace 'your_cloudinary_url_here' with your actual Cloudinary URL
 CLOUDINARY_STORAGE = {
@@ -204,7 +201,7 @@ CLOUDINARY_STORAGE = {
 }
 # CLOUDINARY_URL = os.environ.get("CLOUDINARY_URL")
 MEDIA_URL = "/media/"
-DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+# DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -212,6 +209,11 @@ DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "journal.CustomUser"
+
+AUTHENTICATION_BACKENDS = (
+    "allauth.account.auth_backends.AuthenticationBackend",
+    "django.contrib.auth.backends.ModelBackend",
+)
 
 # https://stackoverflow.com/questions/71636502/django-allauth-customuser
 # -object-has-no-attribute-username
@@ -221,3 +223,14 @@ ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_EMAIL_VERIFICATION = "optional"
+LOGIN_REDIRECT_URL = "/"
+
+ACCOUNT_FORMS = {"signup": "journal.forms.CustomSignupForm"}
+
+SOCIALACCOUNT_PROVIDERS = {"google": {"EMAIL_AUTHENTICATION": True}}
+
+SOCIALACCOUNT_FORMS = {
+    "disconnect": "allauth.socialaccount.forms.DisconnectForm",
+    "signup": "allauth.socialaccount.forms.SignupForm",
+}

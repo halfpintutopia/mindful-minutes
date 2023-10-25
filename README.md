@@ -64,9 +64,14 @@ focus on the present, fostering a send of mindfulness and self-awareness.
 
 For further details of the design process, please see:
 
-### [Design Thinking](docs/ui-ux/design-thinking/design-thinking.md)
+- [Design Thinking](docs/ui-ux/design-thinking/design-thinking.md)
 
-### [5 Planes of Design](docs/ui-ux/five-planes/five-planes.md)
+- [5 Planes of Design](docs/ui-ux/five-planes/five-planes.md)
+
+## Agile 
+
+[Agile User Story Master on Google Sheets](docs/agile/Agile%20User%20Story%20-%20Master%20-%20Use%20Cases.pdf)
+was created from a template supplied by our Cohort October 2022 Tutor, Rebecca Tracey-Timoney.
 
 ### Future Implementations
 
@@ -126,18 +131,82 @@ pip freeze --local > requirements.txt
 
 ## Remote & Local Deployment
 
-[Agile User Story Master on Google Sheets](https://docs.google.com/spreadsheets/d/1AhkEDuU5mDY9n6TMRGyk5BchJ2ijZUxiFlvbauW9HUE/edit?usp=sharing)
-was created from a template supplied by our Cohort October 2022 Tutor, Rebecca Tracey-Timoney.
+Ensure you have Docker installed.
 
-```shell
-pip install django
+All instruction are on the terminal command line. 
 
-pip install gunicorn # Server used to run Django on Heroku
-```
+
+### Local Deployment
+
+#### Fork the Repository
+
+
+
+1. Build the image and start the container up in detached mode
+   - `docker compose up -d --build`
+
+- Check errors
+  - `docker compose logs -f`
+- Bring down the development containers
+  - `docker compose down --volumes`
+
+##### Additional Information
+
+###### Configuration steps
+
+1. Docker Registry
+    - Set up a Docker registry on Docker Hub
+2. Docker Registry Image
+    - Name and tag Docker image for project, with the following format:
+        - `registry-url/username/repo-name:tag` (e.g. `docker.io/username/project:latest`)
+3. GitHub Repository
+    - Set up repo secrets
+        - Go to "Settings" and under "Secrets and variables", click on "Actions"
+        - Create a secret for `DOCKER_REGISTRY_IMAGE`. Set this to the Docker Registry Image name and tag set in Step 2
+    - Create a new `YAML` file in the located in the `.github/workflows` directory located in the root of the repo
 
 ### Remote Deployment
 
-#### Create the Initial GitHub Actions Workflow YAML For CI/CD
+1. Create a new app
+   - `heroku create <app_name> --region eu`
+   - check app details `heroku info --app <app_name>`
+2. Login to the Heroku Container Registry
+   - `heroku container:login`
+3. If not using ElephantSQL instance, and setting DATABASE_URL in the CONFIG_VARS, provision a new Postgres database
+   - `heroku addons:create heroku-postgresql:mini --app <app_name>`
+4. Build the production Docker image and tag
+   1. `cd app`
+   2. `docker build -f Dockerfile.prod -t registry.heroku.com/<app_name>/web .`
+   3. Test the database locally
+      - `heroku config:get DATABASE_URL --app <app_name>`
+      - `export DATABASE_URL=<database_url>` or add `DATABASE_URL` in the `.env` file
+   4. Set the SECRET_KEY
+      - heroku config:set SECRET_KEY="<app_name>" --app mindfulminutes
+   5. Spin up the container
+      - `docker run --name <container_name> -e "PORT=8765" -p 8008:8765 registry.heroku.com/<app_name>/web:latest`
+   6. Bring down the container
+      - `docker stop <container_name>`
+      - `docker rm <container_name>`
+5. Check the `Dockerfile.prod` has set `ENV DJANGO_ALLOWED_HOSTS .herokuapp.com`
+6. Build the image again
+   - `docker build -f Dockerfile.prod -t registry.heroku.com/<app_name>/web .`
+7. Push the image to the registry
+   - `docker push registry.heroku.com/<app_nam>/web:latest`
+8. Release the image. This should run the container
+   - `heroku container:release web --app <app_name>`
+9. Apply migrations
+   - `heroku run python manage.py migrate --app <app_name>`
+10. Ensure WhiteNoise has been installed 
+    1. Set`'whitenoise.middleware.WhiteNoiseMiddleware'` to `MIDDLEWARE` in `settings.py`
+    2. Set `STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')` in `settings.py`
+    3. Add `RUN python manage.py collectstatic --noinput` to `Dockerfile.prod` after the `COPY . .` command
+11. Build the image again
+12. Push image to the registry
+13. Release the image
+
+#### Additional Information
+
+##### Create the Initial GitHub Actions Workflow YAML For CI/CD
 
 The step-by-step instructions is mainly for continuous integration (CI) and continuous deployment (CD). It is intended
 for remote deployment, specifically for deploying the Django application to Heroku.
@@ -523,27 +592,10 @@ DEVELOPMENT=<SET TO 'True' if in development mode or remove or set to 'False' fo
 3. Go to the "Config Vars" section and add the following variables:
     - DATABASE_URL
     - SECRET_KEY
-    - PORT
-    - CLOUDINARY_URL
+    - PORT (if not using CI/CD as this is set in the workflow)
+    - CLOUDINARY_URL (if not using Whitenoise)
+    - DISABLE_COLLECT_STATIC 1 (IMPORTANT - This is to be removed after Cloudinary or Whitenoise is connected)
 
-DISABLE_COLLECT_STATIC 1
-
-### Local Deployment
-
-#### Fork the Repository
-
-##### Configuration steps
-
-1. Docker Registry
-    - Set up a Docker registry on Docker Hub
-2. Docker Registry Image
-    - Name and tag Docker image for project, with the following format:
-        - `registry-url/username/repo-name:tag` (e.g. `docker.io/username/project:latest`)
-3. GitHub Repository
-    - Set up repo secrets
-        - Go to "Settings" and under "Secrets and variables", click on "Actions"
-        - Create a secret for `DOCKER_REGISTRY_IMAGE`. Set this to the Docker Registry Image name and tag set in Step 2
-    - Create a new `YAML` file in the located in the `.github/workflows` directory located in the root of the repo
 
 ### Contributing
 

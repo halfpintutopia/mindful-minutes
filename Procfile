@@ -1,1 +1,1 @@
-web: gunicorn mindfulminutes.wsgi:application
+web: gunicorn mindfulminutes.wsgi

@@ -194,7 +194,7 @@ STATICFILES_STORAGE = (
 )
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 # Configure the handling of static files
-STATIC_ROOT = os.path.join(BASE_DIR, "-")
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 # Replace 'your_cloudinary_url_here' with your actual Cloudinary URL
 CLOUDINARY_STORAGE = {

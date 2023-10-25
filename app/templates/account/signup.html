@@ -7,16 +7,22 @@
 
 {% block content %}
     <div style="overflow-y: hidden;">
-        <form class="main-form signup" id="signup_form" method="post" action="{% url 'account_signup' %}" data-current-page="1">
+        <form class="main-form signup" id="signup_form" method="post" action="{% url 'account_signup' %}"
+              data-current-page="1">
             {% csrf_token %}
 
             {% for field in form %}
+
                 <div class="form-page background-dark-accent"
                      data-form-page-position="{% if forloop.first %}active{% else %}below{% endif %}">
                     <div class="container list-item text-white" data-width="narrow">
                         <span class="">{{ forloop.counter }}.</span>
-                        <label for="{{ field.id_for_label }}">{{ field.label }} {% if field.field.required %}
+{#                    <label for="id_password1">Password *#}
+{#                        <br><span class="list-item__help-text"></span></label>#}
+
+                        <label for="{{ field.id_for_label }}">{{ field.label }} {% if field.field.required %}*
                         {% endif %}<br><span class="list-item__help-text">{{ field.help_text }}</span></label>
+
                         {{ field }}
                         {% if redirect_field_value %}
                             <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>

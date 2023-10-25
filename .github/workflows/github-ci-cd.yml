@@ -11,7 +11,7 @@ env:
   USER: app
   TAG: latest
   DJANGO_ALLOWED_HOSTS: .herokuapp.com
-  HEROKU_APP_NAME: boiling-dawn-92103
+  HEROKU_APP_NAME: mindful-minutes
 
 jobs:
   build:

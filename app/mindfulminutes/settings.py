@@ -188,10 +188,14 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 # Add compression support
+# STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
 STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 # Configure the handling of static files
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
+MEDIA_URL = "/media/"
+# DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
 # Replace 'your_cloudinary_url_here' with your actual Cloudinary URL
 CLOUDINARY_STORAGE = {
@@ -200,8 +204,7 @@ CLOUDINARY_STORAGE = {
     "API_SECRET": os.environ.get("API_SECRET"),
 }
 # CLOUDINARY_URL = os.environ.get("CLOUDINARY_URL")
-MEDIA_URL = "/media/"
-# DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

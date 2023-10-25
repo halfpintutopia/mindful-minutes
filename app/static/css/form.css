@@ -55,7 +55,7 @@
 
 .list-item span {
 	/*grid-row: 1;*/
-	place-self: end;
+	place-self: start end;
 }
 
 .list-item label {

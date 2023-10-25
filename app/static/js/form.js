@@ -2,6 +2,7 @@
 (function () {
 
     const form = document.querySelector('form');
+    const formCloseButton = document.querySelector('.form-header__close');
     const nextButtons = document.querySelectorAll('.next');
     const pages = document.querySelectorAll('.form-page');
     const pageList = Array.from(pages);
@@ -9,6 +10,17 @@
     // Get the root element
     const cssRoot = document.querySelector(':root');
     let currentPage, nextPage, previousPage, opacity, current = 1, progress;
+
+    // https://stackdiary.com/tutorials/prevent-form-submission-on-pressing-enter-with-javascript/
+    form.addEventListener('keypress', function preventSubmitting(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+        }
+    });
+
+    formCloseButton.addEventListener('click', function returnToPreviousPage() {
+        history.go(-1);
+    });
 
     nextButtons.forEach(function addClickEvent(btn) {
         btn.addEventListener('click', function addActiveClass() {
@@ -29,7 +41,6 @@
             }
         });
     });
-
 
     const formNavigationPreviousBtn = document.querySelector('.btn-previous');
     const formNavigationNextBtn = document.querySelector('.btn-next');

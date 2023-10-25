@@ -50,42 +50,57 @@
     />
     <link
             rel="stylesheet"
+            href="{% static 'css/main.css' %}"
+            type="text/css"
+    />
+    <link
+            rel="stylesheet"
+            href="{% static 'css/buttons.css' %}"
+            type="text/css"
+    />
+    <link
+            rel="stylesheet"
             href="{% static 'css/design_system.css' %}"
             type="text/css"
     />
 
 </head>
 <body>
-    <header class="primary-header container" data-width="wide">
-        <div>
-            <img class="logo" src="" alt="Logo"/>
-        </div>
+    <header>
+        <section class="header-base">
+            <div class="primary-header container" data-width="wide">
+                <div>
+                    <img class="logo" src="" alt="Logo"/>
+                </div>
 
-        <button class="mobile-nav-toggle" aria-controls="primary-navigation" aria-expanded="false">
-            <svg width="48px" height="48px" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-                <g>
-                    <line x1="0" y1="17" x2="48" y2="17" stroke-width="1"></line>
-                    <line x1="0" y1="31" x2="48" y2="31" stroke-width="1"></line>
-                </g>
+                <button class="nav-toggle" aria-controls="primary-navigation" aria-expanded="false">
+                    <svg width="48px" height="48px" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                        <g>
+                            <line x1="0" y1="17" x2="48" y2="17" stroke-width="1"></line>
+                            <line x1="0" y1="31" x2="48" y2="31" stroke-width="1"></line>
+                        </g>
 
-                <g>
-                    <line x1="0" y1="24" x2="48" y2="24" stroke-width="1"></line>
-                    <line x1="0" y1="24" x2="48" y2="24" stroke-width="1"></line>
-                </g>
-            </svg>
-            <span class="sr-only">Menu</span>
-        </button>
+                        <g>
+                            <line x1="0" y1="24" x2="48" y2="24" stroke-width="1"></line>
+                            <line x1="0" y1="24" x2="48" y2="24" stroke-width="1"></line>
+                        </g>
+                    </svg>
+                    <span class="sr-only">Menu</span>
+                </button>
 
-        <nav>
-            <ul id="primary-navigation" data-visible="false" class="primary-navigation">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Pricing</a></li>
-                <li><a href="#">Blog</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-        </nav>
+                <nav>
+                    <ul id="primary-navigation" data-visible="false" class="primary-navigation">
+                        <li class="active"><a href="#">Home</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </section>
     </header>
+
 
     <div class="container" data-width="wide">
         <h1>Design system</h1>
@@ -200,6 +215,75 @@
         </section>
     </div>
 
+    <div class="container" data-width="wide">
+        <h2>Page markers (mobile)</h2>
+
+        <section class="grid grid-auto">
+            <div class="marked-image" data-marker-position="top-right">
+                <img src="{% static 'img/landing_page/woman_smiling.svg' %}"
+                     alt="Girl smiling on sunny day in the city.">
+                <div class="page-marker blue">
+                    To do
+                </div>
+            </div>
+            <div class="marked-image" data-marker-position="top-left">
+                <img src="{% static 'img/landing_page/woman_holding_sparkler.svg' %}"
+                     alt="Girl smiling on sunny day in the city.">
+                <div class="page-marker hotpink">
+                    Thankful for
+                </div>
+            </div>
+            <div class="marked-image" data-marker-position="bottom-right">
+                <img src="{% static 'img/landing_page/group_jumping.svg' %}"
+                     alt="Girl smiling on sunny day in the city.">
+                <div class="page-marker orangered">
+                    Wins
+                </div>
+            </div>
+            <div class="marked-image" data-marker-position="bottom-left">
+                <img src="{% static 'img/landing_page/lightbulb_with_sky.svg' %}"
+                     alt="Girl smiling on sunny day in the city.">
+                <div class="page-marker yellow">
+                    Ideas
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="container" data-width="wide">
+        <h2>Buttons</h2>
+
+        <section>
+            <button class="btn btn-form">
+                Continue
+            </button>
+
+            <div class="btn-form-direction-wrapper flex">
+                <button class="btn btn-form-direction" data-form-direction="up">
+                    <i class="fa-solid fa-chevron-up"></i>
+                </button>
+                 <button class="btn btn-form-direction" data-form-direction="down">
+                    <i class="fa-solid fa-chevron-down"></i>
+                </button>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="primary-footer container" data-width="wide">
+            <div>
+                <img src="" alt="Logo">
+            </div>
+            <div>
+                <span>LinkedIn</span>
+                <span>Facebook</span>
+                <span>Twitter</span>
+                <span>Instagram</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://kit.fontawesome.com/28847961b6.js" rel="preconnect" crossorigin="anonymous"></script>
     <script defer src="{% static 'js/nav-header.js' %}"></script>
 </body>
 </html>

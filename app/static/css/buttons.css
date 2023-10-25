@@ -10,3 +10,8 @@
 	padding-inline: 1em;
 }
 
+.form-close-btn:hover,
+.btn:hover {
+	cursor: pointer;
+}
+

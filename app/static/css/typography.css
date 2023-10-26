@@ -189,6 +189,11 @@ label span.list-item__help-text {
 
 }
 
+small {
+	--tt-key: small-text;
+	--tt-ease: linear;
+}
+
 .page-marker {
 	font-family: var(--caveat);
 	font-variation-settings: "wght" 500;
@@ -238,6 +243,15 @@ label span.list-item__help-text {
 	}
 	100% {
 		font-size: var(--p-font-size-max);
+	}
+}
+
+@keyframes small-text {
+	0% {
+		font-size: var(--small-text-size-min);
+	}
+	100% {
+		font-size: var(--small-text-size-max);
 	}
 }
 

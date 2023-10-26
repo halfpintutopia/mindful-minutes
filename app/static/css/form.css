@@ -61,7 +61,8 @@
 
 .list-item label,
 .list-item input,
-.list-item .btn-form {
+.list-item .btn-form,
+.list-item small {
 	grid-column: 2 / -2;
 }
 

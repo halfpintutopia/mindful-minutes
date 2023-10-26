@@ -8,11 +8,14 @@
 
 {% block content %}
     <div>
+
         <form class="main-form signup" id="signup_form" method="post" action="{% url 'account_signup' %}"
               data-current-page="1">
             {% csrf_token %}
 
             {% for field in form %}
+
+
 
                 <div class="form-page background-dark-accent"
                      data-form-page-number="{{ forloop.counter }}">
@@ -30,6 +33,11 @@
                                 {% if forloop.last %}type="submit"{% endif %} data-form-direction="down">
                             {% if forloop.last %}Ready to Set Up a Habit{% else %}Continue{% endif %}
                         </button>
+                        {% if forloop.first %}
+                            <small>{% blocktrans %}Already have an account? Then please
+                                <a href="{{ login_url }}">sign in</a>
+                                .{% endblocktrans %}</small>
+                        {% endif %}
                     </div>
                 </div>
             {% endfor %}

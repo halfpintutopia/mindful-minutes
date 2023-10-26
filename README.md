@@ -68,7 +68,7 @@ For further details of the design process, please see:
 
 - [5 Planes of Design](docs/ui-ux/five-planes/five-planes.md)
 
-## Agile 
+## Agile
 
 [Agile User Story Master on Google Sheets](docs/agile/Agile%20User%20Story%20-%20Master%20-%20Use%20Cases.pdf)
 was created from a template supplied by our Cohort October 2022 Tutor, Rebecca Tracey-Timoney.
@@ -133,22 +133,19 @@ pip freeze --local > requirements.txt
 
 Ensure you have Docker installed.
 
-All instruction are on the terminal command line. 
-
+All instruction are on the terminal command line.
 
 ### Local Deployment
 
 #### Fork the Repository
 
-
-
 1. Build the image and start the container up in detached mode
-   - `docker compose up -d --build`
+    - `docker compose up -d --build`
 
 - Check errors
-  - `docker compose logs -f`
+    - `docker compose logs -f`
 - Bring down the development containers
-  - `docker compose down --volumes`
+    - `docker compose down --volumes`
 
 ##### Additional Information
 
@@ -168,35 +165,35 @@ All instruction are on the terminal command line.
 ### Remote Deployment
 
 1. Create a new app
-   - `heroku create <app_name> --region eu`
-   - check app details `heroku info --app <app_name>`
+    - `heroku create <app_name> --region eu`
+    - check app details `heroku info --app <app_name>`
 2. Login to the Heroku Container Registry
-   - `heroku container:login`
+    - `heroku container:login`
 3. If not using ElephantSQL instance, and setting DATABASE_URL in the CONFIG_VARS, provision a new Postgres database
-   - `heroku addons:create heroku-postgresql:mini --app <app_name>`
+    - `heroku addons:create heroku-postgresql:mini --app <app_name>`
 4. Build the production Docker image and tag
-   1. `cd app`
-   2. `docker build -f Dockerfile.prod -t registry.heroku.com/<app_name>/web .`
-   3. Test the database locally
-      - `heroku config:get DATABASE_URL --app <app_name>`
-      - `export DATABASE_URL=<database_url>` or add `DATABASE_URL` in the `.env` file
-   4. Set the SECRET_KEY
-      - heroku config:set SECRET_KEY="<app_name>" --app mindfulminutes
-   5. Spin up the container
-      - `docker run --name <container_name> -e "PORT=8765" -p 8008:8765 registry.heroku.com/<app_name>/web:latest`
-   6. Bring down the container
-      - `docker stop <container_name>`
-      - `docker rm <container_name>`
+    1. `cd app`
+    2. `docker build -f Dockerfile.prod -t registry.heroku.com/<app_name>/web .`
+    3. Test the database locally
+        - `heroku config:get DATABASE_URL --app <app_name>`
+        - `export DATABASE_URL=<database_url>` or add `DATABASE_URL` in the `.env` file
+    4. Set the SECRET_KEY
+        - heroku config:set SECRET_KEY="<app_name>" --app mindfulminutes
+    5. Spin up the container
+        - `docker run --name <container_name> -e "PORT=8765" -p 8008:8765 registry.heroku.com/<app_name>/web:latest`
+    6. Bring down the container
+        - `docker stop <container_name>`
+        - `docker rm <container_name>`
 5. Check the `Dockerfile.prod` has set `ENV DJANGO_ALLOWED_HOSTS .herokuapp.com`
 6. Build the image again
-   - `docker build -f Dockerfile.prod -t registry.heroku.com/<app_name>/web .`
+    - `docker build -f Dockerfile.prod -t registry.heroku.com/<app_name>/web .`
 7. Push the image to the registry
-   - `docker push registry.heroku.com/<app_nam>/web:latest`
+    - `docker push registry.heroku.com/<app_nam>/web:latest`
 8. Release the image. This should run the container
-   - `heroku container:release web --app <app_name>`
+    - `heroku container:release web --app <app_name>`
 9. Apply migrations
-   - `heroku run python manage.py migrate --app <app_name>`
-10. Ensure WhiteNoise has been installed 
+    - `heroku run python manage.py migrate --app <app_name>`
+10. Ensure WhiteNoise has been installed
     1. Set`'whitenoise.middleware.WhiteNoiseMiddleware'` to `MIDDLEWARE` in `settings.py`
     2. Set `STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')` in `settings.py`
     3. Add `RUN python manage.py collectstatic --noinput` to `Dockerfile.prod` after the `COPY . .` command
@@ -596,7 +593,6 @@ DEVELOPMENT=<SET TO 'True' if in development mode or remove or set to 'False' fo
     - CLOUDINARY_URL (if not using Whitenoise)
     - DISABLE_COLLECT_STATIC 1 (IMPORTANT - This is to be removed after Cloudinary or Whitenoise is connected)
 
-
 ### Contributing
 
 ## Data Models
@@ -654,6 +650,11 @@ For further details on testing, click [here](docs/testing/testing.md).
 [Browserstack](https://www.browserstack.com) was used for testing. The devices were:
 
 ### Bugs & Fixes
+
+#### Known Bugs
+
+Get a warning in the Firefox console regarding Font Awesome due to "glyths extend outside the bounding
+box". [Cited from StackOverflow](https://stackoverflow.com/a/77233072/8614652)
 
 ### Lighthouse
 

@@ -1,88 +1,62 @@
 // https://codepen.io/monbrielle/pen/dyYRgPm
+// https://www.youtube.com/watch?v=VdqtdKXxKhM&list=PLjY7XQnia3s5x9VepvUha4v4T0wELnFmR&index=4&t=2064s
 (function () {
 
-    const form = document.querySelector('form');
-    const formCloseButton = document.querySelector('.form-header__close');
-    const nextButtons = document.querySelectorAll('.next');
+    const form = document.querySelector('form.main-form');
     const pages = document.querySelectorAll('.form-page');
     const pageList = Array.from(pages);
+    const formNavButtons = document.querySelector('.btn-form-direction-wrapper');
+    const previousBtn = formNavButtons.querySelector('[data-form-direction="up"]');
+    const nextBtn = formNavButtons.querySelector('[data-form-direction="down"]');
 
-    // Get the root element
-    const cssRoot = document.querySelector(':root');
-    let currentPage, nextPage, previousPage, opacity, current = 1, progress;
+    let currentPage, nextPage, previousPage, opacity, current = 1, progress, incrementor;
 
-    // https://stackdiary.com/tutorials/prevent-form-submission-on-pressing-enter-with-javascript/
-    form.addEventListener('keypress', function preventSubmitting(event) {
-        if (event.key === 'Enter') {
-            event.preventDefault();
-        }
-    });
-
-    formCloseButton.addEventListener('click', function returnToPreviousPage() {
-        history.go(-1);
-    });
-
-    nextButtons.forEach(function addClickEvent(btn) {
-        btn.addEventListener('click', function addActiveClass() {
-            currentPage = this.closest('.form-page[data-form-page-position="active"]');
-            nextPage = currentPage.nextElementSibling;
-
-            if (pageList.indexOf(nextPage) < pageList.length) {
-                progress = (pageList.indexOf(nextPage) / pages.length) * 100;
-                cssRoot.style.setProperty('--progress', `${progress}%`);
-
-                currentPage.dataset.formPagePosition = "above";
-                nextPage.dataset.formPagePosition = 'active';
-                if (pageList.indexOf(nextPage) === pages.length - 1) {
-                    form.dataset.currentPage = 'last';
-                } else {
-                    form.dataset.currentPage = `${pageList.indexOf(nextPage) + 1}`;
-                }
-            }
+    function showCurrentPage() {
+        pages.forEach(function toggleActivePage(page, index) {
+            page.toggleAttribute('data-form-page-active', index === currentPage);
         });
+    }
+
+    function checkInputs() {
+        const inputs = pages[currentPage].querySelectorAll("input");
+        const inputList = Array.from(inputs);
+
+        // or use the arrow function with an implicit return behaviour
+        return inputList.every(function checkInputIsValid(input) {
+            return input.checkValidity();
+        });
+    }
+
+    function showHideFormNavButton() {
+        // pages.indexOf(currentPage)
+        nextBtn.toggleAttribute('disabled', currentPage === pages.length - 1);
+        previousBtn.toggleAttribute('disabled', currentPage === 0);
+    }
+
+    currentPage = pageList.findIndex(function getActivePage(page) {
+        return page.getAttribute('data-form-page-active');
     });
 
-    const formNavigationPreviousBtn = document.querySelector('.btn-previous');
-    const formNavigationNextBtn = document.querySelector('.btn-next');
+    if (currentPage < 0) {
+        currentPage = 0;
+        showCurrentPage();
+        showHideFormNavButton();
+    }
 
-    formNavigationPreviousBtn.addEventListener('click', function navigateUp() {
-        currentPage = this.closest('.main-form').querySelector('.form-page[data-form-page-position="active"]');
+    form.addEventListener('click', function changeCurrentPage(event) {
+        console.log('test nav button', event.target);
+        if (event.target.matches('[data-form-direction="down"]')) {
+            incrementor = 1;
+        } else if (event.target.matches('[data-form-direction="up"]')) {
+            incrementor = -1;
+        }
 
-        if (pageList.indexOf(currentPage) > 0) {
-            previousPage = currentPage.previousElementSibling;
+        if (incrementor == null) return;
 
-            progress = (pageList.indexOf(previousPage) / pages.length) * 100;
-            cssRoot.style.setProperty('--progress', `${progress}%`);
-
-            currentPage.dataset.formPagePosition = "below";
-            previousPage.dataset.formPagePosition = 'active';
-
-            if (pageList.indexOf(previousPage) === 0) {
-                form.dataset.currentPage = '1';
-            } else {
-                form.dataset.currentPage = `${pageList.indexOf(previousPage) + 1}`;
-            }
+        if (checkInputs()) {
+            currentPage += incrementor;
+            showCurrentPage();
+            showHideFormNavButton();
         }
     });
-
-    formNavigationNextBtn.addEventListener('click', function navigateUp() {
-        currentPage = this.closest('.main-form').querySelector('.form-page[data-form-page-position="active"]');
-
-        if (pageList.indexOf(currentPage) > 0) {
-            nextPage = currentPage.nextElementSibling;
-
-            progress = (pageList.indexOf(nextPage) / pages.length) * 100;
-            cssRoot.style.setProperty('--progress', `${progress}%`);
-
-            currentPage.dataset.formPagePosition = "above";
-            nextPage.dataset.formPagePosition = 'active';
-
-            if (pageList.indexOf(nextPage) === pages.length - 1) {
-                form.dataset.currentPage = 'last';
-            } else {
-                form.dataset.currentPage = `${pageList.indexOf(nextPage) + 1}`;
-            }
-        }
-    });
-
 })();

@@ -15,3 +15,8 @@
 	cursor: pointer;
 }
 
+button.disabled, 
+.btn.disabled,
+input.disabled {
+	cursor: default;
+}

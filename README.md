@@ -137,8 +137,6 @@ All instruction are on the terminal command line.
 
 ### Local Deployment
 
-#### Fork the Repository
-
 1. Build the image and start the container up in detached mode
     - `docker compose up -d --build`
 
@@ -146,6 +144,10 @@ All instruction are on the terminal command line.
     - `docker compose logs -f`
 - Bring down the development containers
     - `docker compose down --volumes`
+
+#### Fork the Repository
+
+[local-deploy_fork.webm](https://github.com/halfpintutopia/mindful-minutes/assets/30613818/161ee21c-0a8d-4118-8491-e88f40a45dd5)
 
 ##### Additional Information
 
@@ -756,6 +758,7 @@ box". [Cited from StackOverflow](https://stackoverflow.com/a/77233072/8614652)
 - [Django Girls Tutorial](https://tutorial.djangogirls.org/en/)
 - [Getting the Most Out of the Django's User Model](https://www.youtube.com/watch?v=sXZ3ntGp_Xc)
 - [Django - Extend User Model](https://simpleisbetterthancomplex.com/tutorial/2016/07/22/how-to-extend-django-user-model.html)
+- [Adding Social Authentication to Django](https://testdriven.io/blog/django-social-auth/)
 
 ##### Python Dependencies / Packages
 

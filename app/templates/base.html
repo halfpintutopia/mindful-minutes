@@ -8,14 +8,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
     <title>Mindful Minutes | {{ title }}</title>
-    <link rel="icon" type="image/x-icon" href="">
-    <script>
-        window.typetura = {
-            selectors: [".typetura"], // list of selectors to be used as contexts
-            base: 20,  // target base font size in px. Mostly used by official packages.
-            scale: 1 // scale factor to make headlines bigger or smaller. Mostly used by official packages.
-        };
-    </script>
+    <link rel="icon"
+          type="image/x-icon"
+          href="{% static 'img/logo_light.ico' %}"
+          media="(prefers-color-scheme: dark)"
+    >
+    <link rel="icon"
+          type="image/x-icon"
+          href="{% static 'img/logo_dark.ico' %}"
+          media="(prefers-color-scheme: light)"
+    >
+{#    <script>#}
+{#        window.typetura = {#}
+{#            selectors: [".typetura"], // list of selectors to be used as contexts#}
+{#            base: 20,  // target base font size in px. Mostly used by official packages.#}
+{#            scale: 1 // scale factor to make headlines bigger or smaller. Mostly used by official packages.#}
+{#        };#}
+{#    </script>#}
     <script src="{% static 'js/typetura.min.js' %}"></script>
     <script src="https://kit.fontawesome.com/28847961b6.js" rel="preconnect" crossorigin="anonymous"></script>
 

@@ -158,19 +158,19 @@ if DATABASE_URL:
 AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation"
-        ".UserAttributeSimilarityValidator",
+                ".UserAttributeSimilarityValidator",
     },
     {
         "NAME": "django.contrib.auth.password_validation"
-        ".MinimumLengthValidator",
+                ".MinimumLengthValidator",
     },
     {
         "NAME": "django.contrib.auth.password_validation"
-        ".CommonPasswordValidator",
+                ".CommonPasswordValidator",
     },
     {
         "NAME": "django.contrib.auth.password_validation"
-        ".NumericPasswordValidator",
+                ".NumericPasswordValidator",
     },
 ]
 
@@ -214,11 +214,28 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "journal.CustomUser"
 
+AUTHENTICATION_BACKENDS = (
+    "allauth.account.auth_backends.AuthenticationBackend",
+    "django.contrib.auth.backends.ModelBackend",
+)
 # https://stackoverflow.com/questions/71636502/django-allauth-customuser
 # -object-has-no-attribute-username
 # https://django-allauth.readthedocs.io/en/latest/advanced.html#custom-user
 # -models
+SITE_ID = 1
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_EMAIL_VERIFICATION = "none"
+ACCOUNT_LOGOUT_ON_GET = True
+LOGIN_REDIRECT_URL = "/"
+
+ACCOUNT_FORMS = {"signup": "journal.forms.CustomSignupForm"}
+
+SOCIALACCOUNT_PROVIDERS = {"google": {"EMAIL_AUTHENTICATION": True}}
+
+SOCIALACCOUNT_FORMS = {
+    "disconnect": "allauth.socialaccount.forms.DisconnectForm",
+    "signup": "allauth.socialaccount.forms.SignupForm",
+}

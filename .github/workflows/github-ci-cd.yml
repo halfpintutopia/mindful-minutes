@@ -12,7 +12,7 @@ env:
   TAG: latest
   DJANGO_ALLOWED_HOSTS: .herokuapp.com
   HEROKU_APP_NAME: mindfulminutes
-  HEROKU_REGISTRY_IMAGE: registry.heroku.com/${{ env.HEROKU_APP_NAME }}/web
+  HEROKU_REGISTRY_IMAGE: registry.heroku.com/$HEROKU_APP_NAME/web
   HEROKU_AUTH_TOKEN: ${{ secrets.HEROKU_AUTH_TOKEN }}
 
 jobs:

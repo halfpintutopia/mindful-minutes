@@ -152,7 +152,7 @@ jobs:
           context: ./app
           file: ./app/Dockerfile.prod
           push: true
-          tags: ${{ env.HEROKU_REGISTRY_IMAGE }}:latest
+          tags: registry.heroku.com/${{ env.HEROKU_APP_NAME }}/web:latest
           build-args: |
             CLOUD_NAME=${{ secrets.CLOUD_NAME }}
             API_KEY=${{ secrets.API_KEY }}

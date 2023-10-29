@@ -60,14 +60,7 @@ jobs:
             CLOUD_NAME=${{ secrets.CLOUD_NAME }}
             API_KEY=${{ secrets.API_KEY }}
             API_SECRET=${{ secrets.API_SECRET }}
-        run: |
-          docker build \
-            --build-arg CLOUD_NAME=${{ secrets.CLOUD_NAME }} \
-            --build-arg API_KEY=${{ secrets.API_key }} \
-            --build-arg API_SECRET=${{ secrets.API_SECRET }} \
-            -t $IMAGE:$TAG \
-            -f app/Dockerfile.prod \
-            .
+          tags: $IMAGE:$TAG
 
   test:
     name: Test with pytest, Flake8, Black and isort

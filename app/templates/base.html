@@ -18,13 +18,13 @@
           href="{% static 'img/logo_dark.ico' %}"
           media="(prefers-color-scheme: light)"
     >
-{#    <script>#}
-{#        window.typetura = {#}
-{#            selectors: [".typetura"], // list of selectors to be used as contexts#}
-{#            base: 20,  // target base font size in px. Mostly used by official packages.#}
-{#            scale: 1 // scale factor to make headlines bigger or smaller. Mostly used by official packages.#}
-{#        };#}
-{#    </script>#}
+    {#    <script>#}
+    {#        window.typetura = {#}
+    {#            selectors: [".typetura"], // list of selectors to be used as contexts#}
+    {#            base: 20,  // target base font size in px. Mostly used by official packages.#}
+    {#            scale: 1 // scale factor to make headlines bigger or smaller. Mostly used by official packages.#}
+    {#        };#}
+    {#    </script>#}
     <script src="{% static 'js/typetura.min.js' %}"></script>
     <script src="https://kit.fontawesome.com/28847961b6.js" rel="preconnect" crossorigin="anonymous"></script>
 
@@ -35,12 +35,12 @@
     />
     <link
             rel="stylesheet"
-            href="{% static 'css/utilities.css' %}"
+            href="{% static 'css/typography.css' %}"
             type="text/css"
     />
     <link
             rel="stylesheet"
-            href="{% static 'css/typography.css' %}"
+            href="{% static 'css/utilities.css' %}"
             type="text/css"
     />
     <link
@@ -51,6 +51,11 @@
     <link
             rel="stylesheet"
             href="{% static 'css/footer.css' %}"
+            type="text/css"
+    />
+    <link
+            rel="stylesheet"
+            href="{% static 'css/main.css' %}"
             type="text/css"
     />
     <link
@@ -96,11 +101,32 @@
 
                     <nav>
                         <ul id="primary-navigation" data-visible="false" class="primary-navigation">
-                            <li class="active"><a href="#">Home</a></li>
-                            <li><a href="#">About</a></li>
-                            <li><a href="#">Pricing</a></li>
-                            <li><a href="#">Blog</a></li>
-                            <li><a href="#">Contact</a></li>
+                            {% if user.is_authenticated %}
+                                <li class="{% if url_name == 'index' %}active{% endif %}><a href=" #">Morning</a></li>
+                                <li><a href="#">Evening</a></li>
+                            {% endif %}
+                            <li><a href="#">Learn</a></li>
+                            {% if user.is_authenticated %}
+                                <li><a href="#">Search</a></li>
+                                <li><a href="#">My Account</a></li>
+                            {% endif %}
+                            <li><a href="#">Contact Us</a></li>
+
+                            {% if user.is_authenticated %}
+                                <li class="btn-green align-bottom">
+                                    <a href="#">Log out</a>
+                                    {#                                    <button class="btn">Log out</button>#}
+                                </li>
+                            {% else %}
+                                <li class="btn-green align-bottom">
+                                    <a href="#">Sign up</a>
+                                    {#                                    <button class="btn">Sign up</button>#}
+                                </li>
+                                <li class="btn-green">
+                                    <a href="#">Log in</a>
+                                    {#                                    <button class="btn">Log in</button>#}
+                                </li>
+                            {% endif %}
                         </ul>
                     </nav>
                 </div>

@@ -104,8 +104,8 @@
 	/*--p-font-size-min: 1;*/
 	/*--p-font-size-max: 1.125;*/
 	
-	--h1-font-size-min: 5rem;
-	--h1-font-size-max: 6.25rem;
+	--h1-font-size-min: 2rem;
+	--h1-font-size-max: 3rem;
 	--h2-font-size-min: 2.5rem;
 	--h2-font-size-max: 3.5rem;
 	--h3-font-size-min: 1.5rem;
@@ -122,6 +122,8 @@
 	--nav-item-font-size-max: 1.25rem;
 	--page-marker-font-size-min: 0.875rem;
 	--page-marker-font-size-max: 1rem;
+	--scroll-down-font-size-min: 1.25rem;
+	--scroll-down-font-size-max: 2.25rem;
 	
 	--fs-h1: 5rem;
 	/*--fs-h1: calc((var(--h1-font-size-min) * 1rem) + (var(--h1-font-size-max) - var(--h1-font-size-min)) * ((100vw - (var(--bp-small) * 1rem)) / var(--bp-x-large) - var(--bp-small)));*/
@@ -144,6 +146,8 @@
 	--container-width-full: 100%;
 	--standard-padding: 1rem;
 	
+	--header-image-margin: clamp(1.875rem, 1.0489rem + 4.1304vw, 4.25rem);
+	
 	/* z-index */
 	--header-layer: 1000;
 	--top-layer: 9999;
@@ -156,7 +160,7 @@
 }
 
 
-@media (min-width: 40em) {
+@media (width > 40em) {
 	:root {
 		--fs-h1: 6.25rem;
 		--fs-h2: 3.5rem;
@@ -203,8 +207,8 @@ body {
 	--font-optical-size: 18;
 	
 	min-height: 100vh;
-	background-color: hsl(var(--green-smoke-950), black);
-	color: hsl(0, 0%, 0%);
+	background-color: hsl(var(--porsche-50), white);
+	color: hsl(var(--green-smoke-950), black);
 	display: grid;
 	grid-template-rows: min-content 1fr;
 	overflow-x: hidden;
@@ -225,6 +229,7 @@ body {
 	"opsz" var(--font-optical-size);
 	line-height: 1.375;
 }
+
 
 img,
 picture,

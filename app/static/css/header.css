@@ -17,7 +17,7 @@ nav li {
 	padding: calc(var(--_gap) / 2);
 }
 
-nav li::after {
+nav li:not(.btn-nav)::after {
 	--_scale-transition: 300ms;
 	content: '';
 	position: absolute;
@@ -31,34 +31,34 @@ nav li::after {
 	transition: scale 300ms var(--_scale-delay, 0ms), translate 500ms var(--_translate-delay, 0ms);
 }
 
-nav li.active {
+nav li:not(.btn-nav).active {
 	--_scale-width: 1;
 }
 
 @media screen and (width > 34.5em) {
-	nav li:hover,
-	nav li:focus-within {
+	nav li:not(.btn-nav):hover,
+	nav li:not(.btn-nav):focus-within {
 		--_scale-width: 1;
 	}
 	
 	@supports selector(:has(h1)) {
-		nav li:hover + li {
+		nav li:not(.btn-nav):hover + li {
 			--_translate: -100%;
 		}
 		
-		nav li:has(+ :hover) {
+		nav li:not(.btn-nav):has(+ :hover) {
 			--_translate: 100%;
 		}
 		
-		nav li:hover + li,
-		nav li:has(+ :hover) {
+		nav li:not(.btn-nav):hover + li,
+		nav li:not(.btn-nav):has(+ :hover) {
 			--_scale-delay: 300ms;
 			--_translate-delay: 200ms;
 		}
 	}
 }
 
-nav ul a {
+nav ul li:not(.btn-nav) a {
 	color: inherit;
 	opacity: 0.7;
 	text-decoration: none;
@@ -256,4 +256,8 @@ nav ul a:focus-visible {
 .hero {
 	height: 100vh; /*fallback*/
 	height: 100dvh; /*100svh*/
+}
+
+.header-logo-image {
+	margin: var(--header-image-margin) auto;
 }

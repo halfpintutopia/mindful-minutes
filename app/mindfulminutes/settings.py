@@ -188,11 +188,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
 # Add compression support
-# STATICFILES_STORAGE = (
-#     "cloudinary_storage.storage.StaticHashedCloudinaryStorage"
-# )
+STATICFILES_STORAGE = (
+    "cloudinary_storage.storage.StaticHashedCloudinaryStorage"
+)
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 # Configure the handling of static files
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
@@ -205,7 +205,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 # }
 # CLOUDINARY_URL = os.environ.get("CLOUDINARY_URL")
 MEDIA_URL = "/media/"
-# DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -223,13 +223,15 @@ AUTHENTICATION_BACKENDS = (
 # https://django-allauth.readthedocs.io/en/latest/advanced.html#custom-user
 # -models
 SITE_ID = 1
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_EMAIL_VERIFICATION = "none"
 ACCOUNT_LOGOUT_ON_GET = True
-LOGIN_REDIRECT_URL = "/"
 
 ACCOUNT_FORMS = {"signup": "journal.forms.CustomSignupForm"}
 

@@ -15,8 +15,6 @@
 
             {% for field in form %}
 
-
-
                 <div class="form-page background-dark-accent"
                      data-form-page-number="{{ forloop.counter }}">
                     <div class="container list-item text-white" data-width="narrow">
@@ -35,8 +33,7 @@
                         </button>
                         {% if forloop.first %}
                             <small>{% blocktrans %}Already have an account? Then please
-                                <a href="{{ login_url }}">sign in</a>
-                                .{% endblocktrans %}</small>
+                                <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</small>
                         {% endif %}
                     </div>
                 </div>

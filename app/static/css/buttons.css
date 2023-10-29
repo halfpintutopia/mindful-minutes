@@ -1,5 +1,5 @@
-.btn {
-	/*min-width: 5.125em;*/
+button:not(.nav-toggle), btn {
+	 	/*min-width: 5.125em;*/
 	/*height: 1.875em;*/
 	border: none;
 	outline-color: transparent;
@@ -35,10 +35,6 @@ input.disabled {
 	text-align: center;
 	color: hsl(var(--porsche-50));
 	--_btn-padding: clamp(0.6875rem, 0.4918rem + 0.9783vw, 1.25rem) clamp(1.375rem, 0.8967rem + 2.3913vw, 2.75rem);
-}
-
-a:has(.btn-green) {
-
 }
 
 /*.btn-nav {*/

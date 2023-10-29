@@ -78,6 +78,9 @@ was created from a template supplied by our Cohort October 2022 Tutor, Rebecca T
 Personalise experience:
 
 - [How to use ChatGPT as a Personalized Mantra Generation for Meditation](https://chatgptschool.org/how-to-use-chatgpt-as-a-personalized-mantra-generator-for-meditation-2/)
+- Utilise Generative AI To create a plan, break down the task to smaller tasks and give a clear timeline
+- Integrate Google Calendar
+- Add social account login option
 
 ### Accessibility
 

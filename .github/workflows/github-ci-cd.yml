@@ -162,7 +162,7 @@ jobs:
         run: echo ${{ secrets.HEROKU_AUTH_TOKEN }} | docker login --username=_ --password-stdin registry.heroku.com
 
       - name: Push the image to Heroku Container Registry
-        run: docker push ${{ env.HEROKU_REGISTRY_IMAGE }}:latest
+        run: docker build -t ${{ env.HEROKU_REGISTRY_IMAGE }} .  && docker push ${{ env.HEROKU_REGISTRY_IMAGE }}:latest
 
       - name: Execute release.sh
         run: |

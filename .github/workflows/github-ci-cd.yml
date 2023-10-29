@@ -12,7 +12,7 @@ env:
   TAG: latest
   DJANGO_ALLOWED_HOSTS: .herokuapp.com
   HEROKU_APP_NAME: mindfulminutes
-  HEROKU_REGISTRY_IMAGE: registry.heroku.com/${HEROKU_APP_NAME}/web
+  HEROKU_REGISTRY_IMAGE: registry.heroku.com/${{ env.HEROKU_APP_NAME }}/web
   HEROKU_AUTH_TOKEN: ${{ secrets.HEROKU_AUTH_TOKEN }}
 
 jobs:
@@ -162,7 +162,7 @@ jobs:
         run: echo ${{ secrets.HEROKU_AUTH_TOKEN }} | docker login --username=_ --password-stdin registry.heroku.com
 
       - name: Push the image to Heroku Container Registry
-        run: docker tag ${{ env.IMAGE }}/${{ env.USER }}:${{ env.TAG }} registry.heroku.com/${{ env.HEROKU_APP_NAME }}/web && docker push registry.heroku.com/${{ env.HEROKU_APP_NAME }}/web
+        run: docker push ${{ env.HEROKU_REGISTRY_IMAGE }}:latest
 
       - name: Execute release.sh
         run: |

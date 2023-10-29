@@ -12,6 +12,8 @@ env:
   TAG: latest
   DJANGO_ALLOWED_HOSTS: .herokuapp.com
   HEROKU_APP_NAME: mindfulminutes
+  HEROKU_REGISTRY_IMAGE: registry.heroku.com/${HEROKU_APP_NAME}/web
+  HEROKU_AUTH_TOKEN: ${{ secrets.HEROKU_AUTH_TOKEN }}
 
 jobs:
   build:
@@ -58,6 +60,14 @@ jobs:
             CLOUD_NAME=${{ secrets.CLOUD_NAME }}
             API_KEY=${{ secrets.API_KEY }}
             API_SECRET=${{ secrets.API_SECRET }}
+        run: |
+          docker build \
+            --build-arg CLOUD_NAME=${{ secrets.CLOUD_NAME }} \
+            --build-arg API_KEY=${{ secrets.API_key }} \
+            --build-arg API_SECRET=${{ secrets.API_SECRET }} \
+            -t $IMAGE:$TAG \
+            -f app/Dockerfile.prod \
+            .
 
   test:
     name: Test with pytest, Flake8, Black and isort

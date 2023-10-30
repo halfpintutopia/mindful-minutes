@@ -121,10 +121,6 @@
 	transition: opacity 300ms ease 0s;;
 }
 
-/*.form-page:not(:first-of-type) .btn-form-direction-wrapper {*/
-/*	--_opacity: 1;*/
-/*}*/
-
 .btn-form-direction[data-form-direction="up"] {
 	--_btn-radius: 4px 0 0 4px;
 }
@@ -132,11 +128,3 @@
 .btn-form-direction[data-form-direction="down"] {
 	--_btn-radius: 0 4px 4px 0;
 }
-
-/*.form-page:last-of-type ~ .btn-form-direction-wrapper [data-form-direction="up"] {*/
-/*	--_btn-radius: 4px;*/
-/*}*/
-
-/*.form[data-current-page="last"] .btn-form-direction-wrapper [data-form-direction="down"] {*/
-/*	!*display: none;*!*/
-/*}*/

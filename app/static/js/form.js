@@ -9,7 +9,7 @@
     const previousBtn = formNavButtons.querySelector('[data-form-direction="up"]');
     const nextBtn = formNavButtons.querySelector('[data-form-direction="down"]');
 
-    let currentPage, nextPage, previousPage, opacity, current = 1, progress, incrementor;
+    let currentPage,incrementor;
 
     function showCurrentPage() {
         pages.forEach(function toggleActivePage(page, index) {
@@ -28,7 +28,6 @@
     }
 
     function showHideFormNavButton() {
-        // pages.indexOf(currentPage)
         nextBtn.toggleAttribute('disabled', currentPage === pages.length - 1);
         previousBtn.toggleAttribute('disabled', currentPage === 0);
     }

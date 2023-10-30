@@ -9,7 +9,6 @@
 .marked-image {
 	display: grid;
 	grid-template-columns: repeat(5, 1fr);
-	/*grid-template-rows: repeat(2, 1fr);*/
 	width: max-content;
 	align-items: var(--align-marker);
 	grid-row: var(--_marker-grid-row);
@@ -58,8 +57,6 @@
 .page-marker {
 	max-width: 5.125em;
 	max-height: 1.5em;
-	/*box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);*/
-	/*box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;*/
 	box-shadow: var(--box-shadow);
 	background: linear-gradient(90deg, hsla(0, 0%, 100%, 0.8) 0%, hsla(0, 0%, 100%, 0.8) 69.79%, hsl(var(--page-marker-color)) 69.8%, hsl(var(--page-marker-color)) 100%);
 }
@@ -88,10 +85,6 @@
 
 
 /* Scroll sections */
-.page-teaser-wrapper {
-	/*position: relative;*/
-}
-
 .page-teaser {
 	position: relative;
 	left: 0;

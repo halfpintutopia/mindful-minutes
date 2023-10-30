@@ -206,15 +206,8 @@ nav ul a:focus-visible {
 	--_stroke-width: 1;
 }
 
-/*.primary-navigation a > [aria-hidden="true"] {*/
-/*    font-weight: 700;*/
-/*    margin-inline-right: .75rem*/
-/*}*/
-
 @media screen and (width > 34.5em) {
 	.primary-navigation {
-		/*    --underline-gap: .5rem;*/
-		/*    --gap: clamp(1.5rem, 5vw, 3.5rem);*/
 		position: relative;
 		flex-direction: row;
 		inset: unset;

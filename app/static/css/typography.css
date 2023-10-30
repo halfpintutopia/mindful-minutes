@@ -10,7 +10,6 @@ h1, .primary-heading {
 	--font-parametric-uppercase-height: 742;
 	--font-parametric-descender-depth: -150;
 	--font-optical-size: 48;
-	/*font-size: var(--fs-h1);*/
 	--tt-key: primary-heading;
 	--tt-ease: linear;
 	
@@ -41,7 +40,6 @@ h2, .secondary-heading {
 	--font-parametric-uppercase-height: 742;
 	--font-parametric-descender-depth: -150;
 	--font-optical-size: 36;
-	/*font-size: calc(var(--h2-font-size-min) * 1em);*/
 	--tt-key: secondary-heading;
 	--tt-ease: linear;
 	
@@ -70,7 +68,6 @@ h3, .tertiary-heading {
 	--font-parametric-uppercase-height: 652;
 	--font-parametric-descender-depth: -172;
 	--font-optical-size: 36;
-	/*font-size: calc(var(--h3-font-size-min) * 1em);*/
 	--tt-key: tertiary-heading;
 	--tt-ease: linear;
 	
@@ -98,7 +95,6 @@ h4, .quaternary-heading {
 	--font-parametric-uppercase-height: 652;
 	--font-parametric-descender-depth: -172;
 	--font-optical-size: 27;
-	/*font-size: calc(var(--h4-font-size-min) * 1em);*/
 	--tt-key: quaternary-heading;
 	--tt-ease: linear;
 	
@@ -116,7 +112,6 @@ h4, .quaternary-heading {
 }
 
 p {
-	/*font-size: calc(var(--p-font-size-min) * 1em);*/
 	--tt-key: body-paragraph;
 	--tt-ease: linear;
 	line-height: 1.25;

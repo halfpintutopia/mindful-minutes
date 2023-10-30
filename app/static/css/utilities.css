@@ -3,12 +3,6 @@
 /* ------------------- */
 
 /* Layouts */
-/*.container {*/
-/*    padding-inline: var(--container-padding-inline);*/
-/*    margin-inline: auto;*/
-/*    max-width: var(--container-max-width);*/
-/*}*/
-
 .container {
 	width: min(100% - var(--container-padding, calc(var(--standard-padding) * 2)), var(--container-max-width));
 	margin-inline: auto;
@@ -18,12 +12,6 @@
 	--container-padding: calc(var(--standard-padding) * 5);
 	--container-max-width: var(--container-width-narrow);
 }
-
-/*@media only screen and (width >=768px) {*/
-/*    .container[data-width="narrow"] {*/
-/*        --container-width-narrow: 28rem;*/
-/*    }*/
-/*}*/
 
 .container[data-width="regular"] {
 	--container-max-width: var(--container-width-wide);

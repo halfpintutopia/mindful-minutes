@@ -146,6 +146,9 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Login to Heroku Container registry # https://dev.to/heroku/deploying-to-heroku-from-github-actions-29ej
+        run: echo ${{ secrets.HEROKU_AUTH_TOKEN }} | docker login --username=_ --password-stdin registry.heroku.com
+
       - name: Build and tag new image
         uses: docker/build-push-action@v3
         with:

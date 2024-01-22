@@ -285,3 +285,7 @@ section[data-space="narrow"] {
 	margin-top: auto;
 }
 
+.center {
+	margin-inline: auto;
+}
+

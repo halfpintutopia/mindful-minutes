@@ -1,32 +1,52 @@
 button:not(.nav-toggle), .btn {
-	border: none;
-	outline-color: transparent;
-	border-radius: var(--_btn-radius);
-	box-shadow: var(--box-shadow);
-	text-transform: uppercase;
-	padding: var(--_btn-padding);
-	/*margin-block: clamp(0.625rem, -0.462rem + 5.4348vw, 3.75rem);*/
+    border: none;
+    outline-color: transparent;
+    border-radius: var(--_btn-radius);
+    box-shadow: var(--box-shadow);
+    text-transform: uppercase;
+    padding: var(--_btn-padding);
+    /*margin-block: clamp(0.625rem, -0.462rem + 5.4348vw, 3.75rem);*/
 }
 
 .form-close-btn:hover,
 .btn:hover {
-	cursor: pointer;
+    cursor: pointer;
 }
 
 button.disabled,
 .btn.disabled,
 input.disabled {
-	cursor: default;
+    cursor: default;
 }
 
 .btn-green {
-	--_btn-radius: 4px;
-	background: linear-gradient(90deg, #503737 0%, #503737 3.27%, #AFBE98 3.28%);
-	text-align: center;
-	color: hsl(var(--porsche-50));
-	--_btn-padding: clamp(0.6875rem, 0.4918rem + 0.9783vw, 1.25rem) clamp(1.375rem, 0.8967rem + 2.3913vw, 2.75rem);
+    --_btn-radius: 4px;
+    background: linear-gradient(90deg, #503737 0%, #503737 3.27%, #AFBE98 3.28%);
+    text-align: center;
+    color: hsl(var(--porsche-50));
+    --_btn-padding: clamp(0.6875rem, 0.4918rem + 0.9783vw, 1.25rem) clamp(1.375rem, 0.8967rem + 2.3913vw, 2.75rem);
 }
 
 .btn-green a {
-	color: hsl(var(--porsche-50));
+    color: hsl(var(--porsche-50));
+}
+
+/* Scroll Button */
+.scroll-animation {
+    position: absolute;
+    left: 50%;
+    top: -3em;
+    transform: translate(-50%, 0);
+    animation: bounce 2000ms infinite alternate;
+}
+
+.scroll-animation.fa-stack {
+    z-index: 100;
+    font-size: 1.6875em;
+}
+
+@keyframes bounce {
+    100% {
+        transform: translate(-50%, 1em)
+    }
 }

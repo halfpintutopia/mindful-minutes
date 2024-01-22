@@ -1,0 +1,107 @@
+/* Page marker ----------------------------------------------------------------------------------------------------- */
+.page-markers {
+	--gap: 0;
+	grid-template-rows: repeat(8, auto);
+	justify-items: center;
+}
+
+
+.marked-image {
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	width: max-content;
+	align-items: var(--align-marker);
+	grid-row: var(--_marker-grid-row);
+}
+
+.marked-image > * {
+	grid-row: 1;
+}
+
+.marked-image img {
+	grid-column: var(--image-grid-column-span);
+}
+
+.marked-image div {
+	grid-column: var(--marker-grid-column-span);
+}
+
+.marked-image[data-marker-position="top-right"] {
+	--image-grid-column-span: 1 / 3;
+	--marker-grid-column-span: 2 / -1;
+	--align-marker: flex-start;
+	--_marker-grid-row: 2 / 4;
+}
+
+.marked-image[data-marker-position="top-left"] {
+	--image-grid-column-span: 3 / -1;
+	--marker-grid-column-span: 1 / 4;
+	--align-marker: flex-start;
+	--_marker-grid-row: 1 / 3;
+}
+
+.marked-image[data-marker-position="bottom-right"] {
+	--image-grid-column-span: 1 / 3;
+	--marker-grid-column-span: 2 / -1;
+	--align-marker: flex-end;
+	--_marker-grid-row: 5 / -1;
+}
+
+.marked-image[data-marker-position="bottom-left"] {
+	--image-grid-column-span: 3 / -1;
+	--marker-grid-column-span: 1 / 4;
+	--align-marker: flex-end;
+	--_marker-grid-row: 4 / 7;
+}
+
+.page-marker {
+	max-width: 5.125em;
+	max-height: 1.5em;
+	box-shadow: var(--box-shadow);
+	background: linear-gradient(90deg, hsla(0, 0%, 100%, 0.8) 0%, hsla(0, 0%, 100%, 0.8) 69.79%, hsl(var(--page-marker-color)) 69.8%, hsl(var(--page-marker-color)) 100%);
+}
+
+.page-marker.yellow {
+	--page-marker-color: 58, 99%, 48%;
+}
+
+.page-marker.blue {
+	--page-marker-color: 192, 59%, 47%;
+}
+
+.page-marker.hotpink {
+	--page-marker-color: 327, 100%, 54%;
+}
+
+.page-marker.orangered {
+	--page-marker-color: 18, 100%, 50%;
+}
+
+@media screen and (width > 34.5em) {
+	.page-markers {
+		display: none;
+	}
+}
+
+
+/* Scroll sections */
+.page-teaser {
+	position: relative;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+
+.fa-stack.fa-2x {
+	--tt-key: scroll-down;
+	--tt-ease: linear;
+}
+
+@keyframes scroll-down {
+	0% {
+		font-size: var(--scroll-down-font-size-min);
+	}
+	100% {
+		font-size: var(--scroll-down-font-size-max);
+	}
+}

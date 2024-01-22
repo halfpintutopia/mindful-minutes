@@ -1,20 +1,6 @@
 /* ------------------- */
 /* Custom properties   */
 /* ------------------- */
-@font-face {
-	font-family: 'Roboto Flex';
-	src: url("../fonts/RobotoFlex.woff2") format("woff2-variations");
-	font-weight: 0 1000;
-	font-display: swap;
-}
-
-@font-face {
-	font-family: 'Caveat';
-	src: url("../fonts/Caveat.woff2") format("woff2-variations");
-	font-weight: 0 1000;
-	font-display: swap;
-}
-
 :root {
 	/* Colours */
 	--mischka-50: 240 6% 97%;
@@ -28,7 +14,7 @@
 	--mischka-800: 249 6% 41%;
 	--mischka-900: 247 5% 34%;
 	--mischka-950: 250 6% 20%;
-	
+
 	--green-smoke-50: 77 28% 95%;
 	--green-smoke-100: 78 24% 89%;
 	--green-smoke-200: 83 23% 80%;
@@ -40,7 +26,7 @@
 	--green-smoke-800: 90 19% 23%;
 	--green-smoke-900: 88 17% 20%;
 	--green-smoke-950: 87 22% 10%;
-	
+
 	--porsche-50: 40 67% 96%;
 	--porsche-100: 40 67% 96%;
 	--porsche-200: 38 63% 83%;
@@ -52,7 +38,7 @@
 	--porsche-800: 20 50% 34%;
 	--porsche-900: 21 48% 28%;
 	--porsche-950: 19 51% 15%;
-	
+
 	--swirl-50: 30 22% 96%;
 	--swirl-100: 37 19% 92%;
 	--swirl-200: 33 19% 82%; /* main */
@@ -64,7 +50,7 @@
 	--swirl-800: 16 15% 34%;
 	--swirl-900: 15 14% 28%;
 	--swirl-950: 15 16% 15%;
-	
+
 	--sandrift-50: 30 22% 96%;
 	--sandrift-100: 37 19% 92%;
 	--sandrift-200: 33 19% 82%;
@@ -76,22 +62,22 @@
 	--sandrift-800: 16 15% 34%;
 	--sandrift-900: 15 14% 28%;
 	--sandrift-950: 15 16% 15%;
-	
+
 	/* breakpoint variables */
 	--bp-small: 24.15;
 	--bp-medium: 45.75;
 	--bp-large: 60.25;
 	--bp-x-large: 75;
-	
+
 	/*https://www.freecodecamp.org/news/the-100-correct-way-to-do-css-breakpoints-88d6a5ba1862/*/
 	--tablet: 34.5; /*rem*/
 	--tablet-landscape: 56.25;
 	--desktop: 75;
 	--big-desktop: 112.5;
-	
+
 	--roboto-flex: 'Roboto Flex', sans-serif;
 	--caveat: 'Caveat', cursive;
-	
+
 	--h1-font-size-min: 2rem;
 	--h1-font-size-max: 3rem;
 	--h2-font-size-min: 2.5rem;
@@ -112,35 +98,35 @@
 	--page-marker-font-size-max: 1rem;
 	--scroll-down-font-size-min: 1.25rem;
 	--scroll-down-font-size-max: 2.25rem;
-	
+
 	--fs-h1: 5rem;
 	--fs-h2: 2.5rem;
 	--fs-h3: 1.5rem;
 	--fs-h4: 1.25rem;
 	--fs-p: 1rem;
-	
+
 	/* Spacing */
 	--container-padding-inline: 2rem;
 	--container-max-width: 80rem;
 	--section-padding-block: 3rem;
 	--padding: max(3vh, 1rem) 1.5rem;
 	--margin: max(6vh, 2rem);
-	
+
 	--container-width-narrow: 45rem;
 	--container-width-regular: 75rem;
 	--container-width-wide: 87.5rem;
 	--container-width-full: 100%;
 	--standard-padding: 1rem;
-	
+
 	--header-image-margin: clamp(1.875rem, 1.0489rem + 4.1304vw, 4.25rem);
-	
+
 	/* z-index */
 	--header-layer: 1000;
 	--top-layer: 9999;
-	
+
 	/* Effects */
 	--box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
-	
+
 	/* Forms */
 	--progress: 0;
 }
@@ -153,93 +139,5 @@
 		--fs-h3: 2rem;
 		--fs-h4: 1.75rem;
 		--fs-p: 1.125rem;
-	}
-}
-
-/* ------------------- */
-/* Resets                */
-/* ------------------- */
-
-*,
-*::before,
-*::after {
-	box-sizing: border-box;
-}
-
-* {
-	margin: 0;
-	padding: 0;
-	font: inherit;
-}
-
-html {
-	color-scheme: dark light;
-}
-
-body {
-	--font-weight: 250;
-	--font-width: 74;
-	--font-grade: -58;
-	--font-parametric-counter-width: 436;
-	--font-parametric-thick-stroke: 77;
-	--font-parametric-thin-stroke: 49;
-	--font-parametric-lowercase-height: 432;
-	--font-parametric-uppercase-height: 652;
-	--font-parametric-descender-depth: -172;
-	--font-optical-size: 18;
-	
-	min-height: 100vh;
-	background-color: hsl(var(--porsche-50), white);
-	color: hsl(var(--green-smoke-950), black);
-	display: grid;
-	grid-template-rows: min-content 1fr;
-	overflow-x: hidden;
-	
-	font-family: var(--roboto-flex);
-	/*font-size: 16px;*/
-	--tt-key: body-paragraph;
-	--tt-ease: linear;
-	font-variation-settings: "wght" var(--font-weight),
-	"wdth" var(--font-width),
-	"GRAD" var(--font-grade),
-	"XTRA" var(--font-parametric-counter-width),
-	"XOPQ" var(--font-parametric-thick-stroke),
-	"YOPQ" var(--font-parametric-thin-stroke),
-	"YTLC" var(--font-parametric-lowercase-height),
-	"YTUC" var(--font-parametric-uppercase-height),
-	"YTDE" var(--font-parametric-descender-depth),
-	"opsz" var(--font-optical-size);
-	line-height: 1.375;
-}
-
-
-img,
-picture,
-svg,
-video {
-	display: block;
-	max-width: 100%;
-}
-
-input,
-textarea,
-button,
-select {
-	font: inherit;
-}
-
-button, .btn {
-	outline-color: transparent;
-}
-
-/* remove animations for people who have turned them off */
-@media (prefers-reduced-motion: reduce) {
-	*,
-	*::before,
-	*::after {
-		animation-duration: 0.01ms !important;
-		animation-iteration-count: 1 !important;
-		transition-duration: 0.01ms !important;
-		scroll-behavior: auto !important;
 	}
 }

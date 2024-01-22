@@ -77,8 +77,9 @@ nav ul a:focus-visible {
 }
 
 .logo {
-	--_logo-margin: 1.5rem clamp(1.5rem, 5vw, 3.5rem);
-	margin: var(--_logo-margin);
+	/*--_logo-margin: 1.5rem clamp(1.5rem, 5vw, 3.5rem);*/
+	/*margin: var(--_logo-margin);*/
+	height: 2.25em;
 }
 
 .primary-header {

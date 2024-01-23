@@ -2,7 +2,7 @@
 	const primaryNavList = document.querySelector('.primary-navigation');
 	const navToggleButton = document.querySelector('.nav-toggle');
 	
-	const header = document.querySelector('.primary-header');
+	const header = document.querySelector('.header-base');
 	const headerHeight = header.offsetHeight;
 	console.log('heights', header.offsetHeight, header.clientHeight);
 	

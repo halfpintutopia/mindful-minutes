@@ -1,0 +1,28 @@
+.intro {
+    height: calc(100vh - var(--header-height));
+    padding-top: 1em;
+
+    .intro__logo {
+        margin-inline: auto;
+        margin-top: 1em;
+    }
+
+    .intro__logo + div {
+        align-items: center;
+        padding-top: 1em;
+    }
+
+    .intro__text {
+        --gap: 1em;
+    }
+
+    .sm-screen-d-none img {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+    }
+
+    @media screen and (width > 56.25em) {
+        --gap: 5em;
+    }
+}

@@ -5,62 +5,70 @@
 
 {% block content %}
 	<main>
-		<section class="container" data-width="wide">
-			<div class="grid">
-				<img class="header-logo-image" src="{% static 'img/logo_big_dark.svg' %}" alt="">
-				<h1>Make time a habit</h1>
-				<h3>Unlock your full potential</h3>
-				<p>Embrace self-reflection, set goals and make
-					progress. Journal your way to personal growth
-					and achievement.</p>
-				<a class="center" href="{% url 'account_signup' %}">
-					<button class="btn btn-green">
-						Start today
-					</button>
-				</a>
+		<section class="container intro" data-width="regular">
+			<img class="intro__logo" src="{% static 'img/logo_big_dark.svg' %}" alt="">
+			<div class="grid grid-columns" data-columns="2">
+				<div class="grid intro__text">
+					<h1>Make time a habit</h1>
+					<h3>Unlock your full potential</h3>
+					<p>Embrace self-reflection, set goals and make
+						progress. Journal your way to personal growth
+						and achievement.</p>
+					<a class="center" href="{% url 'account_signup' %}">
+						<button class="btn btn-green">
+							Start today
+						</button>
+					</a>
+				</div>
+				<div class="grid page-markers intro__markers lg-screen-d-none" data-space="narrow">
+					<div class="marked-image" data-marker-position="top-right">
+						<img src="{% static 'img/landing_page/woman_smiling.svg' %}"
+						     alt="Girl smiling on sunny day in the city.">
+						<div class="page-marker blue">
+							To do
+						</div>
+					</div>
+					<div class="marked-image" data-marker-position="top-left">
+						<img src="{% static 'img/landing_page/woman_holding_sparkler.svg' %}"
+						     alt="Girl smiling on sunny day in the city.">
+						<div class="page-marker hotpink">
+							Thankful for
+						</div>
+					</div>
+					<div class="marked-image" data-marker-position="bottom-right">
+						<img src="{% static 'img/landing_page/group_jumping.svg' %}"
+						     alt="Girl smiling on sunny day in the city.">
+						<div class="page-marker orangered">
+							Wins
+						</div>
+					</div>
+					<div class="marked-image" data-marker-position="bottom-left">
+						<img src="{% static 'img/landing_page/lightbulb_with_sky.svg' %}"
+						     alt="Girl smiling on sunny day in the city.">
+						<div class="page-marker yellow">
+							Ideas
+						</div>
+					</div>
+				</div>
+				<div class="intro__img sm-screen-d-none">
+					<img src="https://source.unsplash.com/random/300×300/?diary" alt="">
+				</div>
 			</div>
 		</section>
-		
+
 		<section class="grid page-markers container" data-width="narrow" data-space="narrow">
-			<div class="marked-image" data-marker-position="top-right">
-				<img src="{% static 'img/landing_page/woman_smiling.svg' %}"
-				     alt="Girl smiling on sunny day in the city.">
-				<div class="page-marker blue">
-					To do
-				</div>
-			</div>
-			<div class="marked-image" data-marker-position="top-left">
-				<img src="{% static 'img/landing_page/woman_holding_sparkler.svg' %}"
-				     alt="Girl smiling on sunny day in the city.">
-				<div class="page-marker hotpink">
-					Thankful for
-				</div>
-			</div>
-			<div class="marked-image" data-marker-position="bottom-right">
-				<img src="{% static 'img/landing_page/group_jumping.svg' %}"
-				     alt="Girl smiling on sunny day in the city.">
-				<div class="page-marker orangered">
-					Wins
-				</div>
-			</div>
-			<div class="marked-image" data-marker-position="bottom-left">
-				<img src="{% static 'img/landing_page/lightbulb_with_sky.svg' %}"
-				     alt="Girl smiling on sunny day in the city.">
-				<div class="page-marker yellow">
-					Ideas
-				</div>
-			</div>
+
 		</section>
-		
+
 		<section class="grid grid-center page-teaser background-accent">
                 <span class="scroll-animation fa-stack fa-2x">
                 <i class="fa-solid fa-circle fa-stack-2x"></i>
                 <i class="fa-solid fa-chevron-down fa-stack-1x fa-inverse"></i>
             </span>
 		</section>
-		
-		<section class="container background-accent full-bleed" data-width="wide">
-			
+
+{#		<section class="container background-accent full-bleed" data-width="wide">#}
+{##}
 			{#            <picture>#}
 			{#                <source media="(min-width: 900px)" srcset="assets/media/images/news/lg/pexels-susanne-jutzeler-sujufoto-1292006-lg_1x.webp 1x,#}
 			{#                            assets/media/images/news/lg/pexels-susanne-jutzeler-sujufoto-1292006-lg_2x.webp 2x"#}
@@ -78,23 +86,23 @@
 			{#                     sizes="(min-width: 768px) 50vw, 100vw"#}
 			{#                     alt="Two girls sitting on a wooden bench overlooking a lake">#}
 			{#            </picture>#}
-			
-			<img src="https://source.unsplash.com/random/300×300/?study,computer"
-			     alt="Random Unsplash image">
-			<div>
-				<h2>Set meaningful goals</h2>
-				<h4>Start each day with intentions</h4>
-				<p>Stay organised and focused on what matters most
-					to you. Foster a deeper connection with your goals
-					and enhance your commitment.</p>
-				<a href="#" class="button">Learn more <i class="fa-solid fa-arrow-right-long"></i></a>
-				<a href="{% url 'account_signup' %}">
-					<button class="btn-green" data-btn-size="long">
-						Get Started
-					</button>
-				</a>
-			</div>
-		</section>
+{##}
+{#			<img src="https://source.unsplash.com/random/300×300/?study,computer"#}
+{#			     alt="Random Unsplash image">#}
+{#			<div>#}
+{#				<h2>Set meaningful goals</h2>#}
+{#				<h4>Start each day with intentions</h4>#}
+{#				<p>Stay organised and focused on what matters most#}
+{#					to you. Foster a deeper connection with your goals#}
+{#					and enhance your commitment.</p>#}
+{#				<a href="#" class="button">Learn more <i class="fa-solid fa-arrow-right-long"></i></a>#}
+{#				<a href="{% url 'account_signup' %}">#}
+{#					<button class="btn-green" data-btn-size="long">#}
+{#						Get Started#}
+{#					</button>#}
+{#				</a>#}
+{#			</div>#}
+{#		</section>#}
 	</main>
 
 

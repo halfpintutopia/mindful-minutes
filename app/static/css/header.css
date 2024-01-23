@@ -289,10 +289,6 @@ nav ul a:focus-visible {
     height: 100dvh; /*100svh*/
 }
 
-.header-logo-image {
-    margin: var(--header-image-margin) auto;
-}
-
 .menu-mobile-logo-wrapper {
     display: none;
 }

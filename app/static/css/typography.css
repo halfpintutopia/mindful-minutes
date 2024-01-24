@@ -187,7 +187,7 @@ small {
 	--tt-ease: linear;
 }
 
-.page-marker {
+.page-marker__text {
 	font-family: var(--caveat);
 	font-variation-settings: "wght" 500;
 	--tt-key: page-marker;

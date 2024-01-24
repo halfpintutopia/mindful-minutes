@@ -80,13 +80,13 @@
     display: none;
 }
 
-@media screen and (width > 56.25em) {
+@media screen and (width >= 56.25em) {
     .sm-screen-d-none {
         display: block;
     }
 }
 
-@media screen and (width > 56.25em) {
+@media screen and (width >= 56.25em) {
     .lg-screen-d-none {
         display: none;
     }

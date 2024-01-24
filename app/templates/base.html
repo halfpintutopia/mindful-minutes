@@ -122,6 +122,15 @@
 
 {% block content %} {% endblock content %}
 
+{% block scroll_icon %}
+	<div class="grid grid-center page-teaser background-accent">
+                <span class="scroll-animation fa-stack fa-2x">
+                <i class="fa-solid fa-circle fa-stack-2x"></i>
+                <i class="fa-solid fa-chevron-down fa-stack-1x fa-inverse"></i>
+            </span>
+	</div>
+{% endblock scroll_icon %}
+
 {% block footer %} {% endblock footer %}
 
 {#<script defer src="{% static 'js/header-height.js' %}"></script>#}

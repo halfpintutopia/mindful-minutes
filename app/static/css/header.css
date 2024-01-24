@@ -55,6 +55,16 @@ header * {
     transform: translateX(0);
 }
 
+.primary-navigation[data-visible="true"] {
+    ul + a {
+        margin-top: auto;
+    }
+
+    button {
+        width: 100%;
+    }
+}
+
 .primary-navigation a {
     text-decoration: none;
 }
@@ -100,6 +110,8 @@ nav li {
     overflow: hidden;
     position: relative;
     padding-block: calc(var(--_gap) / 2);
+
+    text-transform: uppercase;
 }
 
 nav li:not(.btn-nav)::after {

@@ -4,7 +4,21 @@ footer {
     margin-top: auto;
 }
 
+footer section {
+    padding-block: 1em;
+    justify-content: center;
+    text-align: center;
+}
+
 .primary-footer {
     display: flex;
     flex-direction: column;
+}
+
+footer .social {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+footer .fa-brands {
+    color: hsl(var(--porsche-50));
 }

@@ -6,7 +6,7 @@
 {% block content %}
 	<main>
 		<section class="container intro" data-width="regular">
-			<img class="intro__logo" src="{% static 'img/logo_big_dark.svg' %}" alt="">
+			<img class="intro__logo" src="{% static 'img/logo_full_dark.svg' %}" alt="">
 			<div class="grid grid-columns" data-columns="2">
 				<div class="grid intro__text">
 					<h1>Make time a habit</h1>
@@ -51,52 +51,44 @@
 					</div>
 				</div>
 				<div class="intro__img sm-screen-d-none">
-					<img src="https://source.unsplash.com/random/300×300/?diary" alt="">
+					<picture>
+						<source media="(min-width: 900px)" srcset="{% static 'img/landing_page/lg/green_floral_notebook-lg_1x.webp' %} 1x,
+					                            {% static 'img/landing_page/lg/green_floral_notebook-lg_2x.webp' %} 2x"
+						        type="image/webp">
+						<source media="(min-width: 601px)" srcset="{% static 'img/landing_page/md/green_floral_notebook-md_1x.webp' %} 1x,
+					                            {% static 'img/landing_page/md/green_floral_notebook-md_2x.webp' %} 2x"
+						        type="image/webp">
+						<source srcset="{% static 'img/landing_page/sm/green_floral_notebook-sm_1x.webp' %} 1x,
+					                            {% static 'img/landing_page/sm/green_floral_notebook-sm_2x.webp' %} 2x"
+						        type="image/webp">
+						<img loading="lazy" srcset="{% static 'img/landing_page/sm/green_floral_notebook-sm_1x.jpg' %} 600w,
+					                            {% static 'img/landing_page/md/green_floral_notebook-md_1x.jpg' %} 900w,
+					                            {% static 'img/landing_page/lg/green_floral_notebook-lg_1x.jpg' %} 1440w"
+						     src="{% static 'img/landing_page/lg/green_floral_notebook-lg_1x.jpg' %}"
+						     sizes="(min-width: 768px) 50vw, 100vw"
+						     alt="Two girls sitting on a wooden bench overlooking a lake">
+					</picture>
 				</div>
 			</div>
 		</section>
 		
-		<section class="grid page-markers container" data-width="narrow" data-space="narrow">
-		
-		</section>
-		
-		
-		{#		<section class="container background-accent full-bleed" data-width="wide">#}
-		{##}
-		{#            <picture>#}
-		{#                <source media="(min-width: 900px)" srcset="assets/media/images/news/lg/pexels-susanne-jutzeler-sujufoto-1292006-lg_1x.webp 1x,#}
-		{#                            assets/media/images/news/lg/pexels-susanne-jutzeler-sujufoto-1292006-lg_2x.webp 2x"#}
-		{#                        type="image/webp">#}
-		{#                <source media="(min-width: 601px)" srcset="assets/media/images/news/md/pexels-susanne-jutzeler-sujufoto-1292006-md_1x.webp 1x,#}
-		{#                            assets/media/images/news/md/pexels-susanne-jutzeler-sujufoto-1292006-md_2x.webp 2x"#}
-		{#                        type="image/webp">#}
-		{#                <source srcset="assets/media/images/news/sm/pexels-susanne-jutzeler-sujufoto-1292006-sm_1x.webp 1x,#}
-		{#                            assets/media/images/news/sm/pexels-susanne-jutzeler-sujufoto-1292006-sm_2x.webp 2x"#}
-		{#                        type="image/webp">#}
-		{#                <img loading="lazy" srcset="assets/media/images/news/sm/pexels-susanne-jutzeler-sujufoto-1292006-sm_1x.jpg 600w,#}
-		{#                            assets/media/images/news/md/pexels-susanne-jutzeler-sujufoto-1292006-md_1x.jpg 900w,#}
-		{#                            assets/media/images/news/lg/pexels-susanne-jutzeler-sujufoto-1292006-lg_1x.jpg 1440w"#}
-		{#                     src="assets/media/images/news/lg/pexels-susanne-jutzeler-sujufoto-1292006-lg_1x.jpg"#}
-		{#                     sizes="(min-width: 768px) 50vw, 100vw"#}
-		{#                     alt="Two girls sitting on a wooden bench overlooking a lake">#}
-		{#            </picture>#}
-		{##}
-		{#			<img src="https://source.unsplash.com/random/300×300/?study,computer"#}
-		{#			     alt="Random Unsplash image">#}
-		{#			<div>#}
-		{#				<h2>Set meaningful goals</h2>#}
-		{#				<h4>Start each day with intentions</h4>#}
-		{#				<p>Stay organised and focused on what matters most#}
-		{#					to you. Foster a deeper connection with your goals#}
-		{#					and enhance your commitment.</p>#}
-		{#				<a href="#" class="button">Learn more <i class="fa-solid fa-arrow-right-long"></i></a>#}
-		{#				<a href="{% url 'account_signup' %}">#}
-		{#					<button class="btn-green" data-btn-size="long">#}
-		{#						Get Started#}
-		{#					</button>#}
-		{#				</a>#}
-		{#			</div>#}
-		{#		</section>#}
+{#		<section class="container background-accent full-bleed" data-width="wide">#}
+{#			<img src="https://source.unsplash.com/random/300×300/?study,computer"#}
+{#			     alt="Random Unsplash image">#}
+{#			<div>#}
+{#				<h2>Set meaningful goals</h2>#}
+{#				<h4>Start each day with intentions</h4>#}
+{#				<p>Stay organised and focused on what matters most#}
+{#					to you. Foster a deeper connection with your goals#}
+{#					and enhance your commitment.</p>#}
+{#				<a href="#" class="button">Learn more <i class="fa-solid fa-arrow-right-long"></i></a>#}
+{#				<a href="{% url 'account_signup' %}">#}
+{#					<button class="btn-green" data-btn-size="long">#}
+{#						Get Started#}
+{#					</button>#}
+{#				</a>#}
+{#			</div>#}
+{#		</section>#}
 	</main>
 
 

@@ -46,21 +46,21 @@
 <header>
 	{% block progress_bar %}
 	{% endblock %}
-	
+
 	{% block navigation %}
 		<section class="header-wrapper">
 			<div class="primary-header container" data-width="regular">
 				<div>
 					<img class="logo" src="{% static 'img/logo_dark.svg' %}" alt="Logo"/>
 				</div>
-				
+
 				<button class="nav-toggle" aria-controls="primary-navigation" aria-expanded="false">
 					<svg width="48px" height="48px" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
 						<g>
 							<line x1="0" y1="17" x2="48" y2="17" stroke-width="1"></line>
 							<line x1="0" y1="31" x2="48" y2="31" stroke-width="1"></line>
 						</g>
-						
+
 						<g>
 							<line x1="0" y1="24" x2="48" y2="24" stroke-width="1"></line>
 							<line x1="0" y1="24" x2="48" y2="24" stroke-width="1"></line>
@@ -68,10 +68,10 @@
 					</svg>
 					<span class="sr-only">Menu</span>
 				</button>
-				
+
 				<nav id="primary-navigation" data-visible="false" class="primary-navigation">
 					<div class="menu-mobile-logo-wrapper">
-						<img class="logo" src="{% static 'img/logo_big_dark.svg' %}" alt="Logo"/>
+						<img class="logo" src="{% static 'img/logo_full_dark.svg' %}" alt="Logo"/>
 					</div>
 					<ul>
 						{% if user.is_authenticated %}
@@ -97,10 +97,10 @@
 						<li>
 							Contact Us
 						</li>
-					
-					
+
+
 					</ul>
-					
+
 					{% if user.is_authenticated %}
 						<a href="#">
 							<button class="btn-green align-bottom">Log out</button>
@@ -116,7 +116,7 @@
 				</nav>
 			</div>
 		</section>
-	
+
 	{% endblock navigation %}
 </header>
 
@@ -131,11 +131,27 @@
 	</div>
 {% endblock scroll_icon %}
 
-{% block footer %} {% endblock footer %}
+{% block footer %}
+	<footer>
+		<section class="grid">
+			<div class="logo">
+				<img class="logo" src="{% static 'img/logo_full_light.svg' %}" alt="Logo"/>
+			</div>
+			<div class="social grid">
+				<i class="fa-brands fa-linkedin"></i>
+				<i class="fa-brands fa-square-facebook"></i>
+				<i class="fa-brands fa-x-twitter"></i>
+				<i class="fa-brands fa-square-instagram"></i>
+			</div>
+		</section>
+	</footer>
+{% endblock footer %}
 
-{#<script defer src="{% static 'js/header-height.js' %}"></script>#}
+<script defer src="{% static 'js/header-height.js' %}"></script>
 <script defer src="{% static 'js/nav-header.js' %}"></script>
 <script defer src="{% static 'js/nav-sticky.js' %}"></script>
+<script defer src="{% static 'js/page-scroller.js' %}"></script>
+<script src="https://kit.fontawesome.com/28847961b6.js" crossorigin="anonymous"></script>
 
 {% block custom_js %}
 {% endblock %}

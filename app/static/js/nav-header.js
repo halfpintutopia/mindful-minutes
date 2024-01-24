@@ -1,5 +1,5 @@
 (function () {
-	const header = document.querySelector('header');
+	const header = document.querySelector('.header-wrapper');
 	const scrollWatcher = document.createElement('div');
 	
 	scrollWatcher.setAttribute('data-scroll-watcher', '');

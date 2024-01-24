@@ -92,3 +92,9 @@
     }
 }
 
+/* https://www.youtube.com/watch?v=0-WRRh3ZXhw */
+/* Hero section */
+.hero {
+    height: 100vh; /*fallback*/
+    height: 100dvh; /*100svh*/
+}

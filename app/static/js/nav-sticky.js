@@ -2,12 +2,6 @@
 	const primaryNavList = document.querySelector('.primary-navigation');
 	const navToggleButton = document.querySelector('.nav-toggle');
 	
-	const header = document.querySelector('.header-base');
-	const headerHeight = header.offsetHeight;
-	console.log('heights', header.offsetHeight, header.clientHeight);
-	
-	document.documentElement.style.setProperty('--header-height', `${headerHeight}px`);
-	
 	navToggleButton.addEventListener('click', function temp() {
 		const visibility = primaryNavList.getAttribute('data-visible');
 		if (visibility === 'false') {

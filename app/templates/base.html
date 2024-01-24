@@ -48,7 +48,7 @@
 	{% endblock %}
 	
 	{% block navigation %}
-		<section class="header-base">
+		<section class="header-wrapper">
 			<div class="primary-header container" data-width="regular">
 				<div>
 					<img class="logo" src="{% static 'img/logo_dark.svg' %}" alt="Logo"/>
@@ -124,6 +124,7 @@
 
 {% block footer %} {% endblock footer %}
 
+{#<script defer src="{% static 'js/header-height.js' %}"></script>#}
 <script defer src="{% static 'js/nav-header.js' %}"></script>
 <script defer src="{% static 'js/nav-sticky.js' %}"></script>
 

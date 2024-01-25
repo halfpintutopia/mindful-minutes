@@ -104,14 +104,14 @@
 					</ul>
 					
 					{% if user.is_authenticated %}
-						<a href="#">
+						<a href="{% url 'account_logout' %}">
 							<button class="btn-green align-bottom">Log out</button>
 						</a>
 					{% else %}
-						<a href="#">
+						<a href="{% url 'account_signup' %}">
 							<button class="btn-green align-bottom">Sign up</button>
 						</a>
-						<a href="#">
+						<a href="{% url 'account_login' %}">
 							<button class="btn-green align-bottom">Log in</button>
 						</a>
 					{% endif %}

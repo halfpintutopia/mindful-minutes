@@ -129,6 +129,8 @@
 
 	/* Forms */
 	--progress: 0;
+
+	--scroll-teaser-height: clamp(2.5rem, 2.2159rem + 1.2121vw, 3.125rem);
 }
 
 

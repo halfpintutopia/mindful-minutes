@@ -1,5 +1,5 @@
 .intro {
-    height: calc(100vh - var(--header-height));
+    height: calc(100vh - var(--header-height) - var(--scroll-teaser-height));
     padding-top: 1em;
 
     .intro__logo {
@@ -8,6 +8,7 @@
     }
 
     .intro__logo + div {
+        height: calc(100% - var(--header-height) - var(--scroll-teaser-height));
         align-items: center;
         padding-top: 1em;
     }
@@ -25,4 +26,9 @@
     @media screen and (width > 56.25em) {
         --gap: 5em;
     }
+}
+
+.scroll-teaser {
+    height: var(--scroll-teaser-height);
+    background-color: hsl(var(--green-smoke-100));
 }

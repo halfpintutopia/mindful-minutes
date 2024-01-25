@@ -52,16 +52,19 @@
 				</div>
 				<div class="intro__img sm-screen-d-none">
 					<picture>
-						<source media="(min-width: 900px)" srcset="{% static 'img/landing_page/lg/green_floral_notebook-lg_1x.webp' %} 1x,
+						<source media="(min-width: 900px)"
+						        srcset="{% static 'img/landing_page/lg/green_floral_notebook-lg_1x.webp' %} 1x,
 					                            {% static 'img/landing_page/lg/green_floral_notebook-lg_2x.webp' %} 2x"
 						        type="image/webp">
-						<source media="(min-width: 601px)" srcset="{% static 'img/landing_page/md/green_floral_notebook-md_1x.webp' %} 1x,
+						<source media="(min-width: 601px)"
+						        srcset="{% static 'img/landing_page/md/green_floral_notebook-md_1x.webp' %} 1x,
 					                            {% static 'img/landing_page/md/green_floral_notebook-md_2x.webp' %} 2x"
 						        type="image/webp">
 						<source srcset="{% static 'img/landing_page/sm/green_floral_notebook-sm_1x.webp' %} 1x,
 					                            {% static 'img/landing_page/sm/green_floral_notebook-sm_2x.webp' %} 2x"
 						        type="image/webp">
-						<img loading="lazy" srcset="{% static 'img/landing_page/sm/green_floral_notebook-sm_1x.jpg' %} 600w,
+						<img loading="lazy"
+						     srcset="{% static 'img/landing_page/sm/green_floral_notebook-sm_1x.jpg' %} 600w,
 					                            {% static 'img/landing_page/md/green_floral_notebook-md_1x.jpg' %} 900w,
 					                            {% static 'img/landing_page/lg/green_floral_notebook-lg_1x.jpg' %} 1440w"
 						     src="{% static 'img/landing_page/lg/green_floral_notebook-lg_1x.jpg' %}"
@@ -71,25 +74,33 @@
 				</div>
 			</div>
 		</section>
+		<div class="scroll-teaser"></div>
 		
-{#		<section class="container background-accent full-bleed" data-width="wide">#}
-{#			<img src="https://source.unsplash.com/random/300×300/?study,computer"#}
-{#			     alt="Random Unsplash image">#}
-{#			<div>#}
-{#				<h2>Set meaningful goals</h2>#}
-{#				<h4>Start each day with intentions</h4>#}
-{#				<p>Stay organised and focused on what matters most#}
-{#					to you. Foster a deeper connection with your goals#}
-{#					and enhance your commitment.</p>#}
-{#				<a href="#" class="button">Learn more <i class="fa-solid fa-arrow-right-long"></i></a>#}
-{#				<a href="{% url 'account_signup' %}">#}
-{#					<button class="btn-green" data-btn-size="long">#}
-{#						Get Started#}
-{#					</button>#}
-{#				</a>#}
-{#			</div>#}
-{#		</section>#}
+		
+		{#				<section class="container background-accent full-bleed" data-width="wide">#}
+		{#					<img src="https://source.unsplash.com/random/300×300/?study,computer"#}
+		{#					     alt="Random Unsplash image">#}
+		{#					<div>#}
+		{#						<h2>Set meaningful goals</h2>#}
+		{#						<h4>Start each day with intentions</h4>#}
+		{#						<p>Stay organised and focused on what matters most#}
+		{#							to you. Foster a deeper connection with your goals#}
+		{#							and enhance your commitment.</p>#}
+		{#						<a href="#" class="button">Learn more <i class="fa-solid fa-arrow-right-long"></i></a>#}
+		{#						<a href="{% url 'account_signup' %}">#}
+		{#							<button class="btn-green" data-btn-size="long">#}
+		{#								Get Started#}
+		{#							</button>#}
+		{#						</a>#}
+		{#					</div>#}
+		{#				</section>#}
 	</main>
-
-
+	
 {% endblock content %}
+
+{% block scroll_icon %}
+	<span class="scroll-animation fa-stack fa-2x">
+        <i class="fa-solid fa-circle fa-stack-2x"></i>
+        <i class="fa-solid fa-chevron-down fa-stack-1x fa-inverse"></i>
+    </span>
+{% endblock scroll_icon %}

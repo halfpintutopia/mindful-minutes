@@ -51,7 +51,9 @@
 		<section class="header-wrapper">
 			<div class="primary-header container" data-width="regular">
 				<div>
-					<img class="logo" src="{% static 'img/logo_dark.svg' %}" alt="Logo"/>
+					<a href="{% url 'home' %}">
+						<img class="logo" src="{% static 'img/logo_dark.svg' %}" alt="Logo"/>
+					</a>
 				</div>
 				
 				<button class="nav-toggle" aria-controls="primary-navigation" aria-expanded="false">

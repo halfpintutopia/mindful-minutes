@@ -5,6 +5,7 @@ button:not(.nav-toggle), .btn {
     box-shadow: var(--box-shadow);
     text-transform: uppercase;
     padding: var(--_btn-padding);
+    cursor: pointer;
     /*margin-block: clamp(0.625rem, -0.462rem + 5.4348vw, 3.75rem);*/
 }
 

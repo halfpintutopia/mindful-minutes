@@ -30,7 +30,8 @@ body {
 	--font-parametric-descender-depth: -172;
 	--font-optical-size: 18;
 	
-	min-height: 100vh;
+	min-height: 100vh; /* fallback */
+	min-height: 100svh;
 	background-color: hsl(var(--porsche-50));
 	color: hsl(var(--green-smoke-950));
 	/*background-color: hsl(var(--porsche-50), white);*/

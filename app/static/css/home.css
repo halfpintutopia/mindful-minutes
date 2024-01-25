@@ -1,6 +1,12 @@
+section:not(:first-of-type) {
+    padding-block: clamp(1.5rem, 0.1932rem + 5.5758vw, 4.375rem);
+}
+
 .intro {
     height: calc(100vh - var(--header-height) - var(--scroll-teaser-height));
+    height: calc(100svh - var(--header-height) - var(--scroll-teaser-height));
     padding-top: 1em;
+    position: relative;
 
     .intro__logo {
         margin-inline: auto;
@@ -31,4 +37,38 @@
 .scroll-teaser {
     height: var(--scroll-teaser-height);
     background-color: hsl(var(--green-smoke-100));
+}
+
+.learn-more {
+    & > div {
+        align-items: center;
+    }
+}
+
+.learn-more__text {
+    order: 2;
+}
+
+.learn-more__text + picture {
+    order: 1;
+}
+
+@media screen and (width > 56.25em) {
+    .learn-more {
+        & > div .learn-more__text {
+            margin-left: 2.875em;
+        }
+
+        & > div div:last-child .learn-more__text {
+            margin-right: 2.875em;
+        }
+    }
+
+    .learn-more__text {
+        order: 1;
+    }
+
+    .learn-more__text + picture {
+        order: 2;
+    }
 }

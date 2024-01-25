@@ -37,10 +37,14 @@ input.disabled {
     --fa-inverse: hsl(var(--porsche-50));;
     position: absolute;
     left: 50%;
-    top: -5.15em;
+    top: -2.5em;
     transform: translate(-50%, 0);
     animation: bounce 2000ms infinite alternate;
     color: hsl(var(--green-smoke-700));
+
+    @media screen and (width > 56.25em) {
+        top: -1.75em;
+    }
 }
 
 .scroll-animation.fa-stack {
@@ -48,8 +52,14 @@ input.disabled {
     font-size: clamp(1.25rem, 0.7955rem + 1.9394vw, 2.25rem);
 }
 
-@media screen and (width > 56.25em) {
-    top: -4.5em;;
+.more-btn {
+    display: flex;
+    align-items: center;
+    gap: .5em;
+}
+
+.more-btn + a .btn-green {
+    margin-top: clamp(1.625rem, 1.3693rem + 1.0909vw, 2.1875rem);
 }
 
 @keyframes bounce {

@@ -1,13 +1,16 @@
-const primaryNavList = document.querySelector('.primary-navigation');
-const navToggleButton = document.querySelector('.nav-toggle');
-
-navToggleButton.addEventListener('click', function temp() {
-    const visibility = primaryNavList.getAttribute('data-visible');
-    if (visibility === 'false') {
-        primaryNavList.setAttribute('data-visible', 'true');
-        navToggleButton.setAttribute('aria-expanded', 'true');
-    } else {
-        primaryNavList.setAttribute('data-visible', 'false');
-        navToggleButton.setAttribute('aria-expanded', 'false');
-    }
-});
+(function () {
+	const header = document.querySelector('.header-wrapper');
+	const scrollWatcher = document.createElement('div');
+	
+	scrollWatcher.setAttribute('data-scroll-watcher', '');
+	header.before(scrollWatcher);
+	
+	const navObserver = new IntersectionObserver(
+		(entries) => {
+			header.classList.toggle('sticking', !entries[0].isIntersecting);
+		},
+		{rootMargin: '50px 0px 0px 0px'}
+	);
+	
+	navObserver.observe(scrollWatcher);
+})();

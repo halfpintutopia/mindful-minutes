@@ -4,144 +4,152 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
-    <title>Mindful Minutes | {{ title }}</title>
-    <link rel="icon"
-          type="image/x-icon"
-          href="{% static 'img/logo_light.ico' %}"
-          media="(prefers-color-scheme: dark)"
-    >
-    <link rel="icon"
-          type="image/x-icon"
-          href="{% static 'img/logo_dark.ico' %}"
-          media="(prefers-color-scheme: light)"
-    >
-    {#    <script>#}
-    {#        window.typetura = {#}
-    {#            selectors: [".typetura"], // list of selectors to be used as contexts#}
-    {#            base: 20,  // target base font size in px. Mostly used by official packages.#}
-    {#            scale: 1 // scale factor to make headlines bigger or smaller. Mostly used by official packages.#}
-    {#        };#}
-    {#    </script>#}
-    <script src="{% static 'js/typetura.min.js' %}"></script>
-    <script src="https://kit.fontawesome.com/28847961b6.js" rel="preconnect" crossorigin="anonymous"></script>
-
-    <link
-            rel="stylesheet"
-            href="{% static 'css/index.css' %}"
-            type="text/css"
-    />
-    <link
-            rel="stylesheet"
-            href="{% static 'css/typography.css' %}"
-            type="text/css"
-    />
-    <link
-            rel="stylesheet"
-            href="{% static 'css/utilities.css' %}"
-            type="text/css"
-    />
-    <link
-            rel="stylesheet"
-            href="{% static 'css/header.css' %}"
-            type="text/css"
-    />
-    <link
-            rel="stylesheet"
-            href="{% static 'css/footer.css' %}"
-            type="text/css"
-    />
-    <link
-            rel="stylesheet"
-            href="{% static 'css/main.css' %}"
-            type="text/css"
-    />
-    <link
-            rel="stylesheet"
-            href="{% static 'css/buttons.css' %}"
-            type="text/css"
-    />
-
-    {% block custom_css %}
-    {% endblock %}
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	
+	<title>Mindful Minutes | {{ title }}</title>
+	<link rel="icon"
+	      type="image/x-icon"
+	      href="{% static 'img/logo_light.svg' %}"
+	      media="(prefers-color-scheme: dark)"
+	>
+	<link rel="icon"
+	      type="image/x-icon"
+	      href="{% static 'img/logo_dark.svg' %}"
+	      media="(prefers-color-scheme: light)"
+	>
+	{#    <script>#}
+	{#        window.typetura = {#}
+	{#            selectors: [".typetura"], // list of selectors to be used as contexts#}
+	{#            base: 20,  // target base font size in px. Mostly used by official packages.#}
+	{#            scale: 1 // scale factor to make headlines bigger or smaller. Mostly used by official packages.#}
+	{#        };#}
+	{#    </script>#}
+	<script src="{% static 'js/typetura.min.js' %}"></script>
+	<script src="https://kit.fontawesome.com/28847961b6.js" rel="preconnect" crossorigin="anonymous"></script>
+	
+	<link
+			rel="stylesheet"
+			href="{% static 'css/main.css' %}"
+			type="text/css"
+	/>
+	
+	{% block custom_css %}
+	{% endblock %}
 </head>
 <div class="skip-to-content"></div>
 <body>
 
 
-    {% block navigation_logo %}
-    {% endblock navigation_logo %}
-    <header>
-        {% block progress_bar %}
-        {% endblock %}
+{% block navigation_logo %}
+{% endblock navigation_logo %}
+<header>
+	{% block progress_bar %}
+	{% endblock %}
+	
+	{% block navigation %}
+		<section class="header-wrapper">
+			<div class="primary-header container" data-width="regular">
+				<div>
+					<a href="{% url 'home' %}">
+						<img class="logo" src="{% static 'img/logo_dark.svg' %}" alt="Logo"/>
+					</a>
+				</div>
+				
+				<button class="nav-toggle" aria-controls="primary-navigation" aria-expanded="false">
+					<svg width="48px" height="48px" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+						<g>
+							<line x1="0" y1="17" x2="48" y2="17" stroke-width="1"></line>
+							<line x1="0" y1="31" x2="48" y2="31" stroke-width="1"></line>
+						</g>
+						
+						<g>
+							<line x1="0" y1="24" x2="48" y2="24" stroke-width="1"></line>
+							<line x1="0" y1="24" x2="48" y2="24" stroke-width="1"></line>
+						</g>
+					</svg>
+					<span class="sr-only">Menu</span>
+				</button>
+				
+				<nav id="primary-navigation" data-visible="false" class="primary-navigation">
+					<div class="menu-mobile-logo-wrapper">
+						<img class="logo" src="{% static 'img/logo_full_dark.svg' %}" alt="Logo"/>
+					</div>
+					<ul>
+						{% if user.is_authenticated %}
+							<button></button>
+							<li class="{% if url_name == 'index' %}active{% endif %}">
+								<button>Morning</button>
+							</li>
+							<li>
+								Evening
+							</li>
+						{% endif %}
+						<li>
+							Learn
+						</li>
+						{% if user.is_authenticated %}
+							<li>
+								Search
+							</li>
+							<li>
+								My Account
+							</li>
+						{% endif %}
+						<li>
+							Contact Us
+						</li>
+					
+					
+					</ul>
+					
+					{% if user.is_authenticated %}
+						<a href="{% url 'account_logout' %}">
+							<button class="btn-green align-bottom">Log out</button>
+						</a>
+					{% else %}
+						<a href="{% url 'account_signup' %}">
+							<button class="btn-green align-bottom">Sign up</button>
+						</a>
+						<a href="{% url 'account_login' %}">
+							<button class="btn-green align-bottom">Log in</button>
+						</a>
+					{% endif %}
+				</nav>
+			</div>
+		</section>
+	
+	{% endblock navigation %}
+</header>
 
-        {% block navigation %}
-            <section class="header-base">
-                <div class="primary-header container" data-width="wide">
-                    <div>
-                        <img class="logo" src="" alt="Logo"/>
-                    </div>
+<main>
+	{% block content %} {% endblock content %}
+	{% block scroll_icon %} {% endblock scroll_icon %}
+</main>
 
-                    <button class="nav-toggle" aria-controls="primary-navigation" aria-expanded="false">
-                        <svg width="48px" height="48px" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-                            <g>
-                                <line x1="0" y1="17" x2="48" y2="17" stroke-width="1"></line>
-                                <line x1="0" y1="31" x2="48" y2="31" stroke-width="1"></line>
-                            </g>
+{% block footer %}
+	<footer>
+		<section class="grid">
+			<div class="logo">
+				<img class="logo" src="{% static 'img/logo_full_light.svg' %}" alt="Logo"/>
+			</div>
+			<div class="social grid">
+				<i class="fa-brands fa-linkedin"></i>
+				<i class="fa-brands fa-square-facebook"></i>
+				<i class="fa-brands fa-x-twitter"></i>
+				<i class="fa-brands fa-square-instagram"></i>
+			</div>
+		</section>
+	</footer>
+{% endblock footer %}
 
-                            <g>
-                                <line x1="0" y1="24" x2="48" y2="24" stroke-width="1"></line>
-                                <line x1="0" y1="24" x2="48" y2="24" stroke-width="1"></line>
-                            </g>
-                        </svg>
-                        <span class="sr-only">Menu</span>
-                    </button>
+<script defer src="{% static 'js/header-height.js' %}"></script>
+<script defer src="{% static 'js/nav-header.js' %}"></script>
+<script defer src="{% static 'js/nav-sticky.js' %}"></script>
+<script defer src="{% static 'js/page-scroller.js' %}"></script>
+<script src="https://kit.fontawesome.com/28847961b6.js" crossorigin="anonymous"></script>
 
-                    <nav>
-                        <ul id="primary-navigation" data-visible="false" class="primary-navigation">
-                            {% if user.is_authenticated %}
-                                <li class="{% if url_name == 'index' %}active{% endif %}><a href=" #">Morning</a></li>
-                                <li><a href="#">Evening</a></li>
-                            {% endif %}
-                            <li><a href="#">Learn</a></li>
-                            {% if user.is_authenticated %}
-                                <li><a href="#">Search</a></li>
-                                <li><a href="#">My Account</a></li>
-                            {% endif %}
-                            <li><a href="#">Contact Us</a></li>
-
-                            {% if user.is_authenticated %}
-                                <li class="btn-green align-bottom">
-                                    <a href="#">Log out</a>
-                                    {#                                    <button class="btn">Log out</button>#}
-                                </li>
-                            {% else %}
-                                <li class="btn-green align-bottom">
-                                    <a href="#">Sign up</a>
-                                    {#                                    <button class="btn">Sign up</button>#}
-                                </li>
-                                <li class="btn-green">
-                                    <a href="#">Log in</a>
-                                    {#                                    <button class="btn">Log in</button>#}
-                                </li>
-                            {% endif %}
-                        </ul>
-                    </nav>
-                </div>
-            </section>
-
-        {% endblock navigation %}
-    </header>
-
-    {% block content %} {% endblock content %}
-
-    {% block footer %} {% endblock footer %}
-
-    <script defer src="{% static 'js/nav-header.js' %}"></script>
-
-    {% block custom_js %}
-    {% endblock %}
+{% block custom_js %}
+{% endblock %}
 </body>
 </html>

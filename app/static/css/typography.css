@@ -23,9 +23,7 @@ h1, .primary-heading {
 	"YTUC" var(--font-parametric-uppercase-height),
 	"YTDE" var(--font-parametric-descender-depth),
 	"opsz" var(--font-optical-size);
-	line-height: 1.25;
-	margin-top: 0.9375em;
-	margin-bottom: 0.3125em;
+	line-height: normal;
 }
 
 
@@ -53,7 +51,7 @@ h2, .secondary-heading {
 	"YTUC" var(--font-parametric-uppercase-height),
 	"YTDE" var(--font-parametric-descender-depth),
 	"opsz" var(--font-optical-size);
-	line-height: 1.15;
+	line-height: normal;
 }
 
 
@@ -81,7 +79,7 @@ h3, .tertiary-heading {
 	"YTUC" var(--font-parametric-uppercase-height),
 	"YTDE" var(--font-parametric-descender-depth),
 	"opsz" var(--font-optical-size);
-	line-height: 1.13;
+	line-height: normal;
 }
 
 h4, .quaternary-heading {
@@ -108,13 +106,13 @@ h4, .quaternary-heading {
 	"YTUC" var(--font-parametric-uppercase-height),
 	"YTDE" var(--font-parametric-descender-depth),
 	"opsz" var(--font-optical-size);
-	line-height: 1.11;
+	line-height: normal;
 }
 
 p {
 	--tt-key: body-paragraph;
 	--tt-ease: linear;
-	line-height: 1.25;
+	line-height: 1.5;
 }
 
 
@@ -189,7 +187,7 @@ small {
 	--tt-ease: linear;
 }
 
-.page-marker {
+.page-marker__text {
 	font-family: var(--caveat);
 	font-variation-settings: "wght" 500;
 	--tt-key: page-marker;

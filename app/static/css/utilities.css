@@ -2,286 +2,99 @@
 /* Utilities           */
 /* ------------------- */
 
-/* Layouts */
-.container {
-	width: min(100% - var(--container-padding, calc(var(--standard-padding) * 2)), var(--container-max-width));
-	margin-inline: auto;
-}
-
-.container[data-width="narrow"] {
-	--container-padding: calc(var(--standard-padding) * 5);
-	--container-max-width: var(--container-width-narrow);
-}
-
-.container[data-width="regular"] {
-	--container-max-width: var(--container-width-wide);
-}
-
-@media only screen and (width >= 768px) {
-	.container[data-width="regular"] {
-		--container-max-width: var(--container-width-regular);
-	}
-}
-
-.container[data-width="wide"] {
-	--container-max-width: var(--container-width-wide);
-}
-
-.container[data-width="full"] {
-	--container-max-width: var(--container-width-full);
-}
-
-@media only screen and (width >= 768px) {
-	.container[data-width="full"] {
-		--container-max-width: var(--container-width-wide);
-	}
-}
-
-
-/* https://www.youtube.com/watch?v=Ivk8Blw2VTI&t=2s */
-.container-escape-split-width {
-	padding-block: 0;
-}
-
-.container-escape-split-width > :not(img) {
-	padding-block: var(--section-padding-block);
-	padding-inline: var(--container-padding-inline);
-}
-
-@media screen and (width > 56.25em) {
-	.container-escape-split-width {
-		display: grid;
-		grid-template-columns:
-                minmax(var(--container-padding-inline), 1fr)
-                minmax(0, calc(var(--container-max-width) / 2))
-                minmax(0, calc(var(--container-max-width) / 2))
-                minmax(var(--container-padding-inline), 1fr);
-		position: relative;
-	}
-	
-	.container-escape-split-width > img {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-	}
-	
-	.container-escape-split-width > img:first-child {
-		grid-column: 1 / 3;
-	}
-	
-	.container-escape-split-width > img:last-child {
-		grid-column: 3 / -1;
-	}
-	
-	
-	.container-escape-split-width > :not(img) {
-		display: grid;
-		align-content: center;
-		justify-items: start;
-	}
-	
-	.container-escape-split-width > :not(img):first-child {
-		grid-column: 2 / 3;
-	}
-	
-	.container-escape-split-width > :not(img):last-child {
-		grid-column: 3 / 4;
-	}
-	
-	.container-escape-split-width > :not(img)::before {
-		content: "";
-		position: absolute;
-		inset: 0;
-		background-color: inherit;
-	}
-	
-	.container-escape-split-width > :not(img):first-child::before {
-		grid-column: 1 / 2;
-	}
-	
-	.container-escape-split-width > :not(img):last-child::before {
-		grid-column: 4 / 5;
-	}
-}
-
-/*https://www.youtube.com/watch?v=81pnuZFarRw*/
-.full-bleed {
-	box-shadow: 0 0 0 100vmax hsl(var(--green-smoke-100));
-	clip-path: inset(0 -100vmax);
-}
-
-/*.full-bleed[data-ba]*/
-
-.flex {
-	display: flex;
-	gap: var(--gap, 1rem);
-	flex-wrap: wrap;
-}
-
-.flex > * {
-	flex: 1;
-}
-
-.flex-with-sidebar {
-	align-items: start;
-	max-width: calc(var(--bp-x-large) * 1rem);
-	margin-inline: auto;
-	gap: var(--gap);
-}
-
-/* https://www.youtube.com/watch?v=p3_xN2Zp1TY */
-/*https://every-layout.dev/layouts/sidebar/*/
-.flex-with-sidebar > :first-child {
-	flex-basis: 500px;
-	flex-grow: 9999; /*hack: put at a really high number as rate of growth is bigger, will take up all available space*/
-}
-
-.flex-with-sidebar > :last-child {
-	flex-basis: 300px; /*size to remain when in 2 column layout*/
-	flex-grow: 1;
-}
-
-.grid {
-	display: grid;
-	gap: var(--gap, 1rem);
-}
-
-.auto-grid {
-	grid-template-columns: repeat(
-            auto-fit,
-            minmax(min(10rem, 100%), 1fr));
-}
-
-.grid-columns {
-	--column-count: 1;
-	grid-template-columns: repeat(
-            var(--column-count), 1fr);
-}
-
-/* https://www.youtube.com/watch?v=r1IitKbJRFE */
-@media screen and (width > 56.25em) {
-	.grid-columns[data-columns="2"] {
-		--column-count: 2;
-	}
-	
-	.grid-columns[data-columns="3"] {
-		--column-count: 3;
-	}
-	
-	.grid-columns[data-columns="4"] {
-		--column-count: 4;
-	}
-}
-
-.grid-center {
-	justify-content: center;
-}
-
-.horizontal-grid {
-	grid-auto-flow: column;
-	grid-auto-columns: calc(50% - (var(--gap) / 2)); /*decide how big the columns are*/
-	overflow-x: scroll;
-	scroll-snap-type: x mandatory;
-	scroll-padding: var(--gap);
-}
-
-.horizontal-grid > * {
-	scroll-snap-align: start;
-}
-
-.stacked-grid {
-	display: grid;
-}
-
-.stacked-grid > * {
-	grid-column: 1 / -1;
-	grid-row: 1 / -1;
-}
-
-.stacked-grid > .background-media {
-	z-index: -1;
-}
-
-section {
-	padding-block: var(--_padding-block);
-}
-
-section[data-space="wide"] {
-	--_padding-block: clamp(5rem, 4.1087rem + 4.4565vw, 7.5625rem);
-	
-}
-
-section[data-space="narrow"] {
-	--_padding-block: clamp(2rem, 1.5652rem + 2.1739vw, 3.25rem);
-}
-
 /* Screen Reader */
 .sr-only {
-	position: absolute;
-	width: 1px;
-	height: 1px;
-	padding: 0;
-	margin: -1px;
-	overflow: hidden;
-	clip: rect(0, 0, 0, 0);
-	white-space: nowrap;
-	border: 0;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
 }
 
 .skip-to-content {
-	position: absolute;
-	z-index: 9999;
-	background-color: hsl(var(--porsche-50), white);
-	color: hsl(var(--green-smoke-950), black);
-	padding: .5em 1em;
-	margin-inline: auto;
-	transform: translateY(-100%);
-	transition: transform 250ms ease-in;
+    position: absolute;
+    z-index: 9999;
+    background-color: hsl(var(--porsche-50), white);
+    color: hsl(var(--green-smoke-950), black);
+    padding: .5em 1em;
+    margin-inline: auto;
+    transform: translateY(-100%);
+    transition: transform 250ms ease-in;
 }
 
 .skip-to-content:focus {
-	transform: translateY(0);
+    transform: translateY(0);
 }
 
 .uppercase {
-	text-transform: uppercase;
+    text-transform: uppercase;
 }
 
 
 /* Background */
 .background-dark {
-	background-color: hsl(var(--green-smoke-950));
+    background-color: hsl(var(--green-smoke-950));
 }
 
 .background-dark-accent {
-	background-color: hsl(var(--green-smoke-700));
+    background-color: hsl(var(--green-smoke-700));
 }
 
 .background-accent {
-	background-color: hsl(var(--green-smoke-100));
+    background-color: hsl(var(--green-smoke-100));
 }
 
 .background-light {
-	background-color: hsl(var(--porsche-50));
+    background-color: hsl(var(--porsche-50));
 }
 
 .text-dark {
-	color: hsl(var(--green-smoke-950));
+    color: hsl(var(--green-smoke-950));
 }
 
 .text-dark-accent {
-	color: hsl(var(--green-smoke-700));
+    color: hsl(var(--green-smoke-700));
 }
 
 .text-accent {
-	color: hsl(var(--green-smoke-100));
+    color: hsl(var(--green-smoke-100));
 }
 
 .text-white {
-	color: hsl(var(--porsche-50));
+    color: hsl(var(--porsche-50));
 }
 
 .align-bottom {
-	margin-top: auto;
+    margin-top: auto;
 }
 
+.center {
+    margin-inline: auto;
+}
+
+.sm-screen-d-none {
+    display: none;
+}
+
+@media screen and (width >= 56.25em) {
+    .sm-screen-d-none {
+        display: block;
+    }
+}
+
+@media screen and (width >= 56.25em) {
+    .lg-screen-d-none {
+        display: none;
+    }
+}
+
+/* https://www.youtube.com/watch?v=0-WRRh3ZXhw */
+/* Hero section */
+.hero {
+    height: 100vh; /*fallback*/
+    height: 100dvh; /*100svh*/
+}

@@ -4,98 +4,158 @@
 {% load static %}
 
 {% block content %}
-    <main>
-        <section class="container" data-width="wide">
-            <img class="header-logo-image" src="{% static 'img/logo_big_dark.svg' %}" alt="">
-            <h1>Make time a habit</h1>
-            <h3>Unlock your full potential</h3>
-            <p>Embrace self-reflection, set goals and make
-                progress. Journal your way to personal growth
-                and achievement.</p>
-            <div class="grid grid-center">
-                <a href="{% url 'account_signup' %}">
-                    <button class="btn btn-green">
-                        Start today
-                    </button>
-                </a>
-            </div>
-        </section>
+	<section class="container intro" data-width="regular">
+		<img class="intro__logo" src="{% static 'img/logo_full_dark.svg' %}" alt="">
+		<div class="grid grid-columns" data-columns="2">
+			<div class="grid intro__text">
+				<h1>Make time a habit</h1>
+				<h3>Unlock your full potential</h3>
+				<p>Embrace self-reflection, set goals and make
+					progress. Journal your way to personal growth
+					and achievement.</p>
+				<a class="center" href="{% url 'account_signup' %}">
+					<button class="btn btn-green">
+						Start today
+					</button>
+				</a>
+			</div>
+			<div class="grid page-markers intro__markers lg-screen-d-none" data-space="narrow">
+				<div class="marked-image" data-marker-position="top-right">
+					<img src="{% static 'img/landing_page/woman_smiling.svg' %}"
+					     alt="Girl smiling on sunny day in the city.">
+					<div class="page-marker blue">
+						<p class="page-marker__text">To do</p>
+					</div>
+				</div>
+				<div class="marked-image" data-marker-position="top-left">
+					<img src="{% static 'img/landing_page/woman_holding_sparkler.svg' %}"
+					     alt="Girl smiling on sunny day in the city.">
+					<div class="page-marker hotpink">
+						<p class="page-marker__text">Thankful for</p>
+					</div>
+				</div>
+				<div class="marked-image" data-marker-position="bottom-right">
+					<img src="{% static 'img/landing_page/group_jumping.svg' %}"
+					     alt="Girl smiling on sunny day in the city.">
+					<div class="page-marker orangered">
+						<p class="page-marker__text">Wins</p>
+					</div>
+				</div>
+				<div class="marked-image" data-marker-position="bottom-left">
+					<img src="{% static 'img/landing_page/lightbulb_with_sky.svg' %}"
+					     alt="Girl smiling on sunny day in the city.">
+					<div class="page-marker yellow">
+						<p class="page-marker__text">Ideas</p>
+					</div>
+				</div>
+			</div>
+			<div class="intro__img sm-screen-d-none">
+				<picture>
+					<source media="(min-width: 900px)"
+					        srcset="{% static 'img/landing_page/lg/green_floral_notebook-lg_1x.webp' %} 1x,
+					                            {% static 'img/landing_page/lg/green_floral_notebook-lg_2x.webp' %} 2x"
+					        type="image/webp">
+					<source media="(min-width: 601px)"
+					        srcset="{% static 'img/landing_page/md/green_floral_notebook-md_1x.webp' %} 1x,
+					                            {% static 'img/landing_page/md/green_floral_notebook-md_2x.webp' %} 2x"
+					        type="image/webp">
+					<source srcset="{% static 'img/landing_page/sm/green_floral_notebook-sm_1x.webp' %} 1x,
+					                            {% static 'img/landing_page/sm/green_floral_notebook-sm_2x.webp' %} 2x"
+					        type="image/webp">
+					<img loading="lazy"
+					     srcset="{% static 'img/landing_page/sm/green_floral_notebook-sm_1x.jpg' %} 600w,
+					                            {% static 'img/landing_page/md/green_floral_notebook-md_1x.jpg' %} 900w,
+					                            {% static 'img/landing_page/lg/green_floral_notebook-lg_1x.jpg' %} 1440w"
+					     src="{% static 'img/landing_page/lg/green_floral_notebook-lg_1x.jpg' %}"
+					     sizes="(min-width: 768px) 50vw, 100vw"
+					     alt="Green floral notebook with light green background">
+				</picture>
+			</div>
+		</div>
 
-        <section class="grid page-markers container" data-width="narrow" data-space="narrow">
-            <div class="marked-image" data-marker-position="top-right">
-                <img src="{% static 'img/landing_page/woman_smiling.svg' %}"
-                     alt="Girl smiling on sunny day in the city.">
-                <div class="page-marker blue">
-                    To do
-                </div>
-            </div>
-            <div class="marked-image" data-marker-position="top-left">
-                <img src="{% static 'img/landing_page/woman_holding_sparkler.svg' %}"
-                     alt="Girl smiling on sunny day in the city.">
-                <div class="page-marker hotpink">
-                    Thankful for
-                </div>
-            </div>
-            <div class="marked-image" data-marker-position="bottom-right">
-                <img src="{% static 'img/landing_page/group_jumping.svg' %}"
-                     alt="Girl smiling on sunny day in the city.">
-                <div class="page-marker orangered">
-                    Wins
-                </div>
-            </div>
-            <div class="marked-image" data-marker-position="bottom-left">
-                <img src="{% static 'img/landing_page/lightbulb_with_sky.svg' %}"
-                     alt="Girl smiling on sunny day in the city.">
-                <div class="page-marker yellow">
-                    Ideas
-                </div>
-            </div>
-        </section>
+		<span class="scroll-animation fa-stack fa-2x">
+	        <i class="fa-solid fa-circle fa-stack-2x"></i>
+	        <i class="fa-solid fa-chevron-down fa-stack-1x fa-inverse"></i>
+	    </span>
+	</section>
+	<div class="scroll-teaser"></div>
+	<section class="container background-accent full-bleed learn-more" data-width="wide">
+		<div class="grid grid-columns" data-columns="2">
+			<picture>
+				<source media="(min-width: 900px)"
+				        srcset="{% static 'img/landing_page/lg/laptop-notebook-lg_1x.webp' %} 1x,
+					                            {% static 'img/landing_page/lg/laptop-notebook-lg_2x.webp' %} 2x"
+				        type="image/webp">
+				<source media="(min-width: 601px)"
+				        srcset="{% static 'img/landing_page/md/laptop-notebook-md_1x.webp' %} 1x,
+					                            {% static 'img/landing_page/md/laptop-notebook-md_2x.webp' %} 2x"
+				        type="image/webp">
+				<source srcset="{% static 'img/landing_page/sm/laptop-notebook-sm_1x.webp' %} 1x,
+					                            {% static 'img/landing_page/sm/laptop-notebook-sm_2x.webp' %} 2x"
+				        type="image/webp">
+				<img loading="lazy"
+				     srcset="{% static 'img/landing_page/sm/laptop-notebook-sm_1x.jpg' %} 600w,
+					                            {% static 'img/landing_page/md/laptop-notebook-md_1x.jpg' %} 900w,
+					                            {% static 'img/landing_page/lg/laptop-notebook-lg_1x.jpg' %} 1440w"
+				     src="{% static 'img/landing_page/lg/laptop-notebook-lg_1x.jpg' %}"
+				     sizes="(min-width: 768px) 50vw, 100vw"
+				     alt="Laptop with notebook">
+			</picture>
+			<div class="learn-more__text">
+				<h2>Set meaningful goals</h2>
+				<h4>Start each day with intentions</h4>
+				<p>Stay organised and focused on what matters most
+					to you. Foster a deeper connection with your goals
+					and enhance your commitment.</p>
+				<a href="#" class="more-btn">Learn more <i class="fa-solid fa-arrow-right-long"></i></a>
+				<a href="{% url 'account_signup' %}">
+					<button class="btn-green" data-btn-size="long">
+						Get Started
+					</button>
+				</a>
+			</div>
+		</div>
+	</section>
 
-        <section class="grid grid-center page-teaser background-accent">
-                <span class="fa-stack fa-2x">
-                <i class="fa-solid fa-circle fa-stack-2x"></i>
-                <i class="fa-solid fa-chevron-down fa-stack-1x fa-inverse"></i>
-            </span>
-        </section>
-
-        <section class="container background-accent full-bleed" data-width="wide">
-
-{#            <picture>#}
-{#                <source media="(min-width: 900px)" srcset="assets/media/images/news/lg/pexels-susanne-jutzeler-sujufoto-1292006-lg_1x.webp 1x,#}
-{#                            assets/media/images/news/lg/pexels-susanne-jutzeler-sujufoto-1292006-lg_2x.webp 2x"#}
-{#                        type="image/webp">#}
-{#                <source media="(min-width: 601px)" srcset="assets/media/images/news/md/pexels-susanne-jutzeler-sujufoto-1292006-md_1x.webp 1x,#}
-{#                            assets/media/images/news/md/pexels-susanne-jutzeler-sujufoto-1292006-md_2x.webp 2x"#}
-{#                        type="image/webp">#}
-{#                <source srcset="assets/media/images/news/sm/pexels-susanne-jutzeler-sujufoto-1292006-sm_1x.webp 1x,#}
-{#                            assets/media/images/news/sm/pexels-susanne-jutzeler-sujufoto-1292006-sm_2x.webp 2x"#}
-{#                        type="image/webp">#}
-{#                <img loading="lazy" srcset="assets/media/images/news/sm/pexels-susanne-jutzeler-sujufoto-1292006-sm_1x.jpg 600w,#}
-{#                            assets/media/images/news/md/pexels-susanne-jutzeler-sujufoto-1292006-md_1x.jpg 900w,#}
-{#                            assets/media/images/news/lg/pexels-susanne-jutzeler-sujufoto-1292006-lg_1x.jpg 1440w"#}
-{#                     src="assets/media/images/news/lg/pexels-susanne-jutzeler-sujufoto-1292006-lg_1x.jpg"#}
-{#                     sizes="(min-width: 768px) 50vw, 100vw"#}
-{#                     alt="Two girls sitting on a wooden bench overlooking a lake">#}
-{#            </picture>#}
-
-            <img src="https://source.unsplash.com/random/300×300/?study,computer"
-                 alt="Random Unsplash image">
-            <div>
-                <h2>Set meaningful goals</h2>
-                <h4>Start each day with intentions</h4>
-                <p>Stay organised and focused on what matters most
-                    to you. Foster a deeper connection with your goals
-                    and enhance your commitment.</p>
-                <a href="#" class="button">Learn more <i class="fa-solid fa-arrow-right-long"></i></a>
-                <a href="{% url 'account_signup' %}">
-                    <button class="btn-green" data-btn-size="long">
-                        Get Started
-                    </button>
-                </a>
-            </div>
-        </section>
-    </main>
-
-
+	<section class="container learn-more" data-width="wide">
+		<div class="grid grid-columns" data-columns="2">
+			<div class="learn-more__text">
+				<h2>Embrace the present</h2>
+				<h4>Start each day with intentions</h4>
+				<p>Develop a habit of self-reflection and self-awareness.
+					Reflect on your day, celebrate wins and identify areas
+					for improvement.</p>
+				<a href="#" class="more-btn">Learn more <i class="fa-solid fa-arrow-right-long"></i></a>
+				<a href="{% url 'account_signup' %}">
+					<button class="btn btn-green" data-btn-size="long">
+						Get Started
+					</button>
+				</a>
+			</div>
+			<picture>
+				<source media="(min-width: 900px)"
+				        srcset="{% static 'img/landing_page/lg/empty-notebook-lg_1x.webp' %} 1x,
+					                            {% static 'img/landing_page/lg/empty-notebook-lg_2x.webp' %} 2x"
+				        type="image/webp">
+				<source media="(min-width: 601px)"
+				        srcset="{% static 'img/landing_page/md/empty-notebook-md_1x.webp' %} 1x,
+					                            {% static 'img/landing_page/md/empty-notebook-md_2x.webp' %} 2x"
+				        type="image/webp">
+				<source srcset="{% static 'img/landing_page/sm/empty-notebook-sm_1x.webp' %} 1x,
+					                            {% static 'img/landing_page/sm/empty-notebook-sm_2x.webp' %} 2x"
+				        type="image/webp">
+				<img loading="lazy"
+				     srcset="{% static 'img/landing_page/sm/empty-notebook-sm_1x.jpg' %} 600w,
+					                            {% static 'img/landing_page/md/empty-notebook-md_1x.jpg' %} 900w,
+					                            {% static 'img/landing_page/lg/empty-notebook-lg_1x.jpg' %} 1440w"
+				     src="{% static 'img/landing_page/lg/empty-notebook-lg_1x.jpg' %}"
+				     sizes="(min-width: 768px) 50vw, 100vw"
+				     alt="Laptop with notebook">
+			</picture>
+		</div>
+	</section>
 {% endblock content %}
+
+{% block scroll_icon %}
+
+{% endblock scroll_icon %}

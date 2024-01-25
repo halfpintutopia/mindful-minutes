@@ -2,255 +2,284 @@
 /* Navigation          */
 /* ------------------- */
 
-/* https://www.youtube.com/watch?v=G_h2pGZcOzc&t=25s */
-nav ul {
-	--_gap: 2rem; /*em or rem*/
-	display: flex;
-	margin: 0;
-	padding: 0;
-	list-style: none;
+header {
+    position: sticky;
+    top: 0;
+    background-color: hsl(var(--porsche-50));
+    z-index: var(--header-layer);
 }
 
-nav li {
-	overflow: hidden;
-	position: relative;
-	padding: calc(var(--_gap) / 2);
+header,
+header * {
+    transition: 500ms;
 }
 
-nav li:not(.btn-nav)::after {
-	--_scale-transition: 300ms;
-	content: '';
-	position: absolute;
-	left: 0;
-	bottom: 0.5rem;
-	height: 3px;
-	width: 100%;
-	background-color: hsl(var(--green-smoke-950));
-	translate: var(--_translate, 0);
-	scale: var(--_scale-width, 0) 1; /*shrinking it 0 on the x axis and 1 on the y axis*/
-	transition: scale 300ms var(--_scale-delay, 0ms), translate 500ms var(--_translate-delay, 0ms);
+.primary-header {
+    padding-block: 1em;
 }
 
-nav li:not(.btn-nav).active {
-	--_scale-width: 1;
+.primary-header nav {
+    display: flex;
+    gap: 1em;
+    padding-block: 1em;
+}
+
+
+.header-wrapper {
+    box-shadow: 0 4px 4px 0 hsla(0, 0%, 0%, 0.25);
+}
+
+.logo {
+    height: 2.25em;
+}
+
+.primary-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.primary-navigation {
+    position: fixed;
+    z-index: var(--header-layer);
+    inset: 0 0 0 0;
+    background-color: hsl(var(--porsche-100));
+    /*background-color: hsl(0 0% 0% / 0.75);*/
+    flex-direction: column;
+    padding: min(20rem, 15vh) 2rem;
+    transform: translateX(100%);
+    transition: transform 350ms ease-out;
+}
+
+.primary-navigation[data-visible="true"] {
+    transform: translateX(0);
+}
+
+.primary-navigation[data-visible="true"] {
+    ul + a {
+        margin-top: auto;
+    }
+
+    button {
+        width: 100%;
+    }
+}
+
+.primary-navigation a {
+    text-decoration: none;
 }
 
 @media screen and (width > 34.5em) {
-	nav li:not(.btn-nav):hover,
-	nav li:not(.btn-nav):focus-within {
-		--_scale-width: 1;
-	}
-	
-	@supports selector(:has(h1)) {
-		nav li:not(.btn-nav):hover + li {
-			--_translate: -100%;
-		}
-		
-		nav li:not(.btn-nav):has(+ :hover) {
-			--_translate: 100%;
-		}
-		
-		nav li:not(.btn-nav):hover + li,
-		nav li:not(.btn-nav):has(+ :hover) {
-			--_scale-delay: 300ms;
-			--_translate-delay: 200ms;
-		}
-	}
+    .primary-header {
+        padding-block: 0;
+    }
+
+    .primary-navigation {
+        position: relative;
+        flex-direction: row;
+        inset: unset;
+        padding: 0;
+        background-color: unset;
+        transform: translateX(0);
+    }
+
+    .primary-navigation ul {
+        flex-direction: row;
+    }
+}
+
+.menu-mobile-logo-wrapper {
+    display: none;
+}
+
+.primary-navigation[data-visible="true"] .menu-mobile-logo-wrapper {
+    display: block;
+}
+
+/* Menu underline effect https://www.youtube.com/watch?v=G_h2pGZcOzc&t=25s */
+nav ul {
+    --_gap: 2rem; /*em or rem*/
+    display: flex;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    flex-direction: column;
+}
+
+nav li {
+    overflow: hidden;
+    position: relative;
+    padding-block: calc(var(--_gap) / 2);
+
+    text-transform: uppercase;
+}
+
+nav li:not(.btn-nav)::after {
+    --_scale-transition: 300ms;
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0.5rem;
+    height: 3px;
+    width: 100%;
+    background-color: hsl(var(--green-smoke-950));
+    translate: var(--_translate, 0);
+    scale: var(--_scale-width, 0) 1; /*shrinking it 0 on the x axis and 1 on the y axis*/
+    transition: scale 300ms var(--_scale-delay, 0ms), translate 500ms var(--_translate-delay, 0ms);
+}
+
+nav li:not(.btn-nav).active {
+    --_scale-width: 1;
 }
 
 nav ul li:not(.btn-nav) a {
-	color: inherit;
-	opacity: 0.7;
-	text-decoration: none;
-	text-transform: uppercase;
-	position: relative;
+    color: inherit;
+    opacity: 0.7;
+    text-decoration: none;
+    text-transform: uppercase;
+    position: relative;
 }
 
 nav ul a:hover,
 nav ul a:focus-visible {
-	opacity: 1;
+    opacity: 1;
 }
 
-/*-----------------------------*/
-.header-base {
-	box-shadow: 0 4px 4px 0 hsla(0, 0%, 0%, 0.25);
+@media screen and (width > 34.5em) {
+    nav li {
+        padding: calc(var(--_gap) / 2);
+    }
+
+    nav li:not(.btn-nav):hover,
+    nav li:not(.btn-nav):focus-within {
+        --_scale-width: 1;
+    }
+
+    @supports selector(:has(h1)) {
+        nav li:not(.btn-nav):hover + li {
+            --_translate: -100%;
+        }
+
+        nav li:not(.btn-nav):has(+ :hover) {
+            --_translate: 100%;
+        }
+
+        nav li:not(.btn-nav):hover + li,
+        nav li:not(.btn-nav):has(+ :hover) {
+            --_scale-delay: 300ms;
+            --_translate-delay: 200ms;
+        }
+    }
 }
 
-.logo {
-	--_logo-margin: 1.5rem clamp(1.5rem, 5vw, 3.5rem);
-	margin: var(--_logo-margin);
-}
+/* End of - Menu underline effect */
 
-.primary-header {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-}
-
-.primary-navigation {
-	position: fixed;
-	z-index: var(--header-layer);
-	inset: 0 0 0 30%;
-	background-color: hsl(var(--porsche-100));
-	/*background-color: hsl(0 0% 0% / 0.75);*/
-	flex-direction: column;
-	padding: min(20rem, 15vh) 2rem;
-	transform: translateX(100%);
-	transition: transform 350ms ease-out;
-}
-
-.primary-navigation[data-visible="true"] {
-	transform: translateX(0);
-}
-
-@supports (backdrop-filter: blur(1rem)) {
-	.primary-navigation {
-		/*background-color: hsl(0 0% 100% / 0.1);*/
-		/*backdrop-filter: blur(1rem);*/
-	}
-}
-
-.primary-navigation a {
-	text-decoration: none;
-}
-
+/* Toggle Button https://codepen.io/staffanmowitz/pen/KoKgmo */
 .nav-toggle {
-	position: absolute;
-	z-index: var(--top-layer);
-	/*top: 2rem;*/
-	right: 1rem;
-	border: 0;
-	background: none;
+    position: absolute;
+    z-index: var(--top-layer);
+    /*top: 2rem;*/
+    right: 1rem;
+    border: 0;
+    background: none;
 }
 
 .form-header .nav-toggle {
-	position: unset;
+    position: unset;
 }
 
-/*https://codepen.io/staffanmowitz/pen/KoKgmo*/
 .nav-toggle svg {
-	--_stroke: hsl(var(--green-smoke-950));
-	stroke: var(--_stroke);
-	transition: 0.2s;
+    --_stroke: hsl(var(--green-smoke-950));
+    stroke: var(--_stroke);
+    transition: 0.2s;
 }
 
 .nav-toggle svg g:first-child {
-	opacity: 1;
-	transition: opacity 0s 0.2s;
+    opacity: 1;
+    transition: opacity 0s 0.2s;
 }
 
 .nav-toggle svg g:first-child line {
-	transition: transform 0.2s 0.2s;
-	transform: translateY(0);
+    transition: transform 0.2s 0.2s;
+    transform: translateY(0);
 }
 
 .nav-toggle svg g:last-child {
-	opacity: 0;
-	transition: opacity 0s 0.2s;
+    opacity: 0;
+    transition: opacity 0s 0.2s;
 }
 
 .nav-toggle svg g:last-child line {
-	transition: transform 0.2s;
-	transform: rotate(0deg);
-	transform-origin: center;
+    transition: transform 0.2s;
+    transform: rotate(0deg);
+    transform-origin: center;
 }
 
 .nav-toggle[aria-expanded="true"] svg g:first-child {
-	opacity: 0;
+    opacity: 0;
 }
 
 .nav-toggle[aria-expanded="true"] svg g:first-child line {
-	transition: transform 0.2s;
+    transition: transform 0.2s;
 }
 
 .nav-toggle[aria-expanded="true"] svg g:first-child line:first-child {
-	transform: translateY(7px);
+    transform: translateY(7px);
 }
 
 .nav-toggle[aria-expanded="true"] svg g:first-child line:last-child {
-	transform: translateY(-7px);
+    transform: translateY(-7px);
 }
 
 .nav-toggle[aria-expanded="true"] svg g:last-child {
-	opacity: 1;
+    opacity: 1;
 }
 
 .nav-toggle[aria-expanded="true"] svg g:last-child line {
-	transition: transform 0.2s 0.2s;
+    transition: transform 0.2s 0.2s;
 }
 
 .nav-toggle[aria-expanded="true"] svg g:last-child line:first-child {
-	transform: rotate(45deg);
+    transform: rotate(45deg);
 }
 
 .nav-toggle[aria-expanded="true"] svg g:last-child line:last-child {
-	transform: rotate(-45deg);
+    transform: rotate(-45deg);
 }
 
+@media screen and (width > 34.5em) {
+    .nav-toggle {
+        display: none;
+    }
+}
+
+/* End of - Toggle Button */
+
+
+/* Secondary header? */
 .form-header .logo {
-	--_logo-margin: 1rem;
-	position: relative;
+    --_logo-margin: 1rem;
+    position: relative;
 }
 
 .form-header .logo,
 .form-header a {
-	z-index: 2000;
+    z-index: 2000;
 }
 
 .form-header:last-child {
-	margin-right: 1em;
+    margin-right: 1em;
 }
 
 .form-header .nav-toggle svg {
-	--_stroke: hsl(var(--porsche-50));
-	--_stroke-width: 1;
+    --_stroke: hsl(var(--porsche-50));
+    --_stroke-width: 1;
 }
 
 @media screen and (width > 34.5em) {
-	.primary-navigation {
-		position: relative;
-		flex-direction: row;
-		inset: unset;
-		padding: 0;
-		background-color: unset;
-		transform: translateX(0);
-	}
-	
-	.nav-toggle {
-		display: none;
-	}
-	
-	.form-header .nav-toggle {
-		display: block;
-	}
+    .form-header .nav-toggle {
+        display: block;
+    }
 }
 
-.underline-indicators > * {
-	cursor: pointer;
-	padding: var(--underline-gap, .5rem) 0;
-	border: 0;
-	border-bottom: .2rem solid hsl(var(--clr-white, white) / 0);
-	background-color: transparent;
-}
-
-.underline-indicators > *:hover,
-.underline-indicators > *:focus {
-	border-color: hsl(var(--clr-white, white) / .5);
-}
-
-.underline-indicators > .active,
-.underline-indicators > [aria-selected="true"] {
-	color: hsl(var(--clr-white, white) / 1);
-	border-color: hsl(var(--clr-white, white) / 1);
-}
-
-/* https://www.youtube.com/watch?v=0-WRRh3ZXhw */
-/* Hero section */
-.hero {
-	height: 100vh; /*fallback*/
-	height: 100dvh; /*100svh*/
-}
-
-.header-logo-image {
-	margin: var(--header-image-margin) auto;
-}
+/* End of - Secondary header? */

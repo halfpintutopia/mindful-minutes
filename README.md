@@ -81,7 +81,7 @@ For further details of the design process, please see:
 ## Agile
 
 [Agile User Story Master on Google Sheets](docs/agile/Agile%20User%20Story%20-%20Master%20-%20Use%20Cases.pdf)
-was created from a template supplied by our Cohort October 2022 Tutor, Rebecca Tracey-Timoney.
+was created from a template supplied by our Cohort October 2022 Tutor, [Rebecca Tracey-Timoney](https://www.linkedin.com/in/rebeccatraceytimoney/).
 
 ### Future Implementations
 
@@ -698,6 +698,17 @@ box". [Cited from StackOverflow](https://stackoverflow.com/a/77233072/8614652)
 - [Adobe Color - Lab](https://color.adobe.com/color-labs/recolor-svg)
 - [Strengthening Typography with Responsive Techniques and Typetura](https://www.youtube.com/watch?v=fs9uJ7I4a70)
 - [Cubic Bezier](https://cubic-bezier.com)
+- [You need to fix your `line-height`](https://www.kevinpowell.co/article/line-height/)
+- [Stacking Icons | Font Awesome](https://fontawesome.com/v6/docs/web/style/stack)
+- [10 CSS animation tips and tricks](https://www.youtube.com/watch?v=y8-F5-2EIcg)
+- [Getting started with CSS nesting](https://www.youtube.com/watch?v=YnWPeA6l5UE)
+- [Learn how to create a responsive CSS grid layout | 07:23 - Using aspect-ratio on the images](https://www.youtube.com/watch?v=sKFW3wek21Q&t=1576s)
+
+##### Images
+
+- [Copper and Wild - green floral covered notebook](https://unsplash.com/photos/green-floral-covered-notebook-kgRTbSLpB3o)
+- [Nick Morrison - Laptop and notepad](https://unsplash.com/photos/FHnnjk1Yj7Y)
+- [JESHOOTS.COM - White work table with notes, smartphone and laptop](https://unsplash.com/photos/pUAM5hPaCRI)
 
 #### Definitions
 

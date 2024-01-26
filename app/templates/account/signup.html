@@ -14,10 +14,9 @@
             {% csrf_token %}
 
             {% for field in form %}
-
                 <div class="form-page background-dark-accent"
-                     data-form-page-number="{{ forloop.counter }}">
-                    <div class="container list-item text-white" data-width="narrow">
+                     data-form-page-number="{{ forloop.counter }}" data-pages="{% if form.fields|length > 1 %}multiple{% endif %}">
+                    <div class="container list list-item text-white" data-width="narrow">
                         <span class="">{{ forloop.counter }}.</span>
 
                         <label for="{{ field.id_for_label }}">{{ field.label }} {% if field.field.required %}*

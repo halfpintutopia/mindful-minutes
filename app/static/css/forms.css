@@ -8,6 +8,10 @@
     opacity: var(--_opacity);
 }
 
+.socialaccount_ballot {
+    position: relative;
+    z-index: 100;
+}
 
 .form-page {
     --_opacity: 0;
@@ -52,7 +56,7 @@
 
 .list {
     display: grid;
-    gap: 1em 0.5em;
+    gap: var(--_gap);
     grid-auto-rows: min-content;
     align-content: center;
 
@@ -62,10 +66,17 @@
 }
 
 .list-items {
+    --_gap: 1.5em;
 
+    p:not(:nth-of-type(3)) {
+        display: flex;
+        flex-direction: column;
+        gap: .5em;
+    }
 }
 
 .list-item {
+    --_gap: 1em 0.5em;
     grid-template-columns: repeat(8, 1fr);
     /*grid-template-rows: repeat(2, 1fr);*/
 }

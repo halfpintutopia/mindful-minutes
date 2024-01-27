@@ -22,14 +22,25 @@ input.disabled {
 
 .btn-green {
     --_btn-radius: 4px;
+    --_btn-padding: clamp(0.6875rem, 0.4918rem + 0.9783vw, 1.25rem) clamp(1.375rem, 0.8967rem + 2.3913vw, 2.75rem);
+
     background: linear-gradient(90deg, #503737 0%, #503737 3.27%, #AFBE98 3.28%);
     text-align: center;
     color: hsl(var(--porsche-50));
-    --_btn-padding: clamp(0.6875rem, 0.4918rem + 0.9783vw, 1.25rem) clamp(1.375rem, 0.8967rem + 2.3913vw, 2.75rem);
 }
 
 .btn-green a {
     color: hsl(var(--porsche-50));
+}
+
+.btn-white {
+    --_btn-radius: 4px;
+    --_btn-padding: clamp(0.6875rem, 0.4918rem + 0.9783vw, 1.25rem) clamp(1.375rem, 0.8967rem + 2.3913vw, 2.75rem);
+
+    background: linear-gradient(90deg, #A15A2D 0%, #A15A2D 3.27%, #FCF8F0 3.28%);
+    color: hsl(var(--green-smoke-950));
+    text-align: center;
+    width: max-content;
 }
 
 /* Scroll Button */

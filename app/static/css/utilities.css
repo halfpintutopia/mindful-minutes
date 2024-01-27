@@ -98,3 +98,7 @@
     height: 100vh; /*fallback*/
     height: 100dvh; /*100svh*/
 }
+
+.full-width {
+    width: 100%;
+}

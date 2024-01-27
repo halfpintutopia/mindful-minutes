@@ -703,6 +703,8 @@ box". [Cited from StackOverflow](https://stackoverflow.com/a/77233072/8614652)
 - [10 CSS animation tips and tricks](https://www.youtube.com/watch?v=y8-F5-2EIcg)
 - [Getting started with CSS nesting](https://www.youtube.com/watch?v=YnWPeA6l5UE)
 - [Learn how to create a responsive CSS grid layout | 07:23 - Using aspect-ratio on the images](https://www.youtube.com/watch?v=sKFW3wek21Q&t=1576s)
+- [A better image reset for your CSS](https://www.youtube.com/watch?v=345V2MU3E_w)
+  - [The Ultimate Low-Quality Image Placeholder Technique](https://csswizardry.com/2023/09/the-ultimate-lqip-lcp-technique/)
 
 ##### Images
 
@@ -783,6 +785,8 @@ box". [Cited from StackOverflow](https://stackoverflow.com/a/77233072/8614652)
 - [Getting the Most Out of the Django's User Model](https://www.youtube.com/watch?v=sXZ3ntGp_Xc)
 - [Django - Extend User Model](https://simpleisbetterthancomplex.com/tutorial/2016/07/22/how-to-extend-django-user-model.html)
 - [Adding Social Authentication to Django](https://testdriven.io/blog/django-social-auth/)
+- [How To Add Social Authentication Using Django-Allauth To Your Django Project (Google OAuth Example)](https://medium.com/powered-by-django/add-social-authentication-django-allauth-google-oauth-example-d8d69a603356)
+- [Provider Configuration | django-allauth](https://docs.allauth.org/en/latest/socialaccount/provider_configuration.html)
 
 ##### Python Dependencies / Packages
 

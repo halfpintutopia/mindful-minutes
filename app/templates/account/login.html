@@ -7,26 +7,31 @@
 {% block head_title %}{% trans "Sign In" %}{% endblock %}
 
 {% block content %}
-	
-	<form class="login" method="POST" action="{% url 'account_login' %}">
-		{% csrf_token %}
-		
-		<div class="form-page background-dark-accent">
-			<div class="container list list-items text-white" data-width="narrow">
-				<a href="{% provider_login_url 'google' %}">
-					<button class="btn-white full-width"><i class="fa-brands fa-google"></i> Sign up with Google</button>
-				</a>
+	<div class="form-page background-dark-accent">
+		<div class="container list" data-width="narrow">
+			<a href="{% provider_login_url 'google' %}">
+				<button class="btn-white full-width"><i class="fa-brands fa-google"></i> Sign up with Google
+				</button>
+			</a>
+			<form class="login" method="POST" action="{% url 'account_login' %}">
+				{% csrf_token %}
 				
-				<span class="hr-with-text">Or</span>
-				
-				{{ form.as_p }}
-				{% if redirect_field_value %}
-					<input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
-				{% endif %}
-				<a href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
-				<button class="btn-white" type="submit">{% trans "Sign In" %}</button>
-			</div>
+				<div class="list-items text-white">
+					
+					
+					<span class="hr-with-text">Or</span>
+					
+					{{ form.as_p }}
+					{% if redirect_field_value %}
+						<input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+					{% endif %}
+					<a href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+					<button class="btn-white" type="submit">{% trans "Sign In" %}</button>
+				</div>
+			</form>
 		</div>
-	</form>
+	</div>
+
 
 {% endblock %}
+

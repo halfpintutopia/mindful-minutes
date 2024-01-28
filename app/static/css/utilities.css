@@ -102,3 +102,24 @@
 .full-width {
     width: 100%;
 }
+
+.hr-with-text {
+    display: flex;
+    flex-direction: row;
+}
+
+.hr-with-text:before,
+.hr-with-text:after {
+    content: "";
+    flex: 1 1;
+    border-bottom: 2px solid hsl(var(--porsche-50));
+    margin: auto;
+}
+
+.hr-with-text:before {
+    margin-right: 1em;
+}
+
+.hr-with-text:after {
+    margin-left: 1em;
+}

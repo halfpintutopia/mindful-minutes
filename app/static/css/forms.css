@@ -127,6 +127,10 @@
     background-color: hsl(var(--porsche-700));
 }
 
+.list-item button {
+    grid-column: 2 / -1;
+}
+
 .btn-form {
     --_btn-radius: 4px;
     background: linear-gradient(90deg, hsl(var(--porsche-700)) 0%, hsl(var(--porsche-700)) 3.27%, hsl(var(--porsche-50)) 3.29%);

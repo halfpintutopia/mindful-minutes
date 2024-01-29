@@ -106,6 +106,7 @@
 .hr-with-text {
     display: flex;
     flex-direction: row;
+    text-transform: uppercase;
 }
 
 .hr-with-text:before,

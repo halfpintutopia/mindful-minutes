@@ -9,6 +9,14 @@ header {
     z-index: var(--header-layer);
 }
 
+header:has(.progress-bar) {
+    background-color: unset;
+}
+
+header .progress-bar + section {
+    margin: clamp(0.5rem, 0.273rem + 0.97vi, 1rem);
+}
+
 header,
 header * {
     transition: 500ms;

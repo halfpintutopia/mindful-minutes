@@ -144,13 +144,15 @@ DATABASES = {
 	}
 }
 
-DATABASE_URL = os.environ.get("DATABASE_URL")
+if not DEBUG:
+	DATABASE_URL = os.environ.get("DATABASE_URL")
+	
+	if DATABASE_URL:
+		db_from_env = dj_database_url.config(
+			default=DATABASE_URL, conn_max_age=500
+		)
+		DATABASES["default"].update(db_from_env)
 
-if DATABASE_URL:
-	db_from_env = dj_database_url.config(
-		default=DATABASE_URL, conn_max_age=500
-	)
-	DATABASES["default"].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

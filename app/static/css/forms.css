@@ -159,3 +159,12 @@
 .btn-form-direction[data-form-direction="down"] {
     --_btn-radius: 0 4px 4px 0;
 }
+
+input + span.validity-msg {
+    place-self: unset;
+    grid-column: 2 / -2;
+}
+
+.validity-msg:before {
+    content: "\200b";
+}

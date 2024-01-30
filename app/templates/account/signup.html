@@ -21,8 +21,8 @@
 
                         <label for="{{ field.id_for_label }}">{{ field.label }} {% if field.field.required %}*
                         {% endif %}<br><span class="list-item__help-text">{{ field.help_text }}</span></label>
-
                         {{ field }}
+                        <span class="validity-msg"></span>
                         {% if redirect_field_value %}
                             <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
                         {% endif %}

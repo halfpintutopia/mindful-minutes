@@ -72,7 +72,7 @@
 				</picture>
 			</div>
 		</div>
-
+		
 		<span class="scroll-animation fa-stack fa-2x">
 	        <i class="fa-solid fa-circle fa-stack-2x"></i>
 	        <i class="fa-solid fa-chevron-down fa-stack-1x fa-inverse"></i>
@@ -116,7 +116,7 @@
 			</div>
 		</div>
 	</section>
-
+	
 	<section class="container learn-more" data-width="wide">
 		<div class="grid grid-columns" data-columns="2">
 			<div class="learn-more__text">
@@ -159,3 +159,9 @@
 {% block scroll_icon %}
 
 {% endblock scroll_icon %}
+
+{% block custom_js %}
+	<script defer src="{% static 'js/header-height.js' %}"></script>
+	<script defer src="{% static 'js/nav-header.js' %}"></script>
+	<script defer src="{% static 'js/nav-sticky.js' %}"></script>
+{% endblock %}

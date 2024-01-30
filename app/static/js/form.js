@@ -43,7 +43,6 @@
     }
 
     form.addEventListener('click', function changeCurrentPage(event) {
-        console.log('test nav button', event.target);
         if (event.target.matches('[data-form-direction="down"]')) {
             incrementor = 1;
         } else if (event.target.matches('[data-form-direction="up"]')) {

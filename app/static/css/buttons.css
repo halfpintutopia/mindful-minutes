@@ -43,6 +43,16 @@ input.disabled {
     width: max-content;
 }
 
+.btn-continue {
+    --_btn-radius: 4px;
+    --_btn-padding: clamp(0.5rem, 0.4148rem + 0.3636vi, 0.6875rem);
+
+    background: linear-gradient(90deg, #A15A2D 0%, #A15A2D 3.27%, #FCF8F0 3.28%);
+    color: hsl(var(--green-smoke-950));
+    text-align: center;
+    width: max-content;
+}
+
 /* Scroll Button */
 .scroll-animation {
     --fa-inverse: hsl(var(--porsche-50));;

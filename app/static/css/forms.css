@@ -114,7 +114,7 @@
     color: hsl(var(--porsche-50));
     border: none;
     background: none;
-    border-bottom: 1px solid hsl(var(--porsche-50));;
+    border-bottom: 1px solid hsl(var(--porsche-50));
 }
 
 /*Progress Bar  */
@@ -150,6 +150,12 @@
     right: var(--standard-padding);
     opacity: var(--_opacity);
     transition: opacity 300ms ease 0s;;
+}
+
+.btn-form-direction {
+    --_btn-padding: .25em .5em;
+    background-color: hsl(var(--porsche-50));
+    color: hsl(var(--green-smoke-950));
 }
 
 .btn-form-direction[data-form-direction="up"] {

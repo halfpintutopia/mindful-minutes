@@ -1,0 +1,32 @@
+.scroller {
+    --_padding: .5em;
+
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 15%;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+
+    .scroller__item {
+        padding: var(--_padding);
+    }
+}
+
+.scroller__item:has(.calendar-date) {
+    text-align: center;
+}
+
+    .calendar-date {
+        display: grid;
+        align-items: center;
+        justify-content: center;
+
+        width: clamp(1.6875rem, 1.5455rem + 0.6061vi, 2rem);
+        aspect-ratio: 1 / 1;
+        background-color: hsl(var(--green-smoke-700));
+        color: hsl(var(--porsche-100));
+        border-radius: 2px;
+
+        margin-inline: auto;
+    }
+

@@ -2,7 +2,6 @@
 // https://www.youtube.com/watch?v=VdqtdKXxKhM&list=PLjY7XQnia3s5x9VepvUha4v4T0wELnFmR&index=4&t=2064s
 (function () {
 	
-	const form = document.querySelector('form.main-form');
 	const pages = document.querySelectorAll('.form-page');
 	const pageList = Array.from(pages);
 	const formNavButtons = document.querySelector('.btn-form-direction-wrapper');
@@ -11,13 +10,6 @@
 	const continueButtons = document.querySelectorAll('.btn-continue');
 	
 	let currentPage, incrementor, warningMsg;
-	
-	function removeAllRequiredAttrs() {
-		pages.forEach(function findAndRemove(page, index) {
-			const input = page.querySelector('input[required]');
-			input.removeAttribute('required');
-		});
-	}
 	
 	function showCurrentPage() {
 		pages.forEach(function toggleActivePage(page, index) {
@@ -34,9 +26,7 @@
 			if (!input.checkValidity()) {
 				warningMsg = `Don't forget to add your ${input.getAttribute("name").replace("_", " ")}`;
 				input.nextElementSibling.innerText = warningMsg;
-				
 			}
-			
 			return input.checkValidity();
 		});
 	}
@@ -56,28 +46,27 @@
 		showHideFormNavButton();
 	}
 	
-	continueButtons.forEach((button, index) => {
-		button.addEventListener('click', function changeCurrentPage(event) {
-			event.preventDefault();
-			if (event.target.matches('[data-form-direction="down"]')) {
-				incrementor = 1;
-			} else if (event.target.matches('[data-form-direction="up"]')) {
-				incrementor = -1;
-			}
-			
-			if (incrementor == null) return;
-			
+	function changeCurrentPage(event) {
+		event.preventDefault();
+		if (event.currentTarget.matches('[data-form-direction="down"]')) {
+			incrementor = 1;
 			if (checkInputs()) {
 				currentPage += incrementor;
 				showCurrentPage();
 				showHideFormNavButton();
 			}
-		});
-	});
-	
-	function init() {
-		// removeAllRequiredAttrs();
+		} else if (event.currentTarget.matches('[data-form-direction="up"]')) {
+			incrementor = -1;
+			currentPage += incrementor;
+			showCurrentPage();
+			showHideFormNavButton();
+		}
 	}
 	
-	init();
+	continueButtons.forEach((button, index) => {
+		button.addEventListener('click', changeCurrentPage);
+	});
+	
+	nextBtn.addEventListener('click', changeCurrentPage);
+	previousBtn.addEventListener('click', changeCurrentPage);
 })();

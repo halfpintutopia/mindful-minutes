@@ -17,6 +17,15 @@ def index(request):
 		return render(request, "index.html", context)
 
 
+def search(request):
+	"""
+	Render the search page
+	"""
+	title = "Search"
+	context = {"title": title, "search": "active"}
+	return render(request, "search.html", context)
+
+
 # TODO make this only for admin
 def design_system(request):
 	"""

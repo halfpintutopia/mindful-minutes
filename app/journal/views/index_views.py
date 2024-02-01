@@ -26,6 +26,15 @@ def search(request):
 	return render(request, "search.html", context)
 
 
+def account_page(request):
+	"""
+	Render the user's account page
+	"""
+	title = "Search"
+	context = {"title": title, "account_page": "active"}
+	return render(request, "account.html", context)
+
+
 # TODO make this only for admin
 def design_system(request):
 	"""

@@ -39,7 +39,7 @@
 <header>
 	{% block progress_bar %}
 	{% endblock %}
-
+	
 	{% block navigation %}
 		<section class="header-wrapper">
 			<div class="primary-header container" data-width="regular">
@@ -48,14 +48,14 @@
 						<img class="logo" src="{% static 'img/logo_dark.svg' %}" alt="Logo"/>
 					</a>
 				</div>
-
+				
 				<button class="nav-toggle" aria-controls="primary-navigation" aria-expanded="false">
 					<svg width="48px" height="48px" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
 						<g>
 							<line x1="0" y1="17" x2="48" y2="17" stroke-width="1"></line>
 							<line x1="0" y1="31" x2="48" y2="31" stroke-width="1"></line>
 						</g>
-
+						
 						<g>
 							<line x1="0" y1="24" x2="48" y2="24" stroke-width="1"></line>
 							<line x1="0" y1="24" x2="48" y2="24" stroke-width="1"></line>
@@ -63,7 +63,7 @@
 					</svg>
 					<span class="sr-only">Menu</span>
 				</button>
-
+				
 				<nav id="primary-navigation" data-visible="false" class="primary-navigation">
 					<div class="menu-mobile-logo-wrapper">
 						<img class="logo" src="{% static 'img/logo_full_dark.svg' %}" alt="Logo"/>
@@ -86,15 +86,17 @@
 									Search
 								</a>
 							</li>
-							<li>
-								My Account
+							<li class="{{ account_page }}">
+								<a href="{% url "account" %}">
+									My Account
+								</a>
 							</li>
 						{% endif %}
 						<li>
 							Contact Us
 						</li>
 					</ul>
-
+					
 					{% if user.is_authenticated %}
 						<a href="{% url 'account_logout' %}">
 							<button class="btn-green align-bottom">Log out</button>
@@ -110,7 +112,7 @@
 				</nav>
 			</div>
 		</section>
-
+	
 	{% endblock navigation %}
 </header>
 

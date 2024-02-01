@@ -6,7 +6,7 @@
 {% block content %}
 	<section>
 		
-		<div class="scroller">
+		<div class="scroller snaps-inline">
 			<div class="scroller__item">
 				<div class="calendar-date">8</div>
 				<p class="calendar-number">Mon</p>
@@ -68,4 +68,6 @@
 	</section>
 {% endblock content %}
 
-{% block scroll_icon %}{% endblock scroll_icon %}
+{% block custom_js %}
+		<script defer src="{% static 'js/calendar.js' %}"></script>
+{% endblock %}

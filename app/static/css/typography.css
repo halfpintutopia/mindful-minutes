@@ -187,9 +187,40 @@ small {
     --tt-ease: linear;
 }
 
+span {
+    font-variation-settings: "wght" var(--font-weight),
+    "wdth" var(--font-width),
+    "GRAD" var(--font-grade),
+    "XTRA" var(--font-parametric-counter-width),
+    "XOPQ" var(--font-parametric-thick-stroke),
+    "YOPQ" var(--font-parametric-thin-stroke),
+    "YTLC" var(--font-parametric-lowercase-height),
+    "YTUC" var(--font-parametric-uppercase-height),
+    "YTDE" var(--font-parametric-descender-depth),
+    "opsz" var(--font-optical-size);
+
+    --tt-key: body-paragraph;
+    --tt-ease: linear;
+}
+
 span.validity-msg {
     --tt-key: small-text;
     --tt-ease: linear;
+}
+
+.events-day span {
+    --font-weight: 400;
+    --font-width: 74;
+    --font-grade: -58;
+    --font-parametric-counter-width: 436;
+    --font-parametric-thick-stroke: 77;
+    --font-parametric-thin-stroke: 49;
+    --font-parametric-lowercase-height: 432;
+    --font-parametric-uppercase-height: 652;
+    --font-parametric-descender-depth: -172;
+    --font-optical-size: 18;
+
+    line-height: 1.5;
 }
 
 .page-marker__text {

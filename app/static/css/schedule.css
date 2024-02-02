@@ -1,3 +1,8 @@
+.container:has(.morning) h1 {
+    margin-top: 2.8rem;
+    margin-bottom: 1.125rem;
+}
+
 .morning {
     --_schedule-row-height: 50px;
     --_alignment: 60px;
@@ -6,8 +11,10 @@
     --_event-overlay: 200;
     --_line-color: hsl(var(--green-smoke-950) / .1);
     --_radius: 4px;
+    --_gap-wide: 8.5625rem;;
 
     grid-template-columns: repeat(2, 1fr);
+    gap: var(--_gap-wide);
 }
 
 .schedule {
@@ -16,11 +23,11 @@
 
 .schedule__timeline {
     display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
+    /*position: absolute;*/
+    /*top: 0;*/
+    /*left: 0;*/
+    /*height: 100%;*/
+    /*width: 100%;*/
     padding-top: var(--_schedule-row-height);
 
     ul {
@@ -50,9 +57,12 @@
 }
 
 .schedule__events {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
     width: calc(100% - var(--_alignment));
     margin-left: var(--_alignment);
-    position: relative;
     z-index: var(--_events-overlay);
 
     ul {
@@ -60,17 +70,18 @@
         position: relative;
     }
 
-    /*ul:first-of-type li {*/
-    /*    border-bottom: var(--_line-width) solid var(--_line-color);*/
-    /*}*/
-
     .events-day {
         display: grid;
         align-items: center;
-        /*justify-content: center;*/
         height: var(--_schedule-row-height);
         border-bottom: var(--_line-width) solid var(--_line-color);
         padding: 0;
+    }
+
+    .events-day span {
+        position: relative;
+        left: -60px;
+        height: 100%;
     }
 
     .event-list li {
@@ -83,5 +94,9 @@
         background-color: hsl(var(--green-smoke-700));
         color: hsl(var(--porsche-50));
         border-radius: var(--_radius);
+
+        display: grid;
+        align-items: center;
+        justify-content: center;
     }
 }

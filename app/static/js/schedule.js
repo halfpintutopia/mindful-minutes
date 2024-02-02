@@ -1,4 +1,7 @@
 (function () {
+	const lineHeight = 1;
+	
+	
 	let timeElements;
 	
 	const scheduleEvent = (e) => {

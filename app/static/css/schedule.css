@@ -23,11 +23,6 @@
 
 .schedule__timeline {
     display: block;
-    /*position: absolute;*/
-    /*top: 0;*/
-    /*left: 0;*/
-    /*height: 100%;*/
-    /*width: 100%;*/
     padding-top: var(--_schedule-row-height);
 
     ul {
@@ -98,5 +93,6 @@
         display: grid;
         align-items: center;
         justify-content: center;
+        box-shadow: var(--box-shadow);
     }
 }

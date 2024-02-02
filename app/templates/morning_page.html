@@ -1,0 +1,70 @@
+<!-- morning_page.html -->
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+	<div class="container" data-width="regular">
+		<h1>Morning</h1>
+	</div>
+	<section class="container grid morning" data-width="regular">
+		{# TODO Create the timeline #}
+		<article class="schedule">
+			<div class="schedule__timeline">
+				<ul>
+					<li><span>00:00</span></li>
+					<li><span>01:00</span></li>
+					<li><span>02:00</span></li>
+					<li><span>03:00</span></li>
+					<li><span>04:00</span></li>
+					<li><span>05:00</span></li>
+					<li><span>06:00</span></li>
+					<li><span>07:00</span></li>
+					<li><span>08:00</span></li>
+					<li><span>09:00</span></li>
+					<li><span>10:00</span></li>
+					<li><span>11:00</span></li>
+					<li><span>12:00</span></li>
+					<li><span>13:00</span></li>
+					<li><span>14:00</span></li>
+					<li><span>15:00</span></li>
+					<li><span>16:00</span></li>
+					<li><span>17:00</span></li>
+					<li><span>18:00</span></li>
+					<li><span>19:00</span></li>
+					<li><span>20:00</span></li>
+					<li><span>21:00</span></li>
+					<li><span>22:00</span></li>
+					<li><span>23:00</span></li>
+					<li><span>24:00</span></li>
+				</ul>
+			</div>
+			
+			<div class="schedule__events">
+				<ul>
+					<li>
+						<div class="events-day">
+							{# TODO Get current day of the week #}
+							<span>Friday, 2 February 2024</span>
+						</div>
+						<ul class="event-list">
+							{# TODO remove this, this is just an example #}
+							<li style="top: 49px; height: 101px">
+								Test event
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</article>
+		<article>
+			Notes
+		</article>
+		
+		{# TODO Create the event overly #}
+	</section>
+{% endblock content %}
+
+{% block custom_js %}
+	<script defer src="{% static 'js/schedule.js' %}"></script>
+{% endblock %}

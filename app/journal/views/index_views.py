@@ -35,6 +35,15 @@ def account_page(request):
 	return render(request, "account.html", context)
 
 
+def morning_page(request):
+	"""
+	Render the user's account page
+	"""
+	title = "Morning"
+	context = {"title": title, "morning_page": "active"}
+	return render(request, "morning_page.html", context)
+
+
 # TODO make this only for admin
 def design_system(request):
 	"""

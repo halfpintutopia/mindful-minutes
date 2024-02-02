@@ -57,10 +57,6 @@ body {
 	line-height: 1.375;
 }
 
-main {
-	overflow: hidden;
-}
-
 /* A better image reset for your CSS https://www.youtube.com/watch?v=345V2MU3E_w */
 img {
 	font-style: italic; /* fail safe to make the alt text stand out */

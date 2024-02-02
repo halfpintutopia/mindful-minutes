@@ -70,8 +70,10 @@
 					</div>
 					<ul>
 						{% if user.is_authenticated %}
-							<li class="{% if url_name == 'index' %}active{% endif %}">
+							<li class="{{ morning_page }}">
+								<a href="{% url 'morning' %}">
 								Morning
+									</a>
 							</li>
 							<li>
 								Evening

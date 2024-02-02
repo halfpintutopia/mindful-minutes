@@ -22,7 +22,6 @@ h1, .primary-heading {
     "YTLC" var(--font-parametric-lowercase-height),
     "YTUC" var(--font-parametric-uppercase-height),
     "YTDE" var(--font-parametric-descender-depth),
-    "slnt" var(--font-slant),
     "opsz" var(--font-optical-size);
     line-height: normal;
 }

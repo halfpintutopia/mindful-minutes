@@ -20,6 +20,19 @@ input.disabled {
     cursor: default;
 }
 
+.btn.btn-border {
+    --_btn-radius: 4px;
+    --_btn-padding: clamp(0.6875rem, 0.4918rem + 0.9783vw, 1.25rem) clamp(1.375rem, 0.8967rem + 2.3913vw, 2.75rem);
+
+    border: 2px;
+    border-top: 2px solid hsl(var(--porsche-700));
+    border-right: 2px solid hsl(var(--porsche-700));
+    border-bottom: 2px solid hsl(var(--porsche-700));
+    background: linear-gradient(90deg, hsl(var(--green-smoke-300)) 0%, hsl(var(--green-smoke-300)) 3.27%, transparent 3.28%);
+    text-align: center;
+    color: hsl(var(--green-smoke-950));
+}
+
 .btn-green {
     --_btn-radius: 4px;
     --_btn-padding: clamp(0.6875rem, 0.4918rem + 0.9783vw, 1.25rem) clamp(1.375rem, 0.8967rem + 2.3913vw, 2.75rem);

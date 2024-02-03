@@ -101,14 +101,14 @@
 					
 					{% if user.is_authenticated %}
 						<a href="{% url 'account_logout' %}">
-							<button class="btn btn-green align-bottom">Log out</button>
+							<button class="btn btn-border align-bottom">Log out</button>
 						</a>
 					{% else %}
 						<a href="{% url 'account_signup' %}">
-							<button class="btn btn-green align-bottom">Sign up</button>
+							<button class="btn btn-border align-bottom">Sign up</button>
 						</a>
 						<a href="{% url 'account_login' %}">
-							<button class="btn btn-green align-bottom">Log in</button>
+							<button class="btn btn-border align-bottom">Log in</button>
 						</a>
 					{% endif %}
 				</nav>

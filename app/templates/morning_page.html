@@ -54,14 +54,79 @@
 				</div>
 			</article>
 			<article>
-				Notes
+				<div class="accordion-wrapper">
+					<div class="accordion">
+						<div class="accordion-panel">
+							<div id="panel1-heading">
+								<h2>
+									<button
+											class="accordion-trigger"
+											aria-controls="panel1-content"
+											aria-expanded="true"
+									>
+										<span id="panel1-title" class="accordion-title">Boating</span>
+										{#									<svg aria-hidden="true" class="accordion-icon">#}
+										{#										<use xlink:href="#boat"></use>#}
+										{#									</svg>#}
+										<i aria-hidden="true" class="fa-solid fa-sailboat"></i>
+									</button>
+								</h2>
+							</div>
+							<div
+									class="accordion-content"
+									id="panel1-content"
+									aria-labelledby="panel1-heading"
+									aria-hidden="false"
+									role="region"
+							>
+								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita, maxime, quos.
+									Alias assumenda, cupiditate doloribus non perferendis praesentium rem tempora ut.
+									Assumenda dicta eveniet fugit illum odio quibusdam similique voluptatum.</p>
+								<img
+										class="accordion-image"
+										src="https://source.unsplash.com/random/300×300/?boat,sea,landscape"
+										alt="A sailboat at sea"
+								>
+							</div>
+						</div>
+						<div class="accordion-panel">
+							<h2 id="panel2-heading">
+								<button
+										class="accordion-trigger"
+										aria-controls="panel1-content"
+										aria-expanded="false"
+								>
+									<span id="panel2-title" class="accordion-title">Sailing</span>
+									<i aria-hidden="true" class="fa-solid fa-anchor"></i>
+								</button>
+							</h2>
+							<div
+									class="accordion-content"
+									id="panel2-content"
+									aria-labelledby="panel2-heading"
+									aria-hidden="false"
+									role="region"
+							>
+								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita, maxime, quos.
+									Alias assumenda, cupiditate doloribus non perferendis praesentium rem tempora ut.
+									Assumenda dicta eveniet fugit illum odio quibusdam similique voluptatum.</p>
+								<img
+										class="accordion-image"
+										src="https://source.unsplash.com/random/300×300/?boat,anchor,landscape"
+										alt="An anchor"
+								>
+							</div>
+						</div>
+					</div>
+				</div>
 			</article>
-			
-			{# TODO Create the event overly #}
 		</div>
 	</section>
+	
+	{#	symbol with id #}
 {% endblock content %}
 
 {% block custom_js %}
 	<script defer src="{% static 'js/schedule.js' %}"></script>
+	<script defer src="{% static 'js/accordion.js' %}"></script>
 {% endblock %}

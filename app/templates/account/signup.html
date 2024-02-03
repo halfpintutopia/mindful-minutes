@@ -27,7 +27,7 @@
 						{% if redirect_field_value %}
 							<input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
 						{% endif %}
-						<button class="btn-continue{% if forloop.last %} btn-signup{% endif %}"
+						<button class="btn btn-continue{% if forloop.last %} btn-signup{% endif %}"
 						        {% if forloop.last %}type="submit"{% else %}data-form-direction="down"{% endif %}>
 							{% if forloop.last %}Ready to Set Up a Habit{% else %}Continue{% endif %}
 						</button>

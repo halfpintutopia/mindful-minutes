@@ -1,4 +1,4 @@
-button:not(.nav-toggle), .btn {
+.btn:not(.nav-toggle) {
     border: none;
     outline-color: transparent;
     border-radius: var(--_btn-radius);

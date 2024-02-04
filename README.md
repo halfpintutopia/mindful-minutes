@@ -705,6 +705,13 @@ box". [Cited from StackOverflow](https://stackoverflow.com/a/77233072/8614652)
 - [Learn how to create a responsive CSS grid layout | 07:23 - Using aspect-ratio on the images](https://www.youtube.com/watch?v=sKFW3wek21Q&t=1576s)
 - [A better image reset for your CSS](https://www.youtube.com/watch?v=345V2MU3E_w)
   - [The Ultimate Low-Quality Image Placeholder Technique](https://csswizardry.com/2023/09/the-ultimate-lqip-lcp-technique/)
+- [How to make horizontal line with words in the middle using CSS?](https://www.geeksforgeeks.org/how-to-make-horizontal-line-with-words-in-the-middle-using-css/)
+- [Create a horizontal media scroller with CSS](https://www.youtube.com/watch?v=3yfswsnD2sw)
+  - [Open Props](https://open-props.style/#getting-started)
+  - [Building a media scroller component](https://web.dev/articles/building/a-media-scroller-component)
+- [Build a responsive, animate, accessible accordion that looks pretty good](https://www.youtube.com/watch?v=WJERnXiFFug)
+  - [SVGsprit.es](https://svgsprit.es/)
+- [Components - Schedule Template | Cody House](https://codyhouse.co/ds/components/app/weekly-schedule)
 
 ##### Images
 

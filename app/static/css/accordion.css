@@ -128,7 +128,7 @@
         padding: 0;
     }
 
-    button .fa-solid {
+    .accordion-trigger .fa-solid {
         font-size: var(--_symbol-fs);
         padding-block: var(--_symbol-padding);
         padding-left: 32px;
@@ -140,6 +140,28 @@
         padding-block: var(--_symbol-padding);
         padding-right: 32px;
         color: white;
+    }
+
+    ul {
+        list-style: none;
+    }
+
+    .target-list .item {
+        display: flex;
+        align-items: center;
+        gap: .5em;
+    }
+
+    .target-list .item button {
+        height: 35px;
+        display: inline-flex;
+        aspect-ratio: 1 / 1;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid hsl(var(--green-smoke-700));
+        background-color: hsl(var(--porsche-50));
+        color: hsl(var(--green-smoke-700));
+        cursor: pointer;
     }
 }
 

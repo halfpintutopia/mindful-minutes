@@ -77,19 +77,20 @@
         background-color: hsl(var(--green-smoke-400));
     }
 
-    .accordion-content > p {
+    .accordion-content > div {
         transform: translateY(2rem);
         opacity: 0;
         margin-inline: 32px;
+        padding-top: .5rem;
     }
 
     @media (prefers-reduced-motion: no-preference) {
-        .accordion-content > p {
+        .accordion-content > div {
             transition: transform 500ms 500ms, opacity 500ms 500ms;
         }
     }
 
-    .accordion-panel:has([aria-expanded="true"]) p {
+    .accordion-panel:has([aria-expanded="true"]) div {
         transform: translateY(0);
         opacity: 1;
     }

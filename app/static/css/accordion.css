@@ -25,7 +25,7 @@
     .accordion-panel {
         position: relative;
         isolation: isolate;
-        flex-basis: calc(var(--_symbol-fs) + (calc(var(--_symbol-padding) * 2)));
+        flex-basis: calc(var(--_symbol-fs) + (calc(var(--_symbol-padding) * 3)));
         overflow: hidden;
     }
 
@@ -41,7 +41,7 @@
 
     @media (prefers-reduced-motion: no-preference) {
         .accordion-panel {
-            transition: flex-basis 500ms, flex-grow 500ms;
+            transition: flex-basis 500ms, flex-grow 500ms, rotate 500ms;
         }
     }
 
@@ -52,6 +52,10 @@
     .accordion-panel:has([aria-expanded="true"]) {
         flex-basis: clamp(15rem, 40vh, 20rem);
         flex-grow: 1;
+    }
+
+    .accordion-panel:has([aria-expanded="true"]) .panel-more i {
+        rotate: 180deg;
     }
 
     .panel-heading {

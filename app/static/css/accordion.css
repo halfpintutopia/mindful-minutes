@@ -7,10 +7,6 @@
     --_symbol-fs: 18px;
     --_symbol-padding: 8px;
 
-    max-width: 50rem;
-    margin-inline: auto;
-    padding-inline: var(--_space);
-
     .accordion {
         display: flex;
         flex-direction: column;
@@ -146,13 +142,13 @@
         list-style: none;
     }
 
-    .target-list .item {
+    .accordion-list .accordion-list__item {
         display: flex;
         align-items: center;
         gap: .5em;
     }
 
-    .target-list .item button {
+    .target-list .accordion-list__item button {
         height: 35px;
         display: inline-flex;
         aspect-ratio: 1 / 1;

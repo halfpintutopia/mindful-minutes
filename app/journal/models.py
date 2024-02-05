@@ -13,7 +13,7 @@ from .managers import CustomUserManager
 
 class CustomUser(AbstractUser):
     """
-    Custom user model where email is the the unique identifier
+    Custom user model where email is the unique identifier
     instead of username for authentication instead of username
     """
 

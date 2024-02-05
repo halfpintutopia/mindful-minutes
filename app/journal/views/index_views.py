@@ -37,11 +37,20 @@ def account_page(request):
 
 def morning_page(request):
 	"""
-	Render the user's account page
+	Render the user's morning page
 	"""
 	title = "Morning"
 	context = {"title": title, "morning_page": "active"}
 	return render(request, "morning_page.html", context)
+
+
+def evening_page(request):
+	"""
+	Render the user's evening page
+	"""
+	title = "Evening"
+	context = {"title": title, "evening_page": "active"}
+	return render(request, "evening_page.html", context)
 
 
 # TODO make this only for admin

@@ -8,7 +8,6 @@
 		<h1>Morning</h1>
 		
 		<div class="grid morning">
-			{# TODO Create the timeline #}
 			<article class="schedule">
 				<div class="schedule__timeline">
 					<ul>
@@ -78,8 +77,8 @@
 								<div>
 									<p>What is my focus today?</p>
 									<small>Try to keep the list short, no more than 6.</small>
-									<ul class="target-list">
-										<li class="item">
+									<ul class="accordion-list" data-accordion-list="targets">
+										<li class="accordion-list__item">
 											<button>
 												<i class="fa-regular fa-pen-to-square"></i>
 											</button>
@@ -114,7 +113,7 @@
 							>
 								<div>
 									<p>What would you like to note or remember to do later?</p>
-									<ul class="note-list"></ul>
+									<ul class="accordion-list" data-accordion-list="notes"></ul>
 								</div>
 							</div>
 						</div>

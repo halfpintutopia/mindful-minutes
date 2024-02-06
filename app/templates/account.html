@@ -4,12 +4,49 @@
 {% load static %}
 
 {% block content %}
-	<section>
+	<section class="account container" data-width="regular">
+		<h1>Account Settings</h1>
+		<form action="" class="grid">
+			<div class="form-group grid">
+				<h4>Name</h4>
+				<div class="grid grid-columns" data-columns="2">
+					<label for="first-name"><input id="first-name" type="text" placeholder="First"></label>
+					<label for="last-name"><input id="last-name" type="text" placeholder="Last"></label>
+				</div>
+			</div>
+			
+			<div class="form-group grid">
+				<h4>Check In</h4>
+				<div class="grid grid-columns" data-columns="2">
+					<label for="morning"><input id="morning" placeholder="Morning"></label>
+					<label for="evening"><input id="evening" placeholder="Evening"></label>
+				</div>
+			</div>
+			
+			<div class="form-group grid grid-columns" data-columns="2">
+				<div>
+					<h4>Start Day of Week</h4>
+					<label for="morning"><input id="morning" placeholder="Morning"></label>
+				</div>
+			</div>
+			
+			<div class="form-group grid">
+				<div class="grid grid-columns" data-columns="2">
+				<div>
+					<h4>Email</h4>
+					<label for="email"><input id="email" type="text" placeholder="your@email.com"></label>
+				</div>
+				<div>
+					<h4>Password</h4>
+					<label for="morning"><input id="morning" type="password" placeholder="password"></label>
+				</div>
+					</div>
+			</div>
 		
-
+		</form>
+	
 	</section>
 {% endblock content %}
 
 {% block custom_js %}
-		<script defer src="{% static 'js/calendar.js' %}"></script>
 {% endblock %}

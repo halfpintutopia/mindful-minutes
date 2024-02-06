@@ -24,6 +24,7 @@ h1, .primary-heading {
     "YTDE" var(--font-parametric-descender-depth),
     "opsz" var(--font-optical-size);
     line-height: normal;
+    margin-top: clamp(0.875rem, -0.0057rem + 3.7576vi, 2.8125rem);
 }
 
 

@@ -1,6 +1,7 @@
-(function () {
+if (document.querySelector('.header-wrapper') !== null) {
 	const header = document.querySelector('.header-wrapper');
 	const scrollWatcher = document.createElement('div');
+	const headerHeight = header.offsetHeight;
 	
 	scrollWatcher.setAttribute('data-scroll-watcher', '');
 	header.before(scrollWatcher);
@@ -13,4 +14,6 @@
 	);
 	
 	navObserver.observe(scrollWatcher);
-})();
+	
+	document.documentElement.style.setProperty('--header-height', `${headerHeight}px`);
+}

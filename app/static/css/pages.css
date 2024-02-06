@@ -16,6 +16,6 @@
     gap: var(--_gap-wide);
 }
 
-@media screen and (width > 34.5em) {
+@media screen and (width > 56.25em) {
     grid-template-columns: repeat(2, 1fr);
 }

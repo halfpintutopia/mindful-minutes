@@ -2,20 +2,30 @@
 	const lineHeight = 1;
 	
 	
-	let timeElements;
+	let timeElements,
+		closeBtn,
+		modal;
 	
-	const scheduleEvent = (e) => {
-		console.log(e.currentTarget.querySelector('span').innerText);
+	const initDialog = () => {
+		modal.showModal();
+	};
+	
+	const closeDialog = () => {
+		modal.close();
 	};
 	
 	const initHtmlElements = () => {
 		timeElements = document.querySelectorAll('.schedule__timeline li');
+		closeBtn = document.querySelector('[data-close-modal]');
+		modal = document.querySelector('[data-modal]');
 	};
 	
 	const initEvents = () => {
 		timeElements.forEach(el => {
-			el.addEventListener('click', scheduleEvent);
+			el.addEventListener('click', initDialog);
 		});
+		
+		closeBtn.addEventListener('click', closeDialog);
 	};
 	
 	const init = () => {

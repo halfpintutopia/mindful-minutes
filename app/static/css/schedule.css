@@ -40,6 +40,7 @@
     width: calc(100% - var(--_alignment));
     margin-left: var(--_alignment);
     z-index: var(--_events-overlay);
+    pointer-events: none;
 
     ul {
         list-style: none;

@@ -1,4 +1,4 @@
-@media only screen and (width >= 768px) {
+@media screen and (width >= 56.25em) {
     section:has(.scroller) {
         --container-max-width: var(--container-width-regular);
         width: min(100% - var(--container-padding, calc(var(--standard-padding) * 2)), var(--container-max-width));
@@ -23,7 +23,7 @@
     overscroll-behavior-inline: contain;
 }
 
-@media only screen and (width >= 768px) {
+@media screen and (width >= 56.25em) {
     .scroller {
         display: grid;
         grid-auto-flow: unset;

@@ -12,7 +12,7 @@
 				<div class="schedule__events">
 					<div class="events-day">
 						{# TODO Get current day of the week #}
-						<span>Friday, 2nd FEBRUARY 2024</span>
+						<span class="current-date"></span>
 					</div>
 					<ul class="event-list">
 						{# TODO remove this, this is just an example #}
@@ -58,9 +58,9 @@
 							<div class="form-group grid">
 								<h4>Appointment or Task</h4>
 								<div class="grid" data-columns="">
-									<label for="task-name">
+									<label for="title">
 										<input
-												id="task-name"
+												id="title"
 												type="text"
 												placeholder="What will I be doing?">
 									</label>
@@ -78,6 +78,7 @@
 							
 							<div class="form-group grid">
 								<h4>Time</h4>
+								<p>Set the start of the appointment / task, and then the duration.</p>
 								<div class="grid grid-columns" data-columns="2">
 									<label for="morning" class="custom-select">
 										<select name="morning" id="morning">
@@ -97,7 +98,11 @@
 									</label>
 								</div>
 							</div>
-							<button data-close-modal>Close</button>
+							<div class="form-group grid grid-columns" data-columns="2">
+								<button class="btn btn-green" data-close-modal>Close</button>
+								<button class="btn btn-green" type="submit">Save</button>
+							</div>
+							
 						</form>
 					</section>
 				

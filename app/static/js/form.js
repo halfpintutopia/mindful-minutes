@@ -48,6 +48,15 @@
 	
 	function changeCurrentPage(event) {
 		event.preventDefault();
+		
+		const currentBtn = event.currentTarget;
+		
+		if (currentBtn.classList.contains('btn-signup')) {
+			if (checkInputs()) {
+				currentBtn.form.submit();
+			}
+		}
+		
 		if (event.currentTarget.matches('[data-form-direction="down"]')) {
 			incrementor = 1;
 			if (checkInputs()) {

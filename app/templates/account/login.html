@@ -17,10 +17,7 @@
 				{% csrf_token %}
 				
 				<div class="list-items text-white">
-					
-					
 					<span class="hr-with-text">Or</span>
-					
 					{{ form.as_p }}
 					{% if redirect_field_value %}
 						<input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
@@ -31,7 +28,5 @@
 			</form>
 		</div>
 	</div>
-
-
 {% endblock %}
 

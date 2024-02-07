@@ -23,6 +23,7 @@ const suffix = {
 const server = 'http://localhost:8008';
 
 let scheduleElement,
+	scheduleEventListElement,
 	closeBtnElement,
 	modalElement,
 	dateElement,
@@ -45,26 +46,30 @@ const createTimeOptions = (start, end, el) => {
 };
 
 const createEntries = (entries) => {
-	console.log(typeof entries);
-	entries.forEach(entry => {
+	entries.map(entry => {
 		// Convert the time to placement in increments of 50px per hour down
+		const timeFromArray = entry.time_from.split(':');
+		// console.log(`top: ${top - lineHeight}px`);
 		// Convert length of time time-until delete time-from and covert to height of div 50px per hour
+		const timeUntilArray = entry.time_until.split(':');
 		
-		console.log(entry);
+		const duration = timeUntilArray[0] - timeFromArray[0];
+		
+		const item = document.createElement('li');
+		item.innerText = entry.title;
+		item.style.top = `${timeFromArray[0] * hour - lineHeight}px`;
+		item.style.height = `${duration * hour + lineHeight}px`;
+		
+		scheduleEventListElement.append(item);
 	});
-
-	// entries.forEach(entry => {
-	// 	console.log(entry);
-	// });
 };
 
 const initSchedule = async () => {
 	const formData = new FormData(scheduleForm);
-			const currentDate = getCurrentDate();
-
+	const currentDate = getCurrentDate();
+	
 	const api = `${server}/api/users/${formData.get('user')}/appointments/${currentDate}/`;
 	const data = await fetchData(api);
-	console.log(data);
 	createEntries(data);
 };
 
@@ -122,6 +127,7 @@ const initDate = () => {
 
 const initHtmlElements = () => {
 	scheduleElement = document.querySelectorAll('.schedule__timeline li');
+	scheduleEventListElement = document.querySelector('.event-list');
 	closeBtnElement = document.querySelector('[data-close-modal]');
 	modalElement = document.querySelector('[data-modal]');
 	dateElement = document.querySelector('.current-date');

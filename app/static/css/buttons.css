@@ -46,6 +46,10 @@ input.disabled {
     color: hsl(var(--porsche-50));
 }
 
+.btn-green[data-close-modal="delete"] {
+    background: linear-gradient(90deg, #AFBE98 0%, #AFBE98 3.27%, #503737 3.28%);
+}
+
 .btn-white {
     --_btn-radius: 4px;
     --_btn-padding: clamp(0.6875rem, 0.4918rem + 0.9783vw, 1.25rem) clamp(1.375rem, 0.8967rem + 2.3913vw, 2.75rem);
@@ -95,6 +99,7 @@ input.disabled {
 .more-btn + a .btn-green {
     margin-top: clamp(1.625rem, 1.3693rem + 1.0909vw, 2.1875rem);
 }
+
 
 @keyframes bounce {
     100% {

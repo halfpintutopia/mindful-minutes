@@ -88,7 +88,10 @@ const initTimeSelectElement = () => {
 };
 
 const initDialog = (e) => {
+	console.log(e.currentTarget);
 	modalElement.showModal();
+	scheduleForm.reset();
+	
 	if (e.currentTarget.dataset.title) {
 		const timeFromArray = e.currentTarget.dataset.timeFrom.split(':');
 		const timeUntilArray = e.currentTarget.dataset.timeUntil.split(':');
@@ -97,7 +100,10 @@ const initDialog = (e) => {
 		document.querySelector('select#time-until').selectedIndex = timeUntilArray[0] - 1;
 		
 		scheduleForm.setAttribute('data-entry-id', e.currentTarget.dataset.entryId);
-		// document.querySelector('input#tile').value = e.currentTarget.dataset.title;
+		closeBtnElement.dataset.closeModal = 'delete';
+		closeBtnElement.innerText = 'Delete';
+		
+		closeBtnElement.addEventListener('click', deleteEntry);
 	}
 };
 
@@ -136,6 +142,16 @@ const sendData = async (e) => {
 	} else {
 		errorMsgElement.innerText = "A task or appointment can't finish before it starts, unless you're the Flash?";
 	}
+};
+
+const deleteEntry = async () => {
+	const formData = new FormData(scheduleForm);
+	const currentDate = getCurrentDate();
+	
+	const api = `${server}/api/users/${formData.get('user')}/appointments/${currentDate}/${scheduleForm.dataset.entryId}/`;
+	await postData(api, {}, formData.get('csrfmiddlewaretoken'), 'DELETE');
+	initSchedule();
+	
 };
 
 // https://stackoverflow.com/a/69687500/8614652

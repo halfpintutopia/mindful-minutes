@@ -15,9 +15,9 @@ const fetchData = async (url = '') => {
   }
 };
 
-const postData = async (url = '', data = {}, token = '') => {
+const postData = async (url = '', data = {}, token = '', method = 'POST') => {
 	return await fetch(url, {
-		method: 'POST',
+		method: method,
 		headers: {
 			'Content-Type': 'application/json',
 			'X-CSRFToken': token

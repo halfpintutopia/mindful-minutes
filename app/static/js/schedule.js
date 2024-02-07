@@ -1,3 +1,6 @@
+import {getCurrentDate} from "./helpers/helpers.js";
+import {fetchData, postData} from "./helpers/fetchApi.js";
+
 const lineHeight = 1;
 const start = 0;
 const hour = 50;
@@ -10,7 +13,6 @@ const week = [
 	'Friday',
 	'Saturday'
 ];
-
 const suffix = {
 	one: 'st',
 	two: 'nd',
@@ -18,11 +20,60 @@ const suffix = {
 	other: 'th',
 };
 
+const server = 'http://localhost:8008';
+
 let scheduleElement,
 	closeBtnElement,
 	modalElement,
 	dateElement,
-	currentDate;
+	scheduleForm,
+	errorMsgElement;
+
+const createTimeOptions = (start, end, el) => {
+	let option;
+	
+	while (start < end) {
+		if (start < 10) {
+			option = new Option(`0${start}:00`, `0${start}:00`);
+		} else {
+			option = new Option(`${start}:00`, `${start}:00`);
+		}
+		el.add(option, undefined);
+		
+		start++;
+	}
+};
+
+const createEntries = (entries) => {
+	console.log(typeof entries);
+	entries.forEach(entry => {
+		// Convert the time to placement in increments of 50px per hour down
+		// Convert length of time time-until delete time-from and covert to height of div 50px per hour
+		
+		console.log(entry);
+	});
+
+	// entries.forEach(entry => {
+	// 	console.log(entry);
+	// });
+};
+
+const initSchedule = async () => {
+	const formData = new FormData(scheduleForm);
+			const currentDate = getCurrentDate();
+
+	const api = `${server}/api/users/${formData.get('user')}/appointments/${currentDate}/`;
+	const data = await fetchData(api);
+	console.log(data);
+	createEntries(data);
+};
+
+const initTimeSelectElement = () => {
+	const timeFromInput = document.querySelector('select#time-from');
+	const timeUntilInput = document.querySelector('select#time-until');
+	createTimeOptions(0, 24, timeFromInput);
+	createTimeOptions(1, 25, timeUntilInput);
+};
 
 const initDialog = () => {
 	modalElement.showModal();
@@ -31,6 +82,32 @@ const initDialog = () => {
 const closeDialog = (e) => {
 	e.preventDefault();
 	modalElement.close();
+};
+
+const checkTimes = (data) => {
+	return data.get('timeFrom') < data.get('timeUntil');
+};
+
+const sendData = async (e) => {
+	e.preventDefault();
+	
+	const formData = new FormData(scheduleForm);
+	if (checkTimes(formData)) {
+		const currentDate = getCurrentDate();
+		
+		const dataObj = {
+			'date': currentDate,
+			'title': formData.get('title'),
+			'time_from': formData.get('timeFrom'),
+			'time_until': formData.get('timeUntil'),
+		};
+		
+		const api = `${server}/api/users/${formData.get('user')}/appointments/${currentDate}/`;
+		await postData(api, dataObj, formData.get('csrfmiddlewaretoken'));
+		closeDialog(e);
+	} else {
+		errorMsgElement.innerText = "A task or appointment can't finish before it starts, unless you're the Flash?";
+	}
 };
 
 // https://stackoverflow.com/a/69687500/8614652
@@ -48,6 +125,8 @@ const initHtmlElements = () => {
 	closeBtnElement = document.querySelector('[data-close-modal]');
 	modalElement = document.querySelector('[data-modal]');
 	dateElement = document.querySelector('.current-date');
+	scheduleForm = document.querySelector('form#schedule');
+	errorMsgElement = document.querySelector('form .error-msg');
 };
 
 const initEvents = () => {
@@ -57,13 +136,15 @@ const initEvents = () => {
 	
 	closeBtnElement.addEventListener('click', closeDialog);
 	
-	
+	scheduleForm.addEventListener('submit', sendData);
 };
 
 const init = () => {
 	initHtmlElements();
 	initEvents();
 	initDate();
+	initTimeSelectElement();
+	initSchedule();
 };
 
 init();

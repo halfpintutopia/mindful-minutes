@@ -31,7 +31,10 @@ def account_page(request):
 	Render the user's account page
 	"""
 	title = "Search"
-	context = {"title": title, "account_page": "active"}
+	context = {
+		"title": title,
+		"account_page": "active"
+	}
 	return render(request, "account.html", context)
 
 

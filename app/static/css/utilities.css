@@ -124,3 +124,7 @@
 .hr-with-text:after {
     margin-left: 1em;
 }
+
+.error-msg {
+    color: hsl(var(--porsche-600));
+}

@@ -46,7 +46,7 @@ input.disabled {
     color: hsl(var(--porsche-50));
 }
 
-.btn-green[data-close-modal="delete"] {
+.btn-green[data-btn="delete"] {
     background: linear-gradient(90deg, #AFBE98 0%, #AFBE98 3.27%, #503737 3.28%);
 }
 

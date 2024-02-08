@@ -79,6 +79,8 @@ const showDialog = () => {
 const closeDialog = (e) => {
 	e.preventDefault();
 	modalElement.close();
+	resetForm();
+	hideDeleteBtn();
 };
 
 const resetForm = () => {
@@ -113,6 +115,7 @@ const initTimeSelectElement = () => {
 
 const initForm = (e) => {
 	showDialog();
+	resetForm();
 	showDeleteBtn();
 	
 	const entry = e.currentTarget;
@@ -128,11 +131,6 @@ const initForm = (e) => {
 		selectTimeFrom.selectedIndex = timeFromArray[0];
 		selectTimeUntil.selectedIndex = timeUntilArray[0] - 1;
 	}
-
-	
-	// scheduleForm.setAttribute('data-entry-id', e.currentTarget.dataset.entryId);
-	
-
 };
 
 const checkTimes = (data) => {
@@ -162,8 +160,6 @@ const sendData = async (e) => {
 			await postData(api, dataObj, formData.get('csrfmiddlewaretoken'));
 		}
 		closeDialog(e);
-		hideDeleteBtn();
-		resetForm();
 	} else {
 		errorMsgElement.innerText = "A task or appointment can't finish before it starts, unless you're the Flash?";
 	}

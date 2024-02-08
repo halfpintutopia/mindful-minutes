@@ -46,7 +46,7 @@
 					</ul>
 				</div>
 				
-				<dialog data-modal class="modal">
+				<dialog data-modal="schedule" class="modal">
 					<section class="account container" data-width="regular">
 						<form id="schedule" class="grid">
 							{% csrf_token %}
@@ -119,16 +119,18 @@
 									<small>Try to keep the list short, no more than 6.</small>
 									<ul class="accordion-list" data-accordion-list="targets">
 										<li class="accordion-list__item">
-											<button>
+											<button data-btn="note-edit">
 												<i class="fa-regular fa-pen-to-square"></i>
 											</button>
-											<button>
-												<i class="fa-solid fa-check"></i>
+											<button data-btn="note-done">
+												<span></span>
 											</button>
-											<p>30 minutes body weight training</p>
+											<p class="handwritten">30 minutes body weight training</p>
 										</li>
 									</ul>
-								
+									<button data-btn="note-add">
+										<i class="fa-solid fa-plus"></i>
+									</button>
 								</div>
 							</div>
 						</div>
@@ -159,14 +161,61 @@
 						</div>
 					</div>
 				</div>
+				
+				<dialog data-modal="notes" class="modal">
+					<section class="account container" data-width="regular">
+						<form id="schedule" class="grid">
+							{% csrf_token %}
+							<input type="hidden" name="user" value="{{ user.slug }}">
+							<div class="form-group grid">
+								<h4>Appointment or Task</h4>
+								<div class="grid" data-columns="">
+									<label for="title">
+										<input
+												id="title"
+												name="title"
+												type="text"
+												placeholder="What will I be doing?">
+									</label>
+								</div>
+								<span class="error-msg"></span>
+							</div>
+							
+							<div class="form-group grid">
+								<h4>Time</h4>
+								<p>Set the start of the appointment / task, and then the duration.</p>
+								<div class="grid grid-columns" data-columns="2">
+									<label for="time-from" class="custom-select">
+										<select name="timeFrom" id="time-from">
+										</select>
+										<span class="custom-arrow"></span>
+									</label>
+									<label for="time-until" class="custom-select">
+										<select name="timeUntil" id="time-until">
+										</select>
+										<span class="custom-arrow"></span>
+									</label>
+								</div>
+							</div>
+							<div class="form-group grid grid-columns button-group" data-columns="3">
+								<button class="btn btn-green" data-btn="delete">Delete</button>
+								<button class="btn btn-green" data-btn="close">Close</button>
+								<button class="btn btn-green" type="submit">Save</button>
+							</div>
+						
+						</form>
+					</section>
+				
+				</dialog>
 			</article>
 		</div>
 	</section>
-	
-	{#	symbol with id #}
+
+
 {% endblock content %}
 
 {% block custom_js %}
 	<script type="module" defer src="{% static 'js/schedule.js' %}"></script>
 	<script defer src="{% static 'js/accordion.js' %}"></script>
+	<script defer src="{% static 'js/notes.js' %}"></script>
 {% endblock %}

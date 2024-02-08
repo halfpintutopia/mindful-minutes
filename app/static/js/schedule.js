@@ -189,7 +189,7 @@ const initHtmlElements = () => {
 	scheduleElement = document.querySelectorAll('.schedule__timeline li');
 	scheduleEventListElement = document.querySelector('.event-list');
 	closeBtnElement = document.querySelector('[data-btn="close"]');
-	modalElement = document.querySelector('[data-modal]');
+	modalElement = document.querySelector('[data-modal="schedule"]');
 	dateElement = document.querySelector('.current-date');
 	scheduleForm = document.querySelector('form#schedule');
 	errorMsgElement = document.querySelector('form .error-msg');

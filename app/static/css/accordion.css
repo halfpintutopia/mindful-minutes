@@ -148,7 +148,8 @@
         gap: .5em;
     }
 
-    .target-list .accordion-list__item button {
+    .accordion-list + button,
+    .accordion-list__item button {
         height: 35px;
         display: inline-flex;
         aspect-ratio: 1 / 1;
@@ -159,5 +160,21 @@
         color: hsl(var(--green-smoke-700));
         cursor: pointer;
     }
+
+    .accordion-list + button {
+        margin-top: 10px;
+    }
 }
 
+.accordion-list__item [data-btn] span::before {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+}
+
+[data-btn="note-done"] span::before {
+    content: "\f00c";
+}
+
+[data-btn="note-refresh"] span::before {
+    content: "\f01e";
+}

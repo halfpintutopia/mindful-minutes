@@ -28,7 +28,9 @@ class KnowledgeEntryList(APIView):
             if request.user.slug == slug:
                 knowledge_entries = KnowledgeEntry.objects.all()
 
-                serializer = KnowledgeEntrySerializer(knowledge_entries, many=True)
+                serializer = KnowledgeEntrySerializer(
+                    knowledge_entries, many=True
+                )
                 return Response(serializer.data)
 
             raise MethodNotAllowed(request.method)
@@ -51,14 +53,19 @@ class KnowledgeEntryListCreate(APIView):
                     requested_date = date.fromisoformat(date_request)
                 except ValueError:
                     return Response(
-                        {"error": "Invalid date format. Please user " "YYYY-MM-DD."},
+                        {
+                            "error": "Invalid date format. Please user "
+                            "YYYY-MM-DD."
+                        },
                         status=status.HTTP_400_BAD_REQUEST,
                     )
                 knowledge_entries = KnowledgeEntry.objects.filter(
                     created_on__date=requested_date
                 )
 
-                serializer = KnowledgeEntrySerializer(knowledge_entries, many=True)
+                serializer = KnowledgeEntrySerializer(
+                    knowledge_entries, many=True
+                )
                 return Response(serializer.data)
 
         raise MethodNotAllowed(request.method)
@@ -93,8 +100,12 @@ class KnowledgeEntryListCreate(APIView):
                 serializer = KnowledgeEntrySerializer(data=request.data)
                 if serializer.is_valid():
                     serializer.save(user=request.user)
-                    return Response(serializer.data, status=status.HTTP_201_CREATED)
-                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                    return Response(
+                        serializer.data, status=status.HTTP_201_CREATED
+                    )
+                return Response(
+                    serializer.errors, status=status.HTTP_400_BAD_REQUEST
+                )
 
         raise MethodNotAllowed(request.method)
 
@@ -120,7 +131,9 @@ class KnowledgeEntryDetail(APIView):
         """
         Retrieve an knowledge entry
         """
-        return self._handle_knowledge_detail_action(request, slug, date_request, pk)
+        return self._handle_knowledge_detail_action(
+            request, slug, date_request, pk
+        )
 
     @swagger_auto_schema(
         request_body=openapi.Schema(
@@ -137,13 +150,17 @@ class KnowledgeEntryDetail(APIView):
         """
         Update an knowledge entry
         """
-        return self._handle_knowledge_detail_action(request, slug, date_request, pk)
+        return self._handle_knowledge_detail_action(
+            request, slug, date_request, pk
+        )
 
     def delete(self, request, slug, date_request, pk):
         """
         Delete an knowledge entry
         """
-        return self._handle_knowledge_detail_action(request, slug, date_request, pk)
+        return self._handle_knowledge_detail_action(
+            request, slug, date_request, pk
+        )
 
     def _handle_knowledge_detail_action(self, request, slug, date_request, pk):
         """

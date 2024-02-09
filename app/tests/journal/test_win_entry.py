@@ -18,4 +18,7 @@ def test_create_win_entry(custom_user):
     assert len(win_entries) == 1
     assert win_entries[0].user == custom_user
     assert win_entries[0].title == "20 minutes of meditation."
-    assert isinstance(win_entries[0].title, str) and win_entries[0].title is not None
+    assert (
+        isinstance(win_entries[0].title, str)
+        and win_entries[0].title is not None
+    )

@@ -51,7 +51,10 @@ class IdeasEntryListCreate(APIView):
                     requested_date = date.fromisoformat(date_request)
                 except ValueError:
                     return Response(
-                        {"error": "Invalid date format. Please user " "YYYY-MM-DD."},
+                        {
+                            "error": "Invalid date format. Please user "
+                            "YYYY-MM-DD."
+                        },
                         status=status.HTTP_400_BAD_REQUEST,
                     )
                 ideas_entries = IdeasEntry.objects.filter(
@@ -93,8 +96,12 @@ class IdeasEntryListCreate(APIView):
                 serializer = IdeasEntrySerializer(data=request.data)
                 if serializer.is_valid():
                     serializer.save(user=request.user)
-                    return Response(serializer.data, status=status.HTTP_201_CREATED)
-                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                    return Response(
+                        serializer.data, status=status.HTTP_201_CREATED
+                    )
+                return Response(
+                    serializer.errors, status=status.HTTP_400_BAD_REQUEST
+                )
 
         raise MethodNotAllowed(request.method)
 
@@ -120,7 +127,9 @@ class IdeasEntryDetail(APIView):
         """
         Retrieve an ideas entry
         """
-        return self._handle_ideas_detail_action(request, slug, date_request, pk)
+        return self._handle_ideas_detail_action(
+            request, slug, date_request, pk
+        )
 
     @swagger_auto_schema(
         request_body=openapi.Schema(
@@ -137,13 +146,17 @@ class IdeasEntryDetail(APIView):
         """
         Update an ideas entry
         """
-        return self._handle_ideas_detail_action(request, slug, date_request, pk)
+        return self._handle_ideas_detail_action(
+            request, slug, date_request, pk
+        )
 
     def delete(self, request, slug, date_request, pk):
         """
         Delete an ideas entry
         """
-        return self._handle_ideas_detail_action(request, slug, date_request, pk)
+        return self._handle_ideas_detail_action(
+            request, slug, date_request, pk
+        )
 
     def _handle_ideas_detail_action(self, request, slug, date_request, pk):
         """
@@ -180,7 +193,9 @@ class IdeasEntryDetail(APIView):
                     return Response(serializer.data)
 
                 elif request.method == "PUT":
-                    serializer = IdeasEntrySerializer(ideas_entry, data=request.data)
+                    serializer = IdeasEntrySerializer(
+                        ideas_entry, data=request.data
+                    )
                     if serializer.is_valid():
                         serializer.save(user=request.user)
                         return Response(serializer.data)

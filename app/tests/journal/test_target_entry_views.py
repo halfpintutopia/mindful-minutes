@@ -60,7 +60,9 @@ def test_add_target_entry(authenticated_user):
 
     url = reverse("target-entry-date-list", args=[user.slug, current_date])
 
-    res = client.post(url, json.dumps(target_data), content_type="application/json")
+    res = client.post(
+        url, json.dumps(target_data), content_type="application/json"
+    )
 
     assert res.status_code == status.HTTP_201_CREATED
     assert res.data["user"] == user.id
@@ -196,7 +198,9 @@ def test_get_single_target_entry_incorrect_id(
 
 
 @pytest.mark.django_db
-def test_get_all_target_entries_by_current_date(authenticated_user, add_target_entry):
+def test_get_all_target_entries_by_current_date(
+    authenticated_user, add_target_entry
+):
     """
     GIVEN a Django application
     WHEN the user requests to retrieve all target entries
@@ -299,7 +303,9 @@ def test_get_all_target_entries_by_date(
     assert res.status_code == status.HTTP_200_OK
     assert res.data[0]["created_on"] == date_and_time[0]
 
-    target_entries = TargetEntry.objects.filter(created_on__date=date_and_time[0])
+    target_entries = TargetEntry.objects.filter(
+        created_on__date=date_and_time[0]
+    )
     assert len(target_entries) == 4
 
 
@@ -338,7 +344,9 @@ def test_remove_target_entry(authenticated_user, add_target_entry):
 
     assert res_delete.status_code == status.HTTP_204_NO_CONTENT
 
-    url_retrieve = reverse("target-entry-date-list", args=[user.slug, target_date])
+    url_retrieve = reverse(
+        "target-entry-date-list", args=[user.slug, target_date]
+    )
 
     res_retrieve = client.get(url_retrieve, content_type="application/json")
 
@@ -489,7 +497,9 @@ def test_update_target_entry(authenticated_user, add_target_entry, test_data):
 
 
 @pytest.mark.django_db
-def test_update_target_entry_incorrect_data(authenticated_user, add_target_entry):
+def test_update_target_entry_incorrect_data(
+    authenticated_user, add_target_entry
+):
     """
     GIVEN a Django application
     WHEN the user requests to update an target entry with an incorrect id
@@ -517,7 +527,9 @@ def test_update_target_entry_incorrect_data(authenticated_user, add_target_entry
         args=[user.slug, current_date, invalid_id],
     )
 
-    res = client.put(url, json.dumps(target_data), content_type="application/json")
+    res = client.put(
+        url, json.dumps(target_data), content_type="application/json"
+    )
 
     assert res.status_code == status.HTTP_404_NOT_FOUND
 
@@ -594,6 +606,8 @@ def test_update_target_entry_invalid_json(
         args=[user.slug, current_date, target_entry.id],
     )
 
-    res = client.put(url, test_data["payload"], content_type="application/json")
+    res = client.put(
+        url, test_data["payload"], content_type="application/json"
+    )
 
     assert res.status_code == status.HTTP_400_BAD_REQUEST

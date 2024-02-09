@@ -29,12 +29,12 @@ def test_user_settings_serializer(custom_user):
 
     assert serializer.data.get("user") == custom_user.id
     assert serializer.data.get("start_week_day") == start_week_day
-    assert serializer.data.get("morning_check_in") == morning_check_in.strftime(
-        "%H:%M:%S"
-    )
-    assert serializer.data.get("evening_check_in") == evening_check_in.strftime(
-        "%H:%M:%S"
-    )
+    assert serializer.data.get(
+        "morning_check_in"
+    ) == morning_check_in.strftime("%H:%M:%S")
+    assert serializer.data.get(
+        "evening_check_in"
+    ) == evening_check_in.strftime("%H:%M:%S")
 
 
 @pytest.mark.django_db
@@ -96,7 +96,9 @@ def test_invalid_user_settings_serializer_missing_morning_check_in():
         "start_week_day": 1,
         "evening_check_in": time(20, 00),
     }
-    assert serializer.errors == {"morning_check_in": ["This field is required."]}
+    assert serializer.errors == {
+        "morning_check_in": ["This field is required."]
+    }
 
 
 @pytest.mark.django_db
@@ -114,4 +116,6 @@ def test_invalid_user_settings_serializer_missing_evening_check_in():
     assert not serializer.is_valid()
     assert serializer.validated_data == {}
     assert serializer.data == invalid_serializer_data
-    assert serializer.errors == {"evening_check_in": ["This field is required."]}
+    assert serializer.errors == {
+        "evening_check_in": ["This field is required."]
+    }

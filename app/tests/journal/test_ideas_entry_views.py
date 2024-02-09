@@ -60,11 +60,16 @@ def test_add_ideas_entry(authenticated_user):
 
     url = reverse("ideas-entry-date-list", args=[user.slug, current_date])
 
-    res = client.post(url, json.dumps(ideas_data), content_type="application/json")
+    res = client.post(
+        url, json.dumps(ideas_data), content_type="application/json"
+    )
 
     assert res.status_code == status.HTTP_201_CREATED
     assert res.data["user"] == user.id
-    assert res.data["content"] == "Check out TypeScript course on Frontend " "Masters."
+    assert (
+        res.data["content"] == "Check out TypeScript course on Frontend "
+        "Masters."
+    )
 
     ideas_entries = IdeasEntry.objects.all()
     assert len(ideas_entries) == 1
@@ -77,7 +82,8 @@ def test_add_ideas_entry(authenticated_user):
         {"payload": {}, "status_code": 400},
         {
             "payload": {
-                "content entry": "Check out TypeScript course on Frontend " "Masters.",
+                "content entry": "Check out TypeScript course on Frontend "
+                "Masters.",
             },
             "status_code": 400,
         },
@@ -163,7 +169,10 @@ def test_get_single_ideas_entry(authenticated_user, add_ideas_entry):
 
     assert res.status_code == status.HTTP_200_OK
     assert res.data["user"] == user.id
-    assert res.data["content"] == "Check out TypeScript course on Frontend " "Masters."
+    assert (
+        res.data["content"] == "Check out TypeScript course on Frontend "
+        "Masters."
+    )
 
 
 @pytest.mark.django_db
@@ -180,7 +189,9 @@ def test_get_single_ideas_entry_incorrect_id(
     current_date = date.today()
     invalid_id = 14258
 
-    url = reverse("ideas-entry-detail", args=[user.slug, current_date, invalid_id])
+    url = reverse(
+        "ideas-entry-detail", args=[user.slug, current_date, invalid_id]
+    )
 
     res = client.get(url)
 
@@ -188,7 +199,9 @@ def test_get_single_ideas_entry_incorrect_id(
 
 
 @pytest.mark.django_db
-def test_get_all_ideas_entries_by_current_date(authenticated_user, add_ideas_entry):
+def test_get_all_ideas_entries_by_current_date(
+    authenticated_user, add_ideas_entry
+):
     """
     GIVEN a Django application
     WHEN the user requests to retrieve all ideas entries
@@ -253,7 +266,9 @@ def test_get_all_ideas_entries_by_date(
     assert res.status_code == status.HTTP_200_OK
     assert res.data[0]["created_on"] == date_and_time[0]
 
-    ideas_entries = IdeasEntry.objects.filter(created_on__date=date_and_time[0])
+    ideas_entries = IdeasEntry.objects.filter(
+        created_on__date=date_and_time[0]
+    )
     assert len(ideas_entries) == 1
 
 
@@ -284,13 +299,18 @@ def test_remove_ideas_entry(authenticated_user, add_ideas_entry):
     res = client.get(url, content_type="application/json")
 
     assert res.status_code == status.HTTP_200_OK
-    assert res.data["content"] == "Check out TypeScript course on Frontend " "Masters."
+    assert (
+        res.data["content"] == "Check out TypeScript course on Frontend "
+        "Masters."
+    )
 
     res_delete = client.delete(url, content_type="application/json")
 
     assert res_delete.status_code == status.HTTP_204_NO_CONTENT
 
-    url_retrieve = reverse("ideas-entry-date-list", args=[user.slug, ideas_date])
+    url_retrieve = reverse(
+        "ideas-entry-date-list", args=[user.slug, ideas_date]
+    )
 
     res_retrieve = client.get(url_retrieve, content_type="application/json")
 
@@ -318,7 +338,9 @@ def test_remove_ideas_invalid_id(authenticated_user):
 
     client, user = authenticated_user
 
-    url = reverse("ideas-entry-detail", args=[user.slug, current_date, invalid_id])
+    url = reverse(
+        "ideas-entry-detail", args=[user.slug, current_date, invalid_id]
+    )
 
     res = client.delete(url, content_type="application/json")
 
@@ -426,7 +448,9 @@ def test_update_ideas_entry(authenticated_user, add_ideas_entry, test_data):
 
 
 @pytest.mark.django_db
-def test_update_ideas_entry_incorrect_data(authenticated_user, add_ideas_entry):
+def test_update_ideas_entry_incorrect_data(
+    authenticated_user, add_ideas_entry
+):
     """
     GIVEN a Django application
     WHEN the user requests to update an ideas entry with an incorrect id
@@ -447,9 +471,13 @@ def test_update_ideas_entry_incorrect_data(authenticated_user, add_ideas_entry):
         "user": user.id,
     }
 
-    url = reverse("ideas-entry-detail", args=[user.slug, current_date, invalid_id])
+    url = reverse(
+        "ideas-entry-detail", args=[user.slug, current_date, invalid_id]
+    )
 
-    res = client.put(url, json.dumps(ideas_data), content_type="application/json")
+    res = client.put(
+        url, json.dumps(ideas_data), content_type="application/json"
+    )
 
     assert res.status_code == status.HTTP_404_NOT_FOUND
 
@@ -496,7 +524,8 @@ def test_update_ideas_entry_incorrect_date(
         },
         {
             "payload": {
-                "content entry": "Check out TypeScript course on Frontend " "Masters.",
+                "content entry": "Check out TypeScript course on Frontend "
+                "Masters.",
             },
         },
     ],
@@ -523,6 +552,8 @@ def test_update_ideas_entry_invalid_json(
         args=[user.slug, current_date, ideas_entry.id],
     )
 
-    res = client.put(url, test_data["payload"], content_type="application/json")
+    res = client.put(
+        url, test_data["payload"], content_type="application/json"
+    )
 
     assert res.status_code == status.HTTP_400_BAD_REQUEST

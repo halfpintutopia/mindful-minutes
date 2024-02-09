@@ -84,7 +84,9 @@ class CustomSignupForm(SignupForm):
     password2 = forms.CharField(
         label="Repeat the password.",
         help_text="Just to make sure you are awake",
-        widget=forms.PasswordInput(attrs={"placeholder": "s3cureP@ssw0rd!1234"}),
+        widget=forms.PasswordInput(
+            attrs={"placeholder": "s3cureP@ssw0rd!1234"}
+        ),
     )
 
     # https://stackoverflow.com/a/63625914/8614652

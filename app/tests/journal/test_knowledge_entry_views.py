@@ -13,7 +13,9 @@ from journal.models import KnowledgeEntry
 
 
 @pytest.mark.django_db
-def test_get_list_of_knowledge_entries(authenticated_user, add_knowledge_entry):
+def test_get_list_of_knowledge_entries(
+    authenticated_user, add_knowledge_entry
+):
     """
     GIVEN a Django application
     WHEN a user requests a list of all knowledge entries
@@ -24,7 +26,8 @@ def test_get_list_of_knowledge_entries(authenticated_user, add_knowledge_entry):
     knowledge_entries = [
         "Was able to explain specificity to a colleague.",
         "Finished the course on Docker.",
-        "Wrote a blog entry to share knowledge regarding how to write an " "README.",
+        "Wrote a blog entry to share knowledge regarding how to write an "
+        "README.",
         "Finished video on Django.",
     ]
 
@@ -60,7 +63,9 @@ def test_add_knowledge_entry(authenticated_user):
 
     url = reverse("knowledge-entry-date-list", args=[user.slug, current_date])
 
-    res = client.post(url, json.dumps(knowledge_data), content_type="application/json")
+    res = client.post(
+        url, json.dumps(knowledge_data), content_type="application/json"
+    )
 
     assert res.status_code == status.HTTP_201_CREATED
     assert res.data["user"] == user.id
@@ -229,7 +234,9 @@ def test_get_all_knowledge_entries_by_current_date(
     assert res.status_code == status.HTTP_200_OK
     assert res.data[0]["created_on"] == str(current_date)
 
-    knowledge_entries = KnowledgeEntry.objects.filter(created_on__date=current_date)
+    knowledge_entries = KnowledgeEntry.objects.filter(
+        created_on__date=current_date
+    )
     assert len(knowledge_entries) == 1
 
 
@@ -263,13 +270,17 @@ def test_get_all_knowledge_entries_by_date(
             user=user,
         )
 
-    url = reverse("knowledge-entry-date-list", args=[user.slug, date_and_time[0]])
+    url = reverse(
+        "knowledge-entry-date-list", args=[user.slug, date_and_time[0]]
+    )
     res = client.get(url)
 
     assert res.status_code == status.HTTP_200_OK
     assert res.data[0]["created_on"] == date_and_time[0]
 
-    knowledge_entries = KnowledgeEntry.objects.filter(created_on__date=date_and_time[0])
+    knowledge_entries = KnowledgeEntry.objects.filter(
+        created_on__date=date_and_time[0]
+    )
     assert len(knowledge_entries) == 1
 
 
@@ -414,7 +425,9 @@ def test_remove_knowledge_not_current_date(
         },
     ],
 )
-def test_update_knowledge_entry(authenticated_user, add_knowledge_entry, test_data):
+def test_update_knowledge_entry(
+    authenticated_user, add_knowledge_entry, test_data
+):
     """
     GIVEN a Django application
     WHEN the user requests to update an knowledge entry
@@ -457,7 +470,9 @@ def test_update_knowledge_entry(authenticated_user, add_knowledge_entry, test_da
 
 
 @pytest.mark.django_db
-def test_update_knowledge_entry_incorrect_data(authenticated_user, add_knowledge_entry):
+def test_update_knowledge_entry_incorrect_data(
+    authenticated_user, add_knowledge_entry
+):
     """
     GIVEN a Django application
     WHEN the user requests to update an knowledge entry with an incorrect id
@@ -485,7 +500,9 @@ def test_update_knowledge_entry_incorrect_data(authenticated_user, add_knowledge
         args=[user.slug, current_date, invalid_id],
     )
 
-    res = client.put(url, json.dumps(knowledge_data), content_type="application/json")
+    res = client.put(
+        url, json.dumps(knowledge_data), content_type="application/json"
+    )
 
     assert res.status_code == status.HTTP_404_NOT_FOUND
 
@@ -561,6 +578,8 @@ def test_update_knowledge_entry_invalid_json(
         args=[user.slug, current_date, knowledge_entry.id],
     )
 
-    res = client.put(url, test_data["payload"], content_type="application/json")
+    res = client.put(
+        url, test_data["payload"], content_type="application/json"
+    )
 
     assert res.status_code == status.HTTP_400_BAD_REQUEST

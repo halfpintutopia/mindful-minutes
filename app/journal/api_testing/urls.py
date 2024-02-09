@@ -49,7 +49,9 @@ from ..api_views.win_entries import (
 )
 
 urlpatterns = [
-    path("api/users/<str:slug>/", CustomUserDetail.as_view(), name="user-detail"),
+    path(
+        "api/users/<str:slug>/", CustomUserDetail.as_view(), name="user-detail"
+    ),
     path("api/users/", CustomUserList.as_view(), name="user-list"),
     path(
         "api/users/<str:slug>/user-settings/",

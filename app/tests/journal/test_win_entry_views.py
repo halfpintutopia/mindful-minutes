@@ -62,7 +62,9 @@ def test_add_win_entry(authenticated_user):
 
     url = reverse("win-entry-date-list", args=[user.slug, current_date])
 
-    res = client.post(url, json.dumps(win_data), content_type="application/json")
+    res = client.post(
+        url, json.dumps(win_data), content_type="application/json"
+    )
 
     assert res.status_code == status.HTTP_201_CREATED
     assert res.data["user"] == user.id
@@ -157,7 +159,9 @@ def test_get_single_win_entry(authenticated_user, add_win_entry):
         user=user,
     )
 
-    url = reverse("win-entry-detail", args=[user.slug, current_date, win_entry.id])
+    url = reverse(
+        "win-entry-detail", args=[user.slug, current_date, win_entry.id]
+    )
 
     res = client.get(url, content_type="application/json")
 
@@ -180,7 +184,9 @@ def test_get_single_win_entry_incorrect_id(
     current_date = date.today()
     invalid_id = 14258
 
-    url = reverse("win-entry-detail", args=[user.slug, current_date, invalid_id])
+    url = reverse(
+        "win-entry-detail", args=[user.slug, current_date, invalid_id]
+    )
 
     res = client.get(url)
 
@@ -188,7 +194,9 @@ def test_get_single_win_entry_incorrect_id(
 
 
 @pytest.mark.django_db
-def test_get_all_win_entries_by_current_date(authenticated_user, add_win_entry):
+def test_get_all_win_entries_by_current_date(
+    authenticated_user, add_win_entry
+):
     """
     GIVEN a Django application
     WHEN the user requests to retrieve all win entries
@@ -345,7 +353,9 @@ def test_remove_win_invalid_id(authenticated_user):
 
     client, user = authenticated_user
 
-    url = reverse("win-entry-detail", args=[user.slug, current_date, invalid_id])
+    url = reverse(
+        "win-entry-detail", args=[user.slug, current_date, invalid_id]
+    )
 
     res = client.delete(url, content_type="application/json")
 
@@ -361,7 +371,9 @@ def test_remove_win_invalid_id(authenticated_user):
     "requested_date",
     ["2024-07-06 12:00:00", "2023-03-05 15:30:00", "2022-09-16 23:15:00"],
 )
-def test_remove_win_not_current_date(authenticated_user, requested_date, add_win_entry):
+def test_remove_win_not_current_date(
+    authenticated_user, requested_date, add_win_entry
+):
     """
     GIVEN a Django application
     WHEN the user requests to remove an win entry when the date is not today
@@ -433,7 +445,9 @@ def test_update_win_entry(authenticated_user, add_win_entry, test_data):
 
     test_data["payload"]["user"] = user.id
 
-    url = reverse("win-entry-detail", args=[user.slug, current_date, win_entry.id])
+    url = reverse(
+        "win-entry-detail", args=[user.slug, current_date, win_entry.id]
+    )
 
     res = client.put(
         url, json.dumps(test_data["payload"]), content_type="application/json"
@@ -473,9 +487,13 @@ def test_update_win_entry_incorrect_data(authenticated_user, add_win_entry):
         "user": user.id,
     }
 
-    url = reverse("win-entry-detail", args=[user.slug, current_date, invalid_id])
+    url = reverse(
+        "win-entry-detail", args=[user.slug, current_date, invalid_id]
+    )
 
-    res = client.put(url, json.dumps(win_data), content_type="application/json")
+    res = client.put(
+        url, json.dumps(win_data), content_type="application/json"
+    )
 
     assert res.status_code == status.HTTP_404_NOT_FOUND
 
@@ -527,7 +545,9 @@ def test_update_win_entry_incorrect_date(
         },
     ],
 )
-def test_update_win_entry_invalid_json(authenticated_user, add_win_entry, test_data):
+def test_update_win_entry_invalid_json(
+    authenticated_user, add_win_entry, test_data
+):
     """
     GIVEN a Django application
     WHEN the user requests to update an win entry with invalid JSON
@@ -542,8 +562,12 @@ def test_update_win_entry_invalid_json(authenticated_user, add_win_entry, test_d
         user=user,
     )
 
-    url = reverse("win-entry-detail", args=[user.slug, current_date, win_entry.id])
+    url = reverse(
+        "win-entry-detail", args=[user.slug, current_date, win_entry.id]
+    )
 
-    res = client.put(url, test_data["payload"], content_type="application/json")
+    res = client.put(
+        url, test_data["payload"], content_type="application/json"
+    )
 
     assert res.status_code == status.HTTP_400_BAD_REQUEST

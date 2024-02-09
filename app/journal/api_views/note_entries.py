@@ -51,10 +51,15 @@ class NoteEntryListCreate(APIView):
                     requested_date = date.fromisoformat(date_request)
                 except ValueError:
                     return Response(
-                        {"error": "Invalid date format. Please user " "YYYY-MM-DD."},
+                        {
+                            "error": "Invalid date format. Please user "
+                            "YYYY-MM-DD."
+                        },
                         status=status.HTTP_400_BAD_REQUEST,
                     )
-                note_entries = NoteEntry.objects.filter(created_on__date=requested_date)
+                note_entries = NoteEntry.objects.filter(
+                    created_on__date=requested_date
+                )
 
                 serializer = NoteEntrySerializer(note_entries, many=True)
                 return Response(serializer.data)
@@ -91,8 +96,12 @@ class NoteEntryListCreate(APIView):
                 serializer = NoteEntrySerializer(data=request.data)
                 if serializer.is_valid():
                     serializer.save(user=request.user)
-                    return Response(serializer.data, status=status.HTTP_201_CREATED)
-                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                    return Response(
+                        serializer.data, status=status.HTTP_201_CREATED
+                    )
+                return Response(
+                    serializer.errors, status=status.HTTP_400_BAD_REQUEST
+                )
 
         raise MethodNotAllowed(request.method)
 
@@ -178,7 +187,9 @@ class NoteEntryDetail(APIView):
                     return Response(serializer.data)
 
                 elif request.method == "PUT":
-                    serializer = NoteEntrySerializer(note_entry, data=request.data)
+                    serializer = NoteEntrySerializer(
+                        note_entry, data=request.data
+                    )
                     if serializer.is_valid():
                         serializer.save(user=request.user)
                         return Response(serializer.data)

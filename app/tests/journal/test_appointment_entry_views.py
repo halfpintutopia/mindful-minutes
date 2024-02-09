@@ -85,9 +85,7 @@ def test_add_appointment_entry(authenticated_user):
         "user": user.id,
     }
 
-    url = reverse(
-        "appointment-entry-date-list", args=[user.slug, current_date]
-    )
+    url = reverse("appointment-entry-date-list", args=[user.slug, current_date])
 
     res = client.post(
         url, json.dumps(appointment_data), content_type="application/json"
@@ -136,9 +134,7 @@ def test_add_appointment_entry_incorrect_json(authenticated_user, test_data):
     test_data["payload"]["date"] = current_date
     test_data["payload"]["user"] = user.id
 
-    url = reverse(
-        "appointment-entry-date-list", args=[user.slug, str(current_date)]
-    )
+    url = reverse("appointment-entry-date-list", args=[user.slug, str(current_date)])
 
     res = client.post(url, {}, content_type="application/json")
     assert res.status_code == status.HTTP_400_BAD_REQUEST
@@ -149,9 +145,7 @@ def test_add_appointment_entry_incorrect_json(authenticated_user, test_data):
 
 @pytest.mark.django_db
 @pytest.mark.parametrize("date_param", ["2023-07-01", "2023-06-20"])
-def test_add_appointment_entry_not_current_date(
-    authenticated_user, date_param
-):
+def test_add_appointment_entry_not_current_date(authenticated_user, date_param):
     """
     GIVEN a Django application
     WHEN the user attempts to add an appointment entry on a date,
@@ -184,9 +178,7 @@ def test_add_appointment_entry_not_current_date(
 
 
 @pytest.mark.django_db
-def test_get_single_appointment_entry(
-    authenticated_user, add_appointment_entry
-):
+def test_get_single_appointment_entry(authenticated_user, add_appointment_entry):
     """
     GIVEN a Django application
     WHEN the user requests to retrieve an appointment entry
@@ -294,18 +286,14 @@ def test_get_all_appointment_entries_by_current_date(
         user=user,
     )
 
-    url = reverse(
-        "appointment-entry-date-list", args=[user.slug, str(current_date)]
-    )
+    url = reverse("appointment-entry-date-list", args=[user.slug, str(current_date)])
 
     res = client.get(url)
 
     assert res.status_code == status.HTTP_200_OK
     assert res.data[0]["created_on"] == str(current_date)
 
-    appointment_entries = AppointmentEntry.objects.filter(
-        created_on__date=current_date
-    )
+    appointment_entries = AppointmentEntry.objects.filter(created_on__date=current_date)
     assert len(appointment_entries) == 4
 
 
@@ -366,18 +354,14 @@ def test_get_all_appointment_entries_by_date(
             user=user,
         )
 
-    url = reverse(
-        "appointment-entry-date-list", args=[user.slug, current_date]
-    )
+    url = reverse("appointment-entry-date-list", args=[user.slug, current_date])
 
     res = client.get(url)
 
     assert res.status_code == status.HTTP_200_OK
     assert res.data[0]["created_on"] == str(current_date)
 
-    appointment_entries = AppointmentEntry.objects.filter(
-        created_on__date=current_date
-    )
+    appointment_entries = AppointmentEntry.objects.filter(created_on__date=current_date)
     assert len(appointment_entries) == 4
 
 
@@ -428,9 +412,7 @@ def test_remove_appointment_entry(authenticated_user, add_appointment_entry):
     assert res_retrieve.status_code == status.HTTP_200_OK
     assert len(res_retrieve.data) == 0
 
-    assert not AppointmentEntry.objects.filter(
-        id=appointment_entry.id
-    ).exists()
+    assert not AppointmentEntry.objects.filter(id=appointment_entry.id).exists()
 
     appointment_entries = AppointmentEntry.objects.all()
     assert len(appointment_entries) == 0
@@ -529,9 +511,7 @@ def test_remove_appointment_not_current_date(
         },
     ],
 )
-def test_update_appointment_entry(
-    authenticated_user, add_appointment_entry, test_data
-):
+def test_update_appointment_entry(authenticated_user, add_appointment_entry, test_data):
     """
     GIVEN a Django application
     WHEN the user requests to update an appointment entry

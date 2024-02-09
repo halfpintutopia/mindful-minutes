@@ -13,9 +13,7 @@ from journal.models import GratitudeEntry
 
 
 @pytest.mark.django_db
-def test_get_list_of_gratitude_entries(
-    authenticated_user, add_gratitude_entry
-):
+def test_get_list_of_gratitude_entries(authenticated_user, add_gratitude_entry):
     """
     GIVEN a Django application
     WHEN a user requests a list of all gratitude entries
@@ -56,16 +54,13 @@ def test_add_gratitude_entry(authenticated_user):
     client, user = authenticated_user
 
     gratitude_data = {
-        "content": "I am healthy. My studies are going well. I am free and "
-        "strong.",
+        "content": "I am healthy. My studies are going well. I am free and " "strong.",
         "user": user.id,
     }
 
     url = reverse("gratitude-entry-date-list", args=[user.slug, current_date])
 
-    res = client.post(
-        url, json.dumps(gratitude_data), content_type="application/json"
-    )
+    res = client.post(url, json.dumps(gratitude_data), content_type="application/json")
 
     assert res.status_code == status.HTTP_201_CREATED
     assert res.data["user"] == user.id
@@ -134,8 +129,7 @@ def test_add_gratitude_entry_not_current_date(authenticated_user, date_param):
     client, user = authenticated_user
 
     gratitude_data = {
-        "content": "I am healthy. My studies are going well. I am free and "
-        "strong.",
+        "content": "I am healthy. My studies are going well. I am free and " "strong.",
         "user": user.id,
     }
 
@@ -161,8 +155,7 @@ def test_get_single_gratitude_entry(authenticated_user, add_gratitude_entry):
     client, user = authenticated_user
 
     gratitude_entry = add_gratitude_entry(
-        content="I am healthy. My studies are going well. I am free and "
-        "strong.",
+        content="I am healthy. My studies are going well. I am free and " "strong.",
         user=user,
     )
 
@@ -224,8 +217,7 @@ def test_get_all_gratitude_entries_by_current_date(
     client, user = authenticated_user
 
     add_gratitude_entry(
-        content="I am healthy. My studies are going well. I am free and "
-        "strong.",
+        content="I am healthy. My studies are going well. I am free and " "strong.",
         user=user,
     )
 
@@ -236,9 +228,7 @@ def test_get_all_gratitude_entries_by_current_date(
     assert res.status_code == status.HTTP_200_OK
     assert res.data[0]["created_on"] == str(current_date)
 
-    gratitude_entries = GratitudeEntry.objects.filter(
-        created_on__date=current_date
-    )
+    gratitude_entries = GratitudeEntry.objects.filter(created_on__date=current_date)
     assert len(gratitude_entries) == 1
 
 
@@ -273,17 +263,13 @@ def test_get_all_gratitude_entries_by_date(
             user=user,
         )
 
-    url = reverse(
-        "gratitude-entry-date-list", args=[user.slug, date_and_time[0]]
-    )
+    url = reverse("gratitude-entry-date-list", args=[user.slug, date_and_time[0]])
     res = client.get(url)
 
     assert res.status_code == status.HTTP_200_OK
     assert res.data[0]["created_on"] == date_and_time[0]
 
-    gratitude_entries = GratitudeEntry.objects.filter(
-        created_on__date=date_and_time[0]
-    )
+    gratitude_entries = GratitudeEntry.objects.filter(created_on__date=date_and_time[0])
     assert len(gratitude_entries) == 1
 
 
@@ -300,8 +286,7 @@ def test_remove_gratitude_entry(authenticated_user, add_gratitude_entry):
     client, user = authenticated_user
 
     gratitude_entry = add_gratitude_entry(
-        content="I am healthy. My studies are going well. I am free and "
-        "strong.",
+        content="I am healthy. My studies are going well. I am free and " "strong.",
         user=user,
     )
 
@@ -429,9 +414,7 @@ def test_remove_gratitude_not_current_date(
         },
     ],
 )
-def test_update_gratitude_entry(
-    authenticated_user, add_gratitude_entry, test_data
-):
+def test_update_gratitude_entry(authenticated_user, add_gratitude_entry, test_data):
     """
     GIVEN a Django application
     WHEN the user requests to update an gratitude entry
@@ -445,8 +428,7 @@ def test_update_gratitude_entry(
     client, user = authenticated_user
 
     gratitude_entry = add_gratitude_entry(
-        content="I am healthy. My studies are going well. I am free and "
-        "strong.",
+        content="I am healthy. My studies are going well. I am free and " "strong.",
         user=user,
     )
 
@@ -474,9 +456,7 @@ def test_update_gratitude_entry(
 
 
 @pytest.mark.django_db
-def test_update_gratitude_entry_incorrect_data(
-    authenticated_user, add_gratitude_entry
-):
+def test_update_gratitude_entry_incorrect_data(authenticated_user, add_gratitude_entry):
     """
     GIVEN a Django application
     WHEN the user requests to update an gratitude entry with an incorrect id
@@ -488,8 +468,7 @@ def test_update_gratitude_entry_incorrect_data(
     invalid_id = 12574
 
     add_gratitude_entry(
-        content="I am healthy. My studies are going well. I am free and "
-        "strong.",
+        content="I am healthy. My studies are going well. I am free and " "strong.",
         user=user,
     )
 
@@ -504,9 +483,7 @@ def test_update_gratitude_entry_incorrect_data(
         args=[user.slug, current_date, invalid_id],
     )
 
-    res = client.put(
-        url, json.dumps(gratitude_data), content_type="application/json"
-    )
+    res = client.put(url, json.dumps(gratitude_data), content_type="application/json")
 
     assert res.status_code == status.HTTP_404_NOT_FOUND
 
@@ -583,8 +560,6 @@ def test_update_gratitude_entry_invalid_json(
         args=[user.slug, current_date, gratitude_entry.id],
     )
 
-    res = client.put(
-        url, test_data["payload"], content_type="application/json"
-    )
+    res = client.put(url, test_data["payload"], content_type="application/json")
 
     assert res.status_code == status.HTTP_400_BAD_REQUEST

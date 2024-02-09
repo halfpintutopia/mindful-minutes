@@ -195,7 +195,6 @@ const initHtmlElements = () => {
 	errorMsgElement = document.querySelector('form .error-msg');
 	buttonGroupElement = document.querySelector('.button-group');
 	deleteBtnElement = document.querySelector('[data-btn="delete"]');
-	// submitBtnElement = document.querySelector('button[type="submit"]');
 };
 
 const initEvents = () => {

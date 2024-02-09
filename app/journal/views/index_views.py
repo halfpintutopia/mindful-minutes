@@ -6,12 +6,10 @@ def index(request):
     Render the index page
     """
     if request.user.is_authenticated:
-        # return redirect("user_page")
         title = "Home"
         context = {"title": title}
-        return render(request, "user_page.html", context)
+        return render(request, "morning_page.html", context)
     else:
-        # return redirect("home")
         title = "Home"
         context = {"title": title}
         return render(request, "index.html", context)

@@ -20,7 +20,6 @@ function checkInputs() {
 	const inputs = pages[currentPage].querySelectorAll("input");
 	const inputList = Array.from(inputs);
 	
-	// or use the arrow function with an implicit return behaviour
 	return inputList.every(function checkInputIsValid(input) {
 		if (!input.checkValidity()) {
 			warningMsg = `Don't forget to add your ${input.getAttribute("name").replace("_", " ")}`;

@@ -146,7 +146,6 @@ const showForm = () => {
 
 const sendForm = (e) => {
 	e.preventDefault();
-	// on save, collect form data
 	const formData = new FormData(targetsForm);
 	if (validateForm(formData)) {
 		if (targetsForm.dataset.formEntryId) {

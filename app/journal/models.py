@@ -32,17 +32,13 @@ class CustomUser(AbstractUser):
             slug_name = slugify(f"{self.first_name} {self.last_name}")
             slug = f"{slug_name}-{str(self.unique_identifier)}"
 
-            duplicates = CustomUser.objects.filter(slug=slug).exclude(
-                pk=self.pk
-            )
+            duplicates = CustomUser.objects.filter(slug=slug).exclude(pk=self.pk)
 
             while duplicates.exists():
                 self.unique_identifier = uuid.uuid4()
                 slug = f"{slug_name}-{self.unique_identifier}"
 
-                duplicates = CustomUser.objects.filter(slug=slug).exclude(
-                    pk=self.pk
-                )
+                duplicates = CustomUser.objects.filter(slug=slug).exclude(pk=self.pk)
 
             self.slug = slug
 
@@ -72,9 +68,7 @@ class UserSettings(models.Model):
         on_delete=models.CASCADE,
         related_name="user_settings",
     )
-    start_week_day = models.IntegerField(
-        _("Start Week Day"), choices=DAY_OPTIONS
-    )
+    start_week_day = models.IntegerField(_("Start Week Day"), choices=DAY_OPTIONS)
     morning_check_in = models.TimeField()
     evening_check_in = models.TimeField()
     created_on = models.DateTimeField(auto_now_add=True)

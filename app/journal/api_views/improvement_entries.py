@@ -28,9 +28,7 @@ class ImprovementEntryList(APIView):
             if request.user.slug == slug:
                 improvement_entries = ImprovementEntry.objects.all()
 
-                serializer = ImprovementEntrySerializer(
-                    improvement_entries, many=True
-                )
+                serializer = ImprovementEntrySerializer(improvement_entries, many=True)
                 return Response(serializer.data)
 
             raise MethodNotAllowed(request.method)
@@ -53,19 +51,14 @@ class ImprovementEntryListCreate(APIView):
                     requested_date = date.fromisoformat(date_request)
                 except ValueError:
                     return Response(
-                        {
-                            "error": "Invalid date format. Please user "
-                            "YYYY-MM-DD."
-                        },
+                        {"error": "Invalid date format. Please user " "YYYY-MM-DD."},
                         status=status.HTTP_400_BAD_REQUEST,
                     )
                 improvement_entries = ImprovementEntry.objects.filter(
                     created_on__date=requested_date
                 )
 
-                serializer = ImprovementEntrySerializer(
-                    improvement_entries, many=True
-                )
+                serializer = ImprovementEntrySerializer(improvement_entries, many=True)
                 return Response(serializer.data)
 
         raise MethodNotAllowed(request.method)
@@ -100,12 +93,8 @@ class ImprovementEntryListCreate(APIView):
                 serializer = ImprovementEntrySerializer(data=request.data)
                 if serializer.is_valid():
                     serializer.save(user=request.user)
-                    return Response(
-                        serializer.data, status=status.HTTP_201_CREATED
-                    )
-                return Response(
-                    serializer.errors, status=status.HTTP_400_BAD_REQUEST
-                )
+                    return Response(serializer.data, status=status.HTTP_201_CREATED)
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         raise MethodNotAllowed(request.method)
 
@@ -131,9 +120,7 @@ class ImprovementEntryDetail(APIView):
         """
         Retrieve an improvement entry
         """
-        return self._handle_improvement_detail_action(
-            request, slug, date_request, pk
-        )
+        return self._handle_improvement_detail_action(request, slug, date_request, pk)
 
     @swagger_auto_schema(
         request_body=openapi.Schema(
@@ -150,21 +137,15 @@ class ImprovementEntryDetail(APIView):
         """
         Update an improvement entry
         """
-        return self._handle_improvement_detail_action(
-            request, slug, date_request, pk
-        )
+        return self._handle_improvement_detail_action(request, slug, date_request, pk)
 
     def delete(self, request, slug, date_request, pk):
         """
         Delete an improvement entry
         """
-        return self._handle_improvement_detail_action(
-            request, slug, date_request, pk
-        )
+        return self._handle_improvement_detail_action(request, slug, date_request, pk)
 
-    def _handle_improvement_detail_action(
-        self, request, slug, date_request, pk
-    ):
+    def _handle_improvement_detail_action(self, request, slug, date_request, pk):
         """
         Private helper method to handle GET, PUT and DELETE requests
 

@@ -10,9 +10,7 @@ def test_create_emotion_entry(custom_user):
     WHEN creating a emotion entry
     THEN user should have successfully created a emotion entry
     """
-    emotion_entry = EmotionEntry.objects.create(
-        user=custom_user, emotion="okay"
-    )
+    emotion_entry = EmotionEntry.objects.create(user=custom_user, emotion="okay")
     emotion_entry.save()
     emotion_entries = EmotionEntry.objects.all()
     assert len(emotion_entries) == 1

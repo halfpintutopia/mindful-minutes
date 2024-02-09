@@ -60,12 +60,8 @@ class CustomUserList(APIView):
 
             if serializer.is_valid():
                 serializer.save()
-                return Response(
-                    serializer.data, status=status.HTTP_201_CREATED
-                )
-            return Response(
-                serializer.errors, status=status.HTTP_400_BAD_REQUEST
-            )
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         raise MethodNotAllowed(request.method)
 
@@ -144,9 +140,7 @@ class CustomUserDetail(APIView):
                 if serializer.is_valid():
                     serializer.save()
                     return Response(serializer.data)
-                return Response(
-                    serializer.errors, status=status.HTTP_400_BAD_REQUEST
-                )
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
             elif request.method == "DELETE":
                 user.delete()

@@ -16,4 +16,12 @@ const compareOrder = (a, b) => {
 	return a.order - b.order;
 };
 
-export { getCurrentDate, compareOrder };
+const removeAllInnerElements = (element) => {
+	let child = element.lastElementChild;
+	while (child) {
+		element.removeChild(child);
+		child = element.lastElementChild;
+	}
+};
+
+export { getCurrentDate, compareOrder, removeAllInnerElements };

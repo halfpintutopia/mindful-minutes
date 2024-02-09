@@ -1,4 +1,4 @@
-import { compareOrder, getCurrentDate } from "./helpers/helpers.js";
+import { compareOrder, getCurrentDate, removeAllInnerElements } from "./helpers/helpers.js";
 import { fetchData, postData } from "./helpers/fetchApi.js";
 
 const server = 'http://localhost:8008';
@@ -66,14 +66,18 @@ const createTargetEntry = (entry) => {
 	            <p class="handwritten">${ entry.title }</p>
 	        </li>
 	    `;
+	
 	targetList.insertAdjacentHTML("beforeend", target);
 };
+
+
 
 
 const showTargets = () => {
 	retrieveTargets()
 		.then(res => {
 			res.sort(compareOrder);
+			removeAllInnerElements(targetList);
 			res.forEach(target => {
 				createTargetEntry(target);
 			});
@@ -98,6 +102,7 @@ const sendForm = (e) => {
 	if (validateForm(formData)) {
 		createTarget(formData)
 			.then(r => {
+				showTargets();
 				closeDialog();
 			});
 	} else {

@@ -128,3 +128,7 @@
 .error-msg {
     color: hsl(var(--porsche-600));
 }
+
+.done {
+    text-decoration: line-through;
+}

@@ -104,7 +104,23 @@ const showTargets = () => {
 			editButtons.forEach(btn => {
 				btn.addEventListener('click', fillForm);
 			});
+			
+			doneButtons = document.querySelectorAll('[data-btn="done"]');
+			doneButtons.forEach(btn => {
+				btn.addEventListener('click', markAndUTargetAsDone);
+			});
 		});
+};
+
+const markAndUTargetAsDone = (e) => {
+	const target = e.currentTarget;
+	if (target.dataset.btn === 'done') {
+		target.dataset.btn = 'refresh';
+		target.nextElementSibling.classList.add('done');
+	} else {
+		target.dataset.btn = 'done';
+		target.nextElementSibling.classList.remove('done');
+	}
 };
 
 const fillForm = (e) => {
@@ -120,14 +136,9 @@ const fillForm = (e) => {
 			}
 		}
 	}
-	console.log("WTF", item.dataset.entryId);
 	addFormId(item.dataset.entryId);
 	showDialog();
 };
-// TODO add edit button
-//  Call api to update
-//  Update list
-//  Refresh list
 
 const showForm = () => {
 	showDialog();
@@ -157,7 +168,6 @@ const sendForm = (e) => {
 };
 
 const initHtmlElements = () => {
-	doneButtons = document.querySelectorAll('[data-btn="done"]');
 	addButtonElement = document.querySelector('[data-btn="target-add"]');
 	modalElement = document.querySelector('[data-modal="targets"]');
 	modalCloseButton = document.querySelector('form#targets [data-btn="close"]');

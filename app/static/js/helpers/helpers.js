@@ -12,4 +12,8 @@ const getCurrentDate = () => {
 	].join('-');
 };
 
-export {getCurrentDate};
+const compareOrder = (a, b) => {
+	return a.order - b.order;
+};
+
+export { getCurrentDate, compareOrder };

@@ -153,6 +153,10 @@
             var(--column-count), 1fr);
 }
 
+.grid-list {
+    grid-template-columns: auto 1fr;
+}
+
 /* https://www.youtube.com/watch?v=r1IitKbJRFE */
 @media screen and (width > 56.25em) {
     .grid-columns[data-columns="2"] {

@@ -171,10 +171,10 @@
     font-weight: 900;
 }
 
-[data-btn="note-done"] span::before {
+[data-btn="done"] span::before {
     content: "\f00c";
 }
 
-[data-btn="note-refresh"] span::before {
+[data-btn="refresh"] span::before {
     content: "\f01e";
 }

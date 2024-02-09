@@ -3,8 +3,8 @@ import { fetchData, postData } from "./helpers/fetchApi.js";
 
 const server = 'http://localhost:8008';
 
-let editButtonElement,
-	doneButtonElement,
+let editButtons,
+	doneButtons,
 	refreshButtonElement,
 	addButtonElement,
 	modalElement,
@@ -23,16 +23,28 @@ const retrieveTargets = async () => {
 
 const createTarget = async (data) => {
 	const currentDate = getCurrentDate();
-	let dataObj = {};
+	const dataObj = createDataObject(data);
 	
+	const api = `${ server }/api/users/${ data.get('user') }/target/${ currentDate }/`;
+	await postData(api, dataObj, data.get('csrfmiddlewaretoken'));
+};
+
+const updateTarget = async (data) => {
+	const currentDate = getCurrentDate();
+	const dataObj = createDataObject(data);
+	
+	const api = `${ server }/api/users/${ data.get('user') }/target/${ currentDate }/${ targetsForm.dataset.formEntryId }/`;
+	await postData(api, dataObj, data.get('csrfmiddlewaretoken'), 'PUT');
+};
+
+const createDataObject = (data) => {
+	let dataObj = {};
 	for (let [ key, value ] of data.entries()) {
 		if (key !== 'csrfmiddlewaretoken' && key !== 'user') {
 			dataObj[key] = value;
 		}
 	}
-	
-	const api = `${ server }/api/users/${ data.get('user') }/target/${ currentDate }/`;
-	await postData(api, dataObj, data.get('csrfmiddlewaretoken'));
+	return dataObj;
 };
 
 const showDialog = () => {
@@ -41,6 +53,14 @@ const showDialog = () => {
 
 const closeDialog = () => {
 	modalElement.close();
+};
+
+const addFormId = (id) => {
+	targetsForm.dataset.formEntryId = id;
+};
+
+const removeFormId = () => {
+	targetsForm.dataset.formEntryId = undefined;
 };
 
 const validateForm = (data) => {
@@ -56,22 +76,19 @@ const validateForm = (data) => {
 
 const createTargetEntry = (entry) => {
 	const target = `
-	        <li class="accordion-list__item">
-	            <button data-btn="edit">
-	                <i class="fa-regular fa-pen-to-square"></i>
-	            </button>
-	            <button data-btn="done">
-	                <span></span>
-	            </button>
-	            <p class="handwritten">${ entry.title }</p>
-	        </li>
-	    `;
+    <li class="accordion-list__item" data-entry-id="${ entry.id }" data-entry-order="${ entry.order }" data-entry-title="${ entry.title }">
+      <button data-btn="edit">
+          <i class="fa-regular fa-pen-to-square"></i>
+      </button>
+      <button data-btn="done">
+          <span></span>
+      </button>
+      <p class="handwritten">${ entry.title }</p>
+    </li>
+`;
 	
 	targetList.insertAdjacentHTML("beforeend", target);
 };
-
-
-
 
 const showTargets = () => {
 	retrieveTargets()
@@ -81,15 +98,36 @@ const showTargets = () => {
 			res.forEach(target => {
 				createTargetEntry(target);
 			});
+		})
+		.then(() => {
+			editButtons = document.querySelectorAll('[data-btn="edit"]');
+			editButtons.forEach(btn => {
+				btn.addEventListener('click', fillForm);
+			});
 		});
 };
 
-// TODO change to appropriate name after refactoring
-const temp = () => {
+const fillForm = (e) => {
+	const formData = new FormData(targetsForm);
+	const item = e.currentTarget.closest('.accordion-list__item');
 	
-	
-	// on delete, send delete request to api
+	for (let [ key, value ] of formData.entries()) {
+		if (key !== 'csrfmiddlewaretoken' && key !== 'user') {
+			const input = targetsForm.querySelector(`[name=${ key }]`);
+			const dataValue = item.getAttribute(`data-entry-${ key }`);
+			if (input) {
+				input.value = dataValue;
+			}
+		}
+	}
+	console.log("WTF", item.dataset.entryId);
+	addFormId(item.dataset.entryId);
+	showDialog();
 };
+// TODO add edit button
+//  Call api to update
+//  Update list
+//  Refresh list
 
 const showForm = () => {
 	showDialog();
@@ -100,25 +138,26 @@ const sendForm = (e) => {
 	// on save, collect form data
 	const formData = new FormData(targetsForm);
 	if (validateForm(formData)) {
-		createTarget(formData)
-			.then(r => {
-				showTargets();
-				closeDialog();
-			});
+		if (targetsForm.dataset.formEntryId) {
+			updateTarget(formData)
+				.then(r => {
+					showTargets();
+					closeDialog();
+				});
+		} else {
+			createTarget(formData)
+				.then(r => {
+					showTargets();
+					closeDialog();
+				});
+		}
 	} else {
 		errorMsgElement.innerText = `You haven't provided enough information, please fill in the form`;
 	}
-	// send to api to create
-	// clear form
-	// close the modal
-	// add target to list on day targets
-	// add the edit button
-	// add the done / refresh button
 };
 
 const initHtmlElements = () => {
-	editButtonElement = document.querySelectorAll('[data-btn="target-edit"]');
-	doneButtonElement = document.querySelectorAll('[data-btn="target-done"]');
+	doneButtons = document.querySelectorAll('[data-btn="done"]');
 	addButtonElement = document.querySelector('[data-btn="target-add"]');
 	modalElement = document.querySelector('[data-modal="targets"]');
 	modalCloseButton = document.querySelector('form#targets [data-btn="close"]');

@@ -18,13 +18,6 @@
 	      href="{% static 'img/logo_dark.svg' %}"
 	      media="(prefers-color-scheme: light)"
 	>
-	{#    <script>#}
-	{#        window.typetura = {#}
-	{#            selectors: [".typetura"], // list of selectors to be used as contexts#}
-	{#            base: 20,  // target base font size in px. Mostly used by official packages.#}
-	{#            scale: 1 // scale factor to make headlines bigger or smaller. Mostly used by official packages.#}
-	{#        };#}
-	{#    </script>#}
 	<script src="{% static 'js/typetura.min.js' %}"></script>
 	<script src="https://kit.fontawesome.com/28847961b6.js" rel="preconnect" crossorigin="anonymous"></script>
 	
@@ -56,7 +49,7 @@
 					</a>
 				</div>
 				
-				<button class="nav-toggle" aria-controls="primary-navigation" aria-expanded="false">
+				<button class="btn nav-toggle" aria-controls="primary-navigation" aria-expanded="false">
 					<svg width="48px" height="48px" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
 						<g>
 							<line x1="0" y1="17" x2="48" y2="17" stroke-width="1"></line>
@@ -77,42 +70,47 @@
 					</div>
 					<ul>
 						{% if user.is_authenticated %}
-							<button></button>
-							<li class="{% if url_name == 'index' %}active{% endif %}">
-								<button>Morning</button>
+							<li class="{{ morning_page }}">
+								<a href="{% url 'morning' %}">
+									Morning
+								</a>
 							</li>
-							<li>
-								Evening
+							<li class="{{ evening_page }}">
+								<a href="{% url 'evening' %}">
+									Evening
+								</a>
 							</li>
 						{% endif %}
 						<li>
 							Learn
 						</li>
 						{% if user.is_authenticated %}
-							<li>
-								Search
+							<li class="{{ search }}">
+								<a href="{% url 'search' %}">
+									Search
+								</a>
 							</li>
-							<li>
-								My Account
+							<li class="{{ account_page }}">
+								<a href="{% url "account" %}">
+									My Account
+								</a>
 							</li>
 						{% endif %}
 						<li>
 							Contact Us
 						</li>
-					
-					
 					</ul>
 					
 					{% if user.is_authenticated %}
 						<a href="{% url 'account_logout' %}">
-							<button class="btn-green align-bottom">Log out</button>
+							<button class="btn btn-border align-bottom">Log out</button>
 						</a>
 					{% else %}
 						<a href="{% url 'account_signup' %}">
-							<button class="btn-green align-bottom">Sign up</button>
+							<button class="btn btn-border align-bottom">Sign up</button>
 						</a>
 						<a href="{% url 'account_login' %}">
-							<button class="btn-green align-bottom">Log in</button>
+							<button class="btn btn-border align-bottom">Log in</button>
 						</a>
 					{% endif %}
 				</nav>
@@ -143,13 +141,10 @@
 	</footer>
 {% endblock footer %}
 
-<script defer src="{% static 'js/header-height.js' %}"></script>
+<script src="https://kit.fontawesome.com/28847961b6.js" crossorigin="anonymous"></script>
 <script defer src="{% static 'js/nav-header.js' %}"></script>
 <script defer src="{% static 'js/nav-sticky.js' %}"></script>
-<script defer src="{% static 'js/page-scroller.js' %}"></script>
-<script src="https://kit.fontawesome.com/28847961b6.js" crossorigin="anonymous"></script>
 
-{% block custom_js %}
-{% endblock %}
+{% block custom_js %}{% endblock %}
 </body>
 </html>

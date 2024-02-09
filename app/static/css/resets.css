@@ -15,6 +15,7 @@
 }
 
 html {
+	height: 100%;
 	color-scheme: dark light;
 }
 
@@ -37,6 +38,7 @@ body {
 	/*background-color: hsl(var(--porsche-50), white);*/
 	/*color: hsl(var(--green-smoke-950), black);*/
 	display: grid;
+	/*grid: auto / 1em 1fr 1em;*/
 	grid-template-rows: min-content 1fr;
 	overflow-x: hidden;
 	
@@ -57,8 +59,18 @@ body {
 	line-height: 1.375;
 }
 
+/* A better image reset for your CSS https://www.youtube.com/watch?v=345V2MU3E_w */
+img {
+	font-style: italic; /* fail safe to make the alt text stand out */
+	background-repeat: no-repeat;
+	background-size: cover;
+	shape-margin: 1rem;
+	vertical-align: middle;
+	height: auto;
+	max-width: 100%;
+}
 
-img,
+/*img,*/
 picture,
 svg,
 video {

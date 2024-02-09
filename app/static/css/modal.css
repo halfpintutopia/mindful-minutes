@@ -1,0 +1,28 @@
+.modal {
+    padding: 1em 1.5em;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    background-color: hsl(var(--sandrift-50));
+    border-radius: 0.25rem;
+    z-index: 500;
+    color: hsl(var(--mischka-950));
+    min-width: 100%;
+
+    textarea {
+        width: 100%;
+        background: none;
+        color: hsl(var(--mischka-950));
+        padding: 1em 1.5em;
+    }
+
+    [data-btn="delete"] {
+        visibility: hidden;
+    }
+}
+
+@media screen and (width > 56.25em) {
+    .modal {
+        min-width: 50%;
+    }
+}

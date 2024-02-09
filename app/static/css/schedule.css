@@ -1,0 +1,80 @@
+.schedule {
+    position: relative;
+}
+
+.schedule__timeline {
+    display: block;
+    padding-top: var(--_schedule-row-height);
+
+    ul {
+        list-style: none;
+    }
+
+    li {
+        position: relative;
+        height: var(--_schedule-row-height);
+    }
+
+    li::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: var(--_alignment);
+        width: calc(100% - var(--_alignment));
+        height: var(--_line-width);
+        background-color: var(--_line-color);
+    }
+
+    li span {
+        display: inline-block;
+        transform: translateY(-50%);
+        font-size: 18px;
+    }
+}
+
+.schedule__events {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: calc(100% - var(--_alignment));
+    margin-left: var(--_alignment);
+    /*z-index: var(--_events-overlay);*/
+    /*pointer-events: none;*/
+
+    ul {
+        list-style: none;
+        position: relative;
+    }
+
+    .events-day {
+        display: grid;
+        align-items: center;
+        height: var(--_schedule-row-height);
+        border-bottom: var(--_line-width) solid var(--_line-color);
+        padding: 0;
+    }
+
+    .events-day > span {
+        position: relative;
+        left: -60px;
+        height: 100%;
+    }
+
+    .event-list li {
+        position: absolute;
+        z-index: var(--_event-overlay);
+        width: calc(100% + calc(var(--_line-width) * 2));
+        left: calc(var(--_line-width) * -1);
+        max-width: none;
+        margin-right: 0;
+        background-color: hsl(var(--green-smoke-700));
+        color: hsl(var(--porsche-50));
+        border-radius: var(--_radius);
+
+        display: grid;
+        align-items: center;
+        justify-content: center;
+        box-shadow: var(--box-shadow);
+    }
+}

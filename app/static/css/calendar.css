@@ -1,0 +1,76 @@
+@media screen and (width >= 56.25em) {
+    section:has(.scroller) {
+        --container-max-width: var(--container-width-regular);
+        width: min(100% - var(--container-padding, calc(var(--standard-padding) * 2)), var(--container-max-width));
+        margin-inline: auto;
+    }
+}
+
+.scroller {
+    --_spacer-sm: .5rem;
+    --_spacer-md: 1rem;
+    --_bg-dk-grey: 210 10% 23%;
+    --_radius: 2px;
+    --_shadow-color: 220 40% 2%;
+    --_shadow-strength: 10%;
+    --_shadow: 0 3px 5px -2px hsl(var(--_shadow-color) / calc(var(--_shadow-strength) + 3%)), 0 7px 14px -5px hsl(var(--_shadow-color) / calc(var(--_shadow-strength) + 5%));
+
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 9%;
+    gap: var(--_spacer-md);
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+}
+
+@media screen and (width >= 56.25em) {
+    .scroller {
+        display: grid;
+        grid-auto-flow: unset;
+        grid-auto-columns: unset;
+        gap: unset;
+        overflow-x: unset;
+        overscroll-behavior-inline: unset;
+        grid-template-columns: repeat(7, 1fr);
+
+    }
+}
+
+.scroller__item {
+    display: grid;
+    grid-template-columns: min-content;
+    gap: var(--_spacer-sm);
+}
+
+.scroller__item:has(.calendar-date) {
+    text-align: center;
+}
+
+.calendar-date {
+    display: grid;
+    align-items: center;
+    justify-content: center;
+
+    width: clamp(1.6875rem, 1.5455rem + 0.6061vi, 2rem);
+    aspect-ratio: 1 / 1;
+    background-color: hsl(var(--green-smoke-700));
+    color: hsl(var(--porsche-100));
+    border-radius: var(--_radius);
+    box-shadow: var(--_shadow);
+
+
+    margin-inline: auto;
+}
+
+.snaps-inline {
+    scroll-snap-type: inline mandatory;
+    scroll-padding-inline: var(--_spacer-md); /* check this as it is not working in browser */
+
+    & > * {
+        scroll-snap-align: start;
+    }
+}
+
+.search-month {
+    text-transform: uppercase;
+}

@@ -90,6 +90,7 @@ INSTALLED_APPS = [
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
+    "allauth.socialaccount.providers.google",
     "cloudinary",
     "ckeditor",
     "rest_framework",
@@ -143,13 +144,14 @@ DATABASES = {
     }
 }
 
-DATABASE_URL = os.environ.get("DATABASE_URL")
+if not DEBUG:
+    DATABASE_URL = os.environ.get("DATABASE_URL")
 
-if DATABASE_URL:
-    db_from_env = dj_database_url.config(
-        default=DATABASE_URL, conn_max_age=500
-    )
-    DATABASES["default"].update(db_from_env)
+    if DATABASE_URL:
+        db_from_env = dj_database_url.config(
+            default=DATABASE_URL, conn_max_age=500
+        )
+        DATABASES["default"].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -230,13 +232,33 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_EMAIL_VERIFICATION = "none"
+# ACCOUNT_EMAIL_VERIFICATION = "optional"
 ACCOUNT_LOGOUT_ON_GET = True
 
 ACCOUNT_FORMS = {"signup": "journal.forms.CustomSignupForm"}
-
-SOCIALACCOUNT_PROVIDERS = {"google": {"EMAIL_AUTHENTICATION": True}}
 
 SOCIALACCOUNT_FORMS = {
     "disconnect": "allauth.socialaccount.forms.DisconnectForm",
     "signup": "allauth.socialaccount.forms.SignupForm",
 }
+
+SOCIALACCOUNT_PROVIDERS = {
+    "google": {
+        "APPS": [
+            {
+                "client_id": os.environ.get("GOOGLE_CLIENT_ID"),
+                "secret": os.environ.get("GOOGLE_SECRET"),
+                "key": "",
+            },
+        ],
+        "SCOPE": [
+            "profile",
+            "email",
+        ],
+        "AUTH_PARAMS": {
+            "access_type": "online",
+        },
+    }
+}
+
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"

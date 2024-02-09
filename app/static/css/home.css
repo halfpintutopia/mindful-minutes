@@ -9,6 +9,7 @@ section:not(:first-of-type) {
     position: relative;
 
     .intro__logo {
+        display: block;
         margin-inline: auto;
         margin-top: 1em;
     }

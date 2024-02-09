@@ -1,0 +1,180 @@
+.accordion-wrapper {
+    --_space: 1rem;
+    --_layer-bottom: -100;
+    --_layer-top: 100;
+    --_btn-size: 3rem;
+    --_panel-padding: 0.75rem;
+    --_symbol-fs: 18px;
+    --_symbol-padding: 8px;
+
+    .accordion {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        contain: content;
+    }
+
+    .accordion * {
+        margin-top: 0;
+    }
+
+    .accordion-panel {
+        position: relative;
+        isolation: isolate;
+        flex-basis: calc(var(--_symbol-fs) + (calc(var(--_symbol-padding) * 3)));
+        overflow: hidden;
+    }
+
+    .accordion-panel:first-of-type {
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+    }
+
+    .accordion-panel:last-of-type {
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius: 4px;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+        .accordion-panel {
+            transition: flex-basis 500ms, flex-grow 500ms, rotate 500ms;
+        }
+    }
+
+    .accordion-panel:nth-of-type(1) {
+        --_icon-color: red;
+    }
+
+    .accordion-panel:has([aria-expanded="true"]) {
+        flex-basis: clamp(15rem, 40vh, 20rem);
+        flex-grow: 1;
+    }
+
+    .accordion-panel:has([aria-expanded="true"]) .panel-more i {
+        rotate: 180deg;
+    }
+
+    .panel-heading {
+        display: flex;
+        background-color: hsl(var(--green-smoke-700));
+    }
+
+    .accordion-trigger {
+        outline: 0;
+    }
+
+    .accordion-panel:focus-within {
+        outline: 3px solid var(--_icon-color);
+        outline-offset: 4px;
+    }
+
+    .accordion-content {
+        height: 100%;
+        background-color: hsl(var(--green-smoke-400));
+    }
+
+    .accordion-content > div {
+        transform: translateY(2rem);
+        opacity: 0;
+        margin-inline: 32px;
+        padding-top: .5rem;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+        .accordion-content > div {
+            transition: transform 500ms 500ms, opacity 500ms 500ms;
+        }
+    }
+
+    .accordion-panel:has([aria-expanded="true"]) div {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    .accordion-title {
+        font-size: 1.75rem;
+        font-weight: 700;
+        position: relative;
+        isolation: isolate;
+
+        display: grid;
+        align-items: center;
+    }
+
+    @media screen and (width < 44.9999em) {
+        .accordion-title::after {
+            content: "";
+            position: absolute;
+            left: calc((var(--_space) + var(--_btn-size)) * -1);
+            width: calc(100% + (var(--_btn-size) * 2));
+            height: var(--_btn-size);
+            background-color: hsl(0 0% 0% / .5);
+            z-index: var(--_layer-bottom);
+            border-radius: 100vw;
+        }
+    }
+
+    .accordion-trigger {
+        display: flex;
+        align-items: center;
+        gap: var(--_space);
+        flex-direction: row-reverse;
+        background: transparent;
+        border: 0;
+        padding: 0;
+    }
+
+    .accordion-trigger .fa-solid {
+        font-size: var(--_symbol-fs);
+        padding-block: var(--_symbol-padding);
+        padding-left: 32px;
+    }
+
+    button + span {
+        margin-left: auto;
+        font-size: var(--_symbol-fs);
+        padding-block: var(--_symbol-padding);
+        padding-right: 32px;
+        color: white;
+    }
+
+    ul {
+        list-style: none;
+    }
+
+    .accordion-list .accordion-list__item {
+        display: flex;
+        align-items: center;
+        gap: .5em;
+    }
+
+    .accordion-list + button,
+    .accordion-list__item button {
+        height: 35px;
+        display: inline-flex;
+        aspect-ratio: 1 / 1;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid hsl(var(--green-smoke-700));
+        background-color: hsl(var(--porsche-50));
+        color: hsl(var(--green-smoke-700));
+        cursor: pointer;
+    }
+
+    .accordion-list + button {
+        margin-top: 10px;
+    }
+}
+
+.accordion-list__item [data-btn] span::before {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+}
+
+[data-btn="done"] span::before {
+    content: "\f00c";
+}
+
+[data-btn="refresh"] span::before {
+    content: "\f01e";
+}

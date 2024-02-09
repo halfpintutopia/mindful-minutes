@@ -9,56 +9,56 @@
 ## Table of Contents
 
 - [Mindful Minutes](#mindful-minutes)
-  - [Table of Contents](#table-of-contents)
-  - [Product Information](#product-information)
-  - [UX / UI Design](#ux--ui-design)
-  - [Agile](#agile)
-    - [Future Implementations](#future-implementations)
-    - [Accessibility](#accessibility)
-  - [Technologies Used](#technologies-used)
-    - [Stack](#stack)
-    - [Packages](#packages)
-    - [Frameworks, Libraries \& Additional Programs/Software/Tools used](#frameworks-libraries--additional-programssoftwaretools-used)
-      - [Libraries \& Dependencies](#libraries--dependencies)
-      - [Tools](#tools)
-  - [Remote \& Local Deployment](#remote--local-deployment)
-    - [Local Deployment](#local-deployment)
-      - [Fork the Repository](#fork-the-repository)
-        - [Additional Information](#additional-information)
-          - [Configuration steps](#configuration-steps)
-    - [Remote Deployment](#remote-deployment)
-      - [Additional Information](#additional-information-1)
-        - [Create the Initial GitHub Actions Workflow YAML For CI/CD](#create-the-initial-github-actions-workflow-yaml-for-cicd)
-        - [Continuous Integration (CI)](#continuous-integration-ci)
-        - [Continuous Deployment (CD)](#continuous-deployment-cd)
-  - [Testing](#testing)
-    - [Django Test Driven Development using REST Framework](#django-test-driven-development-using-rest-framework)
-    - [User experience](#user-experience)
-    - [Bugs \& Fixes](#bugs--fixes)
-      - [Known Bugs](#known-bugs)
-    - [Lighthouse](#lighthouse)
-    - [Validator Testing](#validator-testing)
-  - [Credits](#credits)
-    - [References](#references)
-      - [Style](#style)
-      - [Definitions](#definitions)
-    - [Code Used](#code-used)
-    - [References \& Resources](#references--resources)
-      - [Additional Courses](#additional-courses)
-      - [Agile](#agile-1)
-      - [Deployment](#deployment)
-        - [Issues / Bugs](#issues--bugs)
-      - [CI / CD](#ci--cd)
-      - [Django](#django)
-        - [Python Dependencies / Packages](#python-dependencies--packages)
-      - [Heroku](#heroku)
-      - [Testing](#testing-1)
-        - [Automated testing](#automated-testing)
-      - [Django](#django-1)
-      - [Performance and Optimisation](#performance-and-optimisation)
-    - [Content](#content)
-    - [Media](#media)
-    - [Acknowledgements](#acknowledgements)
+    - [Table of Contents](#table-of-contents)
+    - [Product Information](#product-information)
+    - [UX / UI Design](#ux--ui-design)
+    - [Agile](#agile)
+        - [Future Implementations](#future-implementations)
+        - [Accessibility](#accessibility)
+    - [Technologies Used](#technologies-used)
+        - [Stack](#stack)
+        - [Packages](#packages)
+        - [Frameworks, Libraries \& Additional Programs/Software/Tools used](#frameworks-libraries--additional-programssoftwaretools-used)
+            - [Libraries \& Dependencies](#libraries--dependencies)
+            - [Tools](#tools)
+    - [Remote \& Local Deployment](#remote--local-deployment)
+        - [Local Deployment](#local-deployment)
+            - [Fork the Repository](#fork-the-repository)
+                - [Additional Information](#additional-information)
+                    - [Configuration steps](#configuration-steps)
+        - [Remote Deployment](#remote-deployment)
+            - [Additional Information](#additional-information-1)
+                - [Create the Initial GitHub Actions Workflow YAML For CI/CD](#create-the-initial-github-actions-workflow-yaml-for-cicd)
+                - [Continuous Integration (CI)](#continuous-integration-ci)
+                - [Continuous Deployment (CD)](#continuous-deployment-cd)
+    - [Testing](#testing)
+        - [Django Test Driven Development using REST Framework](#django-test-driven-development-using-rest-framework)
+        - [User experience](#user-experience)
+        - [Bugs \& Fixes](#bugs--fixes)
+            - [Known Bugs](#known-bugs)
+        - [Lighthouse](#lighthouse)
+        - [Validator Testing](#validator-testing)
+    - [Credits](#credits)
+        - [References](#references)
+            - [Style](#style)
+            - [Definitions](#definitions)
+        - [Code Used](#code-used)
+        - [References \& Resources](#references--resources)
+            - [Additional Courses](#additional-courses)
+            - [Agile](#agile-1)
+            - [Deployment](#deployment)
+                - [Issues / Bugs](#issues--bugs)
+            - [CI / CD](#ci--cd)
+            - [Django](#django)
+                - [Python Dependencies / Packages](#python-dependencies--packages)
+            - [Heroku](#heroku)
+            - [Testing](#testing-1)
+                - [Automated testing](#automated-testing)
+            - [Django](#django-1)
+            - [Performance and Optimisation](#performance-and-optimisation)
+        - [Content](#content)
+        - [Media](#media)
+        - [Acknowledgements](#acknowledgements)
 
 ## Product Information
 
@@ -81,7 +81,8 @@ For further details of the design process, please see:
 ## Agile
 
 [Agile User Story Master on Google Sheets](docs/agile/Agile%20User%20Story%20-%20Master%20-%20Use%20Cases.pdf)
-was created from a template supplied by our Cohort October 2022 Tutor, [Rebecca Tracey-Timoney](https://www.linkedin.com/in/rebeccatraceytimoney/).
+was created from a template supplied by our Cohort October 2022
+Tutor, [Rebecca Tracey-Timoney](https://www.linkedin.com/in/rebeccatraceytimoney/).
 
 ### Future Implementations
 
@@ -286,22 +287,22 @@ jobs:
   build:
     name: Build and Push Docker Image
     runs-on: ubuntu-latest
-
+    
     steps:
       - name: Checkout codebase
         uses: actions/checkout@v3
-
+      
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version:3.11
-
+      
       - name: Login to GitHub Container Registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
-
+      
       - name: Pull Docker image
         run: docker pull $IMAGE:latest || true
-
+      
       - name: Build Docker image
         run: |
           cd app
@@ -343,26 +344,26 @@ test:
   name: Test
   needs: build
   runs-on: ubuntu-latest
-
+  
   services:
     - name: postgres-latest
       alias: postgres
-
+  
   variables:
     DATABASE_TEST_URL: ${{ env.DATABASE_TEST_URL }}
-
+  
   steps:
     - name: Checkout codebase
       uses: actions/checkout@v3
-
+    
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
         python-version: 3.11
-
+    
     - name: Install dependencies
       run: pip install -r requirements.txt
-
+    
     - name: Lint with Flake8, Black and isort
       run: |
         cd app
@@ -403,16 +404,16 @@ deploy:
   name: Deploy to production
   needs: test
   runs-on: ubuntu-latest
-
+  
   steps:
     - name: Checkout codebase
       uses: actions/checkout@v3
-
+    
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
         python-version: 3.11
-
+    
     - name: Deploy to Heroku
       env:
         HEROKU_APP_NAME: mindful-minutes
@@ -622,32 +623,32 @@ Considered creating a base model or mixin as models most of the models contained
 ```python
 # Creating the base model to be inherited by models
 class BaseModel(models.Model):
-    field_1 = models.CharField(max_length=50)
-    field_2 = models.IntegerField()
-    field_3 = models.TimeField()
-
-    class Meta:
-        abstract = True
+	field_1 = models.CharField(max_length=50)
+	field_2 = models.IntegerField()
+	field_3 = models.TimeField()
+	
+	class Meta:
+		abstract = True
 
 
 # implementation of BaseModel by inheritance as follows:
 class ModelOne(BaseModel):
-    additional_field_1 = models.TextField()
+	additional_field_1 = models.TextField()
 
 
 # Creating the mixin to be reused by models
 class MixinModel(models.Model):
-    field_1 = models.CharField(max_length=50)
-    field_2 = models.IntegerField()
-    field_3 = models.TimeField()
-
-    class Meta:
-        abstract = True
+	field_1 = models.CharField(max_length=50)
+	field_2 = models.IntegerField()
+	field_3 = models.TimeField()
+	
+	class Meta:
+		abstract = True
 
 
 # implementation of reusing the MixinModel
 class ModelTwo(MixinModel):
-    additional_field_1 = models.TextField()
+	additional_field_1 = models.TextField()
 ```
 
 As the models had the exactly the same fields with not additional fields or behaviours, I chose to keep the models
@@ -703,6 +704,16 @@ box". [Cited from StackOverflow](https://stackoverflow.com/a/77233072/8614652)
 - [10 CSS animation tips and tricks](https://www.youtube.com/watch?v=y8-F5-2EIcg)
 - [Getting started with CSS nesting](https://www.youtube.com/watch?v=YnWPeA6l5UE)
 - [Learn how to create a responsive CSS grid layout | 07:23 - Using aspect-ratio on the images](https://www.youtube.com/watch?v=sKFW3wek21Q&t=1576s)
+- [A better image reset for your CSS](https://www.youtube.com/watch?v=345V2MU3E_w)
+    - [The Ultimate Low-Quality Image Placeholder Technique](https://csswizardry.com/2023/09/the-ultimate-lqip-lcp-technique/)
+- [How to make horizontal line with words in the middle using CSS?](https://www.geeksforgeeks.org/how-to-make-horizontal-line-with-words-in-the-middle-using-css/)
+- [Create a horizontal media scroller with CSS](https://www.youtube.com/watch?v=3yfswsnD2sw)
+    - [Open Props](https://open-props.style/#getting-started)
+    - [Building a media scroller component](https://web.dev/articles/building/a-media-scroller-component)
+- [Build a responsive, animate, accessible accordion that looks pretty good](https://www.youtube.com/watch?v=WJERnXiFFug)
+    - [SVGsprit.es](https://svgsprit.es/)
+- [Components - Schedule Template | Cody House](https://codyhouse.co/ds/components/app/weekly-schedule)
+- [Custom select menu - CSS only](https://www.youtube.com/watch?v=bB14uo0Tu5A)
 
 ##### Images
 
@@ -783,6 +794,8 @@ box". [Cited from StackOverflow](https://stackoverflow.com/a/77233072/8614652)
 - [Getting the Most Out of the Django's User Model](https://www.youtube.com/watch?v=sXZ3ntGp_Xc)
 - [Django - Extend User Model](https://simpleisbetterthancomplex.com/tutorial/2016/07/22/how-to-extend-django-user-model.html)
 - [Adding Social Authentication to Django](https://testdriven.io/blog/django-social-auth/)
+- [How To Add Social Authentication Using Django-Allauth To Your Django Project (Google OAuth Example)](https://medium.com/powered-by-django/add-social-authentication-django-allauth-google-oauth-example-d8d69a603356)
+- [Provider Configuration | django-allauth](https://docs.allauth.org/en/latest/socialaccount/provider_configuration.html)
 
 ##### Python Dependencies / Packages
 

@@ -72,7 +72,7 @@
 				</picture>
 			</div>
 		</div>
-
+		
 		<span class="scroll-animation fa-stack fa-2x">
 	        <i class="fa-solid fa-circle fa-stack-2x"></i>
 	        <i class="fa-solid fa-chevron-down fa-stack-1x fa-inverse"></i>
@@ -109,14 +109,14 @@
 					and enhance your commitment.</p>
 				<a href="#" class="more-btn">Learn more <i class="fa-solid fa-arrow-right-long"></i></a>
 				<a href="{% url 'account_signup' %}">
-					<button class="btn-green" data-btn-size="long">
+					<button class="btn btn-green" data-btn-size="long">
 						Get Started
 					</button>
 				</a>
 			</div>
 		</div>
 	</section>
-
+	
 	<section class="container learn-more" data-width="wide">
 		<div class="grid grid-columns" data-columns="2">
 			<div class="learn-more__text">
@@ -159,3 +159,7 @@
 {% block scroll_icon %}
 
 {% endblock scroll_icon %}
+
+{% block custom_js %}
+	<script defer src="{% static 'js/page-scroller.js' %}"></script>
+{% endblock %}

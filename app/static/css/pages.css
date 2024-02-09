@@ -1,0 +1,17 @@
+.container:has(.morning) h1 {
+    margin-top: 2.8rem;
+    margin-bottom: 1.125rem;
+}
+
+.morning {
+    --_schedule-row-height: 50px;
+    --_alignment: 60px;
+    --_line-width: 1px;
+    --_events-overlay: 100;
+    --_event-overlay: 200;
+    --_line-color: hsl(var(--green-smoke-950) / .1);
+    --_radius: 4px;
+    --_gap-wide: clamp(1.75rem, -1.3466rem + 13.2121vi, 8.5625rem);
+
+    gap: var(--_gap-wide);
+}

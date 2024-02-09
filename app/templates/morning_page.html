@@ -1,0 +1,230 @@
+<!-- morning_page.html -->
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+	<section class="container" data-width="regular">
+		<h1>Morning</h1>
+		
+		<div class="grid grid-columns morning" data-columns="2">
+			<article class="schedule">
+				<div class="schedule__events">
+					<div class="events-day">
+						<span class="current-date"></span>
+					</div>
+					<ul class="event-list"></ul>
+				</div>
+				
+				<div class="schedule__timeline">
+					<ul>
+						<li><span>00:00</span></li>
+						<li><span>01:00</span></li>
+						<li><span>02:00</span></li>
+						<li><span>03:00</span></li>
+						<li><span>04:00</span></li>
+						<li><span>05:00</span></li>
+						<li><span>06:00</span></li>
+						<li><span>07:00</span></li>
+						<li><span>08:00</span></li>
+						<li><span>09:00</span></li>
+						<li><span>10:00</span></li>
+						<li><span>11:00</span></li>
+						<li><span>12:00</span></li>
+						<li><span>13:00</span></li>
+						<li><span>14:00</span></li>
+						<li><span>15:00</span></li>
+						<li><span>16:00</span></li>
+						<li><span>17:00</span></li>
+						<li><span>18:00</span></li>
+						<li><span>19:00</span></li>
+						<li><span>20:00</span></li>
+						<li><span>21:00</span></li>
+						<li><span>22:00</span></li>
+						<li><span>23:00</span></li>
+						<li><span>24:00</span></li>
+					</ul>
+				</div>
+			</article>
+			
+			<article class="targets">
+				<div class="accordion-wrapper">
+					<div class="accordion">
+						<div class="accordion-panel">
+							<div id="panel1-heading" class="panel-heading">
+								<button
+										class="accordion-trigger"
+										aria-controls="panel1-content"
+										aria-expanded="true"
+								>
+									<span id="panel1-title" class="accordion-title">Day Targets</span>
+									<i aria-hidden="true" class="fa-solid fa-bullseye"></i>
+								</button>
+								<span class="panel-more"><i class="fa-solid fa-chevron-down"></i></span>
+							</div>
+							<div
+									class="accordion-content"
+									id="panel1-content"
+									aria-labelledby="panel1-heading"
+									aria-hidden="false"
+									role="region"
+							>
+								<div>
+									<p>What is my focus today?</p>
+									<small>Try to keep the list short, no more than 6.</small>
+									<ul class="accordion-list" data-accordion-list="targets"></ul>
+									<button data-btn="target-add">
+										<i class="fa-solid fa-plus"></i>
+									</button>
+								</div>
+							</div>
+						</div>
+						<div class="accordion-panel">
+							<div id="panel2-heading" class="panel-heading">
+								<button
+										class="accordion-trigger"
+										aria-controls="panel1-content"
+										aria-expanded="false"
+								>
+									<span id="panel2-title" class="accordion-title">Notes</span>
+									<i aria-hidden="true" class="fa-solid fa-pencil"></i>
+								</button>
+								<span class="panel-more"><i class="fa-solid fa-chevron-down"></i></span>
+							</div>
+							<div
+									class="accordion-content"
+									id="panel2-content"
+									aria-labelledby="panel2-heading"
+									aria-hidden="false"
+									role="region"
+							>
+								<div>
+									<p>What would you like to note or remember to do later?</p>
+									<ul class="accordion-list" data-accordion-list="notes"></ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				{# Dialogs #}
+				{# Schedule #}
+				<dialog data-modal="schedule" class="modal">
+					<section class="account container" data-width="regular">
+						<form id="schedule" class="grid">
+							{% csrf_token %}
+							<input type="hidden" name="user" value="{{ user.slug }}">
+							<div class="form-group grid">
+								<h4>Add appointment or task</h4>
+								<div class="grid" data-columns="">
+									<label for="title">
+										<input
+												id="title"
+												name="title"
+												type="text"
+												placeholder="What will I be doing?">
+									</label>
+								</div>
+								<span class="error-msg"></span>
+							</div>
+							
+							<div class="form-group grid">
+								<h4>Time</h4>
+								<p>Set the start of the appointment / task, and then the duration.</p>
+								<div class="grid grid-columns" data-columns="2">
+									<label for="time-from" class="custom-select">
+										<select name="timeFrom" id="time-from">
+										</select>
+										<span class="custom-arrow"></span>
+									</label>
+									<label for="time-until" class="custom-select">
+										<select name="timeUntil" id="time-until">
+										</select>
+										<span class="custom-arrow"></span>
+									</label>
+								</div>
+							</div>
+							<div class="form-group grid grid-columns button-group" data-columns="3">
+								<button class="btn btn-green" data-btn="delete">Delete</button>
+								<button class="btn btn-green" data-btn="close">Close</button>
+								<button class="btn btn-green" type="submit">Save</button>
+							</div>
+						</form>
+					</section>
+				</dialog>
+				
+				{# Targets #}
+				<dialog data-modal="targets" class="modal" data-form-id="">
+					<section class="account container" data-width="regular">
+						<form id="targets" class="grid">
+							{% csrf_token %}
+							<input type="hidden" name="user" value="{{ user.slug }}">
+							<div class="form-group grid">
+								<h4>Add Target</h4>
+								<div class="grid grid-list">
+									<label for="order">
+										<input
+												id="order"
+												name="order"
+												type="number"
+												min="1"
+												max="6"
+												placeholder="Order of priority">
+									</label>
+									<label for="title">
+										<input
+												id="title"
+												name="title"
+												type="text"
+												placeholder="What are my main priorities today?">
+									</label>
+								</div>
+								<span class="error-msg"></span>
+							</div>
+							<div class="form-group grid grid-columns button-group" data-columns="3">
+								<button class="btn btn-green" data-btn="delete">Delete</button>
+								<button class="btn btn-green" data-btn="close">Close</button>
+								<button class="btn btn-green" type="submit">Save</button>
+							</div>
+						
+						</form>
+					</section>
+				</dialog>
+				
+				{# Notes #}
+				<dialog data-modal="notes" class="modal">
+					<section class="account container" data-width="regular">
+						<form id="notes" class="grid">
+							{% csrf_token %}
+							<input type="hidden" name="user" value="{{ user.slug }}">
+							<div class="form-group grid">
+								<h4>Add Notes</h4>
+								<div class="grid" data-columns="">
+									<label for="content">
+										<textarea name="content" id="content" cols="30" rows="10"></textarea>
+									</label>
+								</div>
+								<span class="error-msg"></span>
+							</div>
+							<div class="form-group grid grid-columns button-group" data-columns="3">
+								<button class="btn btn-green" data-btn="delete">Delete</button>
+								<button class="btn btn-green" data-btn="close">Close</button>
+								<button class="btn btn-green" type="submit">Save</button>
+							</div>
+						
+						</form>
+					</section>
+				</dialog>
+			
+			</article>
+		</div>
+	</section>
+
+
+{% endblock content %}
+
+{% block custom_js %}
+	<script type="module" defer src="{% static 'js/schedule.js' %}"></script>
+	<script defer src="{% static 'js/accordion.js' %}"></script>
+	<script type="module" defer src="{% static 'js/notes.js' %}"></script>
+{% endblock %}

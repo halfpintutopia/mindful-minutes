@@ -20,7 +20,9 @@ then
   echo "PostgreSQL started"
 fi
 
-python manage.py flush --no-input
+# Uncomment the following line for the first deployment to production
+# to start with a clean database in production
+#python manage.py flush --no-input
 python manage.py migrate
 
 exec "$@"

@@ -1,0 +1,68 @@
+.account {
+    form {
+        gap: clamp(2rem, 1.6307rem + 1.5758vi, 2.8125rem);
+    }
+
+    input {
+        background: none;
+        color: hsl(var(--green-smoke-950) / 0.6);
+        border: none;
+        border-bottom: 1px solid hsl(var(--green-smoke-950));
+        width: 100%;
+    }
+
+    h4 {
+        text-transform: uppercase;
+    }
+}
+
+.custom-select {
+    position: relative;
+
+    select {
+        /*padding: 1em 5em 1em 1.5em;*/
+        background: none;
+        color: hsl(var(--green-smoke-950) / 0.6);
+        border: 0;
+        width: 100%;
+        appearance: none;
+    }
+
+    .custom-arrow {
+        position: absolute;
+        top: 0;
+        right: 0;
+        display: block;
+        /*background-color: red;*/
+        height: 100%;
+        aspect-ratio: 1 / 1;
+        pointer-events: none;
+    }
+
+    .custom-arrow::before,
+    .custom-arrow::after {
+        --_size: 0.5em;
+
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 0;
+
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .custom-arrow::before {
+        border-left: var(--_size) solid transparent;
+        border-right: var(--_size) solid transparent;
+        border-bottom: var(--_size) solid hsl(var(--green-smoke-950));
+        top: 25%;
+    }
+
+    .custom-arrow::after {
+        border-left: var(--_size) solid transparent;
+        border-right: var(--_size) solid transparent;
+        border-top: var(--_size) solid hsl(var(--green-smoke-950));
+        top: 75%;
+    }
+}

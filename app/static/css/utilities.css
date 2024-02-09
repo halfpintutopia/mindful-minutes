@@ -98,3 +98,37 @@
     height: 100vh; /*fallback*/
     height: 100dvh; /*100svh*/
 }
+
+.full-width {
+    width: 100%;
+}
+
+.hr-with-text {
+    display: flex;
+    flex-direction: row;
+    text-transform: uppercase;
+}
+
+.hr-with-text:before,
+.hr-with-text:after {
+    content: "";
+    flex: 1 1;
+    border-bottom: 2px solid hsl(var(--porsche-50));
+    margin: auto;
+}
+
+.hr-with-text:before {
+    margin-right: 1em;
+}
+
+.hr-with-text:after {
+    margin-left: 1em;
+}
+
+.error-msg {
+    color: hsl(var(--porsche-600));
+}
+
+.done {
+    text-decoration: line-through;
+}

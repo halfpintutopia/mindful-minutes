@@ -7,51 +7,52 @@
 {% block head_title %}{% trans "Signup" %}{% endblock %}
 
 {% block content %}
-    <div>
-
-        <form class="main-form signup" id="signup_form" method="post" action="{% url 'account_signup' %}"
-              data-current-page="1">
-            {% csrf_token %}
-
-            {% for field in form %}
-
-                <div class="form-page background-dark-accent"
-                     data-form-page-number="{{ forloop.counter }}">
-                    <div class="container list-item text-white" data-width="narrow">
-                        <span class="">{{ forloop.counter }}.</span>
-
-                        <label for="{{ field.id_for_label }}">{{ field.label }} {% if field.field.required %}*
-                        {% endif %}<br><span class="list-item__help-text">{{ field.help_text }}</span></label>
-
-                        {{ field }}
-                        {% if redirect_field_value %}
-                            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
-                        {% endif %}
-                        <button class="btn btn-form{% if forloop.last %} btn-signup{% endif %}"
-                                {% if forloop.last %}type="submit"{% endif %} data-form-direction="down">
-                            {% if forloop.last %}Ready to Set Up a Habit{% else %}Continue{% endif %}
-                        </button>
-                        {% if forloop.first %}
-                            <small>{% blocktrans %}Already have an account? Then please
-                                <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</small>
-                        {% endif %}
-                    </div>
-                </div>
-            {% endfor %}
-            <div class="btn-form-direction-wrapper flex">
-                <button class="btn btn-form-direction btn-previous"
-                        data-form-direction="up"
-                        aria-label="Navigate to previous question">
-                    <i class="fa-solid fa-chevron-up"></i>
-                </button>
-                <button class="btn btn-form-direction btn-next"
-                        data-form-direction="down"
-                        aria-label="Navigate to previous question">
-                    <i class="fa-solid fa-chevron-down"></i>
-                </button>
-            </div>
-        </form>
-    </div>
+	<div>
+		
+		<form class="main-form signup" id="signup_form" method="post" action="{% url 'account_signup' %}"
+		      data-current-page="1">
+			{% csrf_token %}
+			
+			{% for field in form %}
+				<div class="form-page background-dark-accent"
+				     data-form-page-number="{{ forloop.counter }}"
+				     data-pages="{% if form.fields|length > 1 %}multiple{% endif %}">
+					<div class="container list list-item text-white" data-width="narrow">
+						<span class="">{{ forloop.counter }}.</span>
+						
+						<label for="{{ field.id_for_label }}">{{ field.label }} {% if field.field.required %}*
+						{% endif %}<br><span class="list-item__help-text">{{ field.help_text }}</span></label>
+						{{ field }}
+						<span class="validity-msg"></span>
+					{{ redirect_field_value }}
+						{% if redirect_field_value %}
+							<input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+						{% endif %}
+						<button class="btn btn-continue{% if forloop.last %} btn-signup{% endif %}"
+						        {% if forloop.last %}type="submit"{% else %}data-form-direction="down"{% endif %}>
+							{% if forloop.last %}{% trans "Ready to Set Up a Habit" %}{% else %}{% trans "Continue" %}{% endif %}
+						</button>
+						{% if forloop.first %}
+							<small>{% blocktrans %}Already have an account? Then please
+								<a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</small>
+						{% endif %}
+					</div>
+				</div>
+			{% endfor %}
+			<div class="btn-form-direction-wrapper flex">
+				<button class="btn btn-form-direction btn-previous"
+				        data-form-direction="up"
+				        aria-label="Navigate to previous question">
+					<i class="fa-solid fa-chevron-up"></i>
+				</button>
+				<button class="btn btn-form-direction btn-next"
+				        data-form-direction="down"
+				        aria-label="Navigate to previous question">
+					<i class="fa-solid fa-chevron-down"></i>
+				</button>
+			</div>
+		</form>
+	</div>
 
 
 {% endblock %}

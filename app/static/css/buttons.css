@@ -1,4 +1,4 @@
-button:not(.nav-toggle), .btn {
+.btn:not(.nav-toggle) {
     border: none;
     outline-color: transparent;
     border-radius: var(--_btn-radius);
@@ -20,16 +20,54 @@ input.disabled {
     cursor: default;
 }
 
+.btn.btn-border {
+    --_btn-radius: 4px;
+    --_btn-padding: clamp(0.6875rem, 0.4918rem + 0.9783vw, 1.25rem) clamp(1.375rem, 0.8967rem + 2.3913vw, 2.75rem);
+
+    border: 2px;
+    border-top: 2px solid hsl(var(--porsche-700));
+    border-right: 2px solid hsl(var(--porsche-700));
+    border-bottom: 2px solid hsl(var(--porsche-700));
+    background: linear-gradient(90deg, hsl(var(--green-smoke-300)) 0%, hsl(var(--green-smoke-300)) 3.27%, transparent 3.28%);
+    text-align: center;
+    color: hsl(var(--green-smoke-950));
+}
+
 .btn-green {
     --_btn-radius: 4px;
+    --_btn-padding: clamp(0.6875rem, 0.4918rem + 0.9783vw, 1.25rem) clamp(1.375rem, 0.8967rem + 2.3913vw, 2.75rem);
+
     background: linear-gradient(90deg, #503737 0%, #503737 3.27%, #AFBE98 3.28%);
     text-align: center;
     color: hsl(var(--porsche-50));
-    --_btn-padding: clamp(0.6875rem, 0.4918rem + 0.9783vw, 1.25rem) clamp(1.375rem, 0.8967rem + 2.3913vw, 2.75rem);
 }
 
 .btn-green a {
     color: hsl(var(--porsche-50));
+}
+
+.btn-green[data-btn="delete"] {
+    background: linear-gradient(90deg, #AFBE98 0%, #AFBE98 3.27%, #503737 3.28%);
+}
+
+.btn-white {
+    --_btn-radius: 4px;
+    --_btn-padding: clamp(0.6875rem, 0.4918rem + 0.9783vw, 1.25rem) clamp(1.375rem, 0.8967rem + 2.3913vw, 2.75rem);
+
+    background: linear-gradient(90deg, #A15A2D 0%, #A15A2D 3.27%, #FCF8F0 3.28%);
+    color: hsl(var(--green-smoke-950));
+    text-align: center;
+    width: max-content;
+}
+
+.btn-continue {
+    --_btn-radius: 4px;
+    --_btn-padding: clamp(0.5rem, 0.4148rem + 0.3636vi, 0.6875rem);
+
+    background: linear-gradient(90deg, #A15A2D 0%, #A15A2D 3.27%, #FCF8F0 3.28%);
+    color: hsl(var(--green-smoke-950));
+    text-align: center;
+    width: max-content;
 }
 
 /* Scroll Button */
@@ -61,6 +99,7 @@ input.disabled {
 .more-btn + a .btn-green {
     margin-top: clamp(1.625rem, 1.3693rem + 1.0909vw, 2.1875rem);
 }
+
 
 @keyframes bounce {
     100% {

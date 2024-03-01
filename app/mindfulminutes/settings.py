@@ -162,7 +162,7 @@ ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_EMAIL_VERIFICATION = "none"  # ACCOUNT_EMAIL_VERIFICATION = "optional"
 ACCOUNT_LOGOUT_ON_GET = True
 
-ACCOUNT_FORMS = {"signup": "journal.forms.CustomSignupForm"}
+ACCOUNT_FORMS = {"signup": "users.forms.CustomSignupForm"}
 
 SOCIALACCOUNT_FORMS = {
     "disconnect": "allauth.socialaccount.forms.DisconnectForm",

@@ -19,6 +19,14 @@ from django.urls import include, path
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions
+from .views import (
+    account_page,
+    design_system,
+    evening_page,
+    index,
+    morning_page,
+    search,
+)
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -33,8 +41,22 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("accounts/", include("allauth.urls")),
     path("accounts/", include("allauth.socialaccount.urls")),
-    path("", include("journal.urls")),
-    path("", include("journal.api_testing.urls")),
+    path("", include("appointments.urls")),
+    path("", include("emotions.urls")),
+    path("", include("gratitude_entries.urls")),
+    path("", include("ideas.urls")),
+    path("", include("improvements.urls")),
+    path("", include("knowledge_entries.urls")),
+    path("", include("notes.urls")),
+    path("", include("targets.urls")),
+    path("", include("users.urls")),
+    path("", include("wins.urls")),
+    path("", index, name="home"),
+    path("search/", search, name="search"),
+    path("account/", account_page, name="account"),
+    path("morning/", morning_page, name="morning"),
+    path("evening/", evening_page, name="evening"),
+    path("design-system", design_system, name="design-systems"),
     path(
         "swagger-docs/",
         schema_view.with_ui("swagger", cache_timeout=0),

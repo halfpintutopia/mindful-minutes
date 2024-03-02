@@ -1,4 +1,5 @@
 from django.contrib import admin
+
 from .models import EmotionEntry
 
 
@@ -9,7 +10,7 @@ class EmotionEntryAdmin(admin.ModelAdmin):
 
     The class defines the display and behaviour fo the EmotionEntry model
     """
-    
+
     readonly_fields = ("created_on", "updated_on")
     list_display = ("user", "emotion")
     fields = (
@@ -20,5 +21,3 @@ class EmotionEntryAdmin(admin.ModelAdmin):
     )
     search_fields = ["user", "emotion", "created_on"]
     ordering = ("created_on",)
-
-

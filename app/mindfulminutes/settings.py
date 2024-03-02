@@ -92,7 +92,7 @@ DATABASES = {
 
 if not DEBUG:
     DATABASE_URL = os.environ.get("DATABASE_URL")
-    
+
     if DATABASE_URL:
         db_from_env = dj_database_url.config(
             default=DATABASE_URL, conn_max_age=500
@@ -102,19 +102,19 @@ if not DEBUG:
 AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation"
-                ".UserAttributeSimilarityValidator",
+        ".UserAttributeSimilarityValidator",
     },
     {
         "NAME": "django.contrib.auth.password_validation"
-                ".MinimumLengthValidator",
+        ".MinimumLengthValidator",
     },
     {
         "NAME": "django.contrib.auth.password_validation"
-                ".CommonPasswordValidator",
+        ".CommonPasswordValidator",
     },
     {
         "NAME": "django.contrib.auth.password_validation"
-                ".NumericPasswordValidator",
+        ".NumericPasswordValidator",
     },
 ]
 
@@ -204,9 +204,7 @@ if not DEBUG:
     SECURE_REFERRER_POLICY = "same-origin"
 
     REST_FRAMEWORK = {
-        "DEFAULT_RENDERER_CLASSES": (
-            "rest_framework.renderers.JSONRenderer",
-        )
+        "DEFAULT_RENDERER_CLASSES": ("rest_framework.renderers.JSONRenderer",)
     }
 
 if DEBUG:

@@ -1,10 +1,6 @@
 from django.urls import path
 
-from .views import (
-    TargetEntryDetail,
-    TargetEntryList,
-    TargetEntryListCreate,
-)
+from .views import TargetEntryDetail, TargetEntryList, TargetEntryListCreate
 
 urlpatterns = [
     path(

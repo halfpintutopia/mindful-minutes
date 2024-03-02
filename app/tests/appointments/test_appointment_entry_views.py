@@ -1,10 +1,8 @@
-
 import json
 from datetime import date
 
 import pytest
 from django.urls import reverse
-
 from freezegun import freeze_time
 from rest_framework import status
 

@@ -122,19 +122,19 @@ if not DEBUG:
 AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation"
-                ".UserAttributeSimilarityValidator",
+        ".UserAttributeSimilarityValidator",
     },
     {
         "NAME": "django.contrib.auth.password_validation"
-                ".MinimumLengthValidator",
+        ".MinimumLengthValidator",
     },
     {
         "NAME": "django.contrib.auth.password_validation"
-                ".CommonPasswordValidator",
+        ".CommonPasswordValidator",
     },
     {
         "NAME": "django.contrib.auth.password_validation"
-                ".NumericPasswordValidator",
+        ".NumericPasswordValidator",
     },
 ]
 
@@ -213,6 +213,4 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 if DEBUG:
     SECURE_SSL_REDIRECT = False
 
-CSRF_TRUSTED_ORIGINS = [
-    "https://mindful-minutes-f992c8465405.herokuapp.com"
-]
+CSRF_TRUSTED_ORIGINS = ["https://mindful-minutes-f992c8465405.herokuapp.com"]

@@ -35,6 +35,10 @@ if not DEBUG:
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
     SECURE_REFERRER_POLICY = "same-origin"
 
+    CSRF_TRUSTED_ORIGINS = [
+        "https://mindful-minutes-f992c8465405.herokuapp.com"
+    ]
+
     REST_FRAMEWORK = {
         "DEFAULT_RENDERER_CLASSES": ("rest_framework.renderers.JSONRenderer",)
     }
@@ -209,7 +213,6 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-
 
 if DEBUG:
     SECURE_SSL_REDIRECT = False

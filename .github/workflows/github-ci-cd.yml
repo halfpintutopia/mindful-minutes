@@ -116,6 +116,7 @@ jobs:
 
       - name: Run tests and linting and run Django deployment checklist
         run: |
+          source app/env/bin/activate
           export DEBUG=1
           pytest -p no:warnings
           flake8 .

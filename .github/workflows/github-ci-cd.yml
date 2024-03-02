@@ -11,6 +11,7 @@ env:
   HEROKU_APP_NAME: mindful-minutes
   HEROKU_REGISTRY_IMAGE: registry.heroku.com/$HEROKU_APP_NAME/web
   HEROKU_AUTH_TOKEN: ${{ secrets.HEROKU_AUTH_TOKEN }}
+  ALLOWED_HOSTS: .herokuapp.com
 
 jobs:
   build:

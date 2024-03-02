@@ -22,6 +22,23 @@ ALLOWED_HOSTS = [
     "mindful-minutes-f992c8465405.herokuapp.com",
 ]
 
+if not DEBUG:
+    # SECURE_HSTS_SECONDS = 3600
+    # SECURE_CONTENT_TYPE_NOSNIFF = True
+    # SECURE_BROWSER_XSS_FILTER = True
+    # SECURE_SSL_REDIRECT = True
+    # SESSION_COOKIE_SECURE = True
+    # CSRF_COOKIE_SECURE = True
+    # X_FRAME_OPTIONS = "SAMEORIGIN"
+    # SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    # SECURE_HSTS_PRELOAD = True
+    # SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+    # SECURE_REFERRER_POLICY = "same-origin"
+
+    REST_FRAMEWORK = {
+        "DEFAULT_RENDERER_CLASSES": ("rest_framework.renderers.JSONRenderer",)
+    }
+
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -57,7 +74,7 @@ MIDDLEWARE = [
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
-    "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    # "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
 ROOT_URLCONF = "mindfulminutes.urls"
@@ -193,22 +210,6 @@ SOCIALACCOUNT_PROVIDERS = {
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
-if not DEBUG:
-    SECURE_HSTS_SECONDS = 3600
-    SECURE_CONTENT_TYPE_NOSNIFF = True
-    SECURE_BROWSER_XSS_FILTER = True
-    SECURE_SSL_REDIRECT = True
-    SESSION_COOKIE_SECURE = True
-    CSRF_COOKIE_SECURE = True
-    X_FRAME_OPTIONS = "SAMEORIGIN"
-    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-    SECURE_HSTS_PRELOAD = True
-    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-    SECURE_REFERRER_POLICY = "same-origin"
-
-    REST_FRAMEWORK = {
-        "DEFAULT_RENDERER_CLASSES": ("rest_framework.renderers.JSONRenderer",)
-    }
 
 if DEBUG:
     SECURE_SSL_REDIRECT = False

@@ -17,6 +17,10 @@ jobs:
   build:
     name: Build and Push Docker Image
     runs-on: ubuntu-latest
+    env:
+      IMAGE: ghcr.io/${{ github.repository }}
+      TAG: latest
+      ALLOWED_HOSTS: .herokuapp.com
 
     steps:
       - name: Checkout codebase

@@ -1,6 +1,6 @@
 import pytest
 
-from journal.models import GratitudeEntry
+from gratitude_entries.models import GratitudeEntry
 
 
 @pytest.mark.django_db
@@ -8,7 +8,7 @@ def test_create_knowledge_entry(custom_user):
     """
     GIVEN a knowledge entry model
     WHEN creating a knowledge entry
-    THEN user should have successfully created a knowledge entry
+    THEN user should have successfully created knowledge entry
     """
     gratitude_entry = GratitudeEntry.objects.create(
         user=custom_user, content="I am healthy"

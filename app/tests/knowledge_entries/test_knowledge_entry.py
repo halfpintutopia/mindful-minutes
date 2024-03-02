@@ -1,6 +1,6 @@
 import pytest
 
-from journal.models import KnowledgeEntry
+from knowledge_entries.models import KnowledgeEntry
 
 
 @pytest.mark.django_db
@@ -8,7 +8,7 @@ def test_create_knowledge_entry(custom_user):
     """
     GIVEN a knowledge entry model
     WHEN creating a knowledge entry
-    THEN user should have successfully created a knowledge entry
+    THEN user should have successfully created knowledge entry
     """
     knowledge_entry = KnowledgeEntry.objects.create(
         user=custom_user,

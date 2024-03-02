@@ -1,6 +1,6 @@
 import pytest
 
-from journal.models import WinEntry
+from wins.models import WinEntry
 
 
 @pytest.mark.django_db

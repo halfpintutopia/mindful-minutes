@@ -4,7 +4,7 @@ import pytest
 from django.core.exceptions import ValidationError
 from faker import Faker
 
-from journal.models import AppointmentEntry
+from appointments.models import AppointmentEntry
 
 fake = Faker()
 

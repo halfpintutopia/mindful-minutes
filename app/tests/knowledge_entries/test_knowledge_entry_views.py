@@ -4,12 +4,10 @@ from datetime import date
 import pytest
 from django.urls import reverse
 
-# https://dennisokeeffe.medium.com/mocking-python-datetime-in-tests-with
-# -freezegun-f5532307d6d6
 from freezegun import freeze_time
 from rest_framework import status
 
-from journal.models import KnowledgeEntry
+from knowledge_entries.models import KnowledgeEntry
 
 
 @pytest.mark.django_db
@@ -45,7 +43,7 @@ def test_get_list_of_knowledge_entries(
 def test_add_knowledge_entry(authenticated_user):
     """
     GIVEN a Django application
-    WHEN the user requests to add an knowledge entry
+    WHEN the user requests to add knowledge entry
     THEN check that the knowledge entry is added
     """
     knowledge_entries = KnowledgeEntry.objects.all()
@@ -95,7 +93,7 @@ def test_add_knowledge_entry(authenticated_user):
 def test_add_knowledge_entry_incorrect_json(authenticated_user, test_data):
     """
     GIVEN a Django application
-    WHEN the user requests to add an knowledge entry with an invalid payload
+    WHEN the user requests to add knowledge entry with an invalid payload
     THEN the payload is not sent
     """
     knowledge_entries = KnowledgeEntry.objects.all()
@@ -123,7 +121,7 @@ def test_add_knowledge_entry_incorrect_json(authenticated_user, test_data):
 def test_add_knowledge_entry_not_current_date(authenticated_user, date_param):
     """
     GIVEN a Django application
-    WHEN the user attempts to add an knowledge entry on a date,
+    WHEN the user attempts to add knowledge entry on a date,
     that is not the current date
     THEN the knowledge entry is not created
     """
@@ -152,7 +150,7 @@ def test_add_knowledge_entry_not_current_date(authenticated_user, date_param):
 def test_get_single_knowledge_entry(authenticated_user, add_knowledge_entry):
     """
     GIVEN a Django application
-    WHEN the user requests to retrieve an knowledge entry
+    WHEN the user requests to retrieve knowledge entry
     THEN check that the knowledge entry is retrieved
     """
     current_date = date.today()
@@ -288,7 +286,7 @@ def test_get_all_knowledge_entries_by_date(
 def test_remove_knowledge_entry(authenticated_user, add_knowledge_entry):
     """
     GIVEN a Django application
-    WHEN the user requests to remove an knowledge entry
+    WHEN the user requests to remove knowledge entry
     THEN the knowledge entry is removed
     """
     knowledge_entries = KnowledgeEntry.objects.all()
@@ -340,7 +338,7 @@ def test_remove_knowledge_entry(authenticated_user, add_knowledge_entry):
 def test_remove_knowledge_invalid_id(authenticated_user):
     """
     GIVEN a Django application
-    WHEN the user requests to remove an knowledge entry with an invalid id
+    WHEN the user requests to remove knowledge entry with an invalid id
     THEN the knowledge entry is not removed
     """
     knowledge_entries = KnowledgeEntry.objects.all()
@@ -375,7 +373,7 @@ def test_remove_knowledge_not_current_date(
 ):
     """
     GIVEN a Django application
-    WHEN the user requests to remove an knowledge entry when the date is not
+    WHEN the user requests to remove knowledge entry when the date is not
     today
     THEN the knowledge entry is not removed
     """
@@ -430,7 +428,7 @@ def test_update_knowledge_entry(
 ):
     """
     GIVEN a Django application
-    WHEN the user requests to update an knowledge entry
+    WHEN the user requests to update knowledge entry
     THEN the knowledge entry is updated
     """
     knowledge_entries = KnowledgeEntry.objects.all()
@@ -475,7 +473,7 @@ def test_update_knowledge_entry_incorrect_data(
 ):
     """
     GIVEN a Django application
-    WHEN the user requests to update an knowledge entry with an incorrect id
+    WHEN the user requests to update knowledge entry with an incorrect id
     THEN the knowledge entry is not updated
     """
     client, user = authenticated_user
@@ -517,7 +515,7 @@ def test_update_knowledge_entry_incorrect_date(
 ):
     """
     GIVEN a Django application
-    WHEN the user requests to update an knowledge entry with an incorrect date
+    WHEN the user requests to update knowledge entry with an incorrect date
     THEN the knowledge entry is not and permission denied
     """
     date_and_time = requested_date.split(" ")
@@ -561,7 +559,7 @@ def test_update_knowledge_entry_invalid_json(
 ):
     """
     GIVEN a Django application
-    WHEN the user requests to update an knowledge entry with invalid JSON
+    WHEN the user requests to update knowledge entry with invalid JSON
     THEN the knowledge entry is not updated
     """
     client, user = authenticated_user

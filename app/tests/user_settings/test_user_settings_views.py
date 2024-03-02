@@ -5,7 +5,7 @@ import pytest
 from django.urls import reverse
 from rest_framework import status
 
-from journal.models import UserSettings
+from user_settings.models import UserSettings
 
 
 @pytest.mark.django_db

@@ -1,6 +1,6 @@
 import pytest
 
-from journal.serializers import EmotionEntrySerializer
+from emotions.serializers import EmotionEntrySerializer
 
 
 @pytest.mark.django_db

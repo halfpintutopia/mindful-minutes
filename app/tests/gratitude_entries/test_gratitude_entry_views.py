@@ -4,12 +4,10 @@ from datetime import date
 import pytest
 from django.urls import reverse
 
-# https://dennisokeeffe.medium.com/mocking-python-datetime-in-tests-with
-# -freezegun-f5532307d6d6
 from freezegun import freeze_time
 from rest_framework import status
 
-from journal.models import GratitudeEntry
+from gratitude_entries.models import GratitudeEntry
 
 
 @pytest.mark.django_db
@@ -23,7 +21,7 @@ def test_get_list_of_gratitude_entries(
     """
     client, user = authenticated_user
 
-    gratitudes = [
+    gratitude_entries = [
         "I am healthy.",
         "Thanks for a beautiful day.",
         "I handed in my assignment",
@@ -31,7 +29,7 @@ def test_get_list_of_gratitude_entries(
         "Celebration of the arrival of healthy twins.",
     ]
 
-    for gratitude in gratitudes:
+    for gratitude in gratitude_entries:
         add_gratitude_entry(user=user, content=gratitude)
 
     url = reverse("gratitude-entry-list", args=[user.slug])
@@ -45,7 +43,7 @@ def test_get_list_of_gratitude_entries(
 def test_add_gratitude_entry(authenticated_user):
     """
     GIVEN a Django application
-    WHEN the user requests to add an gratitude entry
+    WHEN the user requests to add a gratitude entry
     THEN check that the gratitude entry is added
     """
     gratitude_entries = GratitudeEntry.objects.all()
@@ -96,7 +94,7 @@ def test_add_gratitude_entry(authenticated_user):
 def test_add_gratitude_entry_incorrect_json(authenticated_user, test_data):
     """
     GIVEN a Django application
-    WHEN the user requests to add an gratitude entry with an invalid payload
+    WHEN the user requests to add a gratitude entry with an invalid payload
     THEN the payload is not sent
     """
     gratitude_entries = GratitudeEntry.objects.all()
@@ -124,7 +122,7 @@ def test_add_gratitude_entry_incorrect_json(authenticated_user, test_data):
 def test_add_gratitude_entry_not_current_date(authenticated_user, date_param):
     """
     GIVEN a Django application
-    WHEN the user attempts to add an gratitude entry on a date,
+    WHEN the user attempts to add a gratitude entry on a date,
     that is not the current date
     THEN the gratitude entry is not created
     """
@@ -153,7 +151,7 @@ def test_add_gratitude_entry_not_current_date(authenticated_user, date_param):
 def test_get_single_gratitude_entry(authenticated_user, add_gratitude_entry):
     """
     GIVEN a Django application
-    WHEN the user requests to retrieve an gratitude entry
+    WHEN the user requests to retrieve a gratitude entry
     THEN check that the gratitude entry is retrieved
     """
     current_date = date.today()
@@ -188,7 +186,7 @@ def test_get_single_gratitude_entry_incorrect_id(
 ):
     """
     GIVEN a Django application
-    WHEN the user requests to retrieve an gratitude entry with an incorrect id
+    WHEN the user requests to retrieve a gratitude entry with an incorrect id
     THEN check the gratitude entry is not retrieved
     """
     client, user = authenticated_user
@@ -291,7 +289,7 @@ def test_get_all_gratitude_entries_by_date(
 def test_remove_gratitude_entry(authenticated_user, add_gratitude_entry):
     """
     GIVEN a Django application
-    WHEN the user requests to remove an gratitude entry
+    WHEN the user requests to remove a gratitude entry
     THEN the gratitude entry is removed
     """
     gratitude_entries = GratitudeEntry.objects.all()
@@ -344,7 +342,7 @@ def test_remove_gratitude_entry(authenticated_user, add_gratitude_entry):
 def test_remove_gratitude_invalid_id(authenticated_user):
     """
     GIVEN a Django application
-    WHEN the user requests to remove an gratitude entry with an invalid id
+    WHEN the user requests to remove a gratitude entry with an invalid id
     THEN the gratitude entry is not removed
     """
     gratitude_entries = GratitudeEntry.objects.all()
@@ -379,7 +377,7 @@ def test_remove_gratitude_not_current_date(
 ):
     """
     GIVEN a Django application
-    WHEN the user requests to remove an gratitude entry when the date is not
+    WHEN the user requests to remove a gratitude entry when the date is not
     today
     THEN the gratitude entry is not removed
     """
@@ -434,7 +432,7 @@ def test_update_gratitude_entry(
 ):
     """
     GIVEN a Django application
-    WHEN the user requests to update an gratitude entry
+    WHEN the user requests to update a gratitude entry
     THEN the gratitude entry is updated
     """
     gratitude_entries = GratitudeEntry.objects.all()
@@ -479,7 +477,7 @@ def test_update_gratitude_entry_incorrect_data(
 ):
     """
     GIVEN a Django application
-    WHEN the user requests to update an gratitude entry with an incorrect id
+    WHEN the user requests to update a gratitude entry with an incorrect id
     THEN the gratitude entry is not updated
     """
     client, user = authenticated_user
@@ -521,7 +519,7 @@ def test_update_gratitude_entry_incorrect_date(
 ):
     """
     GIVEN a Django application
-    WHEN the user requests to update an gratitude entry with an incorrect date
+    WHEN the user requests to update a gratitude entry with an incorrect date
     THEN the gratitude entry is not and permission denied
     """
     date_and_time = requested_date.split(" ")
@@ -566,7 +564,7 @@ def test_update_gratitude_entry_invalid_json(
 ):
     """
     GIVEN a Django application
-    WHEN the user requests to update an gratitude entry with invalid JSON
+    WHEN the user requests to update a gratitude entry with invalid JSON
     THEN the gratitude entry is not updated
     """
     client, user = authenticated_user

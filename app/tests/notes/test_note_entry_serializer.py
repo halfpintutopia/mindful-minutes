@@ -1,7 +1,7 @@
 import pytest
 
-from journal.models import NoteEntry
-from journal.serializers import NoteEntrySerializer
+from notes.models import NoteEntry
+from notes.serializers import NoteEntrySerializer
 
 
 @pytest.mark.django_db

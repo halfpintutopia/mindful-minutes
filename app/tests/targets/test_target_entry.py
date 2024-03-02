@@ -1,6 +1,6 @@
 import pytest
 
-from journal.models import TargetEntry
+from targets.models import TargetEntry
 
 
 @pytest.mark.django_db

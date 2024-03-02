@@ -1,6 +1,6 @@
 import pytest
 
-from journal.serializers import GratitudeEntrySerializer
+from gratitude_entries.serializers import GratitudeEntrySerializer
 
 
 @pytest.mark.django_db

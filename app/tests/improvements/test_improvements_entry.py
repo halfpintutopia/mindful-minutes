@@ -1,6 +1,6 @@
 import pytest
 
-from journal.models import ImprovementEntry
+from improvements.models import ImprovementEntry
 
 
 @pytest.mark.django_db

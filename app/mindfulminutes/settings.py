@@ -16,7 +16,11 @@ SECRET_KEY = os.environ.get("SECRET_KEY", "")
 
 DEBUG = int(os.environ.get("DEBUG", default=0))
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', "mindful-minutes-f992c8465405.herokuapp.com"]
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "localhost",
+    "mindful-minutes-f992c8465405.herokuapp.com",
+]
 
 INSTALLED_APPS = [
     "django.contrib.admin",

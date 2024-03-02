@@ -7,7 +7,9 @@ on:
 
 env:
   IMAGE: ghcr.io/${{ github.repository }}
+  USER: app
   TAG: latest
+  ALLOWED_HOSTS: .herokuapp.com
   HEROKU_APP_NAME: mindful-minutes
   HEROKU_REGISTRY_IMAGE: registry.heroku.com/$HEROKU_APP_NAME/web
   HEROKU_AUTH_TOKEN: ${{ secrets.HEROKU_AUTH_TOKEN }}
@@ -19,13 +21,14 @@ jobs:
     env:
       IMAGE: ghcr.io/${{ github.repository }}
       TAG: latest
+      ALLOWED_HOSTS: .herokuapp.com
 
     steps:
       - name: Checkout codebase
         uses: actions/checkout@v3
 
       - name: Set up Python
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v4
         with:
           python-version: '3.11'
 
@@ -38,20 +41,14 @@ jobs:
             ${{ runner.os }}-docker-
 
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v2
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-          
-      - name: Debugging information
-        run: |
-          echo "Environment variables:"
-          env
-          echo "Current directory:"
-          pwd
-          echo "Installed Python packages:"
-          pip freeze
+
+      - name: Pull Docker image
+        run: docker pull ${{ env.IMAGE }}:${{ env.TAG }} || true
 
       - name: Build Docker image
         uses: docker/build-push-action@v3
@@ -63,10 +60,6 @@ jobs:
             API_KEY=${{ secrets.API_KEY }}
             API_SECRET=${{ secrets.API_SECRET }}
           tags: ${{ env.IMAGE }}:${{ env.TAG }}
-        env:
-          IMAGE: ghcr.io/${{ github.repository }}
-          TAG: latest
-          ALLOWED_HOSTS: .herokuapp.com
 
   test:
     name: Test with pytest, Flake8, Black and isort
@@ -98,25 +91,20 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Cache Python dependencies
-        uses: actions/cache@v3
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('app/requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
-
-      - name: Install dependencies
+      - name: Create and activate virtual environment
         run: |
           python -m venv app/env
           source app/env/bin/activate
+        working-directory: app
+
+      - name: Install dependencies
+        run: |
           pip install -r requirements.txt
           pip install black==23.3.0 Faker==18.10.1 flake8==6.0.0 freezegun==1.2.2 isort==5.12.0 pytest==7.3.1 pytest-django==4.5.2
         working-directory: app
 
       - name: Run tests and linting and run Django deployment checklist
         run: |
-          source app/env/bin/activate
           export DEBUG=1
           pytest -p no:warnings
           flake8 .
@@ -132,16 +120,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Install cURL
+        run: sudo apt-get install -y curl
+
       - name: Checkout codebase
         uses: actions/checkout@v3
 
       - name: Set up Python
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v4
         with:
           python-version: '3.11'
 
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v2
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -172,3 +163,10 @@ jobs:
         run: heroku container:release web --app ${{ env.HEROKU_APP_NAME }}
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+
+  debug_trace:
+    name: Enable Debug Trace
+    runs-on: ubuntu-latest
+    steps:
+      - name: Enable Debug Trace
+        run: echo "DEBUG_TRACE=true" >> $GITHUB_ENV

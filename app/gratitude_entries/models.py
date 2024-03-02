@@ -1,4 +1,3 @@
-from ckeditor.fields import RichTextField
 from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -14,7 +13,7 @@ class GratitudeEntry(models.Model):
         on_delete=models.CASCADE,
         related_name="gratitude_entries",
     )
-    content = RichTextField(_("Gratitude Entry"))
+    content = models.TextField(_("Gratitude Entry"))
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 

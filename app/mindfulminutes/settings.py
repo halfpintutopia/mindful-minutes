@@ -31,7 +31,6 @@ INSTALLED_APPS = [
     "allauth.socialaccount",
     "allauth.socialaccount.providers.google",
     "cloudinary",
-    "ckeditor",
     "rest_framework",
     "drf_yasg",
     "appointments",

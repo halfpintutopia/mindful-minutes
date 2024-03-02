@@ -11,7 +11,6 @@ env:
   HEROKU_APP_NAME: mindful-minutes
   HEROKU_REGISTRY_IMAGE: registry.heroku.com/$HEROKU_APP_NAME/web
   HEROKU_AUTH_TOKEN: ${{ secrets.HEROKU_AUTH_TOKEN }}
-  ALLOWED_HOSTS: .herokuapp.com
 
 jobs:
   build:
@@ -20,7 +19,6 @@ jobs:
     env:
       IMAGE: ghcr.io/${{ github.repository }}
       TAG: latest
-      ALLOWED_HOSTS: .herokuapp.com
 
     steps:
       - name: Checkout codebase
@@ -65,6 +63,10 @@ jobs:
             API_KEY=${{ secrets.API_KEY }}
             API_SECRET=${{ secrets.API_SECRET }}
           tags: ${{ env.IMAGE }}:${{ env.TAG }}
+        env:
+          IMAGE: ghcr.io/${{ github.repository }}
+          TAG: latest
+          ALLOWED_HOSTS: .herokuapp.com
 
   test:
     name: Test with pytest, Flake8, Black and isort

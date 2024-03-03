@@ -10,9 +10,7 @@ from gratitude_entries.models import GratitudeEntry
 
 
 @pytest.mark.django_db
-def test_get_list_of_gratitude_entries(
-    authenticated_user, add_gratitude_entry
-):
+def test_get_list_of_gratitude_entries(authenticated_user, add_gratitude_entry):
     """
     GIVEN a Django application
     WHEN a user requests a list of all gratitude entries
@@ -580,8 +578,6 @@ def test_update_gratitude_entry_invalid_json(
         args=[user.slug, current_date, gratitude_entry.id],
     )
 
-    res = client.put(
-        url, test_data["payload"], content_type="application/json"
-    )
+    res = client.put(url, test_data["payload"], content_type="application/json")
 
     assert res.status_code == status.HTTP_400_BAD_REQUEST

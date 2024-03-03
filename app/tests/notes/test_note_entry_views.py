@@ -532,8 +532,6 @@ def test_update_note_entry_invalid_json(
         args=[user.slug, current_date, note_entry.id],
     )
 
-    res = client.put(
-        url, test_data["payload"], content_type="application/json"
-    )
+    res = client.put(url, test_data["payload"], content_type="application/json")
 
     assert res.status_code == status.HTTP_400_BAD_REQUEST

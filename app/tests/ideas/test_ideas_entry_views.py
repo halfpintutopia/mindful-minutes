@@ -263,9 +263,7 @@ def test_get_all_ideas_entries_by_date(
     assert res.status_code == status.HTTP_200_OK
     assert res.data[0]["created_on"] == date_and_time[0]
 
-    ideas_entries = IdeasEntry.objects.filter(
-        created_on__date=date_and_time[0]
-    )
+    ideas_entries = IdeasEntry.objects.filter(created_on__date=date_and_time[0])
     assert len(ideas_entries) == 1
 
 
@@ -445,9 +443,7 @@ def test_update_ideas_entry(authenticated_user, add_ideas_entry, test_data):
 
 
 @pytest.mark.django_db
-def test_update_ideas_entry_incorrect_data(
-    authenticated_user, add_ideas_entry
-):
+def test_update_ideas_entry_incorrect_data(authenticated_user, add_ideas_entry):
     """
     GIVEN a Django application
     WHEN the user requests to update an ideas entry with an incorrect id
@@ -549,8 +545,6 @@ def test_update_ideas_entry_invalid_json(
         args=[user.slug, current_date, ideas_entry.id],
     )
 
-    res = client.put(
-        url, test_data["payload"], content_type="application/json"
-    )
+    res = client.put(url, test_data["payload"], content_type="application/json")
 
     assert res.status_code == status.HTTP_400_BAD_REQUEST

@@ -45,13 +45,13 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    "cloudinary",
     "cloudinary_storage",
     "django.contrib.staticfiles",
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
     "allauth.socialaccount.providers.google",
-    "cloudinary",
     "rest_framework",
     "drf_yasg",
     "appointments",
@@ -97,7 +97,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "mindfulminutes.wsgi.application"
-
 if not DEBUG:
     DATABASE_URL = os.environ.get("DATABASE_URL")
 
@@ -186,7 +185,8 @@ ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = "email"
-ACCOUNT_EMAIL_VERIFICATION = "none"  # ACCOUNT_EMAIL_VERIFICATION = "optional"
+# ACCOUNT_EMAIL_VERIFICATION = "none"
+ACCOUNT_EMAIL_VERIFICATION = "optional"
 ACCOUNT_LOGOUT_ON_GET = True
 
 ACCOUNT_FORMS = {"signup": "users.forms.CustomSignupForm"}

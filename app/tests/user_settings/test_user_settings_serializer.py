@@ -29,12 +29,12 @@ def test_user_settings_serializer(custom_user):
 
     assert serializer.data.get("user") == custom_user.id
     assert serializer.data.get("start_week_day") == start_week_day
-    assert serializer.data.get("morning_check_in") == morning_check_in.strftime(
-        "%H:%M:%S"
-    )
-    assert serializer.data.get("evening_check_in") == evening_check_in.strftime(
-        "%H:%M:%S"
-    )
+    assert serializer.data.get(
+        "morning_check_in"
+    ) == morning_check_in.strftime("%H:%M:%S")
+    assert serializer.data.get(
+        "evening_check_in"
+    ) == evening_check_in.strftime("%H:%M:%S")
 
 
 @pytest.mark.django_db

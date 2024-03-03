@@ -57,7 +57,9 @@ def test_add_improvement_entry(authenticated_user):
         "user": user.id,
     }
 
-    url = reverse("improvement-entry-date-list", args=[user.slug, current_date])
+    url = reverse(
+        "improvement-entry-date-list", args=[user.slug, current_date]
+    )
 
     res = client.post(
         url, json.dumps(improvement_data), content_type="application/json"
@@ -99,7 +101,9 @@ def test_add_improvement_entry_incorrect_json(authenticated_user, test_data):
 
     test_data["payload"]["user"] = user.id
 
-    url = reverse("improvement-entry-date-list", args=[user.slug, current_date])
+    url = reverse(
+        "improvement-entry-date-list", args=[user.slug, current_date]
+    )
 
     res = client.post(
         url, json.dumps(test_data["payload"]), content_type="application/json"
@@ -112,7 +116,9 @@ def test_add_improvement_entry_incorrect_json(authenticated_user, test_data):
 
 @pytest.mark.django_db
 @pytest.mark.parametrize("date_param", ["2023-07-01", "2023-06-20"])
-def test_add_improvement_entry_not_current_date(authenticated_user, date_param):
+def test_add_improvement_entry_not_current_date(
+    authenticated_user, date_param
+):
     """
     GIVEN a Django application
     WHEN the user attempts to add an improvement entry on a date,
@@ -216,7 +222,9 @@ def test_get_all_improvement_entries_by_current_date(
         user=user,
     )
 
-    url = reverse("improvement-entry-date-list", args=[user.slug, current_date])
+    url = reverse(
+        "improvement-entry-date-list", args=[user.slug, current_date]
+    )
 
     res = client.get(url)
 
@@ -314,7 +322,9 @@ def test_remove_improvement_entry(authenticated_user, add_improvement_entry):
     assert res_retrieve.status_code == status.HTTP_200_OK
     assert len(res_retrieve.data) == 0
 
-    assert not ImprovementEntry.objects.filter(id=improvement_entry.id).exists()
+    assert not ImprovementEntry.objects.filter(
+        id=improvement_entry.id
+    ).exists()
 
     improvement_entries = ImprovementEntry.objects.all()
     assert len(improvement_entries) == 0
@@ -554,6 +564,8 @@ def test_update_improvement_entry_invalid_json(
         args=[user.slug, current_date, improvement_entry.id],
     )
 
-    res = client.put(url, test_data["payload"], content_type="application/json")
+    res = client.put(
+        url, test_data["payload"], content_type="application/json"
+    )
 
     assert res.status_code == status.HTTP_400_BAD_REQUEST

@@ -191,7 +191,9 @@ def test_get_single_win_entry_incorrect_id(
 
 
 @pytest.mark.django_db
-def test_get_all_win_entries_by_current_date(authenticated_user, add_win_entry):
+def test_get_all_win_entries_by_current_date(
+    authenticated_user, add_win_entry
+):
     """
     GIVEN a Django application
     WHEN the user requests to retrieve all win entries
@@ -486,7 +488,9 @@ def test_update_win_entry_incorrect_data(authenticated_user, add_win_entry):
         "win-entry-detail", args=[user.slug, current_date, invalid_id]
     )
 
-    res = client.put(url, json.dumps(win_data), content_type="application/json")
+    res = client.put(
+        url, json.dumps(win_data), content_type="application/json"
+    )
 
     assert res.status_code == status.HTTP_404_NOT_FOUND
 
@@ -559,6 +563,8 @@ def test_update_win_entry_invalid_json(
         "win-entry-detail", args=[user.slug, current_date, win_entry.id]
     )
 
-    res = client.put(url, test_data["payload"], content_type="application/json")
+    res = client.put(
+        url, test_data["payload"], content_type="application/json"
+    )
 
     assert res.status_code == status.HTTP_400_BAD_REQUEST

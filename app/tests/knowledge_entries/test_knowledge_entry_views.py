@@ -10,7 +10,9 @@ from knowledge_entries.models import KnowledgeEntry
 
 
 @pytest.mark.django_db
-def test_get_list_of_knowledge_entries(authenticated_user, add_knowledge_entry):
+def test_get_list_of_knowledge_entries(
+    authenticated_user, add_knowledge_entry
+):
     """
     GIVEN a Django application
     WHEN a user requests a list of all knowledge entries
@@ -573,6 +575,8 @@ def test_update_knowledge_entry_invalid_json(
         args=[user.slug, current_date, knowledge_entry.id],
     )
 
-    res = client.put(url, test_data["payload"], content_type="application/json")
+    res = client.put(
+        url, test_data["payload"], content_type="application/json"
+    )
 
     assert res.status_code == status.HTTP_400_BAD_REQUEST

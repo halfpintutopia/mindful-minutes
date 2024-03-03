@@ -439,7 +439,9 @@ def test_update_custom_user_incorrect_id(client, add_custom_user, test_data):
 
     url = reverse("user-detail", args=[test_data["invalid_id"]])
 
-    res = client.put(url, test_data["payload"], content_type="application/json")
+    res = client.put(
+        url, test_data["payload"], content_type="application/json"
+    )
 
     assert res.status_code == status.HTTP_404_NOT_FOUND
 
@@ -498,6 +500,8 @@ def test_update_custom_user_invalid_data(client, add_custom_user, test_data):
 
     url = reverse("user-detail", args=[user.slug])
 
-    res = client.put(url, test_data["payload"], content_type="application/json")
+    res = client.put(
+        url, test_data["payload"], content_type="application/json"
+    )
 
     assert res.status_code == status.HTTP_400_BAD_REQUEST

@@ -127,7 +127,9 @@ class IdeasEntryDetail(APIView):
         """
         Retrieve an ideas entry
         """
-        return self._handle_ideas_detail_action(request, slug, date_request, pk)
+        return self._handle_ideas_detail_action(
+            request, slug, date_request, pk
+        )
 
     @swagger_auto_schema(
         request_body=openapi.Schema(
@@ -144,13 +146,17 @@ class IdeasEntryDetail(APIView):
         """
         Update an ideas entry
         """
-        return self._handle_ideas_detail_action(request, slug, date_request, pk)
+        return self._handle_ideas_detail_action(
+            request, slug, date_request, pk
+        )
 
     def delete(self, request, slug, date_request, pk):
         """
         Delete an ideas entry
         """
-        return self._handle_ideas_detail_action(request, slug, date_request, pk)
+        return self._handle_ideas_detail_action(
+            request, slug, date_request, pk
+        )
 
     def _handle_ideas_detail_action(self, request, slug, date_request, pk):
         """

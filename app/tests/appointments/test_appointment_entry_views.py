@@ -82,7 +82,9 @@ def test_add_appointment_entry(authenticated_user):
         "user": user.id,
     }
 
-    url = reverse("appointment-entry-date-list", args=[user.slug, current_date])
+    url = reverse(
+        "appointment-entry-date-list", args=[user.slug, current_date]
+    )
 
     res = client.post(
         url, json.dumps(appointment_data), content_type="application/json"
@@ -144,7 +146,9 @@ def test_add_appointment_entry_incorrect_json(authenticated_user, test_data):
 
 @pytest.mark.django_db
 @pytest.mark.parametrize("date_param", ["2023-07-01", "2023-06-20"])
-def test_add_appointment_entry_not_current_date(authenticated_user, date_param):
+def test_add_appointment_entry_not_current_date(
+    authenticated_user, date_param
+):
     """
     GIVEN a Django application
     WHEN the user attempts to add an appointment entry on a date,
@@ -359,7 +363,9 @@ def test_get_all_appointment_entries_by_date(
             user=user,
         )
 
-    url = reverse("appointment-entry-date-list", args=[user.slug, current_date])
+    url = reverse(
+        "appointment-entry-date-list", args=[user.slug, current_date]
+    )
 
     res = client.get(url)
 
@@ -419,7 +425,9 @@ def test_remove_appointment_entry(authenticated_user, add_appointment_entry):
     assert res_retrieve.status_code == status.HTTP_200_OK
     assert len(res_retrieve.data) == 0
 
-    assert not AppointmentEntry.objects.filter(id=appointment_entry.id).exists()
+    assert not AppointmentEntry.objects.filter(
+        id=appointment_entry.id
+    ).exists()
 
     appointment_entries = AppointmentEntry.objects.all()
     assert len(appointment_entries) == 0

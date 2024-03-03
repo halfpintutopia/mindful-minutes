@@ -97,6 +97,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "mindfulminutes.wsgi.application"
+
 if not DEBUG:
     DATABASE_URL = os.environ.get("DATABASE_URL")
 
@@ -152,10 +153,10 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = "/static/"
-# STATICFILES_STORAGE = (
-#     "whitenoise.storage.CompressedManifestStaticFilesStorage",
-# )
 # STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
+STATICFILES_STORAGE = (
+    "whitenoise.storage.CompressedManifestStaticFilesStorage",
+)
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
@@ -215,9 +216,9 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-
 if DEBUG:
     SECURE_SSL_REDIRECT = False
+
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 CSRF_TRUSTED_ORIGINS = ["https://mindful-minutes-f992c8465405.herokuapp.com"]

@@ -120,7 +120,7 @@ jobs:
           export DEBUG=1
           pytest -p no:warnings
           flake8 .
-          black . --line-length=80 --extend-exclude="migrations|env|venv"
+          black . --line-length=79 --extend-exclude="migrations|env|venv"
           isort . --check-only --skip env
           export DEBUG=0
           python manage.py check --deploy --fail-level=WARNING

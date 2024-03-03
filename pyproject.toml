@@ -1,6 +1,6 @@
 #https://docs.djangoproject.com/en/4.2/intro/reusable-apps/
 [tool.black]
-line-length = 79
+line-length = 80
 extend-exclude = 'migrations'
 
 [tool.isort]

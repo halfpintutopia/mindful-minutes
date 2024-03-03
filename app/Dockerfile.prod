@@ -34,7 +34,7 @@ COPY . .
 # lint
 RUN pip install black==23.3.0 flake8==6.0.0 isort==5.12.0
 RUN flake8 . --exclude="migrations"
-RUN black . -l 79 --check --extend-exclude=migrations
+RUN black . -l 80 --check --extend-exclude=migrations
 RUN isort . --check-only
 
 

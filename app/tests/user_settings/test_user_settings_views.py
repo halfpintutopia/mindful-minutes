@@ -119,12 +119,8 @@ def test_get_user_settings(authenticated_user, add_user_settings):
     assert res.status_code == status.HTTP_200_OK
     assert res.data["user"] == user.id
     assert res.data["start_week_day"] == start_week_day
-    assert res.data["morning_check_in"] == morning_check_in.strftime(
-        "%H:%M:%S"
-    )
-    assert res.data["evening_check_in"] == evening_check_in.strftime(
-        "%H:%M:%S"
-    )
+    assert res.data["morning_check_in"] == morning_check_in.strftime("%H:%M:%S")
+    assert res.data["evening_check_in"] == evening_check_in.strftime("%H:%M:%S")
 
 
 @pytest.mark.django_db
@@ -244,9 +240,7 @@ def test_remove_user_settings_incorrect_id(
         },
     ],
 )
-def test_update_user_settings(
-    authenticated_user, add_user_settings, test_data
-):
+def test_update_user_settings(authenticated_user, add_user_settings, test_data):
     """
     GIVEN a Django application
     WHEN a user requests to update their settings
@@ -281,12 +275,10 @@ def test_update_user_settings(
     assert res.status_code == status.HTTP_200_OK
     assert res.data["start_week_day"] == test_data["payload"]["start_week_day"]
     assert (
-        res.data["morning_check_in"]
-        == test_data["payload"]["morning_check_in"]
+        res.data["morning_check_in"] == test_data["payload"]["morning_check_in"]
     )
     assert (
-        res.data["evening_check_in"]
-        == test_data["payload"]["evening_check_in"]
+        res.data["evening_check_in"] == test_data["payload"]["evening_check_in"]
     )
 
 

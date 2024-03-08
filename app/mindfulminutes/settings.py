@@ -228,4 +228,5 @@ CSRF_TRUSTED_ORIGINS = ["https://mindful-minutes-f992c8465405.herokuapp.com"]
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ORIGIN_WHITELIST = [
     "http://localhost:8008",
+    "https://mindful-minutes-f992c8465405.herokuapp.com"
 ]

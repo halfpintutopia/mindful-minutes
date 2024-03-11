@@ -64,7 +64,7 @@ ARG API_SECRET
 ENV CLOUD_NAME $CLOUD_NAME
 ENV API_KEY $API_KEY
 ENV API_SECRET $API_SECRET
-ENV DJANGO_ALLOWED_HOSTS .herokuapp.com
+ENV ALLOWED_HOSTS .herokuapp.com
 
 # Install system dependencies
 RUN apt-get update \

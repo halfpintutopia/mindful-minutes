@@ -154,12 +154,12 @@ const sendData = async (e) => {
 		if (e.currentTarget.dataset.entryId) {
 			api = `${ server }/api/users/${ formData.get('user') }/appointments/${ currentDate }/${ e.currentTarget.dataset.entryId }/`;
 			await postData(api, dataObj, formData.get('csrfmiddlewaretoken'), 'PUT');
-			initSchedule();
 		} else {
 			api = `${ server }/api/users/${ formData.get('user') }/appointments/${ currentDate }/`;
 			await postData(api, dataObj, formData.get('csrfmiddlewaretoken'));
 		}
 		closeDialog(e);
+		initSchedule();
 	} else {
 		errorMsgElement.innerText = "A task or appointment can't finish before it starts, unless you're the Flash?";
 	}

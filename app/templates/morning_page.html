@@ -159,6 +159,7 @@
 						<form id="targets" class="grid">
 							{% csrf_token %}
 							<input type="hidden" name="user" value="{{ user.slug }}">
+							<input type="hidden" name="entry-id">
 							<div class="form-group grid">
 								<h4>Add Target</h4>
 								<div class="grid grid-list">

@@ -15,6 +15,7 @@ class TargetEntry(models.Model):
     )
     title = models.CharField(_("Target"), max_length=255)
     order = models.IntegerField(_("Order"))
+    completed = models.BooleanField(_("Completed"), default=False)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 

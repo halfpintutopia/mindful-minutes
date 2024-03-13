@@ -3,9 +3,9 @@ import { fetchData, postData } from "./helpers/fetchApi.js";
 
 const server = 'http://localhost:8008';
 
-let editButtons,
-  doneButtons,
-  refreshButtonElement,
+const errorMessage = `You haven't provided enough information, please fill in the form`;
+
+let refreshButtonElement,
   addButtonElement,
   modalElement,
   modalCloseButton,
@@ -30,11 +30,22 @@ const createTarget = async (data) => {
 };
 
 const updateTarget = async (data) => {
-  const currentDate = getCurrentDate();
-  const dataObj = createDataObject(data);
+  const formData = new FormData(targetsForm);
   
-  const api = `${ server }/api/users/${ data.get('user') }/target/${ currentDate }/${ targetsForm.dataset.formEntryId }/`;
-  await postData(api, dataObj, data.get('csrfmiddlewaretoken'), 'PUT');
+  const currentDate = getCurrentDate();
+  
+  // const dataObj = {};
+  // for( let d in data.dataset) {
+  //   console.log(34, d, data.dataset[d])
+  //   dataObj[d] = data.dataset[d];
+  // }
+  
+  const dataObj = createDataObject(formData);
+  console.log(31, dataObj, formData)
+  
+  //
+  const api = `${ server }/api/users/${ formData.get('user') }/target/${ currentDate }/${ formData.get('entryId') }/`;
+  await postData(api, dataObj, formData.get('csrfmiddlewaretoken'), 'PUT');
 };
 
 const createDataObject = (data) => {
@@ -48,16 +59,22 @@ const createDataObject = (data) => {
 };
 
 const showDialog = () => {
+  removeErrorMsg();
   modalElement.showModal();
 };
+
 
 const closeDialog = () => {
   modalElement.close();
 };
 
-const addFormId = (id) => {
-  targetsForm.dataset.formEntryId = id;
-};
+const removeErrorMsg = () => {
+  errorMsgElement.innerText = '';
+}
+
+// const addFormId = (id) => {
+//   targetsForm.dataset.formEntryId = id;
+// };
 
 const removeFormId = () => {
   targetsForm.dataset.formEntryId = undefined;
@@ -65,7 +82,7 @@ const removeFormId = () => {
 
 const validateForm = (data) => {
   let valid = true;
-  for (let value of data.values()) {
+  for (let [ key, value ] of data) {
     if (value.trim() === '') {
       valid = false;
     }
@@ -74,9 +91,13 @@ const validateForm = (data) => {
   return valid;
 };
 
+const resetForm = () => {
+  targetsForm.reset();
+};
+
 const createTargetEntry = (entry) => {
   const target = `
-    <li class="accordion-list__item" data-entry-id="${ entry.id }" data-entry-order="${ entry.order }" data-entry-title="${ entry.title }">
+    <li class="accordion-list__item" data-id="${ entry.id }" data-order="${ entry.order }" data-title="${ entry.title }">
       <button data-btn="edit">
           <i class="fa-regular fa-pen-to-square"></i>
       </button>
@@ -104,12 +125,12 @@ const showTargets = () => {
       }
     })
     .then(() => {
-      editButtons = document.querySelectorAll('[data-btn="edit"]');
+      const editButtons = document.querySelectorAll('[data-btn="edit"]');
       editButtons.forEach(btn => {
         btn.addEventListener('click', fillForm);
       });
       
-      doneButtons = document.querySelectorAll('[data-btn="done"]');
+      const doneButtons = document.querySelectorAll('[data-btn="done"]');
       doneButtons.forEach(btn => {
         btn.addEventListener('click', markAndUTargetAsDone);
       });
@@ -118,42 +139,58 @@ const showTargets = () => {
 
 const markAndUTargetAsDone = (e) => {
   const target = e.currentTarget;
-  if (target.dataset.btn === 'done') {
-    target.dataset.btn = 'refresh';
-    target.nextElementSibling.classList.add('done');
-  } else {
-    target.dataset.btn = 'done';
-    target.nextElementSibling.classList.remove('done');
-  }
+  const item = target.closest('.accordion-list__item');
+  
+  updateTarget(item)
+    .then(() => {
+      if (target.dataset.btn === 'done') {
+        target.dataset.btn = 'refresh';
+        target.nextElementSibling.classList.add('done');
+      } else {
+        target.dataset.btn = 'done';
+        target.nextElementSibling.classList.remove('done');
+      }
+    })
 };
 
 const fillForm = (e) => {
-  const formData = new FormData(targetsForm);
+  let input;
   const item = e.currentTarget.closest('.accordion-list__item');
   
-  for (let [ key, value ] of formData.entries()) {
-    if (key !== 'csrfmiddlewaretoken' && key !== 'user') {
-      const input = targetsForm.querySelector(`[name=${ key }]`);
-      const dataValue = item.getAttribute(`data-entry-${ key }`);
-      if (input) {
-        input.value = dataValue;
-      }
-    }
+  console.log('dataset', item.dataset);
+  
+  for (let d in item.dataset) {
+    input = targetsForm.querySelector(`[name=${d}]`);
+    if (input) input.value = item.dataset[d];
   }
-  addFormId(item.dataset.entryId);
+  
+  // addFormId(item.dataset.id);
   showDialog();
 };
 
-const showForm = () => {
+const closeForm = (e) => {
+  e.preventDefault();
+  removeErrorMsg();
+  modalElement.close();
+}
+
+const addEntry = (e) => {
+  e.preventDefault();
+  
   showDialog();
-};
+  resetForm();
+  console.log(targetsForm);
+}
 
 const sendForm = (e) => {
   e.preventDefault();
+  
+  const target = e.target;
   const formData = new FormData(targetsForm);
+  
   if (validateForm(formData)) {
     if (targetsForm.dataset.formEntryId) {
-      updateTarget(formData)
+      updateTarget(target)
         .then(r => {
           showTargets();
           closeDialog();
@@ -166,7 +203,7 @@ const sendForm = (e) => {
         });
     }
   } else {
-    errorMsgElement.innerText = `You haven't provided enough information, please fill in the form`;
+    errorMsgElement.innerText = errorMessage;
   }
 };
 
@@ -180,8 +217,8 @@ const initHtmlElements = () => {
 };
 
 const initEvents = () => {
-  addButtonElement.addEventListener('click', showForm);
-  modalCloseButton.addEventListener('click', closeDialog);
+  addButtonElement.addEventListener('click', addEntry);
+  modalCloseButton.addEventListener('click', closeForm);
   targetsForm.addEventListener('submit', sendForm);
 };
 

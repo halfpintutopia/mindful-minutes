@@ -31,7 +31,8 @@ const createTarget = async (data) => {
 
 const updateTarget = async (data) => {
   const formData = new FormData(targetsForm);
-  
+  // console.log(data.dataset.completed === );
+  formData.append("completed", data.dataset.completed === 'true' ? "True" : "False")
   const currentDate = getCurrentDate();
   
   // const dataObj = {};
@@ -41,10 +42,10 @@ const updateTarget = async (data) => {
   // }
   
   const dataObj = createDataObject(formData);
-  console.log(31, dataObj, formData)
+  console.log(31, dataObj, formData, data.dataset.id)
   
-  //
-  const api = `${ server }/api/users/${ formData.get('user') }/target/${ currentDate }/${ formData.get('entryId') }/`;
+  const api = `${ server }/api/users/${ formData.get('user') }/target/${ currentDate }/${ data.dataset.id }/`;
+  console.log(api);
   await postData(api, dataObj, formData.get('csrfmiddlewaretoken'), 'PUT');
 };
 
@@ -72,9 +73,9 @@ const removeErrorMsg = () => {
   errorMsgElement.innerText = '';
 }
 
-// const addFormId = (id) => {
-//   targetsForm.dataset.formEntryId = id;
-// };
+const addFormId = (id) => {
+  targetsForm.dataset.id = id;
+};
 
 const removeFormId = () => {
   targetsForm.dataset.formEntryId = undefined;
@@ -97,7 +98,13 @@ const resetForm = () => {
 
 const createTargetEntry = (entry) => {
   const target = `
-    <li class="accordion-list__item" data-id="${ entry.id }" data-order="${ entry.order }" data-title="${ entry.title }">
+    <li
+    class="accordion-list__item"
+    data-id="${ entry.id }"
+    data-order="${ entry.order }"
+    data-title="${ entry.title }"
+    data-completed="${ entry.completed }"
+    >
       <button data-btn="edit">
           <i class="fa-regular fa-pen-to-square"></i>
       </button>
@@ -132,23 +139,25 @@ const showTargets = () => {
       
       const doneButtons = document.querySelectorAll('[data-btn="done"]');
       doneButtons.forEach(btn => {
-        btn.addEventListener('click', markAndUTargetAsDone);
+        btn.addEventListener('click', toggleTargetCompleted);
       });
     });
 };
 
-const markAndUTargetAsDone = (e) => {
+const toggleTargetCompleted = (e) => {
   const target = e.currentTarget;
   const item = target.closest('.accordion-list__item');
+  
+  item.dataset.completed === 'true' ? item.dataset.completed = 'false' : item.dataset.completed = 'true';
   
   updateTarget(item)
     .then(() => {
       if (target.dataset.btn === 'done') {
         target.dataset.btn = 'refresh';
-        target.nextElementSibling.classList.add('done');
+        // target.nextElementSibling.classList.add('done');
       } else {
         target.dataset.btn = 'done';
-        target.nextElementSibling.classList.remove('done');
+        // target.nextElementSibling.classList.remove('done');
       }
     })
 };
@@ -156,15 +165,12 @@ const markAndUTargetAsDone = (e) => {
 const fillForm = (e) => {
   let input;
   const item = e.currentTarget.closest('.accordion-list__item');
-  
-  console.log('dataset', item.dataset);
-  
   for (let d in item.dataset) {
-    input = targetsForm.querySelector(`[name=${d}]`);
+    input = targetsForm.querySelector(`[name=${ d }]`);
     if (input) input.value = item.dataset[d];
   }
   
-  // addFormId(item.dataset.id);
+  addFormId(item.dataset.id);
   showDialog();
 };
 
@@ -179,7 +185,6 @@ const addEntry = (e) => {
   
   showDialog();
   resetForm();
-  console.log(targetsForm);
 }
 
 const sendForm = (e) => {
@@ -187,6 +192,7 @@ const sendForm = (e) => {
   
   const target = e.target;
   const formData = new FormData(targetsForm);
+  
   
   if (validateForm(formData)) {
     if (targetsForm.dataset.formEntryId) {

@@ -14,6 +14,7 @@ def test_create_target(custom_user):
         user=custom_user,
         title="Meditate for 20 minutes",
         order=1,
+        completed=False,
     )
     target.save()
     targets = TargetEntry.objects.all()
@@ -23,3 +24,4 @@ def test_create_target(custom_user):
     assert isinstance(targets[0].title, str) and targets[0].title is not None
     assert targets[0].order == 1
     assert isinstance(targets[0].order, int) and targets[0].order is not None
+    assert targets[0].completed is False

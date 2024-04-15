@@ -2,8 +2,8 @@ from datetime import time
 
 import pytest
 
-from journal.models import UserSettings
-from journal.serializers import CustomUserSerializer
+from users.models import UserSettings
+from users.serializers import CustomUserSerializer
 
 
 @pytest.mark.django_db

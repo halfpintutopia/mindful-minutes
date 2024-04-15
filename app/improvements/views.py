@@ -17,9 +17,9 @@ class ImprovementEntryList(APIView):
     """
     List all improvement entries or create a new improvement entry
     """
-    
+
     permission_classes = [IsAuthenticated]
-    
+
     def get(self, request, slug):
         """
         List all improvement entries
@@ -27,12 +27,12 @@ class ImprovementEntryList(APIView):
         if request.method == "GET":
             if request.user.slug == slug:
                 improvement_entries = ImprovementEntry.objects.all()
-                
+
                 serializer = ImprovementEntrySerializer(
                     improvement_entries, many=True
                 )
                 return Response(serializer.data)
-            
+
             raise MethodNotAllowed(request.method)
 
 
@@ -40,9 +40,9 @@ class ImprovementEntryListCreate(APIView):
     """
     List or create improvement entries for a specific date
     """
-    
+
     permission_classes = [IsAuthenticated]
-    
+
     def get(self, request, slug, date_request=None):
         """
         List all improvement entries or filter by date
@@ -55,21 +55,21 @@ class ImprovementEntryListCreate(APIView):
                     return Response(
                         {
                             "error": "Invalid date format. Please user "
-                                     "YYYY-MM-DD."
+                            "YYYY-MM-DD."
                         },
                         status=status.HTTP_400_BAD_REQUEST,
                     )
                 improvement_entries = ImprovementEntry.objects.filter(
                     created_on__date=requested_date
                 )
-                
+
                 serializer = ImprovementEntrySerializer(
                     improvement_entries, many=True
                 )
                 return Response(serializer.data)
-        
+
         raise MethodNotAllowed(request.method)
-    
+
     @swagger_auto_schema(
         request_body=openapi.Schema(
             type=openapi.TYPE_OBJECT,
@@ -92,7 +92,7 @@ class ImprovementEntryListCreate(APIView):
                     return Response(
                         {
                             "error": "You are not allowed to change "
-                                     "improvements \
+                            "improvements \
                                              for past or future dates."
                         },
                         status=status.HTTP_403_FORBIDDEN,
@@ -106,7 +106,7 @@ class ImprovementEntryListCreate(APIView):
                 return Response(
                     serializer.errors, status=status.HTTP_400_BAD_REQUEST
                 )
-        
+
         raise MethodNotAllowed(request.method)
 
 
@@ -114,9 +114,9 @@ class ImprovementEntryDetail(APIView):
     """
     Retrieve, update or delete an improvement entry
     """
-    
+
     permission_classes = [IsAuthenticated]
-    
+
     def get_object(self, pk):
         """
         Helper method to get an improvement entry object from the database
@@ -126,7 +126,7 @@ class ImprovementEntryDetail(APIView):
             return ImprovementEntry.objects.get(pk=pk)
         except ImprovementEntry.DoesNotExist:
             raise Http404
-    
+
     def get(self, request, slug, date_request, pk):
         """
         Retrieve an improvement entry
@@ -134,7 +134,7 @@ class ImprovementEntryDetail(APIView):
         return self._handle_improvement_detail_action(
             request, slug, date_request, pk
         )
-    
+
     @swagger_auto_schema(
         request_body=openapi.Schema(
             type=openapi.TYPE_OBJECT,
@@ -153,7 +153,7 @@ class ImprovementEntryDetail(APIView):
         return self._handle_improvement_detail_action(
             request, slug, date_request, pk
         )
-    
+
     def delete(self, request, slug, date_request, pk):
         """
         Delete an improvement entry
@@ -161,7 +161,7 @@ class ImprovementEntryDetail(APIView):
         return self._handle_improvement_detail_action(
             request, slug, date_request, pk
         )
-    
+
     def _handle_improvement_detail_action(
         self, request, slug, date_request, pk
     ):
@@ -180,7 +180,7 @@ class ImprovementEntryDetail(APIView):
                 },
                 status=status.HTTP_403_FORBIDDEN,
             )
-        
+
         if request.user.slug == slug:
             if pk is not None:
                 try:
@@ -193,11 +193,11 @@ class ImprovementEntryDetail(APIView):
                             status=status.HTTP_400_BAD_REQUEST,
                         )
                     return Response(status=status.HTTP_404_NOT_FOUND)
-                
+
                 if request.method == "GET":
                     serializer = ImprovementEntrySerializer(improvement_entry)
                     return Response(serializer.data)
-                
+
                 elif request.method == "PUT":
                     serializer = ImprovementEntrySerializer(
                         improvement_entry, data=request.data
@@ -208,10 +208,10 @@ class ImprovementEntryDetail(APIView):
                     return Response(
                         serializer.errors, status=status.HTTP_400_BAD_REQUEST
                     )
-                
+
                 elif request.method == "DELETE":
                     improvement_entry.delete()
                     return Response(status=status.HTTP_204_NO_CONTENT)
-            
+
             return Response(status=status.HTTP_404_NOT_FOUND)
         return Response(status=status.HTTP_403_FORBIDDEN)

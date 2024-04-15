@@ -1,10 +1,6 @@
 from django.urls import path
 
-from .views import (
-    IdeasEntryDetail,
-    IdeasEntryList,
-    IdeasEntryListCreate,
-)
+from .views import IdeasEntryDetail, IdeasEntryList, IdeasEntryListCreate
 
 urlpatterns = [
     path(

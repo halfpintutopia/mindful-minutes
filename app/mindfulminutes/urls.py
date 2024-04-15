@@ -19,6 +19,7 @@ from django.urls import include, path
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions
+
 from .views import (
     account_page,
     design_system,
@@ -50,6 +51,7 @@ urlpatterns = [
     path("", include("notes.urls")),
     path("", include("targets.urls")),
     path("", include("users.urls")),
+    path("", include("user_settings.urls")),
     path("", include("wins.urls")),
     path("", index, name="home"),
     path("search/", search, name="search"),

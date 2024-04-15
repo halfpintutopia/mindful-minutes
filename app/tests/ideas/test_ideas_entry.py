@@ -1,13 +1,13 @@
 import pytest
 
-from journal.models import IdeasEntry
+from ideas.models import IdeasEntry
 
 
 @pytest.mark.django_db
 def test_create_ideas_entry(custom_user):
     """
-    GIVEN a ideas entry model
-    WHEN creating a ideas entry
+    GIVEN an ideas entry model
+    WHEN creating an ideas entry
     THEN user should have successfully created a ideas entry
     """
     ideas_entry = IdeasEntry.objects.create(

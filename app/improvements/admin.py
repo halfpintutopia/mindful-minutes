@@ -1,4 +1,5 @@
 from django.contrib import admin
+
 from .models import ImprovementEntry
 
 
@@ -9,7 +10,7 @@ class ImprovementEntryAdmin(admin.ModelAdmin):
 
     The class defines the display and behaviour fo the ImprovementEntry model
     """
-    
+
     readonly_fields = ("created_on", "updated_on")
     list_display = ("user", "content")
     fields = (

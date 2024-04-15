@@ -2,7 +2,7 @@ from datetime import time
 
 import pytest
 
-from journal.models import UserSettings
+from user_settings.models import UserSettings
 
 
 @pytest.mark.django_db

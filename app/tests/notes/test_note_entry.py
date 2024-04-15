@@ -1,6 +1,6 @@
 import pytest
 
-from journal.models import NoteEntry
+from notes.models import NoteEntry
 
 
 @pytest.mark.django_db

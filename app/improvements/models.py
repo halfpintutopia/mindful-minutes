@@ -1,4 +1,3 @@
-from ckeditor.fields import RichTextField
 from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -14,7 +13,7 @@ class ImprovementEntry(models.Model):
         on_delete=models.CASCADE,
         related_name="improvement_entries",
     )
-    content = RichTextField(_("Improvement Entry"))
+    content = models.TextField(_("Improvement Entry"))
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 

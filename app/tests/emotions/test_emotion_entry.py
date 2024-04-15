@@ -1,6 +1,6 @@
 import pytest
 
-from journal.models import EmotionEntry
+from emotions.models import EmotionEntry
 
 
 @pytest.mark.django_db

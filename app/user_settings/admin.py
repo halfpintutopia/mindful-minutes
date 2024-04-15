@@ -1,4 +1,5 @@
 from django.contrib import admin
+
 from .models import UserSettings
 
 
@@ -9,7 +10,7 @@ class UserSettingsAdmin(admin.ModelAdmin):
 
     The class defines the display and behaviour of the UserSettings model
     """
-    
+
     model = UserSettings
     readonly_fields = ("created_on", "updated_on")
     list_display = (

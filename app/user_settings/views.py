@@ -15,9 +15,9 @@ class UserSettingsView(APIView):
     """
     Retrieve, update, delete user settings for a specific user
     """
-    
+
     permission_classes = [IsAuthenticated]
-    
+
     def get_object(self, user_id):
         """
         Helper method to get the user settings object
@@ -27,7 +27,7 @@ class UserSettingsView(APIView):
             return UserSettings.objects.get(user=user_id)
         except UserSettings.DoesNotExist:
             raise Http404
-    
+
     def get(self, request, slug, format=None):
         """
         Retrieve user settings for specified user
@@ -37,11 +37,11 @@ class UserSettingsView(APIView):
                 {"error": "You are not authorised to access these settings."},
                 status=status.HTTP_403_FORBIDDEN,
             )
-        
+
         user_settings = self.get_object(request.user.id)
         serializer = UserSettingsSerializer(user_settings)
         return Response(serializer.data)
-    
+
     @swagger_auto_schema(
         request_body=openapi.Schema(
             type=openapi.TYPE_OBJECT,
@@ -61,14 +61,14 @@ class UserSettingsView(APIView):
                 {"error": "You are not authorised to create these settings."},
                 status=status.HTTP_403_FORBIDDEN,
             )
-        
+
         serializer = UserSettingsSerializer(data=request.data)
-        
+
         if serializer.is_valid():
             serializer.save(user=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
     def delete(self, request, slug, format=None):
         """
         Delete user setting of the specified user
@@ -78,11 +78,11 @@ class UserSettingsView(APIView):
                 {"error": "You are not authorised to delete these settings."},
                 status=status.HTTP_403_FORBIDDEN,
             )
-        
+
         user_settings = self.get_object(request.user.id)
         user_settings.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-    
+
     @swagger_auto_schema(
         request_body=openapi.Schema(
             type=openapi.TYPE_OBJECT,
@@ -102,7 +102,7 @@ class UserSettingsView(APIView):
                 {"error": "You are not authorised to update these settings."},
                 status=status.HTTP_403_FORBIDDEN,
             )
-        
+
         user_settings = get_object_or_404(UserSettings, user=request.user.id)
         serializer = UserSettingsSerializer(user_settings, data=request.data)
         if serializer.is_valid():

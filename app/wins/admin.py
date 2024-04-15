@@ -1,4 +1,5 @@
 from django.contrib import admin
+
 from .models import WinEntry
 
 
@@ -9,7 +10,7 @@ class WinEntryAdmin(admin.ModelAdmin):
 
     The class defines the display and behaviour fo the WinEntry model
     """
-    
+
     readonly_fields = ("created_on", "updated_on")
     list_display = ("user", "title")
     fields = (

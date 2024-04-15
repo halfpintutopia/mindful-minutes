@@ -3,22 +3,17 @@ from django.contrib.auth import get_user_model
 from faker import Faker
 from rest_framework.test import APIClient
 
-from journal.models import (
-    AppointmentEntry,
-    EmotionEntry,
-    GratitudeEntry,
-    IdeasEntry,
-    ImprovementEntry,
-    KnowledgeEntry,
-    NoteEntry,
-    TargetEntry,
-    UserSettings,
-    WinEntry,
-)
+from appointments.models import AppointmentEntry
+from emotions.models import EmotionEntry
+from gratitude_entries.models import GratitudeEntry
+from ideas.models import IdeasEntry
+from improvements.models import ImprovementEntry
+from knowledge_entries.models import KnowledgeEntry
+from notes.models import NoteEntry
+from targets.models import TargetEntry
+from user_settings.models import UserSettings
+from wins.models import WinEntry
 
-# retrieves the current active user model,
-# which is set as the default user model AUTH_USER_MODEL,
-# as extended AbstractUser
 User = get_user_model()
 fake = Faker()
 
@@ -40,14 +35,8 @@ def authenticated_user():
         last_name=last_name,
     )
 
-    # Acts as a simulated web browser that allows
-    # you to make requests to API endpoints and receive responses.
     client = APIClient()
-    # Sets up the test client with an authenticated user,
-    # then use the client to perform actions on behalf of the authenticated
-    # user
     client.force_authenticate(user=user)
-
     return client, user
 
 

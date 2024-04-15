@@ -2,10 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
 from .forms import CustomUserChangeForm, CustomUserCreationForm
-from .models import (
-    CustomUser,
-    UserSettings,
-)
+from .models import CustomUser, UserSettings
 
 
 class CustomUserAdmin(UserAdmin):
@@ -14,7 +11,7 @@ class CustomUserAdmin(UserAdmin):
 
     The class defines the display and behaviour of the User model
     """
-    
+
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
     model = CustomUser
@@ -72,7 +69,7 @@ class UserSettingsAdmin(admin.ModelAdmin):
 
     The class defines the display and behaviour of the UserSettings model
     """
-    
+
     model = UserSettings
     readonly_fields = ("created_on", "updated_on")
     list_display = (

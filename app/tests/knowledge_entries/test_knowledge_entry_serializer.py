@@ -1,6 +1,6 @@
 import pytest
 
-from journal.serializers import KnowledgeEntrySerializer
+from knowledge_entries.serializers import KnowledgeEntrySerializer
 
 
 @pytest.mark.django_db

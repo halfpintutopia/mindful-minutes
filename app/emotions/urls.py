@@ -1,10 +1,6 @@
 from django.urls import path
 
-from .views import (
-    EmotionEntryDetail,
-    EmotionEntryList,
-    EmotionEntryListCreate,
-)
+from .views import EmotionEntryDetail, EmotionEntryList, EmotionEntryListCreate
 
 urlpatterns = [
     path(

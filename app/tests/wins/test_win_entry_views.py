@@ -3,13 +3,10 @@ from datetime import date
 
 import pytest
 from django.urls import reverse
-
-# https://dennisokeeffe.medium.com/mocking-python-datetime-in-tests-with
-# -freezegun-f5532307d6d6
 from freezegun import freeze_time
 from rest_framework import status
 
-from journal.models import WinEntry
+from wins.models import WinEntry
 
 
 @pytest.mark.django_db

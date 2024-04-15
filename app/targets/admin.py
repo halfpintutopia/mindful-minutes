@@ -1,4 +1,5 @@
 from django.contrib import admin
+
 from .models import TargetEntry
 
 
@@ -9,7 +10,7 @@ class TargetEntryAdmin(admin.ModelAdmin):
 
     The class defines the display and behaviour fo the AppointmentEntry model
     """
-    
+
     readonly_fields = ("created_on", "updated_on")
     list_display = ("order", "title", "user")
     fields = (

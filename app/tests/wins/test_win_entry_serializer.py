@@ -1,6 +1,6 @@
 import pytest
 
-from journal.serializers import WinEntrySerializer
+from wins.serializers import WinEntrySerializer
 
 
 @pytest.mark.django_db

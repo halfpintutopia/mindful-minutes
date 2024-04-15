@@ -1,0 +1,174 @@
+name: Django CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  IMAGE: ghcr.io/${{ github.repository }}
+  TAG: latest
+  HEROKU_APP_NAME: ${{ vars.HEROKU_APP_NAME }}
+  HEROKU_REGISTRY_IMAGE: registry.heroku.com/$HEROKU_APP_NAME/web
+  HEROKU_AUTH_TOKEN: ${{ secrets.HEROKU_AUTH_TOKEN }}
+
+jobs:
+  build:
+    name: Build and Push Docker Image
+    runs-on: ubuntu-latest
+    env:
+      IMAGE: ghcr.io/${{ github.repository }}
+      TAG: latest
+
+    steps:
+      - name: Checkout codebase
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Use Docker Build Cache
+        uses: actions/cache@v3
+        with:
+          path: /var/lib/docker
+          key: ${{ runner.os }}-docker-${{ hashFiles('app/Dockerfile.prod') }}
+          restore-keys: |
+            ${{ runner.os }}-docker-
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Debugging information
+        run: |
+          echo "Environment variables:"
+          env
+          echo "Current directory:"
+          pwd
+          echo "Installed Python packages:"
+          pip freeze
+
+      - name: Build Docker image
+        uses: docker/build-push-action@v3
+        with:
+          context: ./app
+          file: app/Dockerfile.prod
+          build-args: |
+            CLOUD_NAME=${{ secrets.CLOUD_NAME }}
+            API_KEY=${{ secrets.API_KEY }}
+            API_SECRET=${{ secrets.API_SECRET }}
+          tags: ${{ env.IMAGE }}:${{ env.TAG }}
+        env:
+          IMAGE: ghcr.io/${{ github.repository }}
+          TAG: latest
+          ALLOWED_HOSTS: .herokuapp.com
+
+  test:
+    name: Test with pytest, Flake8, Black and isort
+    needs: build
+    runs-on: ubuntu-latest
+    env:
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
+    services:
+      postgres:
+        image: postgres:10.3
+        env:
+          POSTGRES_DB: api-test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout codebase
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Cache Python dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('app/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        run: |
+          python -m venv app/env
+          source app/env/bin/activate
+          pip install -r requirements.txt
+          pip install black==23.3.0 Faker==18.10.1 flake8==6.0.0 freezegun==1.2.2 isort==5.12.0 pytest==7.3.1 pytest-django==4.5.2
+        working-directory: app
+
+      - name: Run tests and linting and run Django deployment checklist
+        run: |
+          source app/env/bin/activate
+          export DEBUG=1
+          pytest -p no:warnings
+          flake8 .
+          black . --line-length=79 --extend-exclude="migrations|env|venv"
+          isort . --check-only --skip env
+          export DEBUG=0
+          python manage.py check --deploy --fail-level=WARNING
+        working-directory: app
+
+  deploy:
+    name: Deploy to production
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout codebase
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Login to Heroku Container registry
+        run: echo ${{ secrets.HEROKU_AUTH_TOKEN }} | docker login --username=_ --password-stdin registry.heroku.com
+
+      - name: Build and tag new image
+        uses: docker/build-push-action@v3
+        with:
+          context: ./app
+          file: ./app/Dockerfile.prod
+          push: true
+          tags: registry.heroku.com/${{ vars.HEROKU_APP_NAME }}/web:latest
+          build-args: |
+            CLOUD_NAME=${{ secrets.CLOUD_NAME }}
+            API_KEY=${{ secrets.API_KEY }}
+            API_SECRET=${{ secrets.API_SECRET }}
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+          HEROKU_APP_NAME: ${{ vars.HEROKU_APP_NAME }}
+
+      - name: Push Docker image to Heroku
+        run: docker push registry.heroku.com/${{ vars.HEROKU_APP_NAME }}/web
+
+      - name: Release Docker image on Heroku
+        run: heroku container:release web --app ${{ vars.HEROKU_APP_NAME }}
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}

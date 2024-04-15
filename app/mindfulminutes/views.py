@@ -59,7 +59,7 @@ def design_system(request):
     """
     if not request.user.is_superuser:
         return HttpResponseForbidden()
-    
+
     title = "Design System"
     context = {"title": title}
     return render(request, "design_system.html", context)

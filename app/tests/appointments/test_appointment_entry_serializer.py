@@ -2,7 +2,7 @@ from datetime import date, time
 
 import pytest
 
-from journal.serializers import AppointmentEntrySerializer
+from appointments.serializers import AppointmentEntrySerializer
 
 
 @pytest.mark.django_db

@@ -1,10 +1,6 @@
 from django.urls import path
 
-from .views import (
-    WinEntryDetail,
-    WinEntryList,
-    WinEntryListCreate,
-)
+from .views import WinEntryDetail, WinEntryList, WinEntryListCreate
 
 urlpatterns = [
     path(

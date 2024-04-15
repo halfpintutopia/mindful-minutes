@@ -9,7 +9,7 @@ from django.urls import reverse
 from freezegun import freeze_time
 from rest_framework import status
 
-from journal.models import NoteEntry
+from notes.models import NoteEntry
 
 
 @pytest.mark.django_db

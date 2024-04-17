@@ -88,7 +88,7 @@
 
 @media screen and (width >= 56.25em) {
     .lg-screen-d-none {
-        display: none;
+        display: none !important;
     }
 }
 

@@ -4,6 +4,8 @@
 
 [![Django CI/CD](https://github.com/halfpintutopia/mindful-minutes-v2/actions/workflows/github-ci-cd.yml/badge.svg)](https://github.com/halfpintutopia/mindful-minutes/actions/workflows/github-ci-cd.yml)
 
+![amiresponsive](https://github.com/halfpintutopia/mindful-minutes/assets/30613818/059055dc-ff9a-4c10-a882-c6440e712441)
+
 <!-- omit from toc -->
 
 ## Table of Contents

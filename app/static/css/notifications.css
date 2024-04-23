@@ -1,0 +1,21 @@
+.alert {
+    display: grid;
+    grid-template-rows: 0fr;
+    /*transition: grid-template-rows 0.5s ease-in-out;*/
+    transition: bottom 0.5s ease-in-out;
+    position: fixed;
+    left: 50%;
+    bottom: -60.75px;
+    transform: translateX(-50%);
+}
+
+.alert__notification {
+    overflow: hidden;
+    padding: 1em;
+    background-color: orangered;
+}
+
+.alert.active {
+    /*grid-template-rows: 1fr;*/
+    bottom: 0;
+}

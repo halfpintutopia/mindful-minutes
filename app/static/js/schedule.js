@@ -1,4 +1,4 @@
-import { getCurrentDate } from "./helpers/helpers.js";
+import { createUrl, getCurrentDate } from "./helpers/helpers.js";
 import { fetchData, postData } from "./helpers/fetchApi.js";
 
 const lineHeight = 1;
@@ -50,7 +50,7 @@ const createEntries = async () => {
   const formData = new FormData(scheduleForm);
   const currentDate = getCurrentDate();
   
-  const api = `${ server }/api/users/${ formData.get('user') }/appointments/${ currentDate }/`;
+  const api = createUrl(`/api/users/${ formData.get('user') }/appointments/${ currentDate }/`);
   const entries = await fetchData(api);
   
   entries.map(entry => {

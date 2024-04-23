@@ -20,9 +20,7 @@
 
 .marked-image img {
     grid-column: var(--image-grid-column-span);
-
-    height: clamp(4.1875rem, 0.3824rem + 16.2353vw, 8.5rem);
-
+    height: clamp(2.9375rem, -0.7679rem + 18.5268vi, 8.125rem);
 }
 
 .marked-image div {

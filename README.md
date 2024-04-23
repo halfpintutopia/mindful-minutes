@@ -95,6 +95,30 @@ Personalise experience:
 
 ### Accessibility
 
+## Features
+
+### Header
+
+### Footer
+
+### Calendar
+
+### Accordion
+
+### Sections
+
+#### Text and image
+
+### Forms
+
+#### Register
+
+#### Login
+
+#### Account page 
+
+#### Search
+
 ## Technologies Used
 
 ### Stack
@@ -103,6 +127,10 @@ Personalise experience:
 - CSS3
 - JavaScript
 - Python
+
+### Frameworks
+
+- Django
 
 ### Packages
 

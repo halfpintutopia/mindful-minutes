@@ -2,7 +2,7 @@
 
 # Mindful Minutes
 
-[![Django CI/CD](https://github.com/halfpintutopia/mindful-minutes-v2/actions/workflows/github-ci-cd.yml/badge.svg)](https://github.com/halfpintutopia/mindful-minutes/actions/workflows/github-ci-cd.yml)
+[![Django CI/CD](https://github.com/halfpintutopia/mindful-minutes/actions/workflows/github-ci-cd.yml/badge.svg)](https://github.com/halfpintutopia/mindful-minutes/actions/workflows/github-ci-cd.yml)
 
 <!-- omit from toc -->
 

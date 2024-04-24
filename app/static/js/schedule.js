@@ -53,6 +53,7 @@ const createEntries = async () => {
   
   const api = createUrl(`/api/users/${ formData.get('user') }/appointments/${ currentDate }/`);
   const entries = await fetchData(api);
+  console.log(entries);
   
   entries.map(entry => {
     const timeFromArray = entry.time_from.split(':');
@@ -158,18 +159,19 @@ const sendData = async (e) => {
   if (checkTimes(formData)) {
     let api;
     
-    activateLoader();
+    activateLoader('create');
     
     if (e.currentTarget.dataset.entryId) {
       api = `${ server }/api/users/${ formData.get('user') }/appointments/${ currentDate }/${ e.currentTarget.dataset.entryId }/`;
       await postData(api, dataObj, formData.get('csrfmiddlewaretoken'), 'PUT');
+      deactivateLoader('Schedule entry', 'update');
     } else {
       api = `${ server }/api/users/${ formData.get('user') }/appointments/${ currentDate }/`;
       await postData(api, dataObj, formData.get('csrfmiddlewaretoken'));
+      deactivateLoader('Schedule entry', 'create');
     }
     closeDialog(e);
     initSchedule();
-    deactivateLoader('Schedule entry');
   } else {
     errorMsgElement.innerText = "A task or appointment can't finish before it starts, unless you're the Flash?";
   }
@@ -178,10 +180,12 @@ const sendData = async (e) => {
 const deleteEntry = async () => {
   const formData = new FormData(scheduleForm);
   const currentDate = getCurrentDate();
+  activateLoader('delete');
   
   const api = `${ server }/api/users/${ formData.get('user') }/appointments/${ currentDate }/${ scheduleForm.dataset.entryId }/`;
   await postData(api, {}, formData.get('csrfmiddlewaretoken'), 'DELETE');
   initSchedule();
+  deactivateLoader('Schedule entry', 'delete');
 };
 
 // https://stackoverflow.com/a/69687500/8614652

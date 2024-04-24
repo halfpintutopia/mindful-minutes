@@ -1,5 +1,6 @@
 import { createUrl, getCurrentDate } from "./helpers/helpers.js";
 import { fetchData, postData } from "./helpers/fetchApi.js";
+import { activateLoader, deactivateLoader } from "./helpers/loader.js";
 
 const lineHeight = 1;
 const hour = 50;
@@ -156,6 +157,9 @@ const sendData = async (e) => {
   
   if (checkTimes(formData)) {
     let api;
+    
+    activateLoader();
+    
     if (e.currentTarget.dataset.entryId) {
       api = `${ server }/api/users/${ formData.get('user') }/appointments/${ currentDate }/${ e.currentTarget.dataset.entryId }/`;
       await postData(api, dataObj, formData.get('csrfmiddlewaretoken'), 'PUT');
@@ -165,6 +169,7 @@ const sendData = async (e) => {
     }
     closeDialog(e);
     initSchedule();
+    deactivateLoader('Schedule entry');
   } else {
     errorMsgElement.innerText = "A task or appointment can't finish before it starts, unless you're the Flash?";
   }

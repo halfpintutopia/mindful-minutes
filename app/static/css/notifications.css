@@ -1,21 +1,25 @@
 .alert {
+    --_height: 60.75;
+
     display: grid;
     grid-template-rows: 0fr;
-    /*transition: grid-template-rows 0.5s ease-in-out;*/
     transition: bottom 0.5s ease-in-out;
     position: fixed;
     left: 50%;
-    bottom: -60.75px;
+    bottom: calc(var(--_height) * -1px);
     transform: translateX(-50%);
+
 }
 
 .alert__notification {
     overflow: hidden;
     padding: 1em;
     background-color: orangered;
+    height: calc(var(--_height) * 1px);
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
 }
 
 .alert.active {
-    /*grid-template-rows: 1fr;*/
     bottom: 0;
 }

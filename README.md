@@ -99,6 +99,17 @@ Personalise experience:
 
 ### Header
 
+| Role | ##### Mobile | ##### Desktop |
+| ---- | ------------ | ------------- |
+| | ![header_mobile](https://github.com/halfpintutopia/mindful-minutes/assets/30613818/b364d26d-3957-40c0-8d8e-7dffb0f196bd)
+ | |
+| Logged out |![header_logged-out_menu_mobile](https://github.com/halfpintutopia/mindful-minutes/assets/30613818/067a2c7a-571e-4fbb-90a2-cd4955927ed8)
+ | ![header_logged-out](https://github.com/halfpintutopia/mindful-minutes/assets/30613818/3acbff20-133d-4e8a-9bda-ccd4c619b626)
+|
+| Logged in | ![header_logged-in_menu_mobile](https://github.com/halfpintutopia/mindful-minutes/assets/30613818/0fd01221-d772-4fc8-8cad-7df643027006)
+ | ![header_logged-in](https://github.com/halfpintutopia/mindful-minutes/assets/30613818/129d30ba-215e-409d-b62c-12bb4c527a06)
+|
+
 ### Footer
 
 ### Calendar

@@ -1,198 +1,198 @@
 <!-- omit from toc -->
 
-# Testing
+<h1>Testing</h1>
 
 [*Return to main README file*](../../../README.md)
 <!-- omit from toc -->
 
-## Table of Contents
+<h2>Table of Contents</h2>
 
-- [Django REST Framework](#django-rest-framework)
-    - [RESTful Routes](#restful-routes)
-        - [Custom User](#custom-user)
-        - [User Settings](#user-settings)
-        - [Appointment Entries](#appointment-entries)
-        - [Target Entries](#target-entries)
-        - [Note Entries](#note-entries)
-        - [Knowledge Entries](#knowledge-entries)
-        - [Gratitude Entries](#gratitude-entries)
-        - [Win Entries](#win-entries)
-        - [Ideas Entries](#ideas-entries)
-        - [Improvement Entries](#improvement-entries)
-        - [Emotion Entries](#emotion-entries)
+<!-- TOC -->
+  * [User Management](#user-management)
+    * [Create account](#create-account)
+    * [Log in](#log-in)
+    * [Manage account settings](#manage-account-settings)
+    * [Reset password](#reset-password)
+  * [Daily Journaling](#daily-journaling)
+    * [Create morning journal entries](#create-morning-journal-entries)
+    * [Create evening journal entries](#create-evening-journal-entries)
+    * [Edit & delete journal entries](#edit--delete-journal-entries)
+    * [List journal entries](#list-journal-entries)
+    * [Tag & categories](#tag--categories)
+  * [Goal Setting and Tracking](#goal-setting-and-tracking)
+    * [Set goals](#set-goals)
+    * [Manage goals](#manage-goals)
+    * [Reminders and notifications](#reminders-and-notifications)
+    * [Track progress](#track-progress)
+<!-- TOC -->
 
-## Django REST Framework
+## User Management
 
-### RESTful Routes
+### Create account
 
-Preferring the approach of a hierachical (nested) URL structure, rather flattened (shallow), to ensure consistency, and
-provides a clear and explicit indication of the relationship between the user and resource. This approach helps to
-prevent potential naming conflicts and provide predicable URL structure. Trying to maintain the practice of including
-the user identifier in the URL to make it more explicit and secure. By including the user
+As a new user, I want to **create an account and provide my basic information** to **have a personalized experience**.
 
-Testing api routes with the structure of
-
-- the dynamic segment
-    - user identifier `<int:user_id>`
-
-#### Custom User
-
-| Endpoint       | HTTP Method | CRUD Method | Result                  |         |
-|:---------------|:-----------:|:-----------:|:------------------------|---------|
-| /api/users/    |     GET     |    READ     | get all users           | &#9745; |
-| /api/users/:id |     GET     |    READ     | get a single user by ID | &#9745; |
-| /api/users     |    POST     |   CREATE    | add an user             | &#9745; |
-| /api/users/:id |     PUT     |   UPDATE    | update an user          | &#9745; |
-| /api/users/:id |   DELETE    |   DELETE    | delete an user          | &#9745; |
+| Assessment Criteria                                                      | Tested | Successful |
+|--------------------------------------------------------------------------|--------|------------|
+| User should be able to register a new account.                           |        |            |
+| User should be able to enter basic information (such as name and email). |        |            |
+| User should be able to receive a confirmation email.                     |        |            |
 
 ---
 
-#### User Settings
+### Log in
 
-| Endpoint                    | HTTP Method | CRUD Method | Result                       |         |
-|:----------------------------|:-----------:|:-----------:|:-----------------------------|---------|
-| /api/user-settings/:user_id |     GET     |    READ     | get all user's user-settings | &#9745; |
-| /api/user-settings/:user_id |    POST     |   CREATE    | add an user's user-settings  | &#9745; |
-| /api/user-settings/:user_id |     PUT     |   UPDATE    | update user's user-settings  | &#9745; |
-| /api/user-settings/:user_id |   DELETE    |   DELETE    | delete user's user-settings  | &#9745; |
+As a **registered user**, I want to **log in and securely access my account** to **maintain privacy and security**.
 
----
-
-#### Appointment Entries
-
-| Endpoint                    | HTTP Method | CRUD Method | Result                               |         |
-|:----------------------------|:-----------:|:-----------:|:-------------------------------------|---------|
-| /api/appointments/:date     |     GET     |    READ     | get all appointments by date         | &#9745; |
-| /api/appointments/:date/:id |     GET     |    READ     | get a single appointment entry by ID | &#9745; |
-| /api/appointments/:date     |    POST     |   CREATE    | add an appointment entry             | &#9745; |
-| /api/appointments/:date/:id |     PUT     |   UPDATE    | update an appointment entry          | &#9745; |
-| /api/appointments/:date/:id |   DELETE    |   DELETE    | delete an appointment entry          | &#9745; |
+| Assessment Criteria                                                                              | Tested | Successful |
+|--------------------------------------------------------------------------------------------------|--------|------------|
+| User should be able to log in with their registered credentials.                                 |        |            |
+| User should be able to update account settings, including password change and email preferences. |        |            |
 
 ---
 
-#### Target Entries
+### Manage account settings
 
-| Endpoint               | HTTP Method | CRUD Method | Result                          |         |
-|:-----------------------|:-----------:|:-----------:|:--------------------------------|---------|
-| /api/targets/:date     |     GET     |    READ     | get all targets by date         | &#9745; |
-| /api/targets/:date/:id |     GET     |    READ     | get a single target entry by ID | &#9745; |
-| /api/targets/:date     |    POST     |   CREATE    | add an target entry             | &#9745; |
-| /api/targets/:date/:id |     PUT     |   UPDATE    | update an target entry          | &#9745; |
-| /api/targets/:date/:id |   DELETE    |   DELETE    | delete an target entry          | &#9745; |
+As a **user**, I want to **update my profile information and manage account settings** to **customize my experience**
 
----
-
-#### Note Entries
-
-| Endpoint             | HTTP Method | CRUD Method | Result                        |         |
-|:---------------------|:-----------:|:-----------:|:------------------------------|---------|
-| /api/notes/:date     |     GET     |    READ     | get all notes by date         | &#9745; |
-| /api/notes/:date/:id |     GET     |    READ     | get a single note entry by ID | &#9745; |
-| /api/notes/:date     |    POST     |   CREATE    | add an note entry             | &#9745; |
-| /api/notes/:date/:id |     PUT     |   UPDATE    | update an note entry          | &#9745; |
-| /api/notes/:date/:id |   DELETE    |   DELETE    | delete an note entry          | &#9745; |
+| Assessment Criteria                                                                                    | Tested | Successful |
+|--------------------------------------------------------------------------------------------------------|--------|------------|
+| User should be able to edit their profile information such as name, email and profile picture.         |        |            |
+| User should be able to update their account settings, including password change and email preferences. |        |            |
 
 ---
 
-#### Knowledge Entries
+### Reset password
 
-| Endpoint                 | HTTP Method | CRUD Method | Result                             |         |
-|:-------------------------|:-----------:|:-----------:|:-----------------------------------|---------|
-| /api/knowledge/:date     |     GET     |    READ     | get all knowledge by date          | &#9745; |
-| /api/knowledge/:date/:id |     GET     |    READ     | get a single knowledge entry by ID | &#9745; |
-| /api/knowledge/:date     |    POST     |   CREATE    | add an knowledge entry             | &#9745; |
-| /api/knowledge/:date/:id |     PUT     |   UPDATE    | update an knowledge entry          | &#9745; |
-| /api/knowledge/:date/:id |   DELETE    |   DELETE    | delete an knowledge entry          | &#9745; |
+As a **user**, I want the to **have the option to reset my password in case I forget it** to **recover my account**
+
+| Assessment Criteria                                                                                                    | Tested | Successful |
+|------------------------------------------------------------------------------------------------------------------------|--------|------------|
+| User should have the ability to reset their password via a password reset link sent to their registered email address. |        |            |
 
 ---
 
-#### Gratitude Entries
+## Daily Journaling
 
-| Endpoint                 | HTTP Method | CRUD Method | Result                             |         |
-|:-------------------------|:-----------:|:-----------:|:-----------------------------------|---------|
-| /api/gratitude/:date     |     GET     |    READ     | get all gratitude by date          | &#9745; |
-| /api/gratitude/:date/:id |     GET     |    READ     | get a single gratitude entry by ID | &#9745; |
-| /api/gratitude/:date     |    POST     |   CREATE    | add an gratitude entry             | &#9745; |
-| /api/gratitude/:date/:id |     PUT     |   UPDATE    | update an gratitude entry          | &#9745; |
-| /api/gratitude/:date/:id |   DELETE    |   DELETE    | delete an gratitude entry          | &#9745; |
+### Create morning journal entries
 
----
+As a **user**, I want to **create morning journal entries with intentions and targets** to **start the day with purpose
+**.
 
-#### Win Entries
-
-| Endpoint            | HTTP Method | CRUD Method | Result                       |         |
-|:--------------------|:-----------:|:-----------:|:-----------------------------|---------|
-| /api/wins/:date     |     GET     |    READ     | get all wins by date         | &#9745; |
-| /api/wins/:date/:id |     GET     |    READ     | get a single win entry by ID | &#9745; |
-| /api/wins/:date     |    POST     |   CREATE    | add an win entry             | &#9745; |
-| /api/wins/:date/:id |     PUT     |   UPDATE    | update an win entry          | &#9745; |
-| /api/wins/:date/:id |   DELETE    |   DELETE    | delete an win entry          | &#9745; |
+| Assessment Criteria                                                                      | Tested | Successful |
+|------------------------------------------------------------------------------------------|--------|------------|
+| User should be able to access the journal entry creation interface.                      |        |            |
+| User should be able to create a new morning journal entry.                               |        |            |
+| User should be able to view and edit their existing morning journal entries.             |        |            |
+| User should be able to save it for future reference, associated with the user's account. |        |            |
+| User should be able to delete their morning journal entries.                             |        |            |
 
 ---
 
-#### Ideas Entries
+### Create evening journal entries
 
-| Endpoint             | HTTP Method | CRUD Method | Result                        |         |
-|:---------------------|:-----------:|:-----------:|:------------------------------|---------|
-| /api/ideas/:date     |     GET     |    READ     | get all ideas by date         | &#9745; |
-| /api/ideas/:date/:id |     GET     |    READ     | get a single idea entry by ID | &#9745; |
-| /api/ideas/:date     |    POST     |   CREATE    | add an idea entry             | &#9745; |
-| /api/ideas/:date/:id |     PUT     |   UPDATE    | update an idea entry          | &#9745; |
-| /api/ideas/:date/:id |   DELETE    |   DELETE    | delete an idea entry          | &#9745; |
+As a **user**, I want to **create evening journal entries with reflections and gratitude** to **foster self-awareness
+and mindfulness**
 
----
-
-#### Improvement Entries
-
-| Endpoint                   | HTTP Method | CRUD Method | Result                               |         |
-|:---------------------------|:-----------:|:-----------:|:-------------------------------------|---------|
-| /api/improvement/:date     |     GET     |    READ     | get all improvement by date          | &#9745; |
-| /api/improvement/:date/:id |     GET     |    READ     | get a single improvement entry by ID | &#9745; |
-| /api/improvement/:date     |    POST     |   CREATE    | add an improvement entry             | &#9745; |
-| /api/improvement/:date/:id |     PUT     |   UPDATE    | update an improvement entry          | &#9745; |
-| /api/improvement/:date/:id |   DELETE    |   DELETE    | delete an improvement entry          | &#9745; |
-
---- 
-
-#### Emotion Entries
-
-| Endpoint            | HTTP Method | CRUD Method | Result                     |     |
-|:--------------------|:-----------:|:-----------:|:---------------------------|-----|
-| /api/emotions/      |     GET     |    READ     | get all emotions           |     |
-| /api/emotions/:date |     GET     |    READ     | get all emotions by date   |     |
-| /api/emotions/:id   |     GET     |    READ     | get a single emotion by ID |     |
-| /api/emotions/      |    POST     |   CREATE    | add an emotion             |     |
-| /api/emotions/:id   |     PUT     |   UPDATE    | update an emotion          |     |
-| /api/emotions/:id   |   DELETE    |   DELETE    | delete an emotion          |     |
+| Assessment Criteria                                                                  | Tested | Successful |
+|--------------------------------------------------------------------------------------|--------|------------|
+| User should be able to access the journal entry creation interface.                  |        |            |
+| User should be able to create a new evening journal entry.                           |        |            |
+| User should be able to view and edit their existing evening journal entries.         |        |            |
+| User should be able to save it for future reference, associated with user's account. |        |            |
+| User should be able to delete their evening journal entries.                         |        |            |
 
 ---
 
-## API Documentation
+### Edit & delete journal entries
 
-Swagger and `drf_yasg` are essential tools for Django and Django REST Framework (DRF) API development. Swagger
-simplifies the creation fo RESTful APIs by providing a standardised format for documenting and exploring
-endpoints. [drf_yasg](https://drf-yasg.readthedocs.io/en/stable/) seamlessly integrates Swagger with DRF, automatically
-generating API documentation based on serializers, views and viewsets. Together they enhance developer experience,
-promote collaboration and ensure up-to-date and interactive API documentation, leading to improved productivity and
-easier adoption of APIs.
+As a **user**, I want to **edit or delete my journal entries** to **ensure accuracy and organization**.
 
-### Test database
+| Assessment Criteria                                       | Tested | Successful |
+|-----------------------------------------------------------|--------|------------|
+| User should be able to edit the content of their journal. |        |            |
+| User should be able to delete them entirely if needed.    |        |            |
 
-When testing Swagger docs, a separate database needs to be set up to ensure that the test data does not permanently
-affect the default database.
+---
 
-To create a new test database, create a new [ElephantSQL](https://elephantsql.com) instance.
+### List journal entries
 
-1. Login to ElephantSQL account
-2. From the dashboard, click on "Create new" button
-3. Provide a name for then new instance e.g. app_test
-4. Configure the region, version and plan
-5. Once the instance has been created, you will land on your "Details" page
-6. Copy the "URL" for the new instance, which starts with `postgres://`, set this to an environment variable in the `.env` file
-7. Update the `settings.py` file to include the test database configuration
-8. Create a new entry in the `DATABASES` dictionary for `test`
-9. Set the environment variable in the value for `test` the `settings.py` file
+As a **user**, I want to **view a list of past journal entries and navigate between them** to **be able to easily
+reference and reflect upon**.
 
-Once this is set up, when running tests, Django will automatically use the test database specified in the `settings.py` file. 
+| Assessment Criteria                                                            | Tested | Successful |
+|--------------------------------------------------------------------------------|--------|------------|
+| User should be able to view a list of their pass journal entries.              |        |            |
+| User should be able to sort by date.                                           |        |            |
+| User should be able to navigate between them to review their previous entries. |        |            |
 
-[Back to the top](#testing)
+---
+
+### Tag & categories
+
+As a **user**, I want to **be able to categorise and tag my journal entries** to **be able to filter and search entries
+**.
+
+| Assessment Criteria                                                                     | Tested | Successful |
+|-----------------------------------------------------------------------------------------|--------|------------|
+| User should be able to create categories or tags for their journal entries.             |        |            |
+| User should be able to assign one or multiple categories or tags to each journal entry. |        |            |
+| User should be able to filter and search journal entries based on categories or tags.   |        |            |
+| User should be able to see only relevant journal entries when filtering or searching.   |        |            |
+| User should be able to edit or remove categories or tags from journal entries.          |        |            |
+| User should be able to easily manage and organise their categories or tags.             |        |            |
+
+---
+
+## Goal Setting and Tracking
+
+### Set goals
+
+As a **user**, I want to **set goals for different areas of my life** to **stay focused and motivated**.
+
+| Assessment Criteria                                                                      | Tested | Successful |
+|------------------------------------------------------------------------------------------|--------|------------|
+| User should be able to set goals for various areas (e.g. health, work, personal growth). |        |            |
+| User should be able to specify goals' details.                                           |        |            |
+| User should be able to set target dates.                                                 |        |            |
+
+---
+
+### Manage goals
+
+As a **user**, I want to **be able to view and manage my goals**.
+
+| Assessment Criteria                                | Tested | Successful |
+|----------------------------------------------------|--------|------------|
+| User should be able to view a list of their goals. |        |            |
+| User should be able to create new goals.           |        |            |
+| User should be able to edit existing goals.        |        |            |
+
+---
+
+### Reminders and notifications
+
+As a **user**, I want to **receive reminders or notifications** to **help me stay on track with my goals and progress**.
+
+| Assessment Criteria                                                                       | Tested | Successful |
+|-------------------------------------------------------------------------------------------|--------|------------|
+| User should receive reminders or notifications for upcoming goal deadlines.               |        |            |
+| User should receive reminders or notifications for goal progress milestones.              |        |            |
+| User should have control over the frequency and timing of the reminders or notifications. |        |            |
+
+---
+
+### Track progress
+
+As a **user**, I want to **track my goal progress and visualize my achievements** to **promote motivation and
+accountability**.
+
+| Assessment Criteria                                                                                   | Tested | Successful |
+|-------------------------------------------------------------------------------------------------------|--------|------------|
+| User should be able to track the progress of their goals.                                             |        |            |
+| User should be able to view visual representations of their achievements.                             |        |            |
+| User should be able to have access to visual representations of their goal progress and achievements. |        |            |
+
+---
+
+[Back to the top](#user-stories)

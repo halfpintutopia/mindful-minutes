@@ -1,64 +1,86 @@
 <!-- omit from toc -->
 
-# Mindful Minutes
+<h1>Mindful Minutes</h1>
 
 [![Django CI/CD](https://github.com/halfpintutopia/mindful-minutes/actions/workflows/github-ci-cd.yml/badge.svg)](https://github.com/halfpintutopia/mindful-minutes/actions/workflows/github-ci-cd.yml)
 
 <!-- omit from toc -->
 
-## Table of Contents
+<h2>Table of Contents</h2>
 
-- [Mindful Minutes](#mindful-minutes)
-    - [Table of Contents](#table-of-contents)
-    - [Product Information](#product-information)
-    - [UX / UI Design](#ux--ui-design)
-    - [Agile](#agile)
-        - [Future Implementations](#future-implementations)
-        - [Accessibility](#accessibility)
-    - [Technologies Used](#technologies-used)
-        - [Stack](#stack)
-        - [Packages](#packages)
-        - [Frameworks, Libraries \& Additional Programs/Software/Tools used](#frameworks-libraries--additional-programssoftwaretools-used)
-            - [Libraries \& Dependencies](#libraries--dependencies)
-            - [Tools](#tools)
-    - [Remote \& Local Deployment](#remote--local-deployment)
-        - [Local Deployment](#local-deployment)
-            - [Fork the Repository](#fork-the-repository)
-                - [Additional Information](#additional-information)
-                    - [Configuration steps](#configuration-steps)
-        - [Remote Deployment](#remote-deployment)
-            - [Additional Information](#additional-information-1)
-                - [Create the Initial GitHub Actions Workflow YAML For CI/CD](#create-the-initial-github-actions-workflow-yaml-for-cicd)
-                - [Continuous Integration (CI)](#continuous-integration-ci)
-                - [Continuous Deployment (CD)](#continuous-deployment-cd)
-    - [Testing](#testing)
-        - [Django Test Driven Development using REST Framework](#django-test-driven-development-using-rest-framework)
-        - [User experience](#user-experience)
-        - [Bugs \& Fixes](#bugs--fixes)
-            - [Known Bugs](#known-bugs)
-        - [Lighthouse](#lighthouse)
-        - [Validator Testing](#validator-testing)
-    - [Credits](#credits)
-        - [References](#references)
-            - [Style](#style)
-            - [Definitions](#definitions)
-        - [Code Used](#code-used)
-        - [References \& Resources](#references--resources)
-            - [Additional Courses](#additional-courses)
-            - [Agile](#agile-1)
-            - [Deployment](#deployment)
-                - [Issues / Bugs](#issues--bugs)
-            - [CI / CD](#ci--cd)
-            - [Django](#django)
-                - [Python Dependencies / Packages](#python-dependencies--packages)
-            - [Heroku](#heroku)
-            - [Testing](#testing-1)
-                - [Automated testing](#automated-testing)
-            - [Django](#django-1)
-            - [Performance and Optimisation](#performance-and-optimisation)
-        - [Content](#content)
-        - [Media](#media)
-        - [Acknowledgements](#acknowledgements)
+<!-- TOC -->
+  * [Product Information](#product-information)
+  * [UX / UI Design](#ux--ui-design)
+  * [Agile](#agile)
+    * [Future Implementations](#future-implementations)
+    * [Accessibility](#accessibility)
+  * [Features](#features)
+    * [Header](#header)
+    * [Footer](#footer)
+    * [Calendar](#calendar)
+    * [Accordion](#accordion)
+    * [Sections](#sections)
+      * [Text and image](#text-and-image)
+    * [Forms](#forms)
+      * [Register](#register)
+      * [Login](#login)
+      * [Account page](#account-page)
+      * [Search](#search)
+  * [Technologies Used](#technologies-used)
+    * [Stack](#stack)
+    * [Frameworks](#frameworks)
+    * [Packages](#packages)
+    * [Frameworks, Libraries & Additional Programs/Software/Tools used](#frameworks-libraries--additional-programssoftwaretools-used)
+      * [Libraries & Dependencies](#libraries--dependencies)
+      * [Tools](#tools)
+  * [Remote & Local Deployment](#remote--local-deployment)
+    * [Local Deployment](#local-deployment)
+      * [Fork the Repository](#fork-the-repository)
+        * [Additional Information](#additional-information)
+          * [Configuration steps](#configuration-steps)
+    * [Remote Deployment](#remote-deployment)
+      * [Additional Information](#additional-information-1)
+        * [Create the Initial GitHub Actions Workflow YAML For CI/CD](#create-the-initial-github-actions-workflow-yaml-for-cicd)
+        * [Continuous Integration (CI)](#continuous-integration-ci)
+        * [Continuous Deployment (CD)](#continuous-deployment-cd)
+      * [Set Up GitHub Actions Workflow YAML For CI/CD After Cloning](#set-up-github-actions-workflow-yaml-for-cicd-after-cloning)
+      * [Create Heroku App (via the Dashboard)](#create-heroku-app-via-the-dashboard)
+      * [Create a new PostgreSQL Database Instance](#create-a-new-postgresql-database-instance)
+      * [Set up Heroku Config Vars](#set-up-heroku-config-vars)
+    * [Contributing](#contributing)
+  * [Data Models](#data-models)
+    * [Schematics](#schematics)
+    * [API](#api)
+  * [Testing](#testing)
+    * [Django Test Driven Development using REST Framework](#django-test-driven-development-using-rest-framework)
+    * [User experience](#user-experience)
+    * [Bugs & Fixes](#bugs--fixes)
+      * [Known Bugs](#known-bugs)
+    * [Lighthouse](#lighthouse)
+    * [Validator Testing](#validator-testing)
+  * [Credits](#credits)
+    * [References](#references)
+      * [Style](#style)
+        * [Images](#images)
+      * [Definitions](#definitions)
+    * [Code Used](#code-used)
+    * [References & Resources](#references--resources)
+      * [Additional Courses](#additional-courses)
+      * [Agile](#agile-1)
+      * [Deployment](#deployment)
+        * [Issues / Bugs](#issues--bugs)
+      * [CI / CD](#ci--cd)
+      * [Django](#django)
+        * [Python Dependencies / Packages](#python-dependencies--packages)
+      * [Heroku](#heroku)
+      * [Testing](#testing-1)
+        * [Automated testing](#automated-testing)
+      * [Django](#django-1)
+      * [Performance and Optimisation](#performance-and-optimisation)
+    * [Content](#content)
+    * [Media](#media)
+    * [Acknowledgements](#acknowledgements)
+<!-- TOC -->
 
 ## Product Information
 
@@ -99,36 +121,68 @@ Personalise experience:
 
 ### Header
 
-| Role | ##### Mobile | ##### Desktop |
-| ---- | ------------ | ------------- |
-| | ![header_mobile](https://github.com/halfpintutopia/mindful-minutes/assets/30613818/b364d26d-3957-40c0-8d8e-7dffb0f196bd)
- | |
-| Logged out |![header_logged-out_menu_mobile](https://github.com/halfpintutopia/mindful-minutes/assets/30613818/067a2c7a-571e-4fbb-90a2-cd4955927ed8)
- | ![header_logged-out](https://github.com/halfpintutopia/mindful-minutes/assets/30613818/3acbff20-133d-4e8a-9bda-ccd4c619b626)
-|
-| Logged in | ![header_logged-in_menu_mobile](https://github.com/halfpintutopia/mindful-minutes/assets/30613818/0fd01221-d772-4fc8-8cad-7df643027006)
- | ![header_logged-in](https://github.com/halfpintutopia/mindful-minutes/assets/30613818/129d30ba-215e-409d-b62c-12bb4c527a06)
-|
+| **Role**       | **Mobile**                                                                                                                               | **Desktop**                                                                                                                  |
+|----------------|------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------|
+|                | ![header_mobile](https://github.com/halfpintutopia/mindful-minutes/assets/30613818/b364d26d-3957-40c0-8d8e-7dffb0f196bd)                 |                                                                                                                              |
+| **Logged out** | ![header_logged-out_menu_mobile](https://github.com/halfpintutopia/mindful-minutes/assets/30613818/067a2c7a-571e-4fbb-90a2-cd4955927ed8) | ![header_logged-out](https://github.com/halfpintutopia/mindful-minutes/assets/30613818/3acbff20-133d-4e8a-9bda-ccd4c619b626) |
+| **Logged in**  | ![header_logged-in_menu_mobile](https://github.com/halfpintutopia/mindful-minutes/assets/30613818/0fd01221-d772-4fc8-8cad-7df643027006)  | ![header_logged-in](https://github.com/halfpintutopia/mindful-minutes/assets/30613818/129d30ba-215e-409d-b62c-12bb4c527a06)  |
 
 ### Footer
 
+| **Mobile**                                              | **Desktop**                                              |
+|---------------------------------------------------------|----------------------------------------------------------|
+| ![header_mobile](./docs/media/images/footer_mobile.png) | ![header_mobile](./docs/media/images/footer_desktop.png) |
+
 ### Calendar
 
+| **Mobile**                                                                                                               | **Desktop** |
+|--------------------------------------------------------------------------------------------------------------------------|-------------|
+| ![header_mobile](https://github.com/halfpintutopia/mindful-minutes/assets/30613818/b364d26d-3957-40c0-8d8e-7dffb0f196bd) |             |
+
 ### Accordion
+
+| **Mobile**                                                                                                               | **Desktop** |
+|--------------------------------------------------------------------------------------------------------------------------|-------------|
+| ![header_mobile](https://github.com/halfpintutopia/mindful-minutes/assets/30613818/b364d26d-3957-40c0-8d8e-7dffb0f196bd) |             |
 
 ### Sections
 
 #### Text and image
 
+| **Position**                     | **Mobile**                                                                                         | **Desktop**                                                                                          |
+|----------------------------------|----------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------|
+| **Image (right)<br>Text (left)** | ![Image (right) and text (left) section for mobile](./docs/media/images/image-r_text-l_mobile.png) | ![Image (right) and text (left) section for desktop](./docs/media/images/image-r_text-l_desktop.png) |
+| **Text (right)<br>Image (left)** | ![Text (right) and image (left) section for mobile](./docs/media/images/text-r_image-l_mobile.png) | ![Text (right) and image (left) section for desktop](./docs/media/images/text-r_image-l_desktop.png) |
+
 ### Forms
+
+| **Mobile**                                                                                                               | **Desktop** |
+|--------------------------------------------------------------------------------------------------------------------------|-------------|
+| ![header_mobile](https://github.com/halfpintutopia/mindful-minutes/assets/30613818/b364d26d-3957-40c0-8d8e-7dffb0f196bd) |             |
 
 #### Register
 
+| **Mobile**                                                                                                               | **Desktop** |
+|--------------------------------------------------------------------------------------------------------------------------|-------------|
+| ![header_mobile](https://github.com/halfpintutopia/mindful-minutes/assets/30613818/b364d26d-3957-40c0-8d8e-7dffb0f196bd) |             |
+
 #### Login
 
-#### Account page 
+| **Mobile**                                                                                                               | **Desktop** |
+|--------------------------------------------------------------------------------------------------------------------------|-------------|
+| ![header_mobile](https://github.com/halfpintutopia/mindful-minutes/assets/30613818/b364d26d-3957-40c0-8d8e-7dffb0f196bd) |             |
+
+#### Account page
+
+| **Mobile**                                                                                                               | **Desktop** |
+|--------------------------------------------------------------------------------------------------------------------------|-------------|
+| ![header_mobile](https://github.com/halfpintutopia/mindful-minutes/assets/30613818/b364d26d-3957-40c0-8d8e-7dffb0f196bd) |             |
 
 #### Search
+
+| **Mobile**                                                                                                               | **Desktop** |
+|--------------------------------------------------------------------------------------------------------------------------|-------------|
+| ![header_mobile](https://github.com/halfpintutopia/mindful-minutes/assets/30613818/b364d26d-3957-40c0-8d8e-7dffb0f196bd) |             |
 
 ## Technologies Used
 
@@ -657,42 +711,11 @@ DEVELOPMENT=<SET TO 'True' if in development mode or remove or set to 'False' fo
 ![Mindful Minutes ERD - Database ER diagram (crow's foot)](docs/media/images/mm_erd.png) created
 with [LucidChart](https://lucid.app).
 
-Considered creating a base model or mixin as models most of the models contained the same fields e.g.
+### API
 
-```python
-# Creating the base model to be inherited by models
-class BaseModel(models.Model):
-	field_1 = models.CharField(max_length=50)
-	field_2 = models.IntegerField()
-	field_3 = models.TimeField()
-	
-	class Meta:
-		abstract = True
+For further details of the API, please see:
 
-
-# implementation of BaseModel by inheritance as follows:
-class ModelOne(BaseModel):
-	additional_field_1 = models.TextField()
-
-
-# Creating the mixin to be reused by models
-class MixinModel(models.Model):
-	field_1 = models.CharField(max_length=50)
-	field_2 = models.IntegerField()
-	field_3 = models.TimeField()
-	
-	class Meta:
-		abstract = True
-
-
-# implementation of reusing the MixinModel
-class ModelTwo(MixinModel):
-	additional_field_1 = models.TextField()
-```
-
-As the models had the exactly the same fields with not additional fields or behaviours, I chose to keep the models
-separate. Having individual models allows for clarity and simplicity as well as making it more maintainable, as then the
-codebase is more flexible to evolve independently.
+- [API](docs/api/api.md)
 
 ## Testing
 

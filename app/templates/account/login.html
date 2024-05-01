@@ -9,15 +9,9 @@
 {% block content %}
 	<div class="form-page background-dark-accent">
 		<div class="container list" data-width="narrow">
-			<a class="center" href="{% provider_login_url 'google' %}">
-				<button class="btn btn-white full-width"><i class="fa-brands fa-google"></i> Sign up with Google
-				</button>
-			</a>
 			<form class="login" method="POST" action="{% url 'account_login' %}">
 				{% csrf_token %}
-				
 				<div class="list-items text-white">
-					<span class="hr-with-text">Or</span>
 					{{ form.as_p }}
 					{% if redirect_field_value %}
 						<input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>

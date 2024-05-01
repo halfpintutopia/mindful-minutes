@@ -5,7 +5,11 @@
 
 {% block content %}
 	<section class="container" data-width="regular">
-		<h1>Evening</h1>
+		<h1>Evening
+			{% if user.is_authenticated %}
+				{{ user.get_short_name }}
+			{% endif %}
+		</h1>
 		
 		<div class="grid grid-columns morning" data-columns="2">
 			<article>

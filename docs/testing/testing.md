@@ -8,48 +8,50 @@
 <h2>Table of Contents</h2>
 
 <!-- TOC -->
+
 * [Testing](#testing)
-  * [User Management](#user-management)
-    * [Create account](#create-account)
-    * [Log in](#log-in)
-    * [Manage account settings](#manage-account-settings)
-    * [Reset password](#reset-password)
-  * [Daily Journaling](#daily-journaling)
-    * [Create morning journal entries](#create-morning-journal-entries)
-    * [Create evening journal entries](#create-evening-journal-entries)
-    * [Edit & delete journal entries](#edit--delete-journal-entries)
-    * [List journal entries](#list-journal-entries)
-    * [Tag & categories](#tag--categories)
-  * [Goal Setting and Tracking](#goal-setting-and-tracking)
-    * [Set goals](#set-goals)
-    * [Manage goals](#manage-goals)
-    * [Reminders and notifications](#reminders-and-notifications)
-    * [Track progress](#track-progress)
-  * [Data Privacy and Security](#data-privacy-and-security)
-    * [Personal Data Protection](#personal-data-protection)
-    * [Third-party data sharing](#third-party-data-sharing)
-    * [Delete account](#delete-account)
-  * [Analytics and Insights](#analytics-and-insights)
-    * [Personalised recommendations](#personalised-recommendations)
-    * [Journal entry analysis](#journal-entry-analysis)
-    * [Data and trends](#data-and-trends)
-  * [User Interface and Experience](#user-interface-and-experience)
-    * [Clean and intuitive user interface](#clean-and-intuitive-user-interface)
-    * [Cross browser and device](#cross-browser-and-device)
-    * [Enhanced user experience](#enhanced-user-experience)
-  * [Backend Development](#backend-development)
-    * [Set up API](#set-up-api)
-    * [User manage functionality](#user-manage-functionality)
-    * [Create and manage journal entries](#create-and-manage-journal-entries)
-    * [Goal setting and tracking](#goal-setting-and-tracking-1)
-  * [Frontend Development](#frontend-development)
-    * [API Test](#api-test)
-  * [Deployment](#deployment)
-    * [Data privacy and security](#data-privacy-and-security-1)
-    * [Insights and recommendations](#insights-and-recommendations)
-    * [Backend optimisation](#backend-optimisation)
-    * [Remote deployment](#remote-deployment)
+    * [User Management](#user-management)
+        * [Create account](#create-account)
+        * [Log in](#log-in)
+        * [Manage account settings](#manage-account-settings)
+        * [Reset password](#reset-password)
+    * [Daily Journaling](#daily-journaling)
+        * [Create morning journal entries](#create-morning-journal-entries)
+        * [Create evening journal entries](#create-evening-journal-entries)
+        * [Edit & delete journal entries](#edit--delete-journal-entries)
+        * [List journal entries](#list-journal-entries)
+        * [Tag & categories](#tag--categories)
+    * [Goal Setting and Tracking](#goal-setting-and-tracking)
+        * [Set goals](#set-goals)
+        * [Manage goals](#manage-goals)
+        * [Reminders and notifications](#reminders-and-notifications)
+        * [Track progress](#track-progress)
+    * [Data Privacy and Security](#data-privacy-and-security)
+        * [Personal Data Protection](#personal-data-protection)
+        * [Third-party data sharing](#third-party-data-sharing)
+        * [Delete account](#delete-account)
+    * [Analytics and Insights](#analytics-and-insights)
+        * [Personalised recommendations](#personalised-recommendations)
+        * [Journal entry analysis](#journal-entry-analysis)
+        * [Data and trends](#data-and-trends)
+    * [User Interface and Experience](#user-interface-and-experience)
+        * [Clean and intuitive user interface](#clean-and-intuitive-user-interface)
+        * [Cross browser and device](#cross-browser-and-device)
+        * [Enhanced user experience](#enhanced-user-experience)
+    * [Backend Development](#backend-development)
+        * [Set up API](#set-up-api)
+        * [User manage functionality](#user-manage-functionality)
+        * [Create and manage journal entries](#create-and-manage-journal-entries)
+        * [Goal setting and tracking](#goal-setting-and-tracking-1)
+    * [Frontend Development](#frontend-development)
+        * [API Test](#api-test)
+    * [Deployment](#deployment)
+        * [Data privacy and security](#data-privacy-and-security-1)
+        * [Insights and recommendations](#insights-and-recommendations)
+        * [Backend optimisation](#backend-optimisation)
+        * [Remote deployment](#remote-deployment)
 * [Future Implementation](#future-implementation)
+
 <!-- TOC -->
 
 # Testing
@@ -61,10 +63,10 @@
 As a new user, I want to **create an account and provide my basic information** to **have a personalized experience**.
 
 | Assessment Criteria                                                      | Tested | Successful |
-|--------------------------------------------------------------------------|--------|------------|
-| User should be able to register a new account.                           |        |            |
-| User should be able to enter basic information (such as name and email). |        |            |
-| User should be able to receive a confirmation email.                     |        |            |
+|--------------------------------------------------------------------------|:------:|:----------:|
+| User should be able to register a new account.                           |   ✔️   |     ✔️     |
+| User should be able to enter basic information (such as name and email). |   ✔️   |     ✔️     |
+| User should be able to receive a confirmation email.                     |   ✔️   |     ✔️     |
 
 ---
 
@@ -73,9 +75,9 @@ As a new user, I want to **create an account and provide my basic information** 
 As a **registered user**, I want to **log in and securely access my account** to **maintain privacy and security**.
 
 | Assessment Criteria                                                                              | Tested | Successful |
-|--------------------------------------------------------------------------------------------------|--------|------------|
-| User should be able to log in with their registered credentials.                                 |        |            |
-| User should be able to update account settings, including password change and email preferences. |        |            |
+|--------------------------------------------------------------------------------------------------|:------:|:----------:|
+| User should be able to log in with their registered credentials.                                 |   ✔️   |     ✔️     |
+| User should be able to update account settings, including password change and email preferences. |   ❌    |     ❌      |
 
 ---
 
@@ -84,9 +86,9 @@ As a **registered user**, I want to **log in and securely access my account** to
 As a **user**, I want to **update my profile information and manage account settings** to **customize my experience**
 
 | Assessment Criteria                                                                                    | Tested | Successful |
-|--------------------------------------------------------------------------------------------------------|--------|------------|
-| User should be able to edit their profile information such as name, email and profile picture.         |        |            |
-| User should be able to update their account settings, including password change and email preferences. |        |            |
+|--------------------------------------------------------------------------------------------------------|:------:|:----------:|
+| User should be able to edit their profile information such as name, email and profile picture.         |   ❌    |     ❌      |
+| User should be able to update their account settings, including password change and email preferences. |   ❌    |     ❌      |
 
 ---
 
@@ -95,8 +97,8 @@ As a **user**, I want to **update my profile information and manage account sett
 As a **user**, I want the to **have the option to reset my password in case I forget it** to **recover my account**
 
 | Assessment Criteria                                                                                                    | Tested | Successful |
-|------------------------------------------------------------------------------------------------------------------------|--------|------------|
-| User should have the ability to reset their password via a password reset link sent to their registered email address. |        |            |
+|------------------------------------------------------------------------------------------------------------------------|:------:|:----------:|
+| User should have the ability to reset their password via a password reset link sent to their registered email address. |   ❌    |     ❌      |
 
 ---
 
@@ -108,12 +110,12 @@ As a **user**, I want to **create morning journal entries with intentions and ta
 **.
 
 | Assessment Criteria                                                                      | Tested | Successful |
-|------------------------------------------------------------------------------------------|--------|------------|
-| User should be able to access the journal entry creation interface.                      |        |            |
-| User should be able to create a new morning journal entry.                               |        |            |
-| User should be able to view and edit their existing morning journal entries.             |        |            |
-| User should be able to save it for future reference, associated with the user's account. |        |            |
-| User should be able to delete their morning journal entries.                             |        |            |
+|------------------------------------------------------------------------------------------|:------:|:----------:|
+| User should be able to access the journal entry creation interface.                      |   ✔️   |     ✔️     |
+| User should be able to create a new morning journal entry.                               |   ✔️   |     ✔️     |
+| User should be able to view and edit their existing morning journal entries.             |   ✔️   |     ✔️     |
+| User should be able to save it for future reference, associated with the user's account. |   ✔️   |     ✔️     |
+| User should be able to delete their morning journal entries.                             |   ✔️   |     ✔️     |
 
 ---
 
@@ -123,12 +125,12 @@ As a **user**, I want to **create evening journal entries with reflections and g
 and mindfulness**
 
 | Assessment Criteria                                                                  | Tested | Successful |
-|--------------------------------------------------------------------------------------|--------|------------|
-| User should be able to access the journal entry creation interface.                  |        |            |
-| User should be able to create a new evening journal entry.                           |        |            |
-| User should be able to view and edit their existing evening journal entries.         |        |            |
-| User should be able to save it for future reference, associated with user's account. |        |            |
-| User should be able to delete their evening journal entries.                         |        |            |
+|--------------------------------------------------------------------------------------|:------:|:----------:|
+| User should be able to access the journal entry creation interface.                  |   ❌    |     ❌      |
+| User should be able to create a new evening journal entry.                           |   ❌    |     ❌      |
+| User should be able to view and edit their existing evening journal entries.         |   ❌    |     ❌      |
+| User should be able to save it for future reference, associated with user's account. |   ❌    |     ❌      |
+| User should be able to delete their evening journal entries.                         |   ❌    |     ❌      |
 
 ---
 
@@ -137,9 +139,9 @@ and mindfulness**
 As a **user**, I want to **edit or delete my journal entries** to **ensure accuracy and organization**.
 
 | Assessment Criteria                                       | Tested | Successful |
-|-----------------------------------------------------------|--------|------------|
-| User should be able to edit the content of their journal. |        |            |
-| User should be able to delete them entirely if needed.    |        |            |
+|-----------------------------------------------------------|:------:|:----------:|
+| User should be able to edit the content of their journal. |   ✔️   |     ✔️     |
+| User should be able to delete them entirely if needed.    |   ✔️   |     ✔️     |
 
 ---
 
@@ -148,11 +150,11 @@ As a **user**, I want to **edit or delete my journal entries** to **ensure accur
 As a **user**, I want to **view a list of past journal entries and navigate between them** to **be able to easily
 reference and reflect upon**.
 
-| Assessment Criteria                                                            | Tested | Successful |
-|--------------------------------------------------------------------------------|--------|------------|
-| User should be able to view a list of their pass journal entries.              |        |            |
-| User should be able to sort by date.                                           |        |            |
-| User should be able to navigate between them to review their previous entries. |        |            |
+| Assessment Criteria                                                            |  Tested  |  Successful  |
+|--------------------------------------------------------------------------------|:--------:|:------------:|
+| User should be able to view a list of their pass journal entries.              |    ❌     |      ❌       |
+| User should be able to sort by date.                                           |    ❌     |      ❌       |
+| User should be able to navigate between them to review their previous entries. |    ❌     |      ❌       |
 
 ---
 
@@ -179,10 +181,9 @@ As a **user**, I want to **be able to categorise and tag my journal entries** to
 As a **user**, I want to **set goals for different areas of my life** to **stay focused and motivated**.
 
 | Assessment Criteria                                                                      | Tested | Successful |
-|------------------------------------------------------------------------------------------|--------|------------|
-| User should be able to set goals for various areas (e.g. health, work, personal growth). |        |            |
-| User should be able to specify goals' details.                                           |        |            |
-| User should be able to set target dates.                                                 |        |            |
+|------------------------------------------------------------------------------------------|:------:|:----------:|
+| User should be able to set goals for various areas (e.g. health, work, personal growth). |   ✔️   |     ✔️     |
+| User should be able to specify goals' details.                                           |   ✔️   |     ✔️     |
 
 ---
 
@@ -190,11 +191,11 @@ As a **user**, I want to **set goals for different areas of my life** to **stay 
 
 As a **user**, I want to **be able to view and manage my goals**.
 
-| Assessment Criteria                                | Tested | Successful |
-|----------------------------------------------------|--------|------------|
-| User should be able to view a list of their goals. |        |            |
-| User should be able to create new goals.           |        |            |
-| User should be able to edit existing goals.        |        |            |
+| Assessment Criteria                                        | Tested | Successful |
+|------------------------------------------------------------|:------:|:----------:|
+| User should be able to view a list of their goals by date. |   ✔️   |     ✔️     |
+| User should be able to create new goals.                   |   ✔️   |     ✔️     |
+| User should be able to edit existing goals.                |   ✔️   |     ✔️     |
 
 ---
 
@@ -203,10 +204,10 @@ As a **user**, I want to **be able to view and manage my goals**.
 As a **user**, I want to **receive reminders or notifications** to **help me stay on track with my goals and progress**.
 
 | Assessment Criteria                                                                       | Tested | Successful |
-|-------------------------------------------------------------------------------------------|--------|------------|
-| User should receive reminders or notifications for upcoming goal deadlines.               |        |            |
-| User should receive reminders or notifications for goal progress milestones.              |        |            |
-| User should have control over the frequency and timing of the reminders or notifications. |        |            |
+|-------------------------------------------------------------------------------------------|:------:|:----------:|
+| User should receive reminders or notifications for upcoming goal deadlines.               |   ❌    |     ❌      |
+| User should receive reminders or notifications for goal progress milestones.              |   ❌    |     ❌      |
+| User should have control over the frequency and timing of the reminders or notifications. |   ❌    |     ❌      |
 
 ---
 
@@ -216,10 +217,10 @@ As a **user**, I want to **track my goal progress and visualize my achievements*
 accountability**.
 
 | Assessment Criteria                                                                                   | Tested | Successful |
-|-------------------------------------------------------------------------------------------------------|--------|------------|
-| User should be able to track the progress of their goals.                                             |        |            |
-| User should be able to view visual representations of their achievements.                             |        |            |
-| User should be able to have access to visual representations of their goal progress and achievements. |        |            |
+|-------------------------------------------------------------------------------------------------------|:------:|:----------:|
+| User should be able to track the progress of their goals.                                             |   ❌    |     ❌      |
+| User should be able to view visual representations of their achievements.                             |   ❌    |     ❌      |
+| User should be able to have access to visual representations of their goal progress and achievements. |   ❌    |     ❌      |
 
 ---
 

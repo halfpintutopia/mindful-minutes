@@ -11,7 +11,7 @@ def index(request):
     if request.user.is_authenticated:
         title = "Home"
         context = {"title": title}
-        return render(request, "morning_page.html", context)
+        return render(request, "learn.html", context)
     else:
         title = "Home"
         context = {"title": title}

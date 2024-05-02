@@ -6,7 +6,6 @@ const alertEl = document.querySelector(`${ alertCls }`),
   alertTextEl = document.querySelector(`${ alertTextCls }`);
 
 const activateLoader = (operation) => {
-  // create, update, delete
   let loadingText;
   switch (operation) {
     case 'create':
@@ -28,7 +27,7 @@ const deactivateLoader = (entryLabel, operation) => {
   alertTextEl.innerText = `${ entryLabel } ${operation}d.`;
   setTimeout(() => {
     alertEl.classList.remove(activeCls);
-  }, 10000);
+  }, 6000);
 }
 
 export { activateLoader, deactivateLoader };

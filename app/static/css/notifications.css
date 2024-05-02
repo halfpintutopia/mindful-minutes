@@ -14,7 +14,8 @@
 .alert__notification {
     overflow: hidden;
     padding: 1em;
-    background-color: orangered;
+    background-color: hsl(var(--green-smoke-950));
+    color: hsl(var(--porsche-50));
     height: calc(var(--_height) * 1px);
     border-top-left-radius: 2px;
     border-top-right-radius: 2px;

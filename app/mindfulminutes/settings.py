@@ -19,7 +19,7 @@ DEBUG = int(os.environ.get("DEBUG", default=0))
 ALLOWED_HOSTS = [
     "127.0.0.1",
     "localhost",
-    "mindful-minutes-f992c8465405.herokuapp.com",
+    "mindfulminutes-2823fda845e7.herokuapp.com",
 ]
 
 if not DEBUG:

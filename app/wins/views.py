@@ -58,8 +58,7 @@ class WinEntryListCreate(APIView):
                         status=status.HTTP_400_BAD_REQUEST,
                     )
                 win_entries = WinEntry.objects.filter(
-                    user=request.user,
-                    created_on__date=requested_date
+                    user=request.user, created_on__date=requested_date
                 )
 
                 serializer = WinEntrySerializer(win_entries, many=True)

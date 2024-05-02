@@ -58,8 +58,7 @@ class NoteEntryListCreate(APIView):
                         status=status.HTTP_400_BAD_REQUEST,
                     )
                 note_entries = NoteEntry.objects.filter(
-                    user=request.user,
-                    created_on__date=requested_date
+                    user=request.user, created_on__date=requested_date
                 )
 
                 serializer = NoteEntrySerializer(note_entries, many=True)

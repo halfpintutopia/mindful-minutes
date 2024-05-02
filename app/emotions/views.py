@@ -26,7 +26,9 @@ class EmotionEntryList(APIView):
         """
         if request.method == "GET":
             if request.user.slug == slug:
-                emotion_entries = EmotionEntry.objects.filter(user=request.user)
+                emotion_entries = EmotionEntry.objects.filter(
+                    user=request.user
+                )
 
                 serializer = EmotionEntrySerializer(emotion_entries, many=True)
                 return Response(serializer.data)
@@ -58,8 +60,7 @@ class EmotionEntryListCreate(APIView):
                         status=status.HTTP_400_BAD_REQUEST,
                     )
                 emotion_entries = EmotionEntry.objects.filter(
-                    user=request.user,
-                    created_on__date=requested_date
+                    user=request.user, created_on__date=requested_date
                 )
 
                 serializer = EmotionEntrySerializer(emotion_entries, many=True)

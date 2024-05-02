@@ -26,7 +26,9 @@ class KnowledgeEntryList(APIView):
         """
         if request.method == "GET":
             if request.user.slug == slug:
-                knowledge_entries = KnowledgeEntry.objects.filter(user=request.user)
+                knowledge_entries = KnowledgeEntry.objects.filter(
+                    user=request.user
+                )
 
                 serializer = KnowledgeEntrySerializer(
                     knowledge_entries, many=True
@@ -60,8 +62,7 @@ class KnowledgeEntryListCreate(APIView):
                         status=status.HTTP_400_BAD_REQUEST,
                     )
                 knowledge_entries = KnowledgeEntry.objects.filter(
-                    user=request.user,
-                    created_on__date=requested_date
+                    user=request.user, created_on__date=requested_date
                 )
 
                 serializer = KnowledgeEntrySerializer(

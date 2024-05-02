@@ -1,5 +1,6 @@
-import { getCurrentDate } from "./helpers/helpers.js";
+import { createUrl, getCurrentDate } from "./helpers/helpers.js";
 import { fetchData, postData } from "./helpers/fetchApi.js";
+import { activateLoader, deactivateLoader } from "./helpers/loader.js";
 
 const lineHeight = 1;
 const hour = 50;
@@ -18,8 +19,6 @@ const suffix = {
   few: 'rd',
   other: 'th',
 };
-
-const server = 'http://localhost:8008';
 
 let scheduleElement,
   scheduleEventListElement,
@@ -50,7 +49,7 @@ const createEntries = async () => {
   const formData = new FormData(scheduleForm);
   const currentDate = getCurrentDate();
   
-  const api = `${ server }/api/users/${ formData.get('user') }/appointments/${ currentDate }/`;
+  const api = createUrl(`/api/users/${ formData.get('user') }/appointments/${ currentDate }/`);
   const entries = await fetchData(api);
   
   entries.map(entry => {
@@ -104,6 +103,7 @@ const closeDialog = (e) => {
 };
 
 const resetForm = () => {
+  scheduleForm.dataset.entryId = '';
   scheduleForm.reset();
 };
 
@@ -156,12 +156,17 @@ const sendData = async (e) => {
   
   if (checkTimes(formData)) {
     let api;
+    
+    activateLoader('create');
+    
     if (e.currentTarget.dataset.entryId) {
-      api = `${ server }/api/users/${ formData.get('user') }/appointments/${ currentDate }/${ e.currentTarget.dataset.entryId }/`;
+      api = createUrl(`/api/users/${ formData.get('user') }/appointments/${ currentDate }/${ e.currentTarget.dataset.entryId }/`);
       await postData(api, dataObj, formData.get('csrfmiddlewaretoken'), 'PUT');
+      deactivateLoader('Schedule entry', 'update');
     } else {
-      api = `${ server }/api/users/${ formData.get('user') }/appointments/${ currentDate }/`;
+      api = createUrl(`/api/users/${ formData.get('user') }/appointments/${ currentDate }/`);
       await postData(api, dataObj, formData.get('csrfmiddlewaretoken'));
+      deactivateLoader('Schedule entry', 'create');
     }
     closeDialog(e);
     initSchedule();
@@ -173,10 +178,12 @@ const sendData = async (e) => {
 const deleteEntry = async () => {
   const formData = new FormData(scheduleForm);
   const currentDate = getCurrentDate();
+  activateLoader('delete');
   
-  const api = `${ server }/api/users/${ formData.get('user') }/appointments/${ currentDate }/${ scheduleForm.dataset.entryId }/`;
+  const api = createUrl(`/api/users/${ formData.get('user') }/appointments/${ currentDate }/${ scheduleForm.dataset.entryId }/`);
   await postData(api, {}, formData.get('csrfmiddlewaretoken'), 'DELETE');
   initSchedule();
+  deactivateLoader('Schedule entry', 'delete');
 };
 
 // https://stackoverflow.com/a/69687500/8614652
@@ -198,7 +205,7 @@ const initHtmlElements = () => {
   scheduleForm = document.querySelector('form#schedule');
   errorMsgElement = document.querySelector('form .error-msg');
   buttonGroupElement = document.querySelector('.button-group');
-  deleteBtnElement = document.querySelector('[data-btn="delete"]');
+  deleteBtnElement = document.querySelector('[data-modal="schedule"] [data-btn="delete"]');
 };
 
 const initEvents = () => {

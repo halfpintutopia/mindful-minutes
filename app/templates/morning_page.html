@@ -5,7 +5,11 @@
 
 {% block content %}
 	<section class="container" data-width="regular">
-		<h1>Morning</h1>
+		<h1>Morning
+			{% if user.is_authenticated %}
+				{{ user.get_short_name }}
+			{% endif %}
+		</h1>
 		
 		<div class="grid grid-columns morning" data-columns="2">
 			<article class="schedule">
@@ -76,31 +80,6 @@
 									<button data-btn="target-add">
 										<i class="fa-solid fa-plus"></i>
 									</button>
-								</div>
-							</div>
-						</div>
-						<div class="accordion-panel">
-							<div id="panel2-heading" class="panel-heading">
-								<button
-										class="accordion-trigger"
-										aria-controls="panel1-content"
-										aria-expanded="false"
-								>
-									<span id="panel2-title" class="accordion-title">Notes</span>
-									<i aria-hidden="true" class="fa-solid fa-pencil"></i>
-								</button>
-								<span class="panel-more"><i class="fa-solid fa-chevron-down"></i></span>
-							</div>
-							<div
-									class="accordion-content"
-									id="panel2-content"
-									aria-labelledby="panel2-heading"
-									aria-hidden="false"
-									role="region"
-							>
-								<div>
-									<p>What would you like to note or remember to do later?</p>
-									<ul class="accordion-list" data-accordion-list="notes"></ul>
 								</div>
 							</div>
 						</div>
@@ -190,37 +169,14 @@
 						</form>
 					</section>
 				</dialog>
-				
-				{# Notes #}
-				<dialog data-modal="notes" class="modal">
-					<section class="account container" data-width="regular">
-						<form id="notes" class="grid">
-							{% csrf_token %}
-							<input type="hidden" name="user" value="{{ user.slug }}">
-							<div class="form-group grid">
-								<h4>Add Notes</h4>
-								<div class="grid" data-columns="">
-									<label for="content">
-										<textarea name="content" id="content" cols="30" rows="10"></textarea>
-									</label>
-								</div>
-								<span class="error-msg"></span>
-							</div>
-							<div class="form-group grid grid-columns button-group" data-columns="3">
-								<button class="btn btn-green" data-btn="delete">Delete</button>
-								<button class="btn btn-green" data-btn="close">Close</button>
-								<button class="btn btn-green" type="submit">Save</button>
-							</div>
-						
-						</form>
-					</section>
-				</dialog>
 			
 			</article>
 		</div>
 	</section>
-
-
+	
+	<div class="alert">
+		<div class="alert__notification"></div>
+	</div>
 {% endblock content %}
 
 {% block custom_js %}

@@ -13,6 +13,7 @@
     li {
         position: relative;
         height: var(--_schedule-row-height);
+        cursor: pointer;
     }
 
     li::after {

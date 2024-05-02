@@ -10,8 +10,24 @@
 			<div class="form-group grid">
 				<h4>Name</h4>
 				<div class="grid grid-columns" data-columns="2">
-					<label for="first-name"><input id="first-name" type="text" placeholder="First"></label>
-					<label for="last-name"><input id="last-name" type="text" placeholder="Last"></label>
+					<label for="first-name">
+						<input
+								id="first-name"
+								type="text"
+								placeholder="First"
+								value="{% if user.is_authenticated %}{{ user.get_short_name }}{% endif %}"
+								disabled
+						>
+					</label>
+					<label for="last-name">
+						<input
+								id="last-name"
+								type="text"
+								placeholder="Last"
+								value="{% if user.is_authenticated %}{{ user.last_name }}{% endif %}"
+								disabled
+						>
+					</label>
 				</div>
 			</div>
 			
@@ -19,15 +35,26 @@
 				<h4>Check In</h4>
 				<div class="grid grid-columns" data-columns="2">
 					<label for="morning" class="custom-select">
-						<select name="morning" id="morning">
+						<select
+								name="morning"
+								id="morning"
+								disabled
+						>
 							<option value="">09:00</option>
 							<option value="">10:00</option>
 							<option value="">11:00</option>
 						</select>
 						<span class="custom-arrow"></span>
 					</label>
-					<label for="evening" class="custom-select">
-						<select name="evening" id="morning">
+					<label
+							for="evening"
+							class="custom-select"
+							disabled>
+						<select 
+								name="evening" 
+								id="morning"
+								disabled
+						>
 							<option value="">18:00</option>
 							<option value="">19:00</option>
 							<option value="">20:00</option>
@@ -38,26 +65,34 @@
 			</div>
 			
 			<div class="form-group grid">
-					<h4>Start Day of Week</h4>
-					<label for="day-of-the-week" class="custom-select">
-						<select name="day-of-the-week" id="day-of-the-week">
-							<option value="">Monday</option>
-							<option value="">Tuesday</option>
-							<option value="">Wednesday</option>
-						</select>
-						<span class="custom-arrow"></span>
-					</label>
+				<h4>Start Day of Week</h4>
+				<label for="day-of-the-week" class="custom-select">
+					<select name="day-of-the-week" id="day-of-the-week">
+						<option selected value="monday" disabled>Monday</option>
+						<option value="tuesday">Tuesday</option>
+						<option value="wednesday">Wednesday</option>
+						<option value="thursday">Thursday</option>
+						<option value="friday">Friday</option>
+						<option value="saturday">Saturday</option>
+						<option value="sunday">Sunday</option>
+					</select>
+					<span class="custom-arrow"></span>
+				</label>
 			</div>
 			
 			<div class="form-group grid">
 				<div class="grid grid-columns" data-columns="2">
 					<div>
 						<h4>Email</h4>
-						<label for="email"><input id="email" type="text" placeholder="your@email.com"></label>
-					</div>
-					<div>
-						<h4>Password</h4>
-						<label for="morning"><input id="morning" type="password" placeholder="password"></label>
+						<label for="email">
+							<input 
+									id="email" 
+									type="text" 
+									placeholder="your@email.com"
+									value="{% if user.is_authenticated %}{{ user.email }}{% endif %}"
+									disabled
+							>
+						</label>
 					</div>
 				</div>
 			</div>

@@ -62,6 +62,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
             "is_active",
             "is_superuser",
             "user_settings",
+            "slug",
         ]
 
         extra_kwargs = {

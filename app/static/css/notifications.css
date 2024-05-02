@@ -1,0 +1,26 @@
+.alert {
+    --_height: 60.75;
+
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: bottom 0.5s ease-in-out;
+    position: fixed;
+    left: 50%;
+    bottom: calc(var(--_height) * -1px);
+    transform: translateX(-50%);
+
+}
+
+.alert__notification {
+    overflow: hidden;
+    padding: 1em;
+    background-color: hsl(var(--green-smoke-950));
+    color: hsl(var(--porsche-50));
+    height: calc(var(--_height) * 1px);
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+}
+
+.alert.active {
+    bottom: 0;
+}

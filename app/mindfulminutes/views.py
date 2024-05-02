@@ -1,5 +1,7 @@
 from django.http import HttpResponseForbidden
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 
 
 def index(request):
@@ -9,7 +11,7 @@ def index(request):
     if request.user.is_authenticated:
         title = "Home"
         context = {"title": title}
-        return render(request, "morning_page.html", context)
+        return render(request, "learn.html", context)
     else:
         title = "Home"
         context = {"title": title}
@@ -25,6 +27,7 @@ def search(request):
     return render(request, "search.html", context)
 
 
+@login_required
 def account_page(request):
     """
     Render the user's account page
@@ -34,6 +37,7 @@ def account_page(request):
     return render(request, "account.html", context)
 
 
+@login_required
 def morning_page(request):
     """
     Render the user's morning page
@@ -43,6 +47,7 @@ def morning_page(request):
     return render(request, "morning_page.html", context)
 
 
+@login_required
 def evening_page(request):
     """
     Render the user's evening page
@@ -52,6 +57,7 @@ def evening_page(request):
     return render(request, "evening_page.html", context)
 
 
+@staff_member_required
 def design_system(request):
     """
     Render design system page

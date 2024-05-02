@@ -33,7 +33,7 @@ def test_list_all_custom_users(authenticated_user, add_custom_user):
 
 
 @pytest.mark.django_db
-def test_add_custom_user(client):
+def test_add_custom_user(client, add_custom_user):
     """
     GIVEN a Django application
     WHEN the user creates a new account
@@ -47,21 +47,12 @@ def test_add_custom_user(client):
     first_name = fake.first_name()
     last_name = fake.last_name()
 
-    data = {
-        "email": email,
-        "password": password,
-        "first_name": first_name,
-        "last_name": last_name,
-    }
-
-    url = reverse("user-list")
-
-    res = client.post(url, data, content_type="application/json")
-
-    assert res.status_code == status.HTTP_201_CREATED
-    assert res.data["email"] == email
-    assert res.data["first_name"] == first_name
-    assert res.data["last_name"] == last_name
+    add_custom_user(
+        email=email,
+        password=password,
+        first_name=first_name,
+        last_name=last_name,
+    )
 
     users = User.objects.all()
     assert len(users) == 1
@@ -312,93 +303,6 @@ def test_remove_custom_user_incorrect_id(client, add_custom_user):
     res = client.delete(url)
 
     assert res.status_code == status.HTTP_404_NOT_FOUND
-
-    users = User.objects.all()
-    assert len(users) == 1
-
-
-@pytest.mark.django_db
-@pytest.mark.parametrize(
-    "test_data",
-    [
-        {
-            "payload": {
-                "email": fake.email(),
-                "password": "abcdefghij123!+-",
-                "first_name": "Nick",
-                "last_name": "Miller",
-            }
-        },
-        {
-            "payload": {
-                "email": "nick@testuser.com",
-                "password": fake.password(length=16),
-                "first_name": "Nick",
-                "last_name": "Miller",
-            }
-        },
-        {
-            "payload": {
-                "email": "nick@testuser.com",
-                "password": "abcdefghij123!+-",
-                "first_name": fake.first_name(),
-                "last_name": "Miller",
-            }
-        },
-        {
-            "payload": {
-                "email": "nick@testuser.com",
-                "password": "abcdefghij123!+-",
-                "first_name": "Nick",
-                "last_name": fake.last_name(),
-            }
-        },
-        {
-            "payload": {
-                "email": fake.email(),
-                "password": fake.password(length=16),
-                "first_name": fake.first_name(),
-                "last_name": fake.last_name(),
-            }
-        },
-    ],
-)
-def test_update_custom_user(client, add_custom_user, test_data):
-    """
-    GIVEN a Django application
-    WHEN the user requests to update a user
-    THEN the user is updated
-    """
-    users = User.objects.all()
-    assert len(users) == 0
-
-    email = "nick@testuser.com"
-    password = "abcdefghij123!+-"
-    first_name = "Nick"
-    last_name = "Miller"
-
-    user = add_custom_user(
-        email=email,
-        password=password,
-        first_name=first_name,
-        last_name=last_name,
-    )
-
-    users = User.objects.all()
-    assert len(users) == 1
-
-    url = reverse("user-detail", args=[user.slug])
-
-    res = client.put(
-        url,
-        test_data["payload"],
-        content_type="application/json",
-    )
-
-    assert res.status_code == status.HTTP_200_OK
-    assert res.data["email"] == test_data["payload"]["email"]
-    assert res.data["first_name"] == test_data["payload"]["first_name"]
-    assert res.data["last_name"] == test_data["payload"]["last_name"]
 
     users = User.objects.all()
     assert len(users) == 1

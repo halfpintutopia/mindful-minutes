@@ -75,30 +75,14 @@
 									Morning
 								</a>
 							</li>
-							<li class="{{ evening_page }}">
-								<a href="{% url 'evening' %}">
-									Evening
-								</a>
-							</li>
 						{% endif %}
-						<li>
-							Learn
-						</li>
 						{% if user.is_authenticated %}
-							<li class="{{ search }}">
-								<a href="{% url 'search' %}">
-									Search
-								</a>
-							</li>
 							<li class="{{ account_page }}">
 								<a href="{% url "account" %}">
 									My Account
 								</a>
 							</li>
 						{% endif %}
-						<li>
-							Contact Us
-						</li>
 					</ul>
 					
 					{% if user.is_authenticated %}

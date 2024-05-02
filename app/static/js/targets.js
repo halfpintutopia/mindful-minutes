@@ -1,7 +1,6 @@
-import { compareOrder, getCurrentDate, removeAllInnerElements } from "./helpers/helpers.js";
+import { compareOrder, createUrl, getCurrentDate, removeAllInnerElements } from "./helpers/helpers.js";
 import { fetchData, postData } from "./helpers/fetchApi.js";
-
-const server = 'http://localhost:8008';
+import { activateLoader, deactivateLoader } from "./helpers/loader.js";
 
 const errorMessage = `You haven't provided enough information, please fill in the form`;
 
@@ -11,42 +10,46 @@ let refreshButtonElement,
   modalCloseButton,
   targetsForm,
   errorMsgElement,
-  targetList;
+  targetList,
+  deleteBtnElement;
+
+const showDeleteBtn = () => {
+  deleteBtnElement.style.visibility = "visible";
+};
+
+const hideDeleteBtn = () => {
+  deleteBtnElement.style.visibility = "hidden";
+};
 
 const retrieveTargets = async () => {
   const formData = new FormData(targetsForm);
   const currentDate = getCurrentDate();
   
-  const api = `${ server }/api/users/${ formData.get('user') }/target/${ currentDate }/`;
+  const api = createUrl(`/api/users/${ formData.get('user') }/target/${ currentDate }/`);
   return await fetchData(api);
 };
 
 const createTarget = async (data) => {
+  activateLoader('create');
   const currentDate = getCurrentDate();
   const dataObj = createDataObject(data);
   
-  const api = `${ server }/api/users/${ data.get('user') }/target/${ currentDate }/`;
+  const api = createUrl(`/api/users/${ data.get('user') }/target/${ currentDate }/`);
   await postData(api, dataObj, data.get('csrfmiddlewaretoken'));
+  deactivateLoader('Day target entry', 'create');
 };
 
 const updateTarget = async (data) => {
+  activateLoader('update');
   const formData = new FormData(targetsForm);
-  // console.log(data.dataset.completed === );
   formData.append("completed", data.dataset.completed === 'true' ? "True" : "False")
   const currentDate = getCurrentDate();
   
-  // const dataObj = {};
-  // for( let d in data.dataset) {
-  //   console.log(34, d, data.dataset[d])
-  //   dataObj[d] = data.dataset[d];
-  // }
-  
   const dataObj = createDataObject(formData);
-  console.log(31, dataObj, formData, data.dataset.id)
   
-  const api = `${ server }/api/users/${ formData.get('user') }/target/${ currentDate }/${ data.dataset.id }/`;
-  console.log(api);
+  const api = createUrl(`/api/users/${ formData.get('user') }/target/${ currentDate }/${ data.dataset.id }/`);
   await postData(api, dataObj, formData.get('csrfmiddlewaretoken'), 'PUT');
+  deactivateLoader('Day target entry', 'update');
 };
 
 const createDataObject = (data) => {
@@ -74,7 +77,7 @@ const removeErrorMsg = () => {
 }
 
 const addFormId = (id) => {
-  targetsForm.dataset.id = id;
+  targetsForm.dataset.entryId = id;
 };
 
 const removeFormId = () => {
@@ -121,6 +124,7 @@ const createTargetEntry = (entry) => {
 const showTargets = () => {
   retrieveTargets()
     .then(res => {
+      console.log(res);
       try {
         res.sort(compareOrder);
         removeAllInnerElements(targetList);
@@ -154,15 +158,15 @@ const toggleTargetCompleted = (e) => {
     .then(() => {
       if (target.dataset.btn === 'done') {
         target.dataset.btn = 'refresh';
-        // target.nextElementSibling.classList.add('done');
       } else {
         target.dataset.btn = 'done';
-        // target.nextElementSibling.classList.remove('done');
       }
     })
 };
 
 const fillForm = (e) => {
+  showDeleteBtn()
+  
   let input;
   const item = e.currentTarget.closest('.accordion-list__item');
   for (let d in item.dataset) {
@@ -177,6 +181,7 @@ const fillForm = (e) => {
 const closeForm = (e) => {
   e.preventDefault();
   removeErrorMsg();
+  hideDeleteBtn()
   modalElement.close();
 }
 
@@ -213,6 +218,22 @@ const sendForm = (e) => {
   }
 };
 
+const deleteEntry = async (e) => {
+  e.preventDefault();
+  console.log('deleteEntry called'); // Add this line
+  
+  const formData = new FormData(targetsForm);
+  const currentDate = getCurrentDate();
+  activateLoader('delete');
+  
+  const api = createUrl(`/api/users/${ formData.get('user') }/target/${ currentDate }/${ targetsForm.dataset.entryId }/`);
+  const res = await postData(api, {}, formData.get('csrfmiddlewaretoken'), 'DELETE');
+  console.log(api, res);
+  await showTargets();
+  closeForm(e);
+  deactivateLoader('Day target entry', 'delete');
+};
+
 const initHtmlElements = () => {
   addButtonElement = document.querySelector('[data-btn="target-add"]');
   modalElement = document.querySelector('[data-modal="targets"]');
@@ -220,12 +241,14 @@ const initHtmlElements = () => {
   targetsForm = document.querySelector('form#targets');
   errorMsgElement = document.querySelector('form#targets .error-msg');
   targetList = document.querySelector('[data-accordion-list="targets"]');
+  deleteBtnElement = document.querySelector('[data-modal="targets"] [data-btn="delete"]');
 };
 
 const initEvents = () => {
   addButtonElement.addEventListener('click', addEntry);
   modalCloseButton.addEventListener('click', closeForm);
   targetsForm.addEventListener('submit', sendForm);
+  deleteBtnElement.addEventListener('click', deleteEntry);
 };
 
 const init = () => {

@@ -156,11 +156,15 @@ Personalise experience:
 
 #### Register
 
+https://github.com/halfpintutopia/mindful-minutes/assets/30613818/f07a0d79-b637-4722-bd98-70f11d8d0220
+
 | **Mobile**                                                     | **Desktop**                                                     |
 |----------------------------------------------------------------|-----------------------------------------------------------------|
 | ![Sign in Form Mobile](./docs/media/images/sign-in_mobile.png) | ![Sign in Form Mobile](./docs/media/images/sign-in_desktop.png) |
 
 #### Login
+
+https://github.com/halfpintutopia/mindful-minutes/assets/30613818/57d732a9-0d12-4aec-a4ca-69a03e50bb32
 
 | **Mobile**                                                  | **Desktop**                                                 |
 |-------------------------------------------------------------|-------------------------------------------------------------|

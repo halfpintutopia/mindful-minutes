@@ -10,8 +10,22 @@
 			<div class="form-group grid">
 				<h4>Name</h4>
 				<div class="grid grid-columns" data-columns="2">
-					<label for="first-name"><input id="first-name" type="text" placeholder="First"></label>
-					<label for="last-name"><input id="last-name" type="text" placeholder="Last"></label>
+					<label for="first-name">
+						<input 
+								id="first-name" 
+								type="text" 
+								placeholder="First"
+								value="{% if user.is_authenticated  %}{{ user.get_short_name }}{% endif %}"
+						>
+					</label>
+					<label for="last-name">
+						<input 
+								id="last-name" 
+								type="text" 
+								placeholder="Last"
+								value="{% if user.is_authenticated  %}{{ get }}{{ user.last_name }}{% endif %}"
+						>
+					</label>
 				</div>
 			</div>
 			

@@ -26,7 +26,7 @@ class IdeasEntryList(APIView):
         """
         if request.method == "GET":
             if request.user.slug == slug:
-                ideas_entries = IdeasEntry.objects.all()
+                ideas_entries = IdeasEntry.objects.filter(user=request.user)
 
                 serializer = IdeasEntrySerializer(ideas_entries, many=True)
                 return Response(serializer.data)
@@ -58,6 +58,7 @@ class IdeasEntryListCreate(APIView):
                         status=status.HTTP_400_BAD_REQUEST,
                     )
                 ideas_entries = IdeasEntry.objects.filter(
+                    user=request.user,
                     created_on__date=requested_date
                 )
 

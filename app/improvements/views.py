@@ -26,7 +26,7 @@ class ImprovementEntryList(APIView):
         """
         if request.method == "GET":
             if request.user.slug == slug:
-                improvement_entries = ImprovementEntry.objects.all()
+                improvement_entries = ImprovementEntry.objects.filter(user=request.user)
 
                 serializer = ImprovementEntrySerializer(
                     improvement_entries, many=True
@@ -60,6 +60,7 @@ class ImprovementEntryListCreate(APIView):
                         status=status.HTTP_400_BAD_REQUEST,
                     )
                 improvement_entries = ImprovementEntry.objects.filter(
+                    user=request.user,
                     created_on__date=requested_date
                 )
 

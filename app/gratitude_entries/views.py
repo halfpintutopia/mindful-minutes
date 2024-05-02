@@ -26,7 +26,7 @@ class GratitudeEntryList(APIView):
         """
         if request.method == "GET":
             if request.user.slug == slug:
-                gratitude_entries = GratitudeEntry.objects.all()
+                gratitude_entries = GratitudeEntry.objects.filter(user=request.user)
 
                 serializer = GratitudeEntrySerializer(
                     gratitude_entries, many=True
@@ -60,6 +60,7 @@ class GratitudeEntryListCreate(APIView):
                         status=status.HTTP_400_BAD_REQUEST,
                     )
                 gratitude_entries = GratitudeEntry.objects.filter(
+                    user=request.user,
                     created_on__date=requested_date
                 )
 

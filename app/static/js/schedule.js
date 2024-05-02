@@ -49,8 +49,11 @@ const createEntries = async () => {
   const formData = new FormData(scheduleForm);
   const currentDate = getCurrentDate();
   
+  console.log(52, formData.get('user'));
+  
   const api = createUrl(`/api/users/${ formData.get('user') }/appointments/${ currentDate }/`);
   const entries = await fetchData(api);
+  console.log(entries)
   
   entries.map(entry => {
     const timeFromArray = entry.time_from.split(':');

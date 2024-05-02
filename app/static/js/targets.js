@@ -124,7 +124,6 @@ const createTargetEntry = (entry) => {
 const showTargets = () => {
   retrieveTargets()
     .then(res => {
-      console.log(res);
       try {
         res.sort(compareOrder);
         removeAllInnerElements(targetList);
@@ -220,7 +219,6 @@ const sendForm = (e) => {
 
 const deleteEntry = async (e) => {
   e.preventDefault();
-  console.log('deleteEntry called'); // Add this line
   
   const formData = new FormData(targetsForm);
   const currentDate = getCurrentDate();
@@ -228,7 +226,6 @@ const deleteEntry = async (e) => {
   
   const api = createUrl(`/api/users/${ formData.get('user') }/target/${ currentDate }/${ targetsForm.dataset.entryId }/`);
   const res = await postData(api, {}, formData.get('csrfmiddlewaretoken'), 'DELETE');
-  console.log(api, res);
   await showTargets();
   closeForm(e);
   deactivateLoader('Day target entry', 'delete');

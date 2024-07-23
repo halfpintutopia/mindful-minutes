@@ -99,6 +99,7 @@ const resetForm = () => {
   targetsForm.reset();
 };
 
+
 const createTargetEntry = (entry) => {
   const target = `
     <li
@@ -111,7 +112,7 @@ const createTargetEntry = (entry) => {
       <button data-btn="edit">
           <i class="fa-regular fa-pen-to-square"></i>
       </button>
-      <button data-btn="done">
+      <button data-btn="${entry.completed === true ? 'refresh' : 'done'}">
           <span></span>
       </button>
       <p class="handwritten">${ entry.title }</p>
@@ -139,7 +140,6 @@ const showTargets = () => {
       editButtons.forEach(btn => {
         btn.addEventListener('click', fillForm);
       });
-      
       const doneButtons = document.querySelectorAll('[data-btn="done"]');
       doneButtons.forEach(btn => {
         btn.addEventListener('click', toggleTargetCompleted);

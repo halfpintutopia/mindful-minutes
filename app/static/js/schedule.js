@@ -84,6 +84,7 @@ const editForm = (e) => {
   const selectTimeUntil = document.querySelector('select#time-until');
   
   const timeFromArray = entry.dataset.timeFrom.split(':');
+  console.log(timeFromArray);
   const timeUntilArray = entry.dataset.timeUntil.split(':');
   inputTitle.value = entry.dataset.title;
   selectTimeFrom.selectedIndex = timeFromArray[0];
@@ -196,6 +197,15 @@ const initDate = () => {
   dateElement.innerHTML = `${ week[date.getDay()] }, ${ day.format(Date.now()) }${ suffix[ordinal.select(new Date(Date.now()).getDate())] } <span class="uppercase">${ month.format(new Date(Date.now())) } ${ date.getFullYear() }</span>`;
 };
 
+const initCreateNewAppointment = (e) => {
+  initForm();
+  const selectTimeFrom = document.querySelector('select#time-from');
+  const selectTimeUntil = document.querySelector('select#time-until');
+  let selectedTime = e.target.querySelector('span').innerText.split(':')[0];
+  selectTimeFrom.selectedIndex = selectedTime;
+  selectTimeUntil.selectedIndex = selectedTime;
+}
+
 const initHtmlElements = () => {
   scheduleElement = document.querySelectorAll('.schedule__timeline li');
   scheduleEventListElement = document.querySelector('.event-list');
@@ -210,7 +220,7 @@ const initHtmlElements = () => {
 
 const initEvents = () => {
   scheduleElement.forEach(el => {
-    el.addEventListener('click', showDialog);
+    el.addEventListener('click', initCreateNewAppointment);
   });
   closeBtnElement.addEventListener('click', closeDialog);
   scheduleForm.addEventListener('submit', sendData);

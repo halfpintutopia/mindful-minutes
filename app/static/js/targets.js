@@ -40,6 +40,8 @@ const createTarget = async (data) => {
 };
 
 const updateTarget = async (data) => {
+  console.log(data);
+  
   activateLoader('update');
   const formData = new FormData(targetsForm);
   formData.append("completed", data.dataset.completed === 'true' ? "True" : "False")
@@ -47,7 +49,7 @@ const updateTarget = async (data) => {
   
   const dataObj = createDataObject(formData);
   
-  const api = createUrl(`/api/users/${ formData.get('user') }/target/${ currentDate }/${ data.dataset.id }/`);
+  const api = createUrl(`/api/users/${ formData.get('user') }/target/${ currentDate }/${ data.dataset.entryId }/`);
   await postData(api, dataObj, formData.get('csrfmiddlewaretoken'), 'PUT');
   deactivateLoader('Day target entry', 'update');
 };
@@ -112,7 +114,7 @@ const createTargetEntry = (entry) => {
       <button data-btn="edit">
           <i class="fa-regular fa-pen-to-square"></i>
       </button>
-      <button data-btn="${entry.completed === true ? 'refresh' : 'done'}">
+      <button data-btn="${ entry.completed === true ? 'refresh' : 'done' }">
           <span></span>
       </button>
       <p class="handwritten">${ entry.title }</p>
@@ -126,6 +128,7 @@ const showTargets = () => {
   retrieveTargets()
     .then(res => {
       try {
+        console.log(129, res);
         res.sort(compareOrder);
         removeAllInnerElements(targetList);
         res.forEach(target => {
@@ -199,17 +202,23 @@ const sendForm = (e) => {
   
   
   if (validateForm(formData)) {
-    if (targetsForm.dataset.formEntryId) {
+    if (targetsForm.dataset.entryId) {
       updateTarget(target)
         .then(r => {
           showTargets();
           closeDialog();
+        })
+        .catch((e) => {
+          console.log(209, e)
         });
     } else {
       createTarget(formData)
         .then(r => {
           showTargets();
           closeDialog();
+        })
+        .catch((e) => {
+          console.log(218, e)
         });
     }
   } else {
